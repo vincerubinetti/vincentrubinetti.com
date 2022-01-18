@@ -1,0 +1,134 @@
+<p data-fade>
+  {% include markdownify.html content=site.data.contact.description %}
+</p>
+
+<p class="mt-5 text-center" data-fade>
+  <script>
+    document.write(
+      window.atob(
+        "PGEgaHJlZj0nJiMxMDk7JiM5NzsmIzEwNTsmIzEwODsmIzExNjsmIzExMTsmIzU4OyYjMTE4OyYjMTA1OyYjMTEwOyYjOTk7JiMxMDE7JiM2NDsmIzExODsmIzEwNTsmIzExMDsmIzk5OyYjMTAxOyYjMTEwOyYjMTE2OyYjMTE0OyYjMTE3OyYjOTg7JiMxMDU7JiMxMTA7JiMxMDE7JiMxMTY7JiMxMTY7JiMxMDU7JiM0NjsmIzk5OyYjMTExOyYjMTA5Oyc+JiMxMTg7JiMxMDU7JiMxMTA7JiM5OTsmIzEwMTsmIzY0OyYjMTE4OyYjMTA1OyYjMTEwOyYjOTk7JiMxMDE7JiMxMTA7JiMxMTY7JiMxMTQ7JiMxMTc7JiM5ODsmIzEwNTsmIzExMDsmIzEwMTsmIzExNjsmIzExNjsmIzEwNTsmIzQ2OyYjOTk7JiMxMTE7JiMxMDk7PC9hPg=="
+      )
+    );
+  </script>
+</p>
+
+<form class="grid grid-cols-1 gap-5 mt-10" onsubmit="onSubmit(event)">
+  <input
+    class="p-4 bg-gray-100"
+    name="name"
+    aria-label="Name"
+    placeholder="Name"
+    defaultValue=""
+    oninput="window.localStorage['name'] = this.value"
+    data-fade
+  />
+  <input
+    class="p-4 bg-gray-100"
+    name="email"
+    aria-label="Email"
+    type="email"
+    placeholder="Email"
+    defaultValue=""
+    oninput="window.localStorage['email'] = this.value"
+    data-fade
+  />
+  <textarea
+    class="p-4 bg-gray-100"
+    name="message"
+    aria-label="Message"
+    placeholder="Message"
+    rows="7"
+    defaultValue=""
+    oninput="window.localStorage['message'] = this.value"
+    data-fade
+  ></textarea>
+  <button class="group p-3 text-lg hover:bg-gray-100" data-fade>
+    <i class="far fa-paper-plane mr-3 text-gray-700"></i>
+    <span class="text-gray-700 font-medium">Send</span>
+  </button>
+</form>
+
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
+<script type="module">
+  // get dom elements
+  const form = document.querySelector("form");
+
+  // restore form values from local storage
+  form.children[0].value = window.localStorage["name"] || "";
+  form.children[1].value = window.localStorage["email"] || "";
+  form.children[2].value = window.localStorage["message"] || "";
+
+  // when form submitted
+  window.onSubmit = async (event) => {
+    // avoid navigating away
+    event.preventDefault();
+
+    // get field values
+    const name = form.children[0].value;
+    const email = form.children[1].value;
+    const message = form.children[2].value;
+
+    // check fields filled in
+    if (!name.trim() || !email.trim() || !message.trim()) {
+      alert("Please fill in all the fields!");
+      return;
+    }
+
+    // google captcha
+    const token = await getCaptcha();
+
+    // debug
+    console.groupCollapsed("Token");
+    console.log(token);
+    console.groupEnd();
+
+    // send email to server
+    const response = await sendEmail({
+      fromAddress: email,
+      fromName: name,
+      ccAddress: email,
+      ccName: name,
+      toAddress: "vince@vincentrubinetti.com",
+      toName: "Vincent Rubinetti",
+      subject: "vincentrubinetti.com email form submission from " + name,
+      html: message,
+      plain: message,
+      token,
+    });
+
+    // debug
+    console.groupCollapsed("Response");
+    console.log(response);
+    console.groupEnd();
+
+    // alert response
+    if (response.includes("Mail sent successfully!"))
+      alert(
+        "Message sent successfully! I'll get back to you as soon as I can."
+      );
+    else
+      alert(
+        "Sorry, there was an issue sending your message. Try emailing me directly; my email address is right next to the contact form."
+      );
+  };
+
+  // google captcha
+  const captchaKey = "6LcLcs8ZAAAAAIXUglBHUKmWXLEGzv7vSWWIVLDu";
+  const getCaptcha = async () => {
+    try {
+      return window.grecaptcha.execute(captchaKey, { action: "submit" });
+    } catch (error) {
+      return "";
+    }
+  };
+
+  // send email to server
+  const sendEmail = async (args) =>
+    (
+      await fetch("email.php", {
+        method: "POST",
+        body: JSON.stringify(args),
+      })
+    ).text();
+</script>

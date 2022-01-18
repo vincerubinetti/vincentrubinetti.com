@@ -1,0 +1,44 @@
+<div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-5 mb-5">
+  {% for genre in site.data.listen %}
+  <button
+    class="
+      flex
+      justify-center
+      items-center
+      py-3
+      border-b-2 border-white
+      hover:bg-gray-100
+      text-center
+      whitespace-nowrap
+    "
+    data-fade
+    onclick="setPlaylist('{{ genre.playlist }}', this)"
+  >
+    {{ genre.title }}
+  </button>
+  {% endfor %}
+</div>
+<iframe
+  id="listen_player"
+  class="w-full h-96"
+  src=""
+  title="Music player"
+  loading="lazy"
+  data-fade
+></iframe>
+
+<script type="module">
+  // get dom elements
+  const player = document.getElementById("listen_player");
+  const buttons = player.previousElementSibling.querySelectorAll("button");
+
+  // set selected playlist
+  window.setPlaylist = (playlist, button) => {
+    buttons.forEach((button) => (button.style.borderColor = "transparent"));
+    player.src = `https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/${playlist}&amp;color=ff5500&amp;auto_play=false&amp;hide_related=true&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false`;
+    button.style.borderColor = "black";
+  };
+
+  // select first genre by default
+  buttons[0].click();
+</script>

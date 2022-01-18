@@ -1,0 +1,17 @@
+title: Vincent Rubinetti | composer, producer, and more
+description: Composer and producer for media. Orchestral, electronic, rock, and more.
+url: https://vincentrubinetti.com
+
+exclude:
+  - .env
+  - ssh.ppk
+  - index.css
+  - package.json
+  - postcss.config.js
+  - tailwind.config.js
+  - upload.js
+  - yarn.lock
+
+plugins:
+  - jekyll-sitemap
+  - jekyll-dotenv

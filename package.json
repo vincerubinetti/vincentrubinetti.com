@@ -1,0 +1,21 @@
+{
+  "scripts": {
+    "fresh": "rm -rf node_modules yarn.lock _site .jekyll-cache && yarn cache clean && yarn install",
+    "tailwind": "npx tailwindcss -i index.css -o styles.css",
+    "tailwind-production": "set NODE_ENV=production&& npx tailwindcss -i index.css -o styles.css",
+    "jekyll-build": "bundle && bundle exec jekyll build",
+    "jekyll-serve": "bundle && bundle exec jekyll serve --open-url --livereload --trace",
+    "upload": "node ./upload.js",
+    "start": "yarn tailwind && yarn jekyll-serve",
+    "build": "yarn tailwind-production && yarn jekyll-build",
+    "deploy": "yarn tailwind-production && yarn jekyll-build && yarn upload"
+  },
+  "dependencies": {
+    "@tailwindcss/aspect-ratio": "^0.2.1",
+    "autoprefixer": "^10.3.1",
+    "dotenv": "^14.2.0",
+    "postcss": "^8.3.6",
+    "ssh2-sftp-client": "^7.0.1",
+    "tailwindcss": "^2.2.7"
+  }
+}

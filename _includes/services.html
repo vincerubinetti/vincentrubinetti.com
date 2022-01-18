@@ -1,0 +1,17 @@
+<div class="grid grid-cols-1 md:grid-cols-3 gap-10 items-start">
+  {% for service in site.data.services %}
+  <div class="grid gap-5 transition-default">
+    <img
+      src="{{ service.image }}"
+      class="w-full max-h-20"
+      alt=""
+      loading="lazy"
+      data-fade
+    />
+    <div class="font-medium text-center uppercase tracking-wide" data-fade>
+      {{ service.title }}
+    </div>
+    <p class="text-center" data-fade>{{ service.description }}</p>
+  </div>
+  {% endfor %}
+</div>

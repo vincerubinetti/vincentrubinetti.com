@@ -1,0 +1,15 @@
+description: Vince is a life-long lover of all shapes and styles of music. Over the last 10+ years he has worked on video games, videos, advertisements, ensemble pieces, and a variety of other collaborations, serving as composer, producer, arranger, musician, and more. His first goal in any musical project is to create the most impactful work possible; to affect people in the same profound way that so many great works of music have affected him.
+
+links:
+  - url: https://github.com/vincerubinetti
+    icon: fas fa-code
+    text: Vince also writes software
+  - url: studio.html
+    icon: fas fa-headphones
+    text: Studio setup
+  - url: stems
+    icon: fas fa-leaf
+    text: Song stems
+  - url: sheets
+    icon: fas fa-music
+    text: Sheet music

@@ -1,0 +1,94 @@
+<div id="work_player"></div>
+<div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
+  {% for work in site.data.work %} {% assign src = "" %} {% if work.playlist %}
+  {% capture src %}https://www.youtube.com/embed/videoseries?list={{
+  work.playlist }}&autoplay=1{% endcapture %} {% elsif work.video %} {% capture
+  src %}https://www.youtube.com/embed/{{ work.video }}?autoplay=1{% endcapture
+  %} {% endif %}
+
+  <template>
+    <div class="mb-20">
+      <div class="-full mb-10 aspect-w-16 aspect-h-9">
+        <iframe
+          src="{{ src }}"
+          allowfullscreen
+          title="Video player"
+          loading="lazy"
+          data-fade
+        ></iframe>
+      </div>
+      <h3 class="text-lg font-medium mb-5" data-fade>{{ work.title }}</h3>
+      <p
+        class="grid gap-h-5 mt-5"
+        style="grid-template-columns: 80px 1fr"
+        data-fade
+      >
+        <b>Credits</b>
+        <span class="text-left">
+          {% include markdownify.html content=work.credits %}
+        </span>
+        <b>Genre</b>
+        <span class="text-left">
+          {% include markdownify.html content=work.genre %}
+        </span>
+      </p>
+      <p class="mt-5" data-fade>
+        {% include markdownify.html content=work.description %}
+      </p>
+      <div class="mt-5 text-left">
+        {% for link in work.links %}
+        <a
+          href="{{ link.url }}"
+          class="group inline-flex items-center m-1 py-2 px-4 max-w-full no-underline hover:bg-gray-100"
+          data-fade
+        >
+          <i class="{{ link.icon }} mr-3 text-gray-700"></i>
+          <span class="text-gray-700 font-medium truncate"
+            >{{ link.text }}</span
+          >
+        </a>
+        {% endfor %}
+      </div>
+    </div>
+  </template>
+  <button
+    class="group relative overflow-hidden"
+    onclick="selectWork(this, event)"
+    data-fade
+  >
+    <img src="{{ work.image }}" alt="" loading="lazy" />
+    <div
+      class="absolute inset-0 flex justify-center items-center p-5 bg-black text-white font-medium opacity-0 group-hover:opacity-100 transition-default duration-300"
+    >
+      {{ work.title }}
+    </div>
+  </button>
+  {% endfor %}
+</div>
+
+<script type="module">
+  // get dom elements
+  const player = document.getElementById("work_player");
+  const gallery = player.nextElementSibling;
+
+  // show contents of template before button in player frame
+  window.selectWork = (button, event) => {
+    player.innerHTML = button.previousElementSibling.innerHTML;
+    if (event.isTrusted) {
+      const options = { behavior: "smooth", block: "start" };
+      player.closest("section").scrollIntoView(options);
+    }
+  };
+
+  // when player comes into view for first time
+  new IntersectionObserver(([{ isIntersecting }], observer) => {
+    if (isIntersecting) {
+      // select first work by default
+      Array.from(gallery.children)
+        .find((child) => child.matches("button"))
+        .click();
+      // only select once
+      observer.disconnect();
+    }
+  }).observe(player);
+</script>

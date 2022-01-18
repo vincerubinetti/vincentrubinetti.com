@@ -1,0 +1,42 @@
+<div
+  class="
+    grid grid-cols-1
+    md:grid-cols-3
+    gap-10
+    justify-items-center
+    items-center
+  "
+  data-fade
+>
+  <img
+    src="images/profile.jpg"
+    class="max-w-56 max-h-56 rounded-full"
+    alt=""
+    loading="lazy"
+  />
+  <p class="col-span-1 md:col-span-2" data-fade>
+    {{ site.data.about.description }}
+  </p>
+</div>
+<div class="flex flex-wrap justify-center mt-10">
+  {% for link in site.data.about.links %}
+  <a
+    href="{{ link.url }}"
+    class="
+      group
+      inline-flex
+      items-center
+      m-1
+      py-4
+      px-4
+      max-w-full
+      no-underline
+      hover:bg-gray-100
+    "
+    data-fade
+  >
+    <i class="{{ link.icon }} mr-3 text-gray-700"></i>
+    <span class="text-gray-700 font-medium">{{ link.text }}</span>
+  </a>
+  {% endfor %}
+</div>

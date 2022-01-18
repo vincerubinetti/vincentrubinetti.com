@@ -1,0 +1,32 @@
+- links:
+    - url: https://vincerubinetti.bandcamp.com/
+      icon: fab fa-bandcamp
+      tooltip: Bandcamp
+
+  text: "**Download** and **stream** the official, highest-quality, most up-to-date versions of _all of my music_"
+
+- links:
+    - url: https://soundcloud.com/vincerubinetti
+      icon: fab fa-soundcloud
+      tooltip: SoundCloud
+
+    - url: https://itunes.apple.com/us/artist/vincent-rubinetti/274886492
+      icon: fab fa-apple
+      tooltip: Apple Music
+
+    - url: https://open.spotify.com/artist/2SRhEEt2tlDQWxzwfUo9Dl
+      icon: fab fa-spotify
+      tooltip: Spotify
+
+  text: "**Stream** and **share** select songs and albums"
+
+- links:
+    - url: https://www.youtube.com/c/VincentRubinetti
+      icon: fab fa-youtube
+      tooltip: YouTube
+
+    - url: https://twitter.com/VinceRubinetti
+      icon: fab fa-twitter
+      tooltip: Twitter
+
+  text: Music videos, news, and other fun stuff

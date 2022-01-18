@@ -1,0 +1,110 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html,
+body {
+  min-height: 100vh;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+}
+
+section:nth-child(2n) {
+  background: #fafafa;
+}
+
+@layer base {
+  a {
+    @apply transition-default underline text-sky-600 hover:text-black duration-300;
+  }
+
+  button {
+    @apply transition-default duration-300;
+  }
+
+  p {
+    @apply text-justify leading-8;
+  }
+
+  b {
+    @apply font-semibold;
+  }
+
+  [data-tooltip] {
+    @apply relative;
+  }
+
+  [data-tooltip]:before {
+    content: attr(data-tooltip);
+    @apply absolute bottom-full left-1/2 py-2 px-4 text-black font-medium opacity-0 transition-opacity duration-300 transform -translate-x-1/2 -translate-y-2 w-max;
+  }
+
+  [data-tooltip]:hover:before {
+    @apply opacity-100;
+  }
+
+  .fas,
+  .far,
+  .fab {
+    @apply transition-default duration-300;
+  }
+
+  .fa-bandcamp {
+    @apply group-hover:text-teal-500;
+  }
+
+  .fa-soundcloud {
+    @apply group-hover:text-orange-500;
+  }
+
+  .fa-apple {
+    @apply group-hover:text-rose-500;
+  }
+
+  .fa-spotify {
+    @apply group-hover:text-green-500;
+  }
+
+  .fa-youtube {
+    @apply group-hover:text-red-500;
+  }
+
+  .fa-twitter {
+    @apply group-hover:text-sky-500;
+  }
+
+  .fa-instagram {
+    @apply group-hover:text-fuchsia-500;
+  }
+
+  .fa-steam {
+    @apply group-hover:text-sky-700;
+  }
+
+  .fa-home {
+    @apply group-hover:text-sky-500;
+  }
+
+  .fa-code {
+    @apply group-hover:text-rose-500;
+  }
+
+  .fa-headphones {
+    @apply group-hover:text-fuchsia-500;
+  }
+
+  .fa-leaf {
+    @apply group-hover:text-green-500;
+  }
+
+  .fa-music {
+    @apply group-hover:text-cyan-500;
+  }
+
+  .fa-paper-plane {
+    @apply group-hover:text-sky-500;
+  }
+}
