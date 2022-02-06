@@ -1,18 +1,15 @@
-<div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-5 mb-5">
+<div
+  class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-5"
+  role="tablist"
+>
   {% for genre in site.data.listen %}
   <button
-    class="
-      flex
-      justify-center
-      items-center
-      py-3
-      border-b-2 border-white
-      hover:bg-gray-100
-      text-center
-      whitespace-nowrap
-    "
-    data-fade
+    id="listen_button_{{ genre.title | split: ' ' | join: '_' | downcase }}"
+    class="button border-transparent"
     onclick="setPlaylist('{{ genre.playlist }}', this)"
+    data-fade
+    role="tab"
+    aria-controls="listen_player"
   >
     {{ genre.title }}
   </button>
@@ -24,6 +21,7 @@
   src=""
   title="Music player"
   loading="lazy"
+  role="tabpanel"
   data-fade
 ></iframe>
 
@@ -34,9 +32,14 @@
 
   // set selected playlist
   window.setPlaylist = (playlist, button) => {
-    buttons.forEach((button) => (button.style.borderColor = "transparent"));
+    buttons.forEach((button) => {
+      button.style.borderColor = "";
+      button.setAttribute("aria-selected", false);
+    });
     player.src = `https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/${playlist}&amp;color=ff5500&amp;auto_play=false&amp;hide_related=true&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false`;
     button.style.borderColor = "black";
+    player.setAttribute("aria-labelledby", button.id);
+    button.setAttribute("aria-selected", true);
   };
 
   // select first genre by default

@@ -7,14 +7,9 @@
 >
   <style>
     #stroke path {
-      animation: appear 2s forwards cubic-bezier(0.2, 0, 0.4, 1);
+      animation: draw 2s forwards cubic-bezier(0.2, 0, 0.4, 1);
     }
-
-    #logo:hover #stroke path {
-      animation: redraw 2s forwards cubic-bezier(0.4, 0, 0.6, 1) infinite;
-    }
-
-    @keyframes appear {
+    @keyframes draw {
       0% {
         stroke-dasharray: 320;
         stroke-dashoffset: 320;
@@ -22,17 +17,6 @@
       25% {
         stroke-dasharray: 320;
         stroke-dashoffset: 320;
-      }
-      100% {
-        stroke-dasharray: 320;
-        stroke-dashoffset: 0;
-      }
-    }
-
-    @keyframes redraw {
-      0% {
-        stroke-dasharray: 320;
-        stroke-dashoffset: 640;
       }
       100% {
         stroke-dasharray: 320;

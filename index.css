@@ -12,17 +12,48 @@ body {
   flex-direction: column;
 }
 
-section:nth-child(2n) {
+header,
+section,
+footer {
+  padding: 60px max(40px, calc((100% - 1000px) / 2));
+  z-index: 1;
+}
+
+section:nth-child(odd) {
   background: #fafafa;
 }
 
+section:nth-child(even) {
+  background: #ffffff;
+}
+
 @layer base {
+  header,
+  footer {
+    @apply bg-black text-white text-center;
+  }
+
+  header,
+  section,
+  footer {
+    @apply flex justify-center items-center flex-col gap-2 w-full;
+  }
+
+  h3 {
+    @apply text-xl font-medium text-neutral-400 text-center font-light;
+  }
+
   a {
     @apply transition-default underline text-sky-600 hover:text-black duration-300;
   }
 
   button {
     @apply transition-default duration-300;
+  }
+
+  input,
+  textarea {
+    @apply transition-default py-2 px-4 max-w-full rounded-full no-underline text-neutral-700 bg-neutral-100;
   }
 
   p {
@@ -33,78 +64,87 @@ section:nth-child(2n) {
     @apply font-semibold;
   }
 
-  [data-tooltip] {
-    @apply relative;
+  .button {
+    @apply inline-flex justify-center items-center gap-2 py-2 px-4 max-w-full rounded-full no-underline border-2 border-neutral-200 hover:border-neutral-800 hover:bg-neutral-800 hover:text-white;
   }
 
-  [data-tooltip]:before {
-    content: attr(data-tooltip);
-    @apply absolute bottom-full left-1/2 py-2 px-4 text-black font-medium opacity-0 transition-opacity duration-300 transform -translate-x-1/2 -translate-y-2 w-max;
+  .button * {
+    @apply text-neutral-800 transition-default duration-300;
   }
 
-  [data-tooltip]:hover:before {
-    @apply opacity-100;
+  .button span {
+    @apply text-neutral-800;
   }
 
-  .fas,
-  .far,
-  .fab {
-    @apply transition-default duration-300;
+  .button:hover span {
+    @apply text-neutral-100;
   }
 
-  .fa-bandcamp {
-    @apply group-hover:text-teal-500;
+  .button:hover i {
+    @apply text-neutral-100;
   }
 
-  .fa-soundcloud {
-    @apply group-hover:text-orange-500;
+  .button:hover .fa-bandcamp {
+    @apply text-teal-500;
   }
 
-  .fa-apple {
-    @apply group-hover:text-rose-500;
+  .button:hover .fa-soundcloud {
+    @apply text-orange-500;
   }
 
-  .fa-spotify {
-    @apply group-hover:text-green-500;
+  .button:hover .fa-apple {
+    @apply text-rose-500;
   }
 
-  .fa-youtube {
-    @apply group-hover:text-red-500;
+  .button:hover .fa-spotify {
+    @apply text-green-500;
   }
 
-  .fa-twitter {
-    @apply group-hover:text-sky-500;
+  .button:hover .fa-youtube {
+    @apply text-red-500;
   }
 
-  .fa-instagram {
-    @apply group-hover:text-fuchsia-500;
+  .button:hover .fa-twitter {
+    @apply text-sky-500;
   }
 
-  .fa-steam {
-    @apply group-hover:text-sky-700;
+  .button:hover .fa-steam {
+    @apply text-sky-700;
   }
 
-  .fa-home {
-    @apply group-hover:text-sky-500;
+  .button:hover .fa-home {
+    @apply text-sky-500;
   }
 
-  .fa-code {
-    @apply group-hover:text-rose-500;
+  .button:hover .fa-code {
+    @apply text-rose-500;
   }
 
-  .fa-headphones {
-    @apply group-hover:text-fuchsia-500;
+  .button:hover .fa-headphones {
+    @apply text-orange-500;
   }
 
-  .fa-leaf {
-    @apply group-hover:text-green-500;
+  .button:hover .fa-leaf {
+    @apply text-green-500;
   }
 
-  .fa-music {
-    @apply group-hover:text-cyan-500;
+  .button:hover .fa-music {
+    @apply text-cyan-500;
   }
 
-  .fa-paper-plane {
-    @apply group-hover:text-sky-500;
+  .button:hover .fa-paper-plane {
+    @apply text-sky-500;
+  }
+
+  .tippy-box {
+    @apply py-3 px-5 bg-neutral-800 leading-7 rounded-lg;
+  }
+
+  .tippy-content {
+    @apply p-0;
+  }
+
+  .tippy-arrow:before {
+    @apply text-neutral-800;
   }
 }

@@ -2,7 +2,7 @@
   {% include markdownify.html content=site.data.contact.description %}
 </p>
 
-<p class="mt-5 text-center" data-fade>
+<p class="text-center" data-fade>
   <script>
     document.write(
       window.atob(
@@ -12,9 +12,8 @@
   </script>
 </p>
 
-<form class="grid grid-cols-1 gap-5 mt-10" onsubmit="onSubmit(event)">
+<form class="flex flex-col gap-5" onsubmit="onSubmit(event)">
   <input
-    class="p-4 bg-gray-100"
     name="name"
     aria-label="Name"
     placeholder="Name"
@@ -23,7 +22,6 @@
     data-fade
   />
   <input
-    class="p-4 bg-gray-100"
     name="email"
     aria-label="Email"
     type="email"
@@ -33,7 +31,7 @@
     data-fade
   />
   <textarea
-    class="p-4 bg-gray-100"
+    class="rounded-xl"
     name="message"
     aria-label="Message"
     placeholder="Message"
@@ -42,9 +40,9 @@
     oninput="window.localStorage['message'] = this.value"
     data-fade
   ></textarea>
-  <button class="group p-3 text-lg hover:bg-gray-100" data-fade>
-    <i class="far fa-paper-plane mr-3 text-gray-700"></i>
-    <span class="text-gray-700 font-medium">Send</span>
+  <button class="group button" data-fade>
+    <i class="fas fa-paper-plane"></i>
+    <span>Send</span>
   </button>
 </form>
 

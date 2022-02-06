@@ -1,16 +1,14 @@
-const colors = require("tailwindcss/colors");
 const aspectRatio = require("@tailwindcss/aspect-ratio");
 
 module.exports = {
-  purge: ["*.md", "*.html", "_includes/*.html", "_data/*.yaml"],
-  darkMode: false,
+  content: ["*.md", "*.html", "_includes/*.html", "_data/*.yaml"],
+  safelist: ["tippy-box", "tippy-content", "tippy-arrow"],
   theme: {
     extend: {
-      screens: {
+      variants: {
         sm: "400px",
         md: "600px",
         lg: "800px",
-        xl: "1000px",
       },
       fontFamily: {
         sans: ["Montserrat", "sans-serif"],
@@ -21,14 +19,9 @@ module.exports = {
         widest: "0.3em",
       },
       transitionProperty: {
-        default: "opacity, color, background-color, border-color, transform",
+        default:
+          "opacity, color, background-color, border-color, transform, box-shadow",
       },
-    },
-    colors,
-  },
-  variants: {
-    extend: {
-      textColor: ["group-hover"],
     },
   },
   plugins: [aspectRatio],

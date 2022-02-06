@@ -1,6 +1,7 @@
 <canvas
   id="waves"
   class="absolute inset-0 w-full h-full max-w-xl mx-auto"
+  style="z-index: -1"
 ></canvas>
 <!-- overlay -->
 <div
@@ -13,6 +14,7 @@
       #00000080 75%,
       #000000 100%
     );
+    z-index: -1;
   "
 ></div>
 
@@ -71,7 +73,7 @@
   const generators = [
     // medium waves
     generator({
-      height: 10,
+      height: 8,
       frequency: 1.5,
       phase: 0,
       length: 200,
@@ -81,7 +83,7 @@
       delay: 0,
     }),
     generator({
-      height: 10,
+      height: 8,
       frequency: 1.5,
       phase: 120,
       length: 200,
@@ -91,7 +93,7 @@
       delay: 0.5,
     }),
     generator({
-      height: 10,
+      height: 8,
       frequency: 1.5,
       phase: 240,
       length: 200,
@@ -103,7 +105,7 @@
 
     // small waves
     generator({
-      height: 30,
+      height: 15,
       frequency: 2,
       phase: 0,
       length: 100,
@@ -113,7 +115,7 @@
       delay: 3,
     }),
     generator({
-      height: 30,
+      height: 15,
       frequency: 2,
       phase: 90,
       length: 100,
@@ -183,7 +185,7 @@
         ctx.beginPath();
         for (let offset = 0; offset < length; offset += 5) {
           const x = from + offset;
-          const amplitude = height + 40 * layer * Math.pow(1 - x / width, 2);
+          const amplitude = height + 20 * layer * Math.pow(1 - x / width, 1);
           const y = cos(360 * (x / width) * frequency + phase) * amplitude;
           offset === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
         }
