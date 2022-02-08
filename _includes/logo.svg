@@ -3,7 +3,7 @@
   viewBox="0 0 100 100"
   class="{{ include.class }}"
   id="logo"
-  alt="Vince's initials"
+  aria-hidden="true"
 >
   <style>
     #stroke path {

@@ -5,10 +5,11 @@ module.exports = {
   safelist: ["tippy-box", "tippy-content", "tippy-arrow"],
   theme: {
     extend: {
-      variants: {
-        sm: "400px",
-        md: "600px",
-        lg: "800px",
+      screens: {
+        sm: "440px",
+        md: "640px",
+        lg: "840px",
+        xl: "1040px"
       },
       fontFamily: {
         sans: ["Montserrat", "sans-serif"],

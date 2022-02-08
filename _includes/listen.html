@@ -15,20 +15,21 @@
   </button>
   {% endfor %}
 </div>
-<iframe
-  id="listen_player"
-  class="w-full h-96"
-  src=""
-  title="Music player"
-  loading="lazy"
-  role="tabpanel"
-  data-fade
-></iframe>
+
+<div id="listen_player" role="tabpanel">
+  <iframe
+    class="w-full h-96"
+    title="Music player"
+    loading="lazy"
+    data-fade
+  ></iframe>
+</div>
 
 <script type="module">
   // get dom elements
-  const player = document.getElementById("listen_player");
+  let player = document.getElementById("listen_player");
   const buttons = player.previousElementSibling.querySelectorAll("button");
+  player = player.querySelector("iframe");
 
   // set selected playlist
   window.setPlaylist = (playlist, button) => {
