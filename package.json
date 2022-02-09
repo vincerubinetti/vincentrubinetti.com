@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "fresh": "rm -rf node_modules yarn.lock _site .jekyll-cache && yarn cache clean && yarn install",
+    "fresh": "rm -rf node_modules yarn.lock _site .jekyll-cache && yarn cache clean",
     "tailwind-dev": "npx tailwindcss -i index.css -o styles.css --watch",
     "tailwind": "npx tailwindcss -i index.css -o styles.css",
     "jekyll-build": "bundle && bundle exec jekyll build",

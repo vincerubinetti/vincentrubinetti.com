@@ -692,6 +692,10 @@ b {
   left: 0px;
 }
 
+.z-10 {
+  z-index: 10;
+}
+
 .mx-auto {
   margin-left: auto;
   margin-right: auto;
@@ -880,6 +884,10 @@ b {
   color: rgb(255 255 255 / var(--tw-text-opacity));
 }
 
+.opacity-40 {
+  opacity: 0.4;
+}
+
 .opacity-0 {
   opacity: 0;
 }
@@ -911,16 +919,10 @@ body {
   min-height: 100vh;
 }
 
-body {
-  display: flex;
-  flex-direction: column;
-}
-
 header,
 section,
 footer {
   padding: 60px max(40px, calc((100% - 1000px) / 2));
-  z-index: 1;
 }
 
 section:nth-child(odd) {

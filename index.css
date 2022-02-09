@@ -7,16 +7,10 @@ body {
   min-height: 100vh;
 }
 
-body {
-  display: flex;
-  flex-direction: column;
-}
-
 header,
 section,
 footer {
   padding: 60px max(40px, calc((100% - 1000px) / 2));
-  z-index: 1;
 }
 
 section:nth-child(odd) {
