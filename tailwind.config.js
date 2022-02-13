@@ -4,13 +4,14 @@ module.exports = {
   content: ["*.md", "*.html", "_includes/*.html", "_data/*.yaml"],
   safelist: ["tippy-box", "tippy-content", "tippy-arrow"],
   theme: {
+    screens: {
+      xs: "360px",
+      sm: "440px",
+      md: "660px",
+      lg: "920px",
+      xl: "1040px",
+    },
     extend: {
-      screens: {
-        sm: "440px",
-        md: "640px",
-        lg: "840px",
-        xl: "1040px"
-      },
       fontFamily: {
         sans: ["Montserrat", "sans-serif"],
       },

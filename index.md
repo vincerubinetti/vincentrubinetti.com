@@ -13,9 +13,9 @@ layout: default
 {% include section.html content=section title="Follow" %}
 
 {% capture section %}
-{% include work.html %}
+{% include highlights.html %}
 {% endcapture %}
-{% include section.html content=section title="Work" %}
+{% include section.html content=section title="Highlights" %}
 
 {% capture section %}
 {% include about.html %}

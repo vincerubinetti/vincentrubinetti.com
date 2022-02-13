@@ -5,7 +5,7 @@
   genre: Orchestral, electronic
   description: "Arrangements of three beloved tracks from the Metroid series, featured on the acclaimed fan album [Harmony of a Hunter Returns](https://harmony.shinesparkers.net/) celebrating the 35 year anniversary of Metroid."
   links:
-    - url: https://vincerubinetti.bandcamp.com/album/emerald-cloud-lab
+    - url: https://vincerubinetti.bandcamp.com/album/metroid
       icon: fab fa-bandcamp
       text: Vince's tracks on Bandcamp
 
@@ -114,26 +114,6 @@
       icon: fab fa-apple
       text: Stream on Apple Music
 
-- title: Gemstone Keeper
-  image: images/gemstone-keeper.jpg
-  video: mVnMpCjsiyI
-  credits: Music, 2017
-  genre: Ambient electronic, glitch
-  description: A game by Gamepopper. Navigate dangerous and mysterious caverns and collect rare gemstones to  your arsenal in this retro arcade twin-stick shooter.
-  links:
-    - url: https://store.steampowered.com/app/522080/Gemstone_Keeper/
-      icon: fab fa-steam
-      text: Get the game on Steam
-    - url: https://vincerubinetti.bandcamp.com/album/gemstone-keeper
-      icon: fab fa-bandcamp
-      text: Download on Bandcamp
-    - url: https://open.spotify.com/album/6lRpUqWxVwPfw8TPmLIqw4
-      icon: fab fa-spotify
-      text: Stream on Spotify
-    - url: https://itunes.apple.com/us/album/gemstone-keeper-ep/1434629342
-      icon: fab fa-apple
-      text: Stream on Apple Music
-
 - title: Remixes and Remakes
   image: images/remixes-and-remakes.jpg
   playlist: PL8CeOEg8N989RH9FV5kWUSTSfGnWXayRO
@@ -144,14 +124,3 @@
     - url: https://vincerubinetti.bandcamp.com/album/remixes-and-remakes
       icon: fab fa-bandcamp
       text: Download on Bandcamp
-
-- title: Harmony of Heroes
-  image: images/harmony-of-heroes.jpg
-  video: mU2hOgeBfaU
-  credits: Music, 2015
-  genre: 70's orchestral funk
-  description: "A remix featured on [Harmony of Heroes: Final Smash](http://www.harmonyofheroes.com/finalsmash/), an acclaimed fan arrangement album celebrating the music of Super Smash Bros."
-  links:
-    - url: https://vincerubinetti.bandcamp.com/album/remixes-and-remakes
-      icon: fab fa-bandcamp
-      text: Vince's track on Bandcamp

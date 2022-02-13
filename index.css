@@ -103,7 +103,7 @@ section:nth-child(even) {
   }
 
   .button:hover .fa-steam {
-    @apply text-sky-700;
+    @apply text-sky-500;
   }
 
   .button:hover .fa-home {

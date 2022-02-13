@@ -2,6 +2,7 @@
   id="waves"
   class="absolute inset-0 w-full h-full max-w-xl mx-auto opacity-40"
 ></canvas>
+
 <!-- overlay -->
 <div
   class="absolute inset-0 w-full h-full max-w-xl mx-auto"
@@ -48,8 +49,8 @@
     generate: () => {
       const gradient = ctx.createLinearGradient(0, 0, width, 0);
       gradient.addColorStop(0.3, "#e91e63");
-      gradient.addColorStop(0.5, "#d500f9");
-      gradient.addColorStop(0.7, "#2196f3");
+      gradient.addColorStop(0.45, "#d500f9");
+      gradient.addColorStop(0.65, "#2196f3");
       for (let layer = 0; layer < layers; layer++)
         waves.push({
           height,

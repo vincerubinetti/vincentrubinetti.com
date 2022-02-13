@@ -1,22 +1,23 @@
 <div
-  class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-5"
+  id="listen_buttons"
+  class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 xl:grid-cols-6 gap-5"
   role="tablist"
 >
-  {% for genre in site.data.listen %}
+  {% for playlist in site.data.listen.playlists %}
   <button
-    id="listen_button_{{ genre.title | split: ' ' | join: '_' | downcase }}"
+    id="listen_button_{{ playlist.title | split: ' ' | join: '_' | downcase }}"
     class="button border-transparent"
-    onclick="setPlaylist('{{ genre.playlist }}', this)"
+    onclick="setPlaylist('{{ playlist.id }}', this)"
     data-fade
     role="tab"
     aria-controls="listen_player"
   >
-    {{ genre.title }}
+    {{ playlist.title }}
   </button>
   {% endfor %}
 </div>
 
-<div id="listen_player" role="tabpanel">
+<div id="listen_player" role="tabpanel" style="margin-top: -10px">
   <iframe
     class="w-full h-96"
     title="Music player"
@@ -25,11 +26,25 @@
   ></iframe>
 </div>
 
+<div
+  class="grid justify-center items-center grid-cols-1 sm:flex flex-wrap gap-5"
+>
+  <a
+    href="{{ site.data.listen.link.url }}"
+    class="button"
+    data-fade
+    data-tooltip="{% include markdownify.html content=site.data.listen.link.tooltip %}"
+    aria-label="{{ site.data.listen.link.text }} - {{ site.data.listen.link.tooltip | markdownify | strip_html }}"
+  >
+    <i class="{{ site.data.listen.link.icon }}"></i>
+    <span>{{ site.data.listen.link.text }}</span>
+  </a>
+</div>
+
 <script type="module">
   // get dom elements
-  let player = document.getElementById("listen_player");
-  const buttons = player.previousElementSibling.querySelectorAll("button");
-  player = player.querySelector("iframe");
+  const player = document.querySelector("#listen_player iframe");
+  const buttons = document.querySelectorAll("#listen_buttons button");
 
   // set selected playlist
   window.setPlaylist = (playlist, button) => {
@@ -41,8 +56,9 @@
     button.style.borderColor = "black";
     player.setAttribute("aria-labelledby", button.id);
     button.setAttribute("aria-selected", true);
+    player.focus();
   };
 
-  // select first genre by default
+  // select first playlist by default
   buttons[0].click();
 </script>

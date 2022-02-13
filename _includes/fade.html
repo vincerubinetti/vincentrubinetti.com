@@ -1,0 +1,43 @@
+<script type="module">
+  // length of fade in
+  const duration = 500;
+
+  // when element comes into view
+  const onView = ([{ isIntersecting, target }], observer) => {
+    if (isIntersecting) {
+      // start fade in
+      const fadeIn = () => {
+        target.style.transition = `opacity ${duration}ms ease`;
+        target.style.opacity = 1;
+        window.setTimeout(unset, duration);
+      };
+
+      // unset fade in props
+      const unset = () => {
+        target.style.transition = "";
+        target.style.opacity = "";
+      };
+
+      // delay fade in based on x position and attribute value
+      const x =
+        target.getBoundingClientRect().left -
+        document.querySelector("section > div").getBoundingClientRect().left;
+      window.setTimeout(fadeIn, x / 2);
+
+      // clean up
+      observer.disconnect();
+    }
+  };
+
+  // listen for when element comes into view
+  const addFade = (element) => {
+    element.style.transition = "none";
+    element.style.opacity = 0;
+    new IntersectionObserver(onView).observe(element);
+  };
+
+  // if not on mobile
+  if (window.matchMedia("(min-width: 500px) and (min-height: 500px)").matches)
+    // add fade to appropriate elements
+    document.querySelectorAll("[data-fade]").forEach(addFade);
+</script>
