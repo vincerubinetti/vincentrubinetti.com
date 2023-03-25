@@ -26,9 +26,3 @@ onMounted(() => {
 });
 onUpdated(fit);
 </script>
-
-<style scoped>
-text {
-  fill: currentColor;
-}
-</style>

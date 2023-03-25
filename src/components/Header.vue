@@ -1,6 +1,7 @@
 <template>
   <header>
-    <Background />
+    <BgBlur />
+    <BgNotes />
     <svg class="center" viewBox="0 0 270 50">
       <Logo x="0" y="0" width="50" height="50" class="logo" />
       <Text
@@ -24,7 +25,8 @@
 </template>
 
 <script setup lang="ts">
-import Background from "./Background.vue";
+import BgBlur from "./BgBlur.vue";
+import BgNotes from "./BgNotes.vue";
 import Logo from "./Logo.vue";
 import Text from "./Text.vue";
 </script>
@@ -35,10 +37,11 @@ header {
   display: flex;
   justify-content: center;
   align-items: center;
+  min-height: 500px;
   padding: 40px;
   background: black;
   color: white;
-  min-height: 500px;
+  overflow: hidden;
   z-index: 0;
 }
 
@@ -49,18 +52,19 @@ header {
 
 .title,
 .subtitle {
+  fill: currentColor;
   letter-spacing: 2px;
 }
 
 .title {
   grid-area: title;
-  animation: fade 2s ease both 1s;
+  animation: fade 2s both 1s;
 }
 
 .subtitle {
   grid-area: subtitle;
   opacity: 0.5;
-  animation: fade 2s ease both 1.5s;
+  animation: fade 2s both 1.5s;
 }
 
 @keyframes fade {
