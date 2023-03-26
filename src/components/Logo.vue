@@ -1,5 +1,5 @@
 <template>
-  <svg viewBox="0 0 100 100">
+  <svg viewBox="0 0 585 100">
     <defs>
       <mask id="stroke">
         <path
@@ -168,6 +168,10 @@
         Z
       "
     />
+    <text x="150" y="13" class="title" role="heading" aria-level="1">
+      VINCENT RUBINETTI
+    </text>
+    <text x="154" y="63" class="subtitle">COMPOSER, PRODUCER, AND MORE</text>
   </svg>
 </template>
 
@@ -175,6 +179,7 @@
 #stroke path {
   animation: draw 2s forwards cubic-bezier(0.2, 0, 0.4, 1);
 }
+
 @keyframes draw {
   0% {
     stroke-dasharray: 320;
@@ -187,6 +192,30 @@
   100% {
     stroke-dasharray: 320;
     stroke-dashoffset: 0;
+  }
+}
+
+.title,
+.subtitle {
+  fill: currentColor;
+  letter-spacing: 4px;
+  dominant-baseline: hanging;
+}
+
+.title {
+  font-size: 40px;
+  animation: fade 2s both 1s;
+}
+
+.subtitle {
+  font-size: 19.65px;
+  opacity: 0.5;
+  animation: fade 2s both 1.5s;
+}
+
+@keyframes fade {
+  from {
+    opacity: 0;
   }
 }
 </style>
