@@ -15,9 +15,14 @@ import {
   BackSide,
   MeshPhongMaterial,
   AdditiveBlending,
+  ExtrudeGeometry,
+  MeshBasicMaterial,
+  FrontSide,
 } from "three";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
-// import Stats from "three/examples/jsm/libs/stats.module";
+import { SVGLoader } from "three/addons/loaders/SVGLoader.js";
+import Stats from "three/examples/jsm/libs/stats.module";
+import note from "./note.svg";
 
 const canvas = ref();
 let size = 10;
@@ -25,18 +30,18 @@ let size = 10;
 onMounted(() => {
   if (!canvas.value) return;
 
-  // const stats = Stats();
-  // document.body.appendChild(stats.dom);
+  const stats = Stats();
+  document.body.appendChild(stats.dom);
 
   const renderer = new WebGLRenderer({ canvas: canvas.value });
   const scene = new Scene();
-  const camera = new PerspectiveCamera(45, 1, 1, size * 1000);
+  const camera = new PerspectiveCamera(45, 1, 0.01, size * 1000);
   const controls = new OrbitControls(camera, renderer.domElement);
 
   camera.position.set(0, 0, size);
 
   const boundary = new Mesh(
-    new SphereGeometry(size, 100, 100),
+    new SphereGeometry(size, 64, 64),
     new MeshPhongMaterial({
       color: "#000000",
       side: BackSide,
@@ -68,6 +73,28 @@ onMounted(() => {
     };
   });
 
+  new SVGLoader().load(note, (data) => {
+    const [path] = data.paths;
+    const [shape] = path.toShapes();
+
+    const note = new Mesh(
+      new ExtrudeGeometry(shape, {
+        depth: 20,
+        bevelEnabled: false,
+      })
+        .center()
+        .scale(0.001, -0.001, 0.001),
+      new MeshPhongMaterial({
+        color: "#000000",
+        shininess: 1000,
+        side: BackSide,
+        transparent: true,
+        opacity: 0.5,
+      })
+    );
+    scene.add(note);
+  });
+
   renderer.setAnimationLoop(() => {
     for (const light of lights) {
       if (light.light.position.x > size / 2) light.vx = -Math.abs(light.vx);
@@ -80,10 +107,10 @@ onMounted(() => {
       light.light.position.y += light.vy;
       light.light.position.z += light.vz;
     }
+    controls.update();
     camera.updateProjectionMatrix();
     renderer.render(scene, camera);
-    controls.update();
-    // stats.update();
+    stats.update();
   });
 
   const onResize = () => {
@@ -93,6 +120,7 @@ onMounted(() => {
     renderer.setSize(canvas.value.clientWidth, canvas.value.clientHeight);
     renderer.setPixelRatio(window.devicePixelRatio);
     renderer.render(scene, camera);
+    console.log(renderer.info.render.triangles);
   };
   useEventListener(window, "resize", onResize);
   onResize();
