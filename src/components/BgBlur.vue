@@ -65,7 +65,7 @@ canvas {
   inset: 0;
   width: 100%;
   height: 100%;
-  opacity: 0.2;
+  opacity: 0.15;
   z-index: -1;
   animation: fade 2s both;
 }

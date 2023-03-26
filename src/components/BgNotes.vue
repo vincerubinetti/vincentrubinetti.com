@@ -52,7 +52,7 @@ const frame = () => {
 
     particle.r += size / 500;
     particle.z++;
-    particle.a -= 0.1;
+    // particle.a -= 0.1;
 
     const percent = Math.max(
       0,
@@ -88,13 +88,13 @@ let a = 0;
 
 const spawn = () => {
   particles.set(Symbol(), {
-    a: (a += 53),
+    a: (a += 46),
     r: 0,
     z: -100,
   });
 };
 
-useIntervalFn(spawn, 100);
+useIntervalFn(spawn, 200);
 
 onMounted(() => {
   if (!canvas.value) return;
