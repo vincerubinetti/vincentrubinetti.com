@@ -168,10 +168,10 @@
         Z
       "
     />
-    <text x="150" y="13" class="title" role="heading" aria-level="1">
+    <text x="140" y="13" class="title" role="heading" aria-level="1">
       VINCENT RUBINETTI
     </text>
-    <text x="154" y="63" class="subtitle">COMPOSER, PRODUCER, AND MORE</text>
+    <text x="144" y="63" class="subtitle">COMPOSER, PRODUCER, AND MORE</text>
   </svg>
 </template>
 
