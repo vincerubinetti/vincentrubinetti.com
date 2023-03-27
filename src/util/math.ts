@@ -16,3 +16,15 @@ export const bounce = (position = 0, limit = 0, velocity = 0) => {
 
 export const triangle = (x = 0.5, l = 0, r = 1, b = 1, t = 0) =>
   (b - t) * Math.abs((l + r - 2 * x) / (l - r)) + t;
+
+export const max = (array: number[]) => {
+  let max = -Infinity;
+  for (const value of array) if (value > max) max = value;
+  return max;
+};
+
+export const min = (array: number[]) => {
+  let min = Infinity;
+  for (const value of array) if (value < min) min = value;
+  return min;
+};

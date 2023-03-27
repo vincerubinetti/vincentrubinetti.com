@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-5 -5 10 10">
+  <rect x="-5" y="-5" width="10" height="10" opacity="0" />
+  <path
+    fill="currentColor"
+    d="
+      M 3 0
+      L -3 -4
+      L -3 4
+      z
+    "
+  />
+</svg>

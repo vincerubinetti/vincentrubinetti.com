@@ -6,8 +6,8 @@
 </template>
 
 <script setup lang="ts">
-import Background from "./Background.vue";
-import Logo from "./Logo.vue";
+import Background from "@/components/Background.vue";
+import Logo from "@/components/Logo.vue";
 </script>
 
 <style scoped>

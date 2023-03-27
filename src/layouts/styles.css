@@ -1,3 +1,20 @@
+:root {
+  --medium: 1rem;
+  --large: 1.2rem;
+  --xl: 1.5rem;
+
+  --red: #f43f5e;
+  --purple: #a855f7;
+  --blue: #0ea5e9;
+  --green: #10b981;
+  --orange: #f97316;
+
+  --gray: #d0d0d0;
+
+  --rounded: 3px;
+  --fast: 0.2s ease;
+}
+
 * {
   box-sizing: border-box;
 }
@@ -7,6 +24,8 @@ body {
   min-height: 100vh;
   font-family: "Roboto";
   font-weight: 300;
+  font-size: 14pt;
+  line-height: 2;
 }
 
 body {
@@ -17,4 +36,19 @@ body {
 
 main {
   flex-grow: 1;
+}
+
+button {
+  border-radius: var(--rounded);
+  border: none;
+  background: none;
+  padding: 0;
+  cursor: pointer;
+  font: inherit;
+  transition: var(--fast);
+  transition-property: background, color;
+}
+
+pre {
+  font: inherit;
 }

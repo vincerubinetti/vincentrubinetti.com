@@ -30,15 +30,7 @@ import {
 } from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import { SVGLoader } from "three/examples/jsm/loaders/SVGLoader.js";
-import {
-  bounce,
-  clamp,
-  cos,
-  degToRad,
-  rand,
-  sin,
-  triangle,
-} from "../util/math";
+import { bounce, clamp, cos, degToRad, rand, sin, triangle } from "@/util/math";
 
 const canvas = ref();
 const svg = ref();
