@@ -1,5 +1,5 @@
 <template>
-  <canvas ref="canvas" />
+  <canvas ref="canvas"></canvas>
   <svg
     ref="svg"
     xmlns="http://www.w3.org/2000/svg"
@@ -13,17 +13,19 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from "vue";
-import { useEventListener, useIntervalFn } from "@vueuse/core";
+import { ref, onMounted, computed } from "vue";
+import { useEventListener } from "@vueuse/core";
 import {
   AdditiveBlending,
   BackSide,
+  BoxHelper,
   Clock,
   ExtrudeGeometry,
   Mesh,
   MeshPhongMaterial,
   PerspectiveCamera,
   PointLight,
+  PointLightHelper,
   Scene,
   SphereGeometry,
   WebGLRenderer,
@@ -31,11 +33,21 @@ import {
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import { SVGLoader } from "three/examples/jsm/loaders/SVGLoader.js";
 import { bounce, clamp, cos, degToRad, rand, sin, triangle } from "@/util/math";
+import { smoothedLevel } from "@/global/state";
+import { useInterval } from "@/util/composables";
+
+const interval = computed(() =>
+  smoothedLevel.value <= 0.01
+    ? Infinity
+    : Math.pow(1 - smoothedLevel.value, 1) * 200
+);
 
 const canvas = ref();
 const svg = ref();
 
 onMounted(() => {
+  const debug = window.location.href.includes("debug");
+
   /** main objects */
   const renderer = new WebGLRenderer({ canvas: canvas.value });
   const scene = new Scene();
@@ -74,6 +86,8 @@ onMounted(() => {
       blending: AdditiveBlending,
     })
   );
+  sphere.renderOrder = -1;
+  if (debug) scene.add(new BoxHelper(sphere, "white"));
   scene.add(sphere);
 
   /** light colors */
@@ -98,6 +112,7 @@ onMounted(() => {
       vy: Math.random() > 0.5 ? -0.002 : 0.002,
       vz: Math.random() > 0.5 ? -0.002 : 0.002,
     };
+    if (debug) scene.add(new PointLightHelper(light));
     scene.add(light);
   }
 
@@ -105,7 +120,7 @@ onMounted(() => {
   const shape = new Mesh(
     new ExtrudeGeometry(
       new SVGLoader().parse(svg.value.outerHTML).paths[0].toShapes(false)[0],
-      { depth: 20, bevelEnabled: false }
+      { depth: 100, bevelEnabled: false }
     )
       .center()
       .scale(0.001, -0.001, 0.001)
@@ -126,17 +141,21 @@ onMounted(() => {
     particle.name = "particle";
     particle.userData = {
       life: 0,
-      a: (angle += 46),
+      a: (angle += 26 + smoothedLevel.value * 45),
       r: 2,
       va: -0.1,
       vr: 0.001,
       vz: 0.05,
     };
     particle.position.z = -10;
+    if (debug) {
+      particle.userData.helper = new BoxHelper(particle, "white");
+      scene.add(particle.userData.helper);
+    }
     scene.add(particle);
   };
-  const { resume } = useIntervalFn(spawn, 100, { immediate: false });
-  window.setTimeout(resume, 3 * 1000);
+
+  useInterval(spawn, interval);
 
   /** main frame loop */
   renderer.setAnimationLoop(() => {
@@ -150,9 +169,15 @@ onMounted(() => {
       light.userData.vx = bounce(light.position.x, 5, light.userData.vx);
       light.userData.vy = bounce(light.position.y, 5, light.userData.vy);
       light.userData.vz = bounce(light.position.z, 5, light.userData.vz);
-      light.position.x += light.userData.vx * d;
-      light.position.y += light.userData.vy * d;
-      light.position.z += light.userData.vz * d;
+      light.position.x +=
+        light.userData.vx * d * (1 + smoothedLevel.value * 20);
+      light.position.y +=
+        light.userData.vy * d * (1 + smoothedLevel.value * 20);
+      light.position.z +=
+        light.userData.vz * d * (1 + smoothedLevel.value * 20);
+
+      /** brightness */
+      light.intensity = 2 + smoothedLevel.value * 1;
     }
 
     /** particles */
@@ -161,26 +186,33 @@ onMounted(() => {
       /** move */
       particle.userData.a += particle.userData.va * d;
       particle.userData.r += particle.userData.vr * d;
-      particle.position.z += particle.userData.vz * d;
+      particle.position.z +=
+        particle.userData.vz * d * (0.1 + smoothedLevel.value * 5);
       particle.position.x = cos(particle.userData.a) * particle.userData.r;
       particle.position.y = sin(particle.userData.a) * particle.userData.r;
       particle.rotation.z = degToRad(particle.userData.a);
 
       /** transparency */
-      particle.renderOrder = particle.userData.life;
+      // particle.renderOrder = particle.userData.life;
       [particle.material].flat()[0].opacity = clamp(
-        triangle(particle.userData.life, 0, 300, 0, 0.5),
+        (1 - Math.abs(particle.position.z) / 10) *
+          triangle(particle.userData.life, 0, 300, 0, 0.5),
         0,
         1
       );
-
       /** destroy */
       particle.userData.life += 1 * d;
       if (particle.userData.life > 300) {
         scene.remove(particle);
         particle.geometry.dispose();
         [particle.material].flat()[0].dispose();
+        if (particle.userData.helper) {
+          scene.remove(particle.userData.helper);
+          particle.userData.helper.dispose();
+        }
       }
+
+      if (debug) particle.userData.helper?.update();
     }
 
     /** update */
@@ -197,14 +229,16 @@ canvas {
   inset: 0;
   width: 100% !important;
   height: 100% !important;
+  opacity: 0;
   z-index: -1;
-  animation: fade 10s both;
+  animation: fade 5s ease both;
+  user-select: none;
   touch-action: auto !important;
 }
 
 @keyframes fade {
-  from {
-    opacity: 0;
+  to {
+    opacity: 1;
   }
 }
 </style>

@@ -8,6 +8,7 @@
 <script setup lang="ts">
 import Background from "@/components/Background.vue";
 import Logo from "@/components/Logo.vue";
+import { level } from "@/global/state";
 </script>
 
 <style scoped>
@@ -21,6 +22,7 @@ header {
   background: black;
   color: white;
   z-index: 0;
+  box-shadow: var(--big-shadow);
 }
 
 .logo {

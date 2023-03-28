@@ -1,6 +1,6 @@
 <template>
   <Section>
-    <Player id="652705266" accent="var(--purple)" />
+    <Player id="652705266" />
   </Section>
 </template>
 

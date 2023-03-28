@@ -17,6 +17,7 @@
     "vue": "^3.2.30"
   },
   "devDependencies": {
-    "@types/three": "^0.149.0"
+    "@types/three": "^0.149.0",
+    "vite-svg-loader": "^4.0.0"
   }
 }

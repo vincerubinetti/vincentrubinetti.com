@@ -1,56 +1,53 @@
 <template>
-  <div v-if="loading">Loading</div>
-  <div v-else-if="!fallback" class="player" :style="{ '--accent': accent }">
-    <div class="controls">
-      <button class="button control" aria-label="previous track">
-        <img class="icon" :src="previous" />
-      </button>
-      <button
-        class="button control"
-        @click="playing ? onClickPause() : onClickPlay()"
-        :aria-label="playing ? 'pause' : 'play'"
-      >
-        <img v-if="!playing" class="icon" :src="play" />
-        <img v-if="playing" class="icon" :src="pause" />
-      </button>
-      <button class="button control" aria-label="next track">
-        <img class="icon" :src="next" />
-      </button>
-      <svg
-        viewBox="0 -10 100 20"
-        class="waveform"
-        preserveAspectRatio="none"
-        @click="onClickWaveform"
-      >
-        <path
-          fill="none"
-          stroke="var(--gray)"
-          stroke-width="0.1"
-          :d="track?.waveform"
-        />
-        <path
-          fill="none"
-          :stroke="accent"
-          stroke-width="0.1"
-          :d="track?.waveform"
-          :style="{
-            'clip-path': `inset(0 ${100 * (1 - position)}% 0 0)`,
-          }"
-        />
-      </svg>
+  <div v-if="loading" class="placeholder"></div>
+  <div v-else-if="!fallback" class="player">
+    <div class="top">
+      <img :src="track?.art" class="art" />
+
+      <div class="info">
+        <div class="title">
+          {{ track?.title }}
+        </div>
+        <div>
+          {{ formatTime((position * (track?.length || 0)) / 1000) }} &ndash;
+          {{ formatTime((track?.length || 0) / 1000) }}
+        </div>
+      </div>
+
+      <div class="controls">
+        <button class="button control" aria-label="previous track">
+          <Previous class="icon" />
+        </button>
+        <button
+          class="button control"
+          @click="playing ? onClickPause() : onClickPlay()"
+          :aria-label="playing ? 'pause' : 'play'"
+        >
+          <Pause v-if="playing" class="icon" />
+          <Play v-else class="icon" />
+        </button>
+        <button class="button control" aria-label="next track">
+          <Next class="icon" />
+        </button>
+      </div>
     </div>
 
-    <div class="current">
-      <div>
-        {{ track?.title }}
-      </div>
-      <div>
-        {{ track?.date }}
-      </div>
-      <div>
-        <a :href="track?.url" target="_blank">On SoundCloud</a>
-      </div>
-    </div>
+    <svg
+      viewBox="0 -10 100 20"
+      tabindex="0"
+      class="waveform"
+      preserveAspectRatio="none"
+      @click="onClickWaveform"
+    >
+      <polygon fill="var(--gray)" :points="track?.waveform" />
+      <polygon
+        fill="var(--dark-gray)"
+        :points="track?.waveform"
+        :style="{
+          'clip-path': `inset(0 ${100 * (1 - position)}% 0 0)`,
+        }"
+      />
+    </svg>
 
     <div class="tracks">
       <button
@@ -61,10 +58,9 @@
       >
         <img :src="track.art" class="track-art" />
         <span class="track-title">{{ track.title }}</span>
-        <span>{{ count(track.plays) }}</span>
-        <span>{{ count(track.likes) }}</span>
-        <span>{{ count(track.downloads) }}</span>
-        <span>{{ count(track.reposts) }}</span>
+        <span class="track-count">
+          {{ formatCount(track.plays) }} <Play class="track-icon"
+        /></span>
       </button>
     </div>
   </div>
@@ -84,14 +80,15 @@ import { ref } from "vue";
 import { useScriptTag } from "@vueuse/core";
 import { wait } from "@/util/func";
 import { max } from "@/util/math";
-import previous from "@/assets/previous.svg";
-import play from "@/assets/play.svg";
-import pause from "@/assets/pause.svg";
-import next from "@/assets/next.svg";
+import { level } from "@/global/state";
+import { formatTime, formatCount } from "@/util/string";
+import Previous from "@/assets/previous.svg?component";
+import Play from "@/assets/play.svg?component";
+import Pause from "@/assets/pause.svg?component";
+import Next from "@/assets/next.svg?component";
 
 type Props = {
   id: string;
-  accent: string;
 };
 
 defineProps<Props>();
@@ -128,7 +125,6 @@ const loading = ref(false);
 const playing = ref(false);
 const track = ref<Track>();
 const position = ref(0);
-const level = ref(0);
 
 /** fallback to soundcloud iframe if error */
 const fallback = ref(false);
@@ -172,7 +168,7 @@ const onReady = async () => {
           id: sound.id || 0,
           length: Math.max(sound.duration || 0, sound.full_duration || 0),
           ...(await getWaveform(sound.waveform_url || "")),
-          art: sound.artwork_url || "",
+          art: (await getArt(sound.artwork_url)) || "",
           title: sound.title || "",
           description: (sound.description || "")
             .split("©")[0]
@@ -201,12 +197,13 @@ const onReady = async () => {
 
     /** move to next track */
     widget.next();
+    widget.pause();
   }
 
   /** go back to first track again */
   widget.skip(0);
-  widget.pause();
   widget.seekTo(0);
+  widget.pause();
 
   loading.value = false;
 
@@ -219,32 +216,48 @@ const onReady = async () => {
 
 /** transform waveform json url into svg path */
 const getWaveform = async (url = "") => {
-  let points = ((await (await fetch(url)).json()).samples || []) as number[];
-  const height = max(points);
-
+  let samples = ((await (await fetch(url)).json()).samples || []) as number[];
+  samples = [0].concat(samples).concat([0]);
+  const height = max(samples);
   const levels: number[] = [];
+  let points = samples.map((sample, index) => {
+    const position = index / samples.length;
+    const level = Math.pow(sample / height, 3);
+    levels.push(level);
+    const x = 100 * position;
+    const y = 10 * level;
+    return { x, y };
+  });
+  const reversed = points.reverse().map(({ x, y }) => ({ x, y: -y }));
+  points = points.concat(reversed);
   const waveform = points
-    .map((point, index) => {
-      const position = index / points.length;
-      const level = Math.pow(point / height, 3);
-      levels.push(level);
-      const x = (100 * position).toFixed(2);
-      const y = (10 * level).toFixed(2);
-      return `M ${x} ${y} L ${x} ${-y}`;
-    })
+    .map(({ x, y }) => x.toFixed(2) + "," + y.toFixed(2))
     .join(" ");
-
   return { waveform, levels };
+};
+
+/** get artwork from url */
+const getArt = async (url = "") => {
+  const bigurl = url.replace("large", "t500x500");
+  try {
+    await fetch(bigurl);
+    return bigurl;
+  } catch (error) {}
+  try {
+    await fetch(url);
+    return url;
+  } catch (error) {
+    return "";
+  }
 };
 
 /** on play progress */
 const onPlayProgress = ({ relativePosition }: { relativePosition: number }) => {
   position.value = relativePosition;
   const levels = track.value?.levels || [];
-  level.value = levels[Math.floor(relativePosition * levels.length)];
-  window.dispatchEvent(
-    new CustomEvent("level", { detail: { level: level.value } })
-  );
+  level.value = playing.value
+    ? levels[Math.floor(relativePosition * levels.length) + 2] || 0
+    : 0;
 };
 
 /** on track start */
@@ -253,6 +266,11 @@ const onPlay = async () => {
     widget.getCurrentSoundIndex(resolve)
   )) as any;
   track.value = tracks.value[index];
+};
+
+/** on track stop */
+const onStop = () => {
+  level.value = 0;
 };
 
 /** on script load */
@@ -268,12 +286,10 @@ const onLoad = () => {
   widget.bind(window.SC.Widget.Events.READY, onError(onReady));
   widget.bind(window.SC.Widget.Events.PLAY_PROGRESS, onError(onPlayProgress));
   widget.bind(window.SC.Widget.Events.PLAY, onError(onPlay));
+  widget.bind(window.SC.Widget.Events.PAUSE, onError(onStop));
+  widget.bind(window.SC.Widget.Events.FINISH, onError(onStop));
 };
 useScriptTag("https://w.soundcloud.com/player/api.js", onError(onLoad));
-
-/** compact count */
-const count = (number = 0): string =>
-  number.toLocaleString(undefined, { notation: "compact" });
 
 /** controls */
 const onClickPlay = () => {
@@ -301,6 +317,21 @@ const onClickTrack = (index: number) => {
 </script>
 
 <style scoped>
+.placeholder {
+  height: 700px;
+  background: black;
+  animation: pulse 0.5s linear infinite alternate;
+}
+
+@keyframes pulse {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 0.1;
+  }
+}
+
 .widget {
   width: 100%;
   height: 800px;
@@ -313,30 +344,58 @@ const onClickTrack = (index: number) => {
   gap: 20px;
 }
 
-.button {
-  position: relative;
+.top {
+  display: flex;
+  align-items: center;
+  gap: 20px;
 }
 
-.button:after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  opacity: 0;
-  background: var(--accent);
-  filter: hue-rotate(-360deg);
-  z-index: -1;
-  transition: var(--fast);
-  transition-property: opacity, filter;
+@media (max-width: 600px) {
+  .top {
+    flex-direction: column;
+  }
 }
 
-.button:hover:after {
-  opacity: 0.2;
-  filter: hue-rotate(0);
+.art {
+  width: 100px;
+  max-width: 100%;
+  box-shadow: var(--shadow);
+}
+
+.info {
+  flex-grow: 1;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  line-height: 1em;
+}
+
+.title {
+  font-size: var(--large);
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
 .controls {
   display: flex;
+  justify-content: center;
+  align-items: center;
   gap: 10px;
+}
+
+.button {
+  display: flex;
+  position: relative;
+  justify-content: center;
+  align-items: center;
+}
+
+.button:hover {
+  box-shadow: var(--small-shadow);
+  transform: translate(-1px, -1px);
 }
 
 .control {
@@ -350,15 +409,20 @@ const onClickTrack = (index: number) => {
 }
 
 .waveform {
-  flex-grow: 1;
+  width: 100%;
   height: 60px;
   cursor: pointer;
+}
+
+.waveform:not(:focus-visible) {
+  outline: none;
 }
 
 .tracks {
   display: flex;
   flex-direction: column;
   gap: 5px;
+  margin-top: 20px;
 }
 
 .track {
@@ -376,5 +440,22 @@ const onClickTrack = (index: number) => {
 .track-title {
   text-align: left;
   flex-grow: 1;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.track-count {
+  color: var(--gray);
+  width: 50px;
+  font-size: var(--tiny);
+  text-align: right;
+  white-space: nowrap;
+  letter-spacing: 1px;
+}
+
+.track-icon {
+  height: 10px;
+  margin-left: 5px;
 }
 </style>
