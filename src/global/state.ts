@@ -8,7 +8,7 @@ const smooth = () => {
   if (Math.abs(smoothedLevel.value - level.value) < 0.01)
     smoothedLevel.value = level.value;
   else {
-    smoothedLevel.value += (level.value - smoothedLevel.value) / 10;
+    smoothedLevel.value += (level.value - smoothedLevel.value) / 20;
     window.requestAnimationFrame(smooth);
   }
 };

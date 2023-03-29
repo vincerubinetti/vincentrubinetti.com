@@ -7,10 +7,11 @@ export const useInterval = (func: Function, interval: ComputedRef<number>) => {
     window.setTimeout(() => {
       running.value = false;
       func();
-      if (interval.value !== Infinity) run();
+      if (interval.value !== Infinity && !document.hidden) run();
     }, interval.value);
   };
   watch(interval, () => {
-    if (interval.value !== Infinity && !running.value) run();
+    if (interval.value !== Infinity && !running.value && !document.hidden)
+      run();
   });
 };

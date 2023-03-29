@@ -1,5 +1,5 @@
 <template>
-  <canvas ref="canvas"></canvas>
+  <canvas ref="canvas" tabindex="0" @keydown="explode"></canvas>
   <svg
     ref="svg"
     xmlns="http://www.w3.org/2000/svg"
@@ -32,9 +32,11 @@ import {
 } from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import { SVGLoader } from "three/examples/jsm/loaders/SVGLoader.js";
+import Stats from "three/addons/libs/stats.module.js";
 import { bounce, clamp, cos, degToRad, rand, sin, triangle } from "@/util/math";
 import { smoothedLevel } from "@/global/state";
 import { useInterval } from "@/util/composables";
+import { repeat } from "@/util/func";
 
 const interval = computed(() =>
   smoothedLevel.value <= 0.01
@@ -44,6 +46,7 @@ const interval = computed(() =>
 
 const canvas = ref();
 const svg = ref();
+let explode: (event: KeyboardEvent) => void;
 
 onMounted(() => {
   const debug = window.location.href.includes("debug");
@@ -54,6 +57,16 @@ onMounted(() => {
   const camera = new PerspectiveCamera(45, 1, 0.01, 10000);
   const clock = new Clock();
   const controls = new OrbitControls(camera, renderer.domElement);
+  if (!debug) controls.enableZoom = false;
+  let stats: any = null;
+  if (debug) {
+    stats = new Stats();
+    document.body.append(stats.dom);
+    stats.triangles = stats.addPanel(
+      new Stats.Panel("triangles", "white", "black")
+    );
+    // stats.showPanel(0);
+  }
 
   /** resize scene */
   const resize = () => {
@@ -134,14 +147,14 @@ onMounted(() => {
 
   /** generate particles */
   let angle = 0;
-  const spawn = () => {
+  const spawn = (increment = 0) => {
     const particle = shape.clone();
     particle.geometry = shape.geometry.clone();
     particle.material = shape.material.clone();
     particle.name = "particle";
     particle.userData = {
       life: 0,
-      a: (angle += 26 + smoothedLevel.value * 45),
+      a: (angle += increment || 26 + smoothedLevel.value * 45),
       r: 2,
       va: -0.1,
       vr: 0.001,
@@ -155,12 +168,18 @@ onMounted(() => {
     scene.add(particle);
   };
 
+  /** spawn on a timer */
   useInterval(spawn, interval);
+
+  /** spawn a bunch of particles on command */
+  explode = ({ key }) => {
+    if (key === "v") repeat(() => spawn(20), 360 / 20);
+  };
 
   /** main frame loop */
   renderer.setAnimationLoop(() => {
     /** factor of reference fps */
-    const d = clock.getDelta() * 120;
+    const d = Math.min(clock.getDelta() * 120, 1);
 
     /** lights */
     const lights = <PointLight[]>scene.getObjectsByProperty("name", "light");
@@ -177,7 +196,7 @@ onMounted(() => {
         light.userData.vz * d * (1 + smoothedLevel.value * 20);
 
       /** brightness */
-      light.intensity = 2 + smoothedLevel.value * 1;
+      light.intensity = 2 + smoothedLevel.value * 2;
     }
 
     /** particles */
@@ -196,13 +215,13 @@ onMounted(() => {
       // particle.renderOrder = particle.userData.life;
       [particle.material].flat()[0].opacity = clamp(
         (1 - Math.abs(particle.position.z) / 10) *
-          triangle(particle.userData.life, 0, 300, 0, 0.5),
+          triangle(particle.userData.life, 0, 300, 0, 0.75),
         0,
         1
       );
       /** destroy */
       particle.userData.life += 1 * d;
-      if (particle.userData.life > 300) {
+      if (particle.userData.life > 300 || particle.position.z > 10) {
         scene.remove(particle);
         particle.geometry.dispose();
         [particle.material].flat()[0].dispose();
@@ -219,6 +238,11 @@ onMounted(() => {
     controls.update();
     camera.updateProjectionMatrix();
     renderer.render(scene, camera);
+
+    if (debug) {
+      stats?.update();
+      stats?.triangles.update(renderer.info.render.triangles, 200000);
+    }
   });
 });
 </script>
@@ -234,6 +258,10 @@ canvas {
   animation: fade 5s ease both;
   user-select: none;
   touch-action: auto !important;
+}
+
+canvas:focus {
+  outline: none;
 }
 
 @keyframes fade {
