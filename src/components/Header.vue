@@ -1,13 +1,23 @@
 <template>
   <header>
-    <Background />
-    <Logo class="logo" />
+    <Background
+      class="background"
+      :style="{ opacity: playing ? 0.75 : 0.25 }"
+    />
+    <Logo
+      class="logo"
+      :style="{
+        opacity: playing ? 0 : 1,
+        pointerEvents: playing ? 'none' : '',
+      }"
+    />
   </header>
 </template>
 
 <script setup lang="ts">
 import Background from "@/components/Background.vue";
 import Logo from "@/components/Logo.vue";
+import { playing } from "@/global/state";
 </script>
 
 <style scoped>
@@ -22,6 +32,10 @@ header {
   color: white;
   z-index: 0;
   box-shadow: var(--big-shadow);
+}
+
+.logo {
+  transition: opacity 1s ease;
 }
 
 .logo {

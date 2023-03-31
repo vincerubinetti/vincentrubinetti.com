@@ -28,7 +28,7 @@
       </div>
 
       <div class="info">
-        <div class="title" :title="track?.description.join('\n')">
+        <div class="title">
           {{ track?.title }}
         </div>
 
@@ -120,7 +120,6 @@
       <svg
         viewBox="0 -10 100 10"
         class="waveform"
-        :style="{ filter: playing ? '' : 'saturate(50%)' }"
         preserveAspectRatio="none"
         @click="onClickWaveform"
         @keydown="onKeyWaveform"
@@ -128,28 +127,27 @@
         :aria-label="formatTimeVerbose(position)"
       >
         <polygon
-          fill="var(--primary)"
-          style="transform: scaleY(-0.35); filter: saturate(0%)"
+          fill="#808080"
+          :style="{ transform: 'scaleY(-0.35)' }"
           opacity="0.15"
           :points="track?.waveform"
         />
         <polygon
-          fill="var(--primary)"
-          style="transform: scaleY(-0.35)"
+          :fill="playing ? 'var(--dark)' : '#808080'"
           opacity="0.15"
           :points="track?.waveform"
-          :style="{ 'clip-path': `inset(0 ${percentLeft}% 0 0)` }"
+          :style="{
+            transform: 'scaleY(-0.35)',
+            'clip-path': `inset(0 ${percentLeft}% 0 0)`,
+          }"
         />
+        <polygon fill="#808080" opacity="0.5" :points="track?.waveform" />
         <polygon
-          fill="var(--primary)"
-          opacity="0.5"
-          style="filter: saturate(0%)"
+          :fill="playing ? 'var(--dark)' : '#808080'"
           :points="track?.waveform"
-        />
-        <polygon
-          fill="var(--primary)"
-          :points="track?.waveform"
-          :style="{ 'clip-path': `inset(0 ${percentLeft}% 0 0)` }"
+          :style="{
+            'clip-path': `inset(0 ${percentLeft}% 0 0)`,
+          }"
         />
       </svg>
 
@@ -169,13 +167,17 @@
         :key="index"
         class="button track"
         @click="onClickTrack(index)"
-        :data-selected="t.id === track?.id"
-        :data-playing="playing"
         :aria-label="`play ${t.title}`"
+        :aria-current="t.id === track?.id"
       >
         <img :src="t.art" class="track-art" />
-        <NoteIcon class="play-marker" />
+        <NoteIcon
+          class="track-marker"
+          :data-selected="t.id === track?.id"
+          :data-playing="playing"
+        />
         <span class="track-title">{{ t.title }}</span>
+        <span class="track-tags">{{ t.tags.join(" ") }}</span>
         <Count :count="t.plays" :flip="true">
           <PlayIcon />
         </Count>
@@ -189,7 +191,7 @@ import { computed, ref } from "vue";
 import { useScriptTag } from "@vueuse/core";
 import { wait } from "@/util/func";
 import { max } from "@/util/math";
-import { level } from "@/global/state";
+import { playing, level } from "@/global/state";
 import { promisifySc } from "@/util/func";
 import { formatTime, formatTimeVerbose } from "@/util/string";
 import Count from "@/components/Count.vue";
@@ -198,11 +200,13 @@ import PlayIcon from "@/assets/play.svg?component";
 import PauseIcon from "@/assets/pause.svg?component";
 import NextIcon from "@/assets/next.svg?component";
 import DateIcon from "@/assets/date.svg?component";
+import PencilIcon from "@/assets/pencil.svg?component";
 import LikeIcon from "@/assets/heart.svg?component";
 import DownloadIcon from "@/assets/download.svg?component";
 import CommentIcon from "@/assets/comment.svg?component";
 import RepostIcon from "@/assets/repost.svg?component";
 import NoteIcon from "@/assets/note.svg?component";
+import Linkify from "@/components/Linkify.vue";
 
 type Props = {
   id: string;
@@ -221,7 +225,7 @@ type Track = {
   levels: number[];
   art: string;
   title: string;
-  description: string[];
+  description: string;
   caption: string;
   plays: number;
   likes: number;
@@ -240,7 +244,6 @@ const tracks = ref<Track[]>([]);
 /** state */
 const loading = ref(true);
 const error = ref(false);
-const playing = ref(false);
 const track = ref<Track>();
 const percent = ref(0);
 
@@ -262,11 +265,13 @@ const onReady = async () => {
     const newTracks: Track[] = [];
 
     /** fill-in missing track information */
-    for (const _ of sounds) {
+    for (const sound of Object.keys(sounds)) {
+      console.info("Track number", sound);
       /** make periodic attempts to get the full info */
       for (let tries = 0; ; tries++) {
+        console.info("Try", tries + 1);
         /** up to limit */
-        if (tries > 100) throw Error("full track info couldn't be loaded");
+        if (tries > 100) throw Error("Ran out of tries");
 
         /** get full details of one track at a time */
         const sound = await promisifySc<any>((resolve) =>
@@ -283,9 +288,11 @@ const onReady = async () => {
             art: (await getArt(sound.artwork_url)) || "",
             title: sound.title || "",
             description: (sound.description || "")
+              .replace(/📅 ?(.*)$/m, "")
               .split("©")[0]
               .trim()
-              .split("\n"),
+              .split(/\n{3,}/)
+              .join("\n"),
             caption: sound.caption || "",
             plays: sound.playback_count || 0,
             likes: sound.likes_count || 0,
@@ -297,13 +304,13 @@ const onReady = async () => {
               new Date(sound.created_at || sound.display_date) || new Date(),
             modified: new Date(sound.last_modified) || new Date(),
             url: sound.permalink_url || "",
-            tags: sound.tag_list?.split(/\s/) || "",
+            tags: getTags(sound.tag_list) || "",
           });
           /** stop re-trying */
           break;
         } else {
           /** wait a bit before re-trying */
-          await wait(10);
+          await wait(50);
         }
       }
 
@@ -324,7 +331,8 @@ const onReady = async () => {
       tracks.value = newTracks;
       track.value = newTracks[0];
       loading.value = false;
-    } else throw Error("no tracks");
+      console.info("Resulting full tracks info", newTracks);
+    } else throw Error("No tracks");
   } catch (error) {
     onError(error);
   }
@@ -332,22 +340,27 @@ const onReady = async () => {
 
 /** transform soundcloud waveform json url into svg path */
 const getWaveform = async (url = "") => {
-  let samples = ((await (await fetch(url)).json()).samples || []) as number[];
-  samples = [0].concat(samples).concat([0]);
-  const height = max(samples);
-  const levels: number[] = [];
-  let waveform = samples
-    .map((sample, index) => {
-      const percent = index / samples.length;
-      const level = Math.pow(sample / height, 3);
-      levels.push(level);
-      const x = 100 * percent;
-      const y = 10 * level;
-      return { x, y };
-    })
-    .map(({ x, y }) => x.toFixed(2) + "," + -y.toFixed(2))
-    .join(" ");
-  return { waveform, levels };
+  try {
+    let samples = ((await (await fetch(url)).json()).samples || []) as number[];
+    samples = [0].concat(samples).concat([0]);
+    const height = max(samples);
+    const levels: number[] = [];
+    let waveform = samples
+      .map((sample, index) => {
+        const percent = index / samples.length;
+        const level = Math.pow(sample / height, 3);
+        levels.push(level);
+        const x = 100 * percent;
+        const y = 10 * level;
+        return { x, y };
+      })
+      .map(({ x, y }) => x.toFixed(2) + "," + -y.toFixed(2))
+      .join(" ");
+    return { waveform, levels };
+  } catch (error) {
+    console.error("Couldn't get waveform");
+    return { waveform: "", levels: [0] };
+  }
 };
 
 /** pick soundcloud art url */
@@ -356,18 +369,34 @@ const getArt = async (url = "") => {
   try {
     await fetch(bigurl);
     return bigurl;
-  } catch (error) {}
+  } catch (error) {
+    console.error("Couldn't get art", bigurl);
+  }
   try {
     await fetch(url);
     return url;
   } catch (error) {
+    console.error("Couldn't get art", url);
     return "";
   }
 };
 
+/** parse and de-duplicate tags */
+const getTags = (string = "") =>
+  Array.from(
+    new Set(
+      (string.match(/"[^"]*"|\S+/g) || []).map(
+        (tag) =>
+          "#" +
+          tag.toLowerCase().replaceAll('"', "").replaceAll(" ", "-").trim()
+      )
+    )
+  );
+
 /** soundcloud callback - on play progress */
 const onPlayProgress = ({ relativePosition }: { relativePosition: number }) => {
   percent.value = relativePosition;
+  widget.setVolume(0);
   const levels = track.value?.levels || [];
   level.value = playing.value
     ? levels[Math.floor(relativePosition * levels.length) + 2] || 0
@@ -402,7 +431,7 @@ const onLoadScript = () => {
     if (!iframe.value) return;
     if (!window.SC) throw Error("SC not defined");
     widget = window.SC.Widget(iframe.value);
-    if (!widget) throw Error("widget couldn't be hooked up");
+    if (!widget) throw Error("Widget couldn't be hooked up");
 
     /** hook up callback events */
     widget.bind(window.SC.Widget.Events.READY, onReady);
@@ -565,45 +594,58 @@ const onClickTrack = (index: number) => {
 }
 
 .button {
-  display: flex;
   position: relative;
+  display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.button:hover {
+.button:where(:hover, :focus) {
   box-shadow: var(--shadow);
   transform: translate(-1px, -1px);
-}
-
-.button .play-marker {
-  width: 0;
-  opacity: 0.5;
-  transition-property: width, margin;
-  transition: var(--fast);
-}
-
-.button[data-selected="true"] .play-marker {
-  width: 15px;
-  margin: 0 5px 0 10px;
-}
-
-.button[data-selected="true"][data-playing="true"] .play-marker {
-  animation: beat 0.5s ease-in-out infinite alternate;
-}
-
-@keyframes beat {
-  to {
-    opacity: 1;
-    filter: none;
-    color: var(--primary);
-    transform: scale(1.1);
-  }
 }
 
 .control {
   width: 60px;
   height: 60px;
+}
+
+.control:after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border: solid 2px transparent;
+  border-radius: inherit;
+}
+
+.control:active {
+  box-shadow: var(--shadow-inset);
+  transform: translate(0, 0);
+}
+
+.control:where(:hover, :focus):after {
+  animation: draw 0.25s linear;
+}
+
+@keyframes draw {
+  0%,
+  100% {
+    border-color: transparent;
+    clip-path: inset(0 0 97% 0);
+  }
+
+  25% {
+    border-color: var(--a);
+    clip-path: inset(0 97% 0 0);
+  }
+  50% {
+    border-color: var(--b);
+    clip-path: inset(97% 0 0 0);
+  }
+  75% {
+    border-color: var(--c);
+    clip-path: inset(0 0 0 97%);
+  }
 }
 
 .icon {
@@ -616,11 +658,14 @@ const onClickTrack = (index: number) => {
   height: 60px;
   overflow: visible;
   cursor: pointer;
-  transition: filter var(--fast);
 }
 
 .waveform:not(:focus-visible) {
   outline: none;
+}
+
+.waveform * {
+  transition: fill var(--fast);
 }
 
 .times {
@@ -649,12 +694,70 @@ const onClickTrack = (index: number) => {
   height: 40px;
 }
 
+.track-marker {
+  width: 0;
+  opacity: 0.5;
+  transition-property: width, margin;
+  transition: var(--fast);
+}
+
+.track-marker[data-selected="true"] {
+  width: 15px;
+  margin: 0 5px 0 10px;
+}
+
+.track-marker[data-selected="true"][data-playing="true"] {
+  animation: beat 3s ease-in-out infinite;
+}
+
+@keyframes beat {
+  0%,
+  33%,
+  66%,
+  100% {
+    opacity: 0.5;
+    color: black;
+    transform: scale(1);
+  }
+  16.5%,
+  49.5%,
+  82.5% {
+    opacity: 1;
+    transform: scale(1.1);
+  }
+  16.5% {
+    color: var(--a);
+  }
+  49.5% {
+    color: var(--b);
+  }
+  82.5% {
+    color: var(--c);
+  }
+}
+
 .track-title {
   text-align: left;
   flex-grow: 1;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
+}
+
+.track-tags {
+  width: 0;
+  font-size: var(--tiny);
+  text-align: right;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  opacity: 0;
+  transition: opacity var(--fast);
+}
+
+.track:where(:hover, :focus) .track-tags {
+  width: unset;
+  opacity: 0.35;
 }
 
 @media (max-width: 600px) {

@@ -6,7 +6,7 @@ type Resolve = (value: unknown) => void;
 export const promisifySc = <T>(func: (resolve: Resolve) => void) =>
   new Promise((resolve, reject) => {
     func(resolve);
-    window.setTimeout(reject, 100);
+    window.setTimeout(() => reject("SoundCloud callback timed out"), 1000);
   }) as T;
 
 /** execute function N times */

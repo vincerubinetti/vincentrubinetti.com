@@ -1,5 +1,5 @@
 <template>
-  <canvas ref="canvas" tabindex="0" @keydown="explode"></canvas>
+  <canvas ref="canvas" v-bind="$attrs"></canvas>
   <svg
     ref="svg"
     xmlns="http://www.w3.org/2000/svg"
@@ -16,13 +16,17 @@
 import { ref, onMounted, computed } from "vue";
 import { useEventListener } from "@vueuse/core";
 import {
+  AddEquation,
   AdditiveBlending,
   BackSide,
   BoxHelper,
   Clock,
+  CustomBlending,
+  DstColorFactor,
   ExtrudeGeometry,
   Mesh,
   MeshPhongMaterial,
+  OneFactor,
   PerspectiveCamera,
   PointLight,
   PointLightHelper,
@@ -46,7 +50,6 @@ const interval = computed(() =>
 
 const canvas = ref();
 const svg = ref();
-let explode: (event: KeyboardEvent) => void;
 
 onMounted(() => {
   const debug = window.location.href.includes("debug");
@@ -65,7 +68,6 @@ onMounted(() => {
     stats.triangles = stats.addPanel(
       new Stats.Panel("triangles", "white", "black")
     );
-    // stats.showPanel(0);
   }
 
   /** resize scene */
@@ -95,7 +97,7 @@ onMounted(() => {
       color: "black",
       side: BackSide,
       transparent: true,
-      opacity: 0.5,
+      opacity: 1,
       blending: AdditiveBlending,
     })
   );
@@ -109,8 +111,8 @@ onMounted(() => {
     "#e91e63",
     "#9c27b0",
     "#9c27b0",
-    "#03a9f4",
-    "#03a9f4",
+    "#2196f3",
+    "#2196f3",
   ];
 
   /** generate lights */
@@ -151,6 +153,7 @@ onMounted(() => {
     const particle = shape.clone();
     particle.geometry = shape.geometry.clone();
     particle.material = shape.material.clone();
+
     particle.name = "particle";
     particle.userData = {
       life: 0,
@@ -161,6 +164,14 @@ onMounted(() => {
       vz: 0.05,
     };
     particle.position.z = -10;
+    if (blend > 0) {
+      particle.material.color.setHex(0x808080);
+      particle.material.blending = CustomBlending;
+      particle.material.blendEquation = AddEquation;
+      particle.material.blendSrc = DstColorFactor;
+      if (blend === 1) particle.material.blendDst = OneFactor;
+      if (blend === 2) particle.material.blendDst = DstColorFactor;
+    }
     if (debug) {
       particle.userData.helper = new BoxHelper(particle, "white");
       scene.add(particle.userData.helper);
@@ -171,10 +182,13 @@ onMounted(() => {
   /** spawn on a timer */
   useInterval(spawn, interval);
 
-  /** spawn a bunch of particles on command */
-  explode = ({ key }) => {
+  let blend = 0;
+  useEventListener(window, "keydown", ({ key }) => {
+    /** spawn a bunch of particles on command */
     if (key === "v") repeat(() => spawn(20), 360 / 20);
-  };
+    /** change blending */
+    if (key === "r") blend = (blend + 1) % 3;
+  });
 
   /** main frame loop */
   renderer.setAnimationLoop(() => {
@@ -213,12 +227,14 @@ onMounted(() => {
 
       /** transparency */
       // particle.renderOrder = particle.userData.life;
-      [particle.material].flat()[0].opacity = clamp(
+      const alpha = clamp(
         (1 - Math.abs(particle.position.z) / 10) *
-          triangle(particle.userData.life, 0, 300, 0, 0.75),
+          triangle(particle.userData.life, 0, 300, 0, 1),
         0,
         1
       );
+      [particle.material].flat()[0].opacity = alpha;
+
       /** destroy */
       particle.userData.life += 1 * d;
       if (particle.userData.life > 300 || particle.position.z > 10) {
@@ -253,20 +269,14 @@ canvas {
   inset: 0;
   width: 100% !important;
   height: 100% !important;
-  opacity: 0;
   z-index: -1;
   animation: fade 5s ease both;
   user-select: none;
   touch-action: auto !important;
+  transition: opacity 1s ease !important;
 }
 
 canvas:focus {
   outline: none;
-}
-
-@keyframes fade {
-  to {
-    opacity: 1;
-  }
 }
 </style>

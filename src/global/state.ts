@@ -1,5 +1,6 @@
 import { ref, watch } from "vue";
 
+export const playing = ref(false);
 export const level = ref(0);
 export const smoothedLevel = ref(0);
 
