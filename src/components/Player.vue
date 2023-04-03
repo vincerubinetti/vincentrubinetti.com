@@ -5,6 +5,7 @@
     :src="`https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/${id}&amp;amp;color=ff5500&amp;amp;auto_play=false&amp;amp;hide_related=true&amp;amp;show_comments=true&amp;amp;show_user=true&amp;amp;show_reposts=false`"
     title="Music player"
     allow="autoplay"
+    frameborder="no"
     loading="lazy"
     :style="
       error
@@ -41,6 +42,14 @@
             :aria-label="`song was finished ${track?.date}`"
           >
             <DateIcon />
+          </Count>
+          <Count
+            v-if="track?.description"
+            count="Notes"
+            tabindex="0"
+            v-tippy="linkify(track?.description)"
+          >
+            <StickyIcon />
           </Count>
           <Count
             v-if="track?.plays"
@@ -91,28 +100,54 @@
       </div>
 
       <div class="controls">
-        <button
-          class="button control"
-          @click="onClickPrevious"
-          aria-label="previous track"
-        >
-          <PreviousIcon class="icon" />
-        </button>
-        <button
-          class="button control"
-          @click="playing ? onClickPause() : onClickPlay()"
-          :aria-label="playing ? 'pause' : 'play'"
-        >
-          <PauseIcon v-if="playing" class="icon" />
-          <PlayIcon v-else class="icon" />
-        </button>
-        <button
-          class="button control"
-          @click="onClickNext"
-          aria-label="next track"
-        >
-          <NextIcon class="icon" />
-        </button>
+        <div class="controls-row">
+          <button
+            class="button button-fancy play-control"
+            @click="onClickPrevious"
+            aria-label="previous track"
+          >
+            <PreviousIcon />
+          </button>
+          <button
+            class="button button-fancy play-control"
+            @click="playing ? onClickPause() : onClickPlay()"
+            :aria-label="playing ? 'pause' : 'play'"
+          >
+            <PauseIcon v-if="playing" />
+            <PlayIcon v-else />
+          </button>
+          <button
+            class="button button-fancy play-control"
+            @click="onClickNext"
+            aria-label="next track"
+          >
+            <NextIcon class="icon" />
+          </button>
+        </div>
+
+        <div class="controls-row">
+          <button
+            class="mute-control"
+            @click="muted = !muted"
+            :aria-label="muted ? 'unmute' : 'mute'"
+          >
+            <VolumeMutedIcon v-if="muted" />
+            <VolumeNoneIcon v-else-if="volume < 25" />
+            <VolumeLowIcon v-else-if="volume < 50" />
+            <VolumeMidIcon v-else-if="volume < 75" />
+            <VolumeHighIcon v-else />
+          </button>
+          <Slider
+            v-model="volume"
+            min="0"
+            max="100"
+            step="1"
+            aria-label="volume"
+            :style="{
+              filter: `saturate(${muted ? 0 : volume}%)`,
+            }"
+          />
+        </div>
       </div>
     </div>
 
@@ -187,37 +222,44 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from "vue";
+import { computed, ref, watch } from "vue";
 import { useScriptTag } from "@vueuse/core";
-import { wait } from "@/util/func";
+import { waitForEvent } from "@/util/func";
 import { max } from "@/util/math";
 import { playing, level } from "@/global/state";
-import { promisifySc } from "@/util/func";
-import { formatTime, formatTimeVerbose } from "@/util/string";
+import { promisifySc } from "@/util/soundcloud";
+import { formatTime, formatTimeVerbose, linkify } from "@/util/string";
 import Count from "@/components/Count.vue";
 import PreviousIcon from "@/assets/previous.svg?component";
 import PlayIcon from "@/assets/play.svg?component";
 import PauseIcon from "@/assets/pause.svg?component";
 import NextIcon from "@/assets/next.svg?component";
 import DateIcon from "@/assets/date.svg?component";
-import PencilIcon from "@/assets/pencil.svg?component";
+import StickyIcon from "@/assets/sticky.svg?component";
+import VolumeHighIcon from "@/assets/volume-high.svg?component";
+import VolumeMidIcon from "@/assets/volume-mid.svg?component";
+import VolumeNoneIcon from "@/assets/volume-none.svg?component";
+import VolumeLowIcon from "@/assets/volume-low.svg?component";
+import VolumeMutedIcon from "@/assets/volume-muted.svg?component";
 import LikeIcon from "@/assets/heart.svg?component";
 import DownloadIcon from "@/assets/download.svg?component";
 import CommentIcon from "@/assets/comment.svg?component";
 import RepostIcon from "@/assets/repost.svg?component";
 import NoteIcon from "@/assets/note.svg?component";
-import Linkify from "@/components/Linkify.vue";
+import Slider from "@/components/Slider.vue";
 
 type Props = {
+  /** playlist id */
   id: string;
 };
 
-defineProps<Props>();
+const props = defineProps<Props>();
 
 const iframe = ref<HTMLIFrameElement>();
 let widget: any;
 
 /** track info */
+type _Track = Record<string, any>;
 type Track = {
   id: number;
   length: number;
@@ -246,6 +288,8 @@ const loading = ref(true);
 const error = ref(false);
 const track = ref<Track>();
 const percent = ref(0);
+const volume = ref(100);
+const muted = ref(false);
 
 /** computed */
 const percentLeft = computed(() => 100 * (1 - percent.value));
@@ -254,85 +298,100 @@ const position = computed(
 );
 const length = computed(() => (track.value?.length || 0) / 1000);
 
+/** cache of full track info */
+const cache: Record<Props["id"], Track[]> = {};
+
 /** soundcloud callback - on widget ready */
 const onReady = async () => {
+  const { id = "" } = props;
+
   try {
-    /** get tracks */
-    const sounds = await promisifySc<any[]>((resolve) =>
-      widget.getSounds(resolve)
-    );
+    /** load new tracks from cache */
+    const newTracks: Track[] = cache[id] || [];
 
-    const newTracks: Track[] = [];
+    if (!newTracks.length) {
+      /** get number of tracks */
+      console.info("Tracks");
+      let sounds = await promisifySc<_Track[]>(
+        (resolve) => widget.getSounds(resolve),
+        (result) => !!result?.length
+      );
 
-    /** fill-in missing track information */
-    for (const sound of Object.keys(sounds)) {
-      console.info("Track number", sound);
-      /** make periodic attempts to get the full info */
-      for (let tries = 0; ; tries++) {
-        console.info("Try", tries + 1);
-        /** up to limit */
-        if (tries > 100) throw Error("Ran out of tries");
-
+      /** fill-in missing track information */
+      for (const number of Object.keys(sounds)) {
+        console.info("Track number", number);
         /** get full details of one track at a time */
-        const sound = await promisifySc<any>((resolve) =>
-          widget.getCurrentSound(resolve)
+        const sound = await promisifySc<_Track>(
+          (resolve) => widget.getCurrentSound(resolve),
+          /** check if full info has loaded for current sound yet */
+          (result) => result.artwork_url
         );
 
-        /** check if full info has loaded for current sound yet */
-        if (sound.artwork_url) {
-          /** record full info and transform into desired format */
-          newTracks.push({
-            id: sound.id || 0,
-            length: Math.max(sound.duration || 0, sound.full_duration || 0),
-            ...(await getWaveform(sound.waveform_url || "")),
-            art: (await getArt(sound.artwork_url)) || "",
-            title: sound.title || "",
-            description: (sound.description || "")
-              .replace(/📅 ?(.*)$/m, "")
-              .split("©")[0]
-              .trim()
-              .split(/\n{3,}/)
-              .join("\n"),
-            caption: sound.caption || "",
-            plays: sound.playback_count || 0,
-            likes: sound.likes_count || 0,
-            comments: sound.comment_count || 0,
-            downloads: sound.download_count || 0,
-            reposts: sound.reposts_count || 0,
-            date: sound.description.match(/📅 ?(.*)$/m)?.[1] || "",
-            created:
-              new Date(sound.created_at || sound.display_date) || new Date(),
-            modified: new Date(sound.last_modified) || new Date(),
-            url: sound.permalink_url || "",
-            tags: getTags(sound.tag_list) || "",
-          });
-          /** stop re-trying */
-          break;
-        } else {
-          /** wait a bit before re-trying */
-          await wait(50);
-        }
+        /** record full info and transform into desired format */
+        newTracks.push({
+          id: sound.id || 0,
+          length: Math.max(sound.duration || 0, sound.full_duration || 0),
+          ...(await getWaveform(sound.waveform_url || "")),
+          art: (await getArt(sound.artwork_url)) || "",
+          title: sound.title || "",
+          description: (sound.description || "")
+            .replace(/📅 ?(.*)$/m, "")
+            .split("©")[0]
+            .trim()
+            .split(/\n{3,}/)
+            .join("\n"),
+          caption: sound.caption || "",
+          plays: sound.playback_count || 0,
+          likes: sound.likes_count || 0,
+          comments: sound.comment_count || 0,
+          downloads: sound.download_count || 0,
+          reposts: sound.reposts_count || 0,
+          date: sound.description.match(/📅 ?(.*)$/m)?.[1] || "",
+          created:
+            new Date(sound.created_at || sound.display_date) || new Date(),
+          modified: new Date(sound.last_modified) || new Date(),
+          url: sound.permalink_url || "",
+          tags: getTags(sound.tag_list + ` "${sound.genre || ""}"`) || "",
+        });
+
+        /** move to next track */
+        widget.next();
+        widget.pause();
       }
 
-      /** move to next track */
-      widget.next();
+      /** go back to first track again */
+      widget.skip(0);
+      widget.seekTo(0);
       widget.pause();
+
+      /** set cache */
+      cache[id] = newTracks;
     }
 
-    /** go back to first track again */
-    widget.skip(0);
-    widget.seekTo(0);
-    widget.pause();
+    /** reset state */
     percent.value = 0;
     playing.value = false;
+    loading.value = false;
 
     /** set tracks */
     if (newTracks.length) {
       tracks.value = newTracks;
       track.value = newTracks[0];
-      loading.value = false;
       console.info("Resulting full tracks info", newTracks);
     } else throw Error("No tracks");
+
+    /** after widget ACTUALLY ready, when getSounds returns something... */
+    await promisifySc<_Track[]>(
+      (resolve) => widget.getSounds(resolve),
+      (result) => !!result?.length
+    );
+
+    /** hook up callback events  */
+    widget.bind(window.SC.Widget.Events.PLAY_PROGRESS, onPlayProgress);
+    widget.bind(window.SC.Widget.Events.PLAY, onPlay);
+    widget.bind(window.SC.Widget.Events.PAUSE, onStop);
+    widget.bind(window.SC.Widget.Events.FINISH, onStop);
+    widget.bind(window.SC.Widget.Events.ERROR, onError);
   } catch (error) {
     onError(error);
   }
@@ -385,18 +444,23 @@ const getArt = async (url = "") => {
 const getTags = (string = "") =>
   Array.from(
     new Set(
-      (string.match(/"[^"]*"|\S+/g) || []).map(
-        (tag) =>
-          "#" +
-          tag.toLowerCase().replaceAll('"', "").replaceAll(" ", "-").trim()
-      )
+      (string.match(/"[^"]*"|\S+/g) || [])
+        .map((tag) =>
+          tag
+            .toLowerCase()
+            .replaceAll('"', "")
+            .replaceAll(" ", "-")
+            .replaceAll("-&-", "&")
+            .trim()
+        )
+        .filter(Boolean)
+        .map((tag) => "#" + tag)
     )
   );
 
 /** soundcloud callback - on play progress */
 const onPlayProgress = ({ relativePosition }: { relativePosition: number }) => {
   percent.value = relativePosition;
-  widget.setVolume(0);
   const levels = track.value?.levels || [];
   level.value = playing.value
     ? levels[Math.floor(relativePosition * levels.length) + 2] || 0
@@ -424,7 +488,7 @@ const onError = (...args: any[]) => {
 };
 
 /** when soundcloud api script loaded */
-const onLoadScript = () => {
+const onLoadScript = async () => {
   try {
     /** load widget */
     loading.value = true;
@@ -432,20 +496,23 @@ const onLoadScript = () => {
     if (!window.SC) throw Error("SC not defined");
     widget = window.SC.Widget(iframe.value);
     if (!widget) throw Error("Widget couldn't be hooked up");
-
-    /** hook up callback events */
     widget.bind(window.SC.Widget.Events.READY, onReady);
-    widget.bind(window.SC.Widget.Events.PLAY_PROGRESS, onPlayProgress);
-    widget.bind(window.SC.Widget.Events.PLAY, onPlay);
-    widget.bind(window.SC.Widget.Events.PAUSE, onStop);
-    widget.bind(window.SC.Widget.Events.FINISH, onStop);
-    widget.bind(window.SC.Widget.Events.ERROR, onError);
   } catch (error) {
     onError(error);
   }
 };
 /** load soundcloud api script */
 useScriptTag("https://w.soundcloud.com/player/api.js", onLoadScript);
+
+/** switch playlist */
+watch(
+  () => props.id,
+  async () => {
+    loading.value = true;
+    await waitForEvent(iframe.value, "load");
+    onLoadScript();
+  }
+);
 
 /** when user clicks controls */
 const onClickPrevious = () => {
@@ -507,7 +574,8 @@ const onClickTrack = (index: number) => {
   playing.value = true;
 };
 
-/** last resort fallback */
+/** when volume changes */
+watch([volume, muted], () => widget.setVolume(muted.value ? 0 : volume.value));
 </script>
 
 <style scoped>
@@ -550,6 +618,7 @@ const onClickTrack = (index: number) => {
   height: 100px;
   flex-shrink: 0;
   box-shadow: var(--shadow);
+  align-self: flex-start;
 }
 
 .art > * {
@@ -589,68 +658,38 @@ const onClickTrack = (index: number) => {
 .controls {
   display: flex;
   justify-content: center;
+  align-items: stretch;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.controls-row {
+  display: flex;
+  justify-content: center;
   align-items: center;
   gap: 10px;
 }
 
-.button {
+.controls-row:last-child {
+  gap: 0;
   position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  left: 5px;
 }
 
-.button:where(:hover, :focus) {
-  box-shadow: var(--shadow);
-  transform: translate(-1px, -1px);
+.controls-row:last-child input {
+  max-width: 145px;
 }
 
-.control {
+.play-control {
   width: 60px;
   height: 60px;
+  padding: 22.5px;
 }
 
-.control:after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border: solid 2px transparent;
-  border-radius: inherit;
-}
-
-.control:active {
-  box-shadow: var(--shadow-inset);
-  transform: translate(0, 0);
-}
-
-.control:where(:hover, :focus):after {
-  animation: draw 0.25s linear;
-}
-
-@keyframes draw {
-  0%,
-  100% {
-    border-color: transparent;
-    clip-path: inset(0 0 97% 0);
-  }
-
-  25% {
-    border-color: var(--a);
-    clip-path: inset(0 97% 0 0);
-  }
-  50% {
-    border-color: var(--b);
-    clip-path: inset(97% 0 0 0);
-  }
-  75% {
-    border-color: var(--c);
-    clip-path: inset(0 0 0 97%);
-  }
-}
-
-.icon {
-  width: 20px;
-  height: 20px;
+.mute-control {
+  width: 30px;
+  height: 30px;
+  padding: 5px;
 }
 
 .waveform {
@@ -686,6 +725,7 @@ const onClickTrack = (index: number) => {
   display: flex;
   align-items: center;
   gap: 10px;
+  padding: 0;
   padding-right: 10px;
 }
 
@@ -726,13 +766,13 @@ const onClickTrack = (index: number) => {
     transform: scale(1.1);
   }
   16.5% {
-    color: var(--a);
+    color: var(--primary);
   }
   49.5% {
-    color: var(--b);
+    color: var(--secondary);
   }
   82.5% {
-    color: var(--c);
+    color: var(--tertiary);
   }
 }
 
@@ -767,8 +807,17 @@ const onClickTrack = (index: number) => {
     text-align: center;
   }
 
+  .art {
+    align-self: unset;
+  }
+
   .counts {
     justify-content: center;
+  }
+
+  .controls {
+    flex-direction: row;
+    flex-wrap: wrap;
   }
 }
 </style>

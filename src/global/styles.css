@@ -4,16 +4,17 @@
   --large: 1.2rem;
   --xl: 1.5rem;
 
-  --a: #e91e63;
-  --b: #9c27b0;
-  --c: #2196f3;
+  --primary: #e91e63;
+  --secondary: #9c27b0;
+  --tertiary: #2196f3;
+  --light: #e0e0ef;
   --dark: #40404f;
 
   --rounded: 5px;
   --fast: 0.2s ease;
   --shadow: 1px 2px 10px #00000020;
-  --shadow-inset: inset 1px 2px 5px #00000020;
-  --big-shadow: 0 0 100px #9c27b080;
+  --shadow-inset: inset 1px 1px 5px #00000010;
+  --secondaryig-shadow: 0 0 100px #9c27b080;
 }
 
 * {
@@ -41,6 +42,9 @@ main {
 }
 
 button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   border-radius: var(--rounded);
   border: none;
   background: none;
@@ -61,10 +65,89 @@ svg > path {
 }
 
 a {
-  color: var(--a);
+  color: var(--primary);
   transition: color var(--fast);
 }
 
 a:where(:hover, :focus) {
-  color: black;
+  color: currentColor;
+}
+
+.button {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 5px 15px;
+}
+
+.button:where(:hover, :focus) {
+  box-shadow: var(--shadow);
+  transform: translate(-1px, -1px);
+}
+
+.button:active {
+  box-shadow: var(--shadow-inset);
+  transform: translate(0, 0);
+}
+
+.button-fancy {
+  letter-spacing: 0.5px;
+}
+
+.button-fancy:after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border: solid 2px transparent;
+  border-radius: inherit;
+}
+
+.button-fancy:where(:hover, :focus):after {
+  animation: draw 0.25s linear;
+}
+
+@keyframes draw {
+  0%,
+  100% {
+    border-color: transparent;
+    clip-path: inset(0 0 97% 0);
+  }
+
+  25% {
+    border-color: var(--primary);
+    clip-path: inset(0 97% 0 0);
+  }
+  50% {
+    border-color: var(--secondary);
+    clip-path: inset(97% 0 0 0);
+  }
+  75% {
+    border-color: var(--tertiary);
+    clip-path: inset(0 0 0 97%);
+  }
+}
+
+.button-fancy[data-active="true"] {
+  background: var(--dark);
+  box-shadow: var(--secondaryig-shadow);
+  color: var(--light);
+}
+
+.tippy-box {
+  max-width: min(90vw, 500px) !important;
+  background: var(--dark) !important;
+  border-radius: var(--rounded) !important;
+  font-size: var(--tiny) !important;
+}
+
+.tippy-content {
+  padding: 20px !important;
+  line-height: 1.5em;
+  max-height: 300px !important;
+  overflow-y: auto;
+}
+
+.tippy-arrow {
+  color: var(--dark) !important;
 }

@@ -29,7 +29,7 @@ defineProps<Props>();
   display: inline-flex;
   align-items: center;
   gap: 0.5em;
-  color: black;
+  color: currentColor;
   opacity: 0.35;
   font-size: var(--tiny);
   text-align: right;

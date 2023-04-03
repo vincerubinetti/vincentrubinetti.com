@@ -13,7 +13,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, computed } from "vue";
+import { ref, onMounted, computed, onBeforeUnmount } from "vue";
 import { useEventListener } from "@vueuse/core";
 import {
   AddEquation,
@@ -42,26 +42,36 @@ import { smoothedLevel } from "@/global/state";
 import { useInterval } from "@/util/composables";
 import { repeat } from "@/util/func";
 
+/** particle spawn interval */
 const interval = computed(() =>
   smoothedLevel.value <= 0.01
     ? Infinity
     : Math.pow(1 - smoothedLevel.value, 1) * 200
 );
 
+/** elements */
 const canvas = ref();
 const svg = ref();
+
+/** main objects */
+let renderer: WebGLRenderer;
+let scene: Scene;
+let camera: PerspectiveCamera;
+let clock: Clock;
+let controls: OrbitControls;
+let stats: typeof Stats;
 
 onMounted(() => {
   const debug = window.location.href.includes("debug");
 
   /** main objects */
-  const renderer = new WebGLRenderer({ canvas: canvas.value });
-  const scene = new Scene();
-  const camera = new PerspectiveCamera(45, 1, 0.01, 10000);
-  const clock = new Clock();
-  const controls = new OrbitControls(camera, renderer.domElement);
-  if (!debug) controls.enableZoom = false;
-  let stats: any = null;
+  renderer = new WebGLRenderer({ canvas: canvas.value });
+  scene = new Scene();
+  camera = new PerspectiveCamera(45, 1, 0.01, 10000);
+  clock = new Clock();
+  controls = new OrbitControls(camera, renderer.domElement);
+  controls.enableDamping = true;
+  controls.enablePan = false;
   if (debug) {
     stats = new Stats();
     document.body.append(stats.dom);
@@ -260,6 +270,13 @@ onMounted(() => {
       stats?.triangles.update(renderer.info.render.triangles, 200000);
     }
   });
+});
+
+onBeforeUnmount(() => {
+  renderer?.setAnimationLoop(null);
+  renderer?.dispose();
+  controls?.dispose();
+  stats?.dispose();
 });
 </script>
 

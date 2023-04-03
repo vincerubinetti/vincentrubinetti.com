@@ -1,16 +1,19 @@
-export const wait = (ms = 0) =>
+export const sleep = (ms = 0) =>
   new Promise((resolve) => window.setTimeout(resolve, ms));
-
-/** special promise wrapper for finnicky soundcloud api callbacks */
-type Resolve = (value: unknown) => void;
-export const promisifySc = <T>(func: (resolve: Resolve) => void) =>
-  new Promise((resolve, reject) => {
-    func(resolve);
-    window.setTimeout(() => reject("SoundCloud callback timed out"), 1000);
-  }) as T;
 
 /** execute function N times */
 export const repeat = (func: Function, n = 1) =>
   Array(n)
     .fill({})
     .forEach(() => func());
+
+/** wait for event to be emitted from element */
+export const waitForEvent = (element: Element | undefined, event: string) =>
+  new Promise((resolve, reject) => {
+    if (!element) return;
+    element.addEventListener(event, resolve, { once: true });
+    window.setTimeout(() => {
+      element.removeEventListener(event, resolve);
+      reject(`Event ${event} never occurred`);
+    }, 1000);
+  });

@@ -1,58 +1,62 @@
 <template>
-  <input class="input" type="range" />
+  <input class="input" type="range" :value="modelValue" @input="onInput" />
 </template>
 
+<script setup lang="ts">
+type Props = {
+  modelValue: number;
+};
+
+defineProps<Props>();
+
+type Emits = {
+  (event: "update:modelValue", value: number): void;
+};
+
+const emit = defineEmits<Emits>();
+
+const onInput = (event: Event) =>
+  emit("update:modelValue", Number((event.target as HTMLInputElement).value));
+</script>
 <style scoped>
-.input[type="range"] {
+.input {
+  margin: 0;
+  padding: 15px;
   -webkit-appearance: none;
   appearance: none;
   background: transparent;
-  margin: 0;
-  padding: 10px 25px;
   cursor: pointer;
+  transition: var(--fast);
+  transition-property: filter;
 }
 
-.input[type="range"]:focus {
-  outline: none;
-}
-
-.input[type="range"]::-webkit-slider-runnable-track {
-  background-color: var(--a);
+.input::-webkit-slider-runnable-track {
+  height: 5px;
   border-radius: 999px;
-  height: 10px;
+  background: var(--primary);
 }
 
-.input[type="range"]::-webkit-slider-thumb {
+.input::-webkit-slider-thumb {
+  height: 15px;
+  width: 15px;
+  margin-top: -5px;
+  background: var(--dark);
+  border-radius: 999px;
   -webkit-appearance: none;
   appearance: none;
-  margin-top: -5px;
-  background-color: var(--dark);
+}
+
+.input::-moz-range-track {
+  height: 15px;
   border-radius: 999px;
-  height: 20px;
-  width: 20px;
+  background: var(--primary);
 }
 
-.input[type="range"]:focus::-webkit-slider-thumb {
-  outline: 3px solid var(--dark);
-  outline-offset: 0.125rem;
-}
-
-.input[type="range"]::-moz-range-track {
-  background-color: var(--a);
-  border-radius: 999px;
-  height: 10px;
-}
-
-.input[type="range"]::-moz-range-thumb {
-  background-color: var(--dark);
+.input::-moz-range-thumb {
+  height: 15px;
+  width: 15px;
   border: none;
   border-radius: 999px;
-  height: 20px;
-  width: 20px;
-}
-
-.input[type="range"]:focus::-moz-range-thumb {
-  outline: 3px solid var(--dark);
-  outline-offset: 0.125rem;
+  background: var(--dark);
 }
 </style>
