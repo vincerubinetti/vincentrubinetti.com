@@ -1,14 +1,18 @@
 <template>
-  <canvas ref="canvas" v-bind="$attrs"></canvas>
+  <canvas
+    ref="canvas"
+    v-bind="$attrs"
+    title="Click and drag to rotate. Double click to reset camera. Ctrl + mouse wheel to zoom."
+  ></canvas>
   <svg
     ref="svg"
     xmlns="http://www.w3.org/2000/svg"
-    viewBox="780 2240 2460 1110"
+    viewBox="0 0 522 918"
     style="display: none"
   >
     <path
-      d="M1257.05,2486.02c-38.2-38.9-143.87-98.43-155.09-219.2c-0.26-12.23-10.25-22.07-22.54-22.07h0 c-12.45,0-22.55,10.1-22.55,22.55v838.53c-38.15-28.12-95.44-37.04-152.16-19.13c-84.85,26.8-136.28,103.48-114.87,171.27 c21.41,67.79,107.55,101.03,192.4,74.23c71.66-22.63,119.49-80.85,119.72-139.24h0V2495c14.67,3.46,193.84,48.57,193.84,188.94 c0,91.49-35.58,139.35-56.59,174.76c-5.21,8.78-2.67,20.11,5.79,25.84c8.1,5.5,19.05,4.08,25.45-3.33 c25.68-29.72,84.79-109.03,84.79-209.38C1355.25,2571.9,1297.76,2527.48,1257.05,2486.02z"
-    ></path>
+      d="M423.05 212.02c-38.2-38.9-93.87-68.43-105.09-189.2C317.7 10.59 307.71.75 295.42.75c-12.45 0-22.55 10.1-22.55 22.55v658.53c-38.15-28.12-95.44-37.04-152.16-19.13C35.86 689.5-15.57 766.18 5.84 833.97 27.25 901.76 113.39 935 198.24 908.2c71.66-22.63 119.49-80.85 119.72-139.24V251c14.67 3.46 143.84 18.57 143.84 158.94 0 91.49-35.58 139.35-56.59 174.76-5.21 8.78-2.67 20.11 5.79 25.84 8.1 5.5 19.05 4.08 25.45-3.33 25.68-29.72 84.79-109.03 84.79-209.38.01-99.93-57.48-144.35-98.19-185.81Z"
+    />
   </svg>
 </template>
 
@@ -94,7 +98,7 @@ onMounted(() => {
 
   /** reset camera */
   const reset = () => {
-    camera.position.set(0, 0, 10);
+    camera.position.set(0, 0, 15);
     camera.rotation.set(0, 0, 0);
   };
   reset();
@@ -220,7 +224,7 @@ onMounted(() => {
         light.userData.vz * d * (1 + smoothedLevel.value * 20);
 
       /** brightness */
-      light.intensity = 2 + smoothedLevel.value * 2;
+      light.intensity = 2 + smoothedLevel.value * 1;
     }
 
     /** particles */
@@ -230,7 +234,7 @@ onMounted(() => {
       particle.userData.a += particle.userData.va * d;
       particle.userData.r += particle.userData.vr * d;
       particle.position.z +=
-        particle.userData.vz * d * (0.1 + smoothedLevel.value * 5);
+        particle.userData.vz * d * (0.1 + smoothedLevel.value * 8);
       particle.position.x = cos(particle.userData.a) * particle.userData.r;
       particle.position.y = sin(particle.userData.a) * particle.userData.r;
       particle.rotation.z = degToRad(particle.userData.a);

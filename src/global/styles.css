@@ -5,8 +5,11 @@
   --xl: 1.5rem;
 
   --primary: #e91e63;
+  --primary-light: #ff80ab;
   --secondary: #9c27b0;
+  --secondary-light: #ea80fc;
   --tertiary: #2196f3;
+  --tertiary-light: #82b1ff;
   --light: #e0e0ef;
   --dark: #40404f;
 
@@ -14,7 +17,8 @@
   --fast: 0.2s ease;
   --shadow: 1px 2px 10px #00000020;
   --shadow-inset: inset 1px 1px 5px #00000010;
-  --secondaryig-shadow: 0 0 100px #9c27b080;
+  --big-shadow: 2px 4px 20px #00000040;
+  --jumbo-shadow: 0 0 100px #9c27b080;
 }
 
 * {
@@ -60,17 +64,13 @@ pre {
   font: inherit;
 }
 
-svg > path {
-  fill: currentColor;
-}
-
 a {
   color: var(--primary);
   transition: color var(--fast);
 }
 
 a:where(:hover, :focus) {
-  color: currentColor;
+  color: var(--tertiary);
 }
 
 .button {
@@ -78,7 +78,29 @@ a:where(:hover, :focus) {
   display: flex;
   justify-content: center;
   align-items: center;
+  gap: 10px;
   padding: 5px 15px;
+}
+
+[data-draw="true"] path {
+  stroke-dasharray: var(--length);
+  animation: draw 1s both;
+}
+
+@keyframes draw {
+  0% {
+    stroke-dashoffset: var(--length);
+    stroke: var(--primary-light);
+  }
+  33% {
+    stroke: var(--secondary-light);
+  }
+  66% {
+    stroke: var(--tertiary-light);
+  }
+  100% {
+    stroke-dashoffset: 0;
+  }
 }
 
 .button:where(:hover, :focus) {
@@ -91,10 +113,6 @@ a:where(:hover, :focus) {
   transform: translate(0, 0);
 }
 
-.button-fancy {
-  letter-spacing: 0.5px;
-}
-
 .button-fancy:after {
   content: "";
   position: absolute;
@@ -104,10 +122,10 @@ a:where(:hover, :focus) {
 }
 
 .button-fancy:where(:hover, :focus):after {
-  animation: draw 0.25s linear;
+  animation: outline 0.3s linear;
 }
 
-@keyframes draw {
+@keyframes outline {
   0%,
   100% {
     border-color: transparent;
@@ -130,7 +148,6 @@ a:where(:hover, :focus) {
 
 .button-fancy[data-active="true"] {
   background: var(--dark);
-  box-shadow: var(--secondaryig-shadow);
   color: var(--light);
 }
 
@@ -139,15 +156,24 @@ a:where(:hover, :focus) {
   background: var(--dark) !important;
   border-radius: var(--rounded) !important;
   font-size: var(--tiny) !important;
+  box-shadow: var(--big-shadow);
 }
 
 .tippy-content {
   padding: 20px !important;
-  line-height: 1.5em;
+  line-height: 1.8em;
   max-height: 300px !important;
   overflow-y: auto;
 }
 
 .tippy-arrow {
   color: var(--dark) !important;
+}
+
+.tippy-box a {
+  color: var(--primary-light);
+}
+
+.tippy-box a:where(:focus, :hover) {
+  color: var(--tertiary-light);
 }

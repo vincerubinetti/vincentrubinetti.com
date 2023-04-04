@@ -9,6 +9,7 @@ export default (app: App) => {
     defaultProps: {
       interactive: true,
       allowHTML: true,
+      trigger: "click mouseenter focus"
       // onHide: () => false,
     },
   });

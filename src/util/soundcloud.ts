@@ -17,7 +17,7 @@ export const promisifySc = <T>(
       console.info("Try", _try + 1);
       const result = await new Promise((resolve: Resolve<T>) => {
         func(resolve);
-        window.setTimeout(() => resolve(undefined), 100);
+        window.setTimeout(() => resolve(undefined), interval);
       });
       if (result && success(result)) {
         resolve(result);

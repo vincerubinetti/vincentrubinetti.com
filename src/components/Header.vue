@@ -31,7 +31,7 @@ header {
   background: black;
   color: white;
   z-index: 0;
-  box-shadow: var(--secondaryig-shadow);
+  box-shadow: var(--jumbo-shadow);
 }
 
 .logo {

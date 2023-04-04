@@ -47,7 +47,7 @@ const onInput = (event: Event) =>
 }
 
 .input::-moz-range-track {
-  height: 15px;
+  height: 5px;
   border-radius: 999px;
   background: var(--primary);
 }

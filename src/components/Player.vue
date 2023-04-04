@@ -29,9 +29,9 @@
       </div>
 
       <div class="info">
-        <div class="title">
+        <a :href="track?.bandcamp ? track?.bandcamp : undefined" class="title">
           {{ track?.title }}
-        </div>
+        </a>
 
         <div class="counts">
           <Count
@@ -70,10 +70,10 @@
             <LikeIcon />
           </Count>
           <Count
-            v-if="track?.downloads"
+            v-if="track?.downloads || track?.bandcamp"
             :count="track?.downloads"
-            :to="track?.url"
-            title="Number of downloads on SoundCloud"
+            :to="track?.bandcamp || track?.url"
+            title="Number of downloads on SoundCloud. Click to go to download page."
             :aria-label="`${track?.downloads} downloads on SoundCloud`"
           >
             <DownloadIcon />
@@ -247,6 +247,7 @@ import CommentIcon from "@/assets/comment.svg?component";
 import RepostIcon from "@/assets/repost.svg?component";
 import NoteIcon from "@/assets/note.svg?component";
 import Slider from "@/components/Slider.vue";
+import bandcamp from "@/assets/bandcamp.json";
 
 type Props = {
   /** playlist id */
@@ -267,14 +268,14 @@ type Track = {
   levels: number[];
   art: string;
   title: string;
+  date: string;
   description: string;
-  caption: string;
+  bandcamp: string;
   plays: number;
   likes: number;
   comments: number;
   downloads: number;
   reposts: number;
-  date: string;
   created: Date;
   modified: Date;
   url: string;
@@ -334,19 +335,19 @@ const onReady = async () => {
           ...(await getWaveform(sound.waveform_url || "")),
           art: (await getArt(sound.artwork_url)) || "",
           title: sound.title || "",
+          date: sound.description.match(/📅 ?(.*)$/m)?.[1] || "",
           description: (sound.description || "")
             .replace(/📅 ?(.*)$/m, "")
             .split("©")[0]
             .trim()
             .split(/\n{3,}/)
             .join("\n"),
-          caption: sound.caption || "",
+          bandcamp: getBandcamp(sound.title),
           plays: sound.playback_count || 0,
           likes: sound.likes_count || 0,
           comments: sound.comment_count || 0,
           downloads: sound.download_count || 0,
           reposts: sound.reposts_count || 0,
-          date: sound.description.match(/📅 ?(.*)$/m)?.[1] || "",
           created:
             new Date(sound.created_at || sound.display_date) || new Date(),
           modified: new Date(sound.last_modified) || new Date(),
@@ -368,6 +369,9 @@ const onReady = async () => {
       cache[id] = newTracks;
     }
 
+    /** if no longer latest, exit */
+    if (id !== props.id) return;
+
     /** reset state */
     percent.value = 0;
     playing.value = false;
@@ -377,7 +381,7 @@ const onReady = async () => {
     if (newTracks.length) {
       tracks.value = newTracks;
       track.value = newTracks[0];
-      console.info("Resulting full tracks info", newTracks);
+      console.info("Full tracks", newTracks);
     } else throw Error("No tracks");
 
     /** after widget ACTUALLY ready, when getSounds returns something... */
@@ -438,6 +442,13 @@ const getArt = async (url = "") => {
     console.error("Couldn't get art", url);
     return "";
   }
+};
+
+/** get associated bandcamp album */
+const getBandcamp = (title = "") => {
+  type Map = Record<string, string>;
+  const album = (bandcamp as Map)[title.toLowerCase()]?.replaceAll(" ", "-");
+  return album ? "https://vincerubinetti.bandcamp.com/album/" + album : "";
 };
 
 /** parse and de-duplicate tags */
@@ -646,6 +657,8 @@ watch([volume, muted], () => widget.setVolume(muted.value ? 0 : volume.value));
   font-size: var(--large);
   text-transform: uppercase;
   letter-spacing: 1px;
+  text-decoration: none;
+  color: currentColor;
 }
 
 .counts {
@@ -683,7 +696,12 @@ watch([volume, muted], () => widget.setVolume(muted.value ? 0 : volume.value));
 .play-control {
   width: 60px;
   height: 60px;
-  padding: 22.5px;
+  padding: 20px;
+}
+
+.play-control svg,
+.mute-control svg {
+  height: 100%;
 }
 
 .mute-control {
@@ -756,7 +774,7 @@ watch([volume, muted], () => widget.setVolume(muted.value ? 0 : volume.value));
   66%,
   100% {
     opacity: 0.5;
-    color: black;
+    color: var(--dark);
     transform: scale(1);
   }
   16.5%,
