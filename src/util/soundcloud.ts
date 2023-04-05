@@ -9,11 +9,16 @@ type Resolve<T> = (result: T | undefined) => void;
 export const promisifySc = <T>(
   func: (resolve: Resolve<T>) => T,
   success: (result: T) => boolean,
+  cancel?: () => boolean,
   tries = 100,
   interval = 50
 ): Promise<T> =>
   new Promise(async (resolve, reject) => {
     for (let _try = 0; _try < tries; _try++) {
+      if (cancel?.()) {
+        reject("stale");
+        return;
+      }
       console.info("Try", _try + 1);
       const result = await new Promise((resolve: Resolve<T>) => {
         func(resolve);

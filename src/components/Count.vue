@@ -34,7 +34,6 @@ defineProps<Props>();
   font-size: var(--tiny);
   text-align: right;
   white-space: nowrap;
-  letter-spacing: 0.5px;
   text-decoration: none;
 }
 

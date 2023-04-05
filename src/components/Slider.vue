@@ -40,7 +40,7 @@ const onInput = (event: Event) =>
   height: 15px;
   width: 15px;
   margin-top: -5px;
-  background: var(--dark);
+  background: var(--gray);
   border-radius: 999px;
   -webkit-appearance: none;
   appearance: none;
@@ -57,6 +57,6 @@ const onInput = (event: Event) =>
   width: 15px;
   border: none;
   border-radius: 999px;
-  background: var(--dark);
+  background: var(--gray);
 }
 </style>

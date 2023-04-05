@@ -19,10 +19,8 @@
     "
   ></iframe>
 
-  <div v-if="!error && loading" class="placeholder"></div>
-
-  <div v-if="!error && !loading" class="player">
-    <div class="top">
+  <div v-if="!error" class="player">
+    <div class="current" :data-loading="loading">
       <div class="art">
         <img :src="track?.art" />
         <img :src="track?.art" />
@@ -73,7 +71,7 @@
             v-if="track?.downloads || track?.bandcamp"
             :count="track?.downloads"
             :to="track?.bandcamp || track?.url"
-            title="Number of downloads on SoundCloud. Click to go to download page."
+            title="Number of downloads on SoundCloud. Click to go to high quality download on Bandcampp."
             :aria-label="`${track?.downloads} downloads on SoundCloud`"
           >
             <DownloadIcon />
@@ -101,33 +99,36 @@
 
       <div class="controls">
         <div class="controls-row">
-          <button
-            class="button button-fancy play-control"
+          <Button
+            class="play-control"
+            :outline="true"
             @click="onClickPrevious"
             aria-label="previous track"
           >
             <PreviousIcon />
-          </button>
-          <button
-            class="button button-fancy play-control"
+          </Button>
+          <Button
+            class="play-control"
+            :outline="true"
             @click="playing ? onClickPause() : onClickPlay()"
             :aria-label="playing ? 'pause' : 'play'"
           >
             <PauseIcon v-if="playing" />
             <PlayIcon v-else />
-          </button>
-          <button
-            class="button button-fancy play-control"
+          </Button>
+          <Button
+            class="play-control"
+            :outline="true"
             @click="onClickNext"
             aria-label="next track"
           >
             <NextIcon class="icon" />
-          </button>
+          </Button>
         </div>
 
         <div class="controls-row">
-          <button
-            class="mute-control"
+          <Button
+            class="mute-control button"
             @click="muted = !muted"
             :aria-label="muted ? 'unmute' : 'mute'"
           >
@@ -136,7 +137,7 @@
             <VolumeLowIcon v-else-if="volume < 50" />
             <VolumeMidIcon v-else-if="volume < 75" />
             <VolumeHighIcon v-else />
-          </button>
+          </Button>
           <Slider
             v-model="volume"
             min="0"
@@ -151,7 +152,7 @@
       </div>
     </div>
 
-    <div>
+    <div :data-loading="loading">
       <svg
         viewBox="0 -10 100 10"
         class="waveform"
@@ -168,7 +169,7 @@
           :points="track?.waveform"
         />
         <polygon
-          :fill="playing ? 'var(--dark)' : '#808080'"
+          :fill="playing ? 'var(--gray)' : '#808080'"
           opacity="0.15"
           :points="track?.waveform"
           :style="{
@@ -178,7 +179,7 @@
         />
         <polygon fill="#808080" opacity="0.5" :points="track?.waveform" />
         <polygon
-          :fill="playing ? 'var(--dark)' : '#808080'"
+          :fill="playing ? 'var(--gray)' : '#808080'"
           :points="track?.waveform"
           :style="{
             'clip-path': `inset(0 ${percentLeft}% 0 0)`,
@@ -196,8 +197,8 @@
       </div>
     </div>
 
-    <div class="tracks">
-      <button
+    <div class="tracks" :data-loading="loading">
+      <Button
         v-for="(t, index) in tracks"
         :key="index"
         class="button track"
@@ -216,7 +217,7 @@
         <Count :count="t.plays" :flip="true">
           <PlayIcon />
         </Count>
-      </button>
+      </Button>
     </div>
   </div>
 </template>
@@ -229,6 +230,7 @@ import { max } from "@/util/math";
 import { playing, level } from "@/global/state";
 import { promisifySc } from "@/util/soundcloud";
 import { formatTime, formatTimeVerbose, linkify } from "@/util/string";
+import Button from "@/components/Button.vue";
 import Count from "@/components/Count.vue";
 import PreviousIcon from "@/assets/previous.svg?component";
 import PlayIcon from "@/assets/play.svg?component";
@@ -303,8 +305,12 @@ const length = computed(() => (track.value?.length || 0) / 1000);
 const cache: Record<Props["id"], Track[]> = {};
 
 /** soundcloud callback - on widget ready */
+/** https://stackoverflow.com/questions/48550585/soundcloud-api-getsounds-only-returns-the-first-5-objects */
 const onReady = async () => {
   const { id = "" } = props;
+
+  /** check if still latest/current playlist */
+  const isStale = () => id !== props.id;
 
   try {
     /** load new tracks from cache */
@@ -315,7 +321,8 @@ const onReady = async () => {
       console.info("Tracks");
       let sounds = await promisifySc<_Track[]>(
         (resolve) => widget.getSounds(resolve),
-        (result) => !!result?.length
+        (result) => !!result?.length,
+        isStale
       );
 
       /** fill-in missing track information */
@@ -355,6 +362,8 @@ const onReady = async () => {
           tags: getTags(sound.tag_list + ` "${sound.genre || ""}"`) || "",
         });
 
+        if (isStale()) throw Error("stale");
+
         /** move to next track */
         widget.next();
         widget.pause();
@@ -368,9 +377,6 @@ const onReady = async () => {
       /** set cache */
       cache[id] = newTracks;
     }
-
-    /** if no longer latest, exit */
-    if (id !== props.id) return;
 
     /** reset state */
     percent.value = 0;
@@ -397,7 +403,8 @@ const onReady = async () => {
     widget.bind(window.SC.Widget.Events.FINISH, onStop);
     widget.bind(window.SC.Widget.Events.ERROR, onError);
   } catch (error) {
-    onError(error);
+    if ((error as Error).message.includes("stale")) console.info("STALE");
+    else onError(error);
   }
 };
 
@@ -590,18 +597,22 @@ watch([volume, muted], () => widget.setVolume(muted.value ? 0 : volume.value));
 </script>
 
 <style scoped>
-.placeholder {
-  height: 700px;
-  background: black;
+[data-loading] {
+  transition: filter var(--fast);
+}
+
+[data-loading="true"] {
+  filter: saturate(0) contrast(0);
+  pointer-events: none;
   animation: pulse 0.5s linear infinite alternate;
 }
 
 @keyframes pulse {
   from {
-    opacity: 0;
+    opacity: 0.1;
   }
   to {
-    opacity: 0.1;
+    opacity: 0.2;
   }
 }
 
@@ -612,12 +623,13 @@ watch([volume, muted], () => widget.setVolume(muted.value ? 0 : volume.value));
 }
 
 .player {
+  width: 100%;
   display: flex;
   flex-direction: column;
   gap: 20px;
 }
 
-.top {
+.current {
   display: flex;
   align-items: center;
   gap: 40px;
@@ -650,13 +662,13 @@ watch([volume, muted], () => widget.setVolume(muted.value ? 0 : volume.value));
   display: flex;
   flex-direction: column;
   gap: 10px;
-  line-height: 1.4em;
+  line-height: 1.5em;
 }
 
 .title {
   font-size: var(--large);
   text-transform: uppercase;
-  letter-spacing: 1px;
+  letter-spacing: 0.5px;
   text-decoration: none;
   color: currentColor;
 }
@@ -736,7 +748,6 @@ watch([volume, muted], () => widget.setVolume(muted.value ? 0 : volume.value));
   display: flex;
   flex-direction: column;
   gap: 5px;
-  margin-top: 20px;
 }
 
 .track {
@@ -774,7 +785,7 @@ watch([volume, muted], () => widget.setVolume(muted.value ? 0 : volume.value));
   66%,
   100% {
     opacity: 0.5;
-    color: var(--dark);
+    color: var(--gray);
     transform: scale(1);
   }
   16.5%,
@@ -819,7 +830,7 @@ watch([volume, muted], () => widget.setVolume(muted.value ? 0 : volume.value));
 }
 
 @media (max-width: 600px) {
-  .top {
+  .current {
     flex-direction: column;
     gap: 20px;
     text-align: center;

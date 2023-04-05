@@ -1,12 +1,14 @@
 ---
-import Header from "../components/Header.vue";
-import Layout from "../layouts/Layout.astro";
+import Header from "@/components/Header.vue";
+import Layout from "@/layouts/Layout.astro";
 import Listen from "@/pages/home/Listen.vue";
+import Discography from "@/pages/home/Discography.vue";
 ---
 
 <Layout title="Vincent Rubinetti | Composer, producer, and more">
   <Header client:idle />
   <main>
     <Listen client:idle />
+    <Discography client:idle />
   </main>
 </Layout>

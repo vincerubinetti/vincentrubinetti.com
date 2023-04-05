@@ -1,26 +1,29 @@
 <template>
   <Section>
     <div class="buttons">
-      <button
+      <Button
         v-for="({ title, id, icon }, index) of playlists"
         :key="index"
-        class="button button-fancy"
+        class="button"
+        :outline="true"
+        :data-color="playlist.id === id ? 'dark' : undefined"
         :data-active="playlist.id === id"
         :aria-current="playlist.id === id"
         :aria-label="`load ${title} playlist`"
         @click="playlist = playlists[index]"
       >
-        <component :is="icon" :data-draw="playlist.id === id" style></component>
+        <component :is="icon" style></component>
         {{ title }}
-      </button>
+      </Button>
     </div>
     <Player :id="playlist.id" />
   </Section>
 </template>
 
 <script setup lang="ts">
-import Player from "@/components/Player.vue";
 import Section from "@/components/Section.vue";
+import Button from "@/components/Button.vue";
+import Player from "@/components/Player.vue";
 import BestOf from "@/assets/best-of.svg?component";
 import Orchestral from "@/assets/orchestral.svg?component";
 import Electronic from "@/assets/electronic.svg?component";
@@ -46,11 +49,7 @@ const playlist = ref(playlists[0]);
   display: grid;
   grid-template-columns: repeat(6, 1fr);
   gap: 10px 30px;
-}
-
-.button {
-  padding-left: 0;
-  padding-right: 0;
+  width: 100%;
 }
 
 .button svg {
@@ -60,12 +59,16 @@ const playlist = ref(playlists[0]);
   transition-property: height, margin;
 }
 
+.button[data-active="false"] > :deep(svg) path {
+  animation: none;
+}
+
 .button[data-active="true"] svg {
   height: 25px;
   margin-right: 0;
 }
 
-@media (max-width: 1000px) {
+@media (max-width: 1080px) {
   .buttons {
     grid-template-columns: repeat(3, 1fr);
   }
