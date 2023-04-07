@@ -5,17 +5,17 @@
     class="count"
     :style="{ flexDirection: flip ? 'row-reverse' : 'row' }"
   >
-    <span class="icon">
-      <slot></slot>
-    </span>
+    <component v-if="icon" :is="icon" class="icon" />
     {{ typeof count === "number" ? formatCount(count || 0) : count }}
   </a>
 </template>
 
 <script setup lang="ts">
+import type { FunctionalComponent } from "vue";
 import { formatCount } from "@/util/string";
 
 type Props = {
+  icon?: FunctionalComponent;
   count?: number | string;
   flip?: boolean;
   to?: string;
@@ -27,24 +27,25 @@ defineProps<Props>();
 <style scoped>
 .count {
   display: inline-flex;
+  justify-content: center;
   align-items: center;
   gap: 0.5em;
-  color: currentColor;
-  opacity: 0.35;
+  height: min-content;
+  padding: 5px;
+  color: var(--gray);
+  opacity: 0.5;
   font-size: var(--tiny);
-  text-align: right;
-  white-space: nowrap;
+  line-height: 0;
   text-decoration: none;
 }
 
-.icon {
-  display: contents;
+.count[href]:hover {
+  color: var(--primary);
+  opacity: 1;
 }
 
-.icon > :deep(*) {
-  position: relative;
-  top: -1px;
-  height: 15px;
+.icon {
+  height: 1em;
   flex-shrink: 0;
 }
 </style>

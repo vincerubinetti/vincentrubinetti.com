@@ -7,16 +7,16 @@ import { sleep } from "@/util/func";
  */
 type Resolve<T> = (result: T | undefined) => void;
 export const promisifySc = <T>(
-  func: (resolve: Resolve<T>) => T,
-  success: (result: T) => boolean,
-  cancel?: () => boolean,
+  func: (resolve: Resolve<T>) => unknown,
+  success: (result: T) => boolean = () => true,
+  cancel: () => boolean = () => false,
   tries = 100,
   interval = 50
 ): Promise<T> =>
   new Promise(async (resolve, reject) => {
     for (let _try = 0; _try < tries; _try++) {
-      if (cancel?.()) {
-        reject("stale");
+      if (cancel()) {
+        reject("canceled");
         return;
       }
       console.info("Try", _try + 1);
@@ -24,7 +24,7 @@ export const promisifySc = <T>(
         func(resolve);
         window.setTimeout(() => resolve(undefined), interval);
       });
-      if (result && success(result)) {
+      if (result !== undefined && success(result)) {
         resolve(result);
         return;
       }

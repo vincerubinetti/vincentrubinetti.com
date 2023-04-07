@@ -3,7 +3,6 @@
     ref="iframe"
     class="iframe"
     :src="`https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/${id}&amp;amp;color=ff5500&amp;amp;auto_play=false&amp;amp;hide_related=true&amp;amp;show_comments=true&amp;amp;show_user=true&amp;amp;show_reposts=false`"
-    title="Music player"
     allow="autoplay"
     frameborder="no"
     loading="lazy"
@@ -27,119 +26,108 @@
       </div>
 
       <div class="info">
-        <a :href="track?.bandcamp ? track?.bandcamp : undefined" class="title">
+        <div class="title">
           {{ track?.title }}
-        </a>
+        </div>
 
         <div class="counts">
-          <Count
-            v-if="track?.date"
-            :count="track?.date"
-            :to="track?.url"
-            title="Date when song was finished"
-            :aria-label="`song was finished ${track?.date}`"
-          >
-            <DateIcon />
-          </Count>
-          <Count
+          <AppCount
+            v-if="track?.bandcamp"
+            v-tippy="'High quality download on Bandcamp'"
+            :to="track?.bandcamp"
+            :icon="DownloadIcon"
+          />
+          <AppCount
             v-if="track?.description"
-            count="Notes"
+            :icon="StickyIcon"
             tabindex="0"
             v-tippy="linkify(track?.description)"
-          >
-            <StickyIcon />
-          </Count>
-          <Count
+          />
+
+          <AppCount
+            v-if="track?.date"
+            :icon="DateIcon"
+            :count="track?.date"
+            :aria-label="`song was finished ${track?.date}`"
+          />
+          <AppCount
             v-if="track?.plays"
+            :icon="PlayIcon"
             :count="track?.plays"
             :to="track?.url"
-            title="Number of plays on SoundCloud"
+            v-tippy="'Plays on SoundCloud'"
             :aria-label="`${track?.plays} plays on SoundCloud`"
-          >
-            <PlayIcon />
-          </Count>
-          <Count
+          />
+          <AppCount
             v-if="track?.likes"
+            :icon="LikeIcon"
             :count="track?.likes"
             :to="track?.url"
-            title="Number of likes on SoundCloud"
+            v-tippy="'Likes on SoundCloud'"
             :aria-label="`${track?.likes} likes on SoundCloud`"
-          >
-            <LikeIcon />
-          </Count>
-          <Count
-            v-if="track?.downloads || track?.bandcamp"
+          />
+          <AppCount
+            v-if="track?.downloads"
+            :icon="DownloadIcon"
             :count="track?.downloads"
-            :to="track?.bandcamp || track?.url"
-            title="Number of downloads on SoundCloud. Click to go to high quality download on Bandcampp."
+            :to="track?.url"
+            v-tippy="'Downloads on SoundCloud'"
             :aria-label="`${track?.downloads} downloads on SoundCloud`"
-          >
-            <DownloadIcon />
-          </Count>
-          <Count
+          />
+          <AppCount
             v-if="track?.comments"
+            :icon="CommentIcon"
             :count="track?.comments"
             :to="track?.url"
-            title="Number of comments on SoundCloud"
+            v-tippy="'Comments on SoundCloud'"
             :aria-label="`${track?.comments} comments on SoundCloud`"
-          >
-            <CommentIcon />
-          </Count>
-          <Count
+          />
+          <AppCount
             v-if="track?.reposts"
+            :icon="RepostIcon"
             :count="track?.reposts"
             :to="track?.url"
-            title="Number of reposts on SoundCloud"
+            v-tippy="'Reposts on SoundCloud'"
             :aria-label="`${track?.reposts} reposts on SoundCloud`"
-          >
-            <RepostIcon />
-          </Count>
+          />
         </div>
       </div>
 
       <div class="controls">
         <div class="controls-row">
-          <Button
+          <AppButton
             class="play-control"
+            :icon="PreviousIcon"
             :outline="true"
             @click="onClickPrevious"
             aria-label="previous track"
-          >
-            <PreviousIcon />
-          </Button>
-          <Button
+          />
+          <AppButton
             class="play-control"
+            :icon="playing ? PauseIcon : PlayIcon"
             :outline="true"
             @click="playing ? onClickPause() : onClickPlay()"
             :aria-label="playing ? 'pause' : 'play'"
-          >
-            <PauseIcon v-if="playing" />
-            <PlayIcon v-else />
-          </Button>
-          <Button
+          />
+          <AppButton
             class="play-control"
+            :icon="NextIcon"
             :outline="true"
             @click="onClickNext"
             aria-label="next track"
-          >
-            <NextIcon class="icon" />
-          </Button>
+          />
         </div>
 
         <div class="controls-row">
-          <Button
+          <AppButton
             class="mute-control button"
+            :icon="muteIcon"
             @click="muted = !muted"
             :aria-label="muted ? 'unmute' : 'mute'"
-          >
-            <VolumeMutedIcon v-if="muted" />
-            <VolumeNoneIcon v-else-if="volume < 25" />
-            <VolumeLowIcon v-else-if="volume < 50" />
-            <VolumeMidIcon v-else-if="volume < 75" />
-            <VolumeHighIcon v-else />
-          </Button>
-          <Slider
-            v-model="volume"
+          />
+          <AppSlider
+            :model-value="muted ? 0 : volume"
+            @update:model-value="onChangeVolume"
             min="0"
             max="100"
             step="1"
@@ -198,7 +186,7 @@
     </div>
 
     <div class="tracks" :data-loading="loading">
-      <Button
+      <AppButton
         v-for="(t, index) in tracks"
         :key="index"
         class="button track"
@@ -214,10 +202,10 @@
         />
         <span class="track-title">{{ t.title }}</span>
         <span class="track-tags">{{ t.tags.join(" ") }}</span>
-        <Count :count="t.plays" :flip="true">
+        <AppCount :count="t.plays" :flip="true">
           <PlayIcon />
-        </Count>
-      </Button>
+        </AppCount>
+      </AppButton>
     </div>
   </div>
 </template>
@@ -227,11 +215,11 @@ import { computed, ref, watch } from "vue";
 import { useScriptTag } from "@vueuse/core";
 import { waitForEvent } from "@/util/func";
 import { max } from "@/util/math";
-import { playing, level } from "@/global/state";
+import { playing, level, art } from "@/global/state";
 import { promisifySc } from "@/util/soundcloud";
 import { formatTime, formatTimeVerbose, linkify } from "@/util/string";
-import Button from "@/components/Button.vue";
-import Count from "@/components/Count.vue";
+import AppCount from "@/components/AppCount.vue";
+import AppSlider from "@/components/AppSlider.vue";
 import PreviousIcon from "@/assets/previous.svg?component";
 import PlayIcon from "@/assets/play.svg?component";
 import PauseIcon from "@/assets/pause.svg?component";
@@ -248,8 +236,8 @@ import DownloadIcon from "@/assets/download.svg?component";
 import CommentIcon from "@/assets/comment.svg?component";
 import RepostIcon from "@/assets/repost.svg?component";
 import NoteIcon from "@/assets/note.svg?component";
-import Slider from "@/components/Slider.vue";
 import bandcamp from "@/assets/bandcamp.json";
+import placeholder from "@/assets/placeholder.jpg";
 
 type Props = {
   /** playlist id */
@@ -284,12 +272,35 @@ type Track = {
   tags: string[];
 };
 /** list of tracks in playlist */
-const tracks = ref<Track[]>([]);
+const tracks = ref<Track[]>(
+  Array(10)
+    .fill({})
+    .map((_, index) => ({
+      id: index,
+      length: 4 * 60 * 1000,
+      waveform: "0 -10, 100 -10",
+      levels: [],
+      art: placeholder,
+      title: ". . .",
+      date: "",
+      description: "",
+      bandcamp: "",
+      plays: 0,
+      likes: 0,
+      comments: 0,
+      downloads: 0,
+      reposts: 0,
+      created: new Date(),
+      modified: new Date(),
+      url: "",
+      tags: [],
+    }))
+);
 
 /** state */
 const loading = ref(true);
 const error = ref(false);
-const track = ref<Track>();
+const track = ref<Track>(tracks.value[0]);
 const percent = ref(0);
 const volume = ref(100);
 const muted = ref(false);
@@ -300,6 +311,13 @@ const position = computed(
   () => (percent.value * (track.value?.length || 0)) / 1000
 );
 const length = computed(() => (track.value?.length || 0) / 1000);
+const muteIcon = computed(() => {
+  if (muted.value) return VolumeMutedIcon;
+  if (volume.value < 25) return VolumeNoneIcon;
+  if (volume.value < 50) return VolumeLowIcon;
+  if (volume.value < 75) return VolumeMidIcon;
+  return VolumeHighIcon;
+});
 
 /** cache of full track info */
 const cache: Record<Props["id"], Track[]> = {};
@@ -378,9 +396,7 @@ const onReady = async () => {
       cache[id] = newTracks;
     }
 
-    /** reset state */
-    percent.value = 0;
-    playing.value = false;
+    /** finish loading */
     loading.value = false;
 
     /** set tracks */
@@ -393,14 +409,15 @@ const onReady = async () => {
     /** after widget ACTUALLY ready, when getSounds returns something... */
     await promisifySc<_Track[]>(
       (resolve) => widget.getSounds(resolve),
-      (result) => !!result?.length
+      (result) => !!result?.length,
+      isStale
     );
 
     /** hook up callback events  */
     widget.bind(window.SC.Widget.Events.PLAY_PROGRESS, onPlayProgress);
     widget.bind(window.SC.Widget.Events.PLAY, onPlay);
-    widget.bind(window.SC.Widget.Events.PAUSE, onStop);
-    widget.bind(window.SC.Widget.Events.FINISH, onStop);
+    widget.bind(window.SC.Widget.Events.PAUSE, onPause);
+    widget.bind(window.SC.Widget.Events.FINISH, onFinish);
     widget.bind(window.SC.Widget.Events.ERROR, onError);
   } catch (error) {
     if ((error as Error).message.includes("stale")) console.info("STALE");
@@ -487,15 +504,26 @@ const onPlayProgress = ({ relativePosition }: { relativePosition: number }) => {
 
 /** soundcloud callback - on track start */
 const onPlay = async () => {
-  const index = (await new Promise((resolve) =>
-    widget.getCurrentSoundIndex(resolve)
-  )) as any;
+  console.info("Current track");
+  const index = await promisifySc<number>(
+    (resolve) => widget.getCurrentSoundIndex(resolve),
+    (result) => typeof result === "number"
+  );
   track.value = tracks.value[index];
+  art.value = track.value.art;
+  playing.value = true;
 };
 
-/** soundcloud callback - on track stop */
-const onStop = () => {
+/** soundcloud callback - on track pause */
+const onPause = () => {
   level.value = 0;
+  playing.value = false;
+};
+
+/** soundcloud callback - on track finish */
+const onFinish = () => {
+  level.value = 0;
+  playing.value = false;
 };
 
 /** soundcloud callback - on error */
@@ -505,8 +533,8 @@ const onError = (...args: any[]) => {
   loading.value = false;
 };
 
-/** when soundcloud api script loaded */
-const onLoadScript = async () => {
+/** load soundcloud widget */
+const onLoad = async () => {
   try {
     /** load widget */
     loading.value = true;
@@ -520,40 +548,43 @@ const onLoadScript = async () => {
   }
 };
 /** load soundcloud api script */
-useScriptTag("https://w.soundcloud.com/player/api.js", onLoadScript);
+useScriptTag("https://w.soundcloud.com/player/api.js", onLoad);
 
-/** switch playlist */
+/** when playlist switched */
 watch(
   () => props.id,
   async () => {
+    /** reset state */
     loading.value = true;
+    playing.value = false;
+    percent.value = 0;
+    level.value = 0;
+
     await waitForEvent(iframe.value, "load");
-    onLoadScript();
+    onLoad();
   }
 );
 
 /** when user clicks controls */
 const onClickPrevious = () => {
-  widget.prev();
+  if (position.value < 2) widget.prev();
   widget.seekTo(0);
   widget.play();
-  percent.value = 0;
-  playing.value = true;
 };
 const onClickPlay = () => {
   widget.play();
-  playing.value = true;
 };
 const onClickPause = () => {
   widget.pause();
-  playing.value = false;
 };
 const onClickNext = () => {
   widget.next();
   widget.seekTo(0);
   widget.play();
-  percent.value = 0;
-  playing.value = true;
+};
+const onChangeVolume = (value: number) => {
+  muted.value = false;
+  volume.value = value;
 };
 
 /** when user clicks waveform */
@@ -563,7 +594,6 @@ const onClickWaveform = (event: MouseEvent) => {
   const percent = (event.clientX - left) / width;
   widget.seekTo(percent * (track.value?.length || 0));
   widget.play();
-  playing.value = true;
 };
 
 /** when user presses key on waveform */
@@ -588,8 +618,6 @@ const onClickTrack = (index: number) => {
   widget.skip(index);
   widget.seekTo(0);
   track.value = tracks.value[index];
-  percent.value = 0;
-  playing.value = true;
 };
 
 /** when volume changes */
@@ -652,7 +680,7 @@ watch([volume, muted], () => widget.setVolume(muted.value ? 0 : volume.value));
 }
 
 .art > *:not(:last-child) {
-  filter: blur(20px) saturate(200%);
+  filter: blur(10px) brightness(200%) saturate(200%);
   opacity: 0.5;
   z-index: -1;
 }
@@ -675,7 +703,7 @@ watch([volume, muted], () => widget.setVolume(muted.value ? 0 : volume.value));
 
 .counts {
   display: flex;
-  gap: 5px 20px;
+  gap: 5px 10px;
   flex-wrap: wrap;
   padding-right: 10px;
 }
@@ -708,18 +736,13 @@ watch([volume, muted], () => widget.setVolume(muted.value ? 0 : volume.value));
 .play-control {
   width: 60px;
   height: 60px;
-  padding: 20px;
-}
-
-.play-control svg,
-.mute-control svg {
-  height: 100%;
+  padding: 20px !important;
 }
 
 .mute-control {
   width: 30px;
   height: 30px;
-  padding: 5px;
+  padding: 8px !important;
 }
 
 .waveform {

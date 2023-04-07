@@ -13,11 +13,10 @@
   --gray: #40404f;
 
   --rounded: 5px;
-  --fast: 0.2s ease;
+  --fast: 0.35s ease;
   --shadow: 1px 2px 10px #00000020;
   --shadow-inset: inset 1px 1px 5px #00000010;
   --big-shadow: 2px 4px 20px #00000040;
-  --jumbo-shadow: 0 0 100px #9c27b080;
 }
 
 * {
@@ -27,6 +26,7 @@
 html,
 body {
   min-height: 100vh;
+  color: var(--gray);
   font-family: "Roboto";
   font-weight: 300;
   font-size: 14pt;
@@ -51,11 +51,33 @@ p {
 
 a {
   color: var(--primary);
-  transition: color var(--fast);
+  transition: var(--fast);
+  transition-property: color, opacity;
 }
 
 a:where(:hover, :focus) {
   color: var(--tertiary);
+}
+
+[data-draw="true"]:where(:hover, :focus) path {
+  stroke-dasharray: var(--length);
+  animation: draw 1s both;
+}
+
+@keyframes draw {
+  0% {
+    stroke-dashoffset: var(--length);
+    stroke: var(--primary-light);
+  }
+  33% {
+    stroke: var(--secondary-light);
+  }
+  66% {
+    stroke: var(--tertiary-light);
+  }
+  100% {
+    stroke-dashoffset: 0;
+  }
 }
 
 .tippy-box {
@@ -67,7 +89,7 @@ a:where(:hover, :focus) {
 }
 
 .tippy-content {
-  padding: 20px !important;
+  padding: 15px 20px !important;
   line-height: 1.5em;
   max-height: 300px !important;
   overflow-y: auto;

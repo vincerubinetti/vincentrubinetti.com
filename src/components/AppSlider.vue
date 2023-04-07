@@ -18,6 +18,7 @@ const emit = defineEmits<Emits>();
 const onInput = (event: Event) =>
   emit("update:modelValue", Number((event.target as HTMLInputElement).value));
 </script>
+
 <style scoped>
 .input {
   margin: 0;

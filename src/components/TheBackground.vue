@@ -1,7 +1,10 @@
 <template>
   <canvas
     ref="canvas"
+    v-if="!reduceMotion"
     v-bind="$attrs"
+    class="canvas"
+    :style="{ opacity: playing ? 0.75 : 0.25 }"
     title="Click and drag to rotate. Double click to reset camera. Ctrl + mouse wheel to zoom."
   ></canvas>
   <svg
@@ -14,11 +17,12 @@
       d="M423.05 212.02c-38.2-38.9-93.87-68.43-105.09-189.2C317.7 10.59 307.71.75 295.42.75c-12.45 0-22.55 10.1-22.55 22.55v658.53c-38.15-28.12-95.44-37.04-152.16-19.13C35.86 689.5-15.57 766.18 5.84 833.97 27.25 901.76 113.39 935 198.24 908.2c71.66-22.63 119.49-80.85 119.72-139.24V251c14.67 3.46 143.84 18.57 143.84 158.94 0 91.49-35.58 139.35-56.59 174.76-5.21 8.78-2.67 20.11 5.79 25.84 8.1 5.5 19.05 4.08 25.45-3.33 25.68-29.72 84.79-109.03 84.79-209.38.01-99.93-57.48-144.35-98.19-185.81Z"
     />
   </svg>
+  <img class="art" :src="art" :style="{ opacity: playing ? 0.5 : 0 }" />
 </template>
 
 <script setup lang="ts">
 import { ref, onMounted, computed, onBeforeUnmount } from "vue";
-import { useEventListener } from "@vueuse/core";
+import { useEventListener, useMediaQuery } from "@vueuse/core";
 import {
   AddEquation,
   AdditiveBlending,
@@ -42,15 +46,17 @@ import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import { SVGLoader } from "three/examples/jsm/loaders/SVGLoader.js";
 import Stats from "three/addons/libs/stats.module.js";
 import { bounce, clamp, cos, degToRad, rand, sin, triangle } from "@/util/math";
-import { smoothedLevel } from "@/global/state";
+import { art, playing, smoothedLevel } from "@/global/state";
 import { useInterval } from "@/util/composables";
 import { repeat } from "@/util/func";
+
+const reduceMotion = useMediaQuery("(prefers-reduced-motion: reduce)");
 
 /** particle spawn interval */
 const interval = computed(() =>
   smoothedLevel.value <= 0.01
     ? Infinity
-    : Math.pow(1 - smoothedLevel.value, 1) * 200
+    : Math.pow(1 - smoothedLevel.value, 1) * 100
 );
 
 /** elements */
@@ -98,7 +104,7 @@ onMounted(() => {
 
   /** reset camera */
   const reset = () => {
-    camera.position.set(0, 0, 15);
+    camera.position.set(0, 0, 10);
     camera.rotation.set(0, 0, 0);
   };
   reset();
@@ -149,7 +155,7 @@ onMounted(() => {
   const shape = new Mesh(
     new ExtrudeGeometry(
       new SVGLoader().parse(svg.value.outerHTML).paths[0].toShapes(false)[0],
-      { depth: 100, bevelEnabled: false }
+      { depth: 50, bevelEnabled: false }
     )
       .center()
       .scale(0.001, -0.001, 0.001)
@@ -171,7 +177,7 @@ onMounted(() => {
     particle.name = "particle";
     particle.userData = {
       life: 0,
-      a: (angle += increment || 26 + smoothedLevel.value * 45),
+      a: (angle += increment || 36 + smoothedLevel.value * 45),
       r: 2,
       va: -0.1,
       vr: 0.001,
@@ -224,7 +230,7 @@ onMounted(() => {
         light.userData.vz * d * (1 + smoothedLevel.value * 20);
 
       /** brightness */
-      light.intensity = 2 + smoothedLevel.value * 1;
+      light.intensity = 2 + smoothedLevel.value * 2;
     }
 
     /** particles */
@@ -234,7 +240,7 @@ onMounted(() => {
       particle.userData.a += particle.userData.va * d;
       particle.userData.r += particle.userData.vr * d;
       particle.position.z +=
-        particle.userData.vz * d * (0.1 + smoothedLevel.value * 8);
+        particle.userData.vz * d * (0.1 + smoothedLevel.value * 10);
       particle.position.x = cos(particle.userData.a) * particle.userData.r;
       particle.position.y = sin(particle.userData.a) * particle.userData.r;
       particle.rotation.z = degToRad(particle.userData.a);
@@ -242,8 +248,10 @@ onMounted(() => {
       /** transparency */
       // particle.renderOrder = particle.userData.life;
       const alpha = clamp(
-        (1 - Math.abs(particle.position.z) / 10) *
-          triangle(particle.userData.life, 0, 300, 0, 1),
+        Math.min(
+          0.75 - Math.abs(particle.position.z) / 10,
+          (2 * 300 - particle.userData.life * 2) / 300
+        ),
         0,
         1
       );
@@ -285,7 +293,7 @@ onBeforeUnmount(() => {
 </script>
 
 <style scoped>
-canvas {
+.canvas {
   position: absolute;
   inset: 0;
   width: 100% !important;
@@ -293,11 +301,24 @@ canvas {
   z-index: -1;
   animation: fade 5s ease both;
   user-select: none;
-  touch-action: auto !important;
-  transition: opacity 1s ease !important;
+  touch-action: auto;
+  transition: opacity 1s ease;
 }
 
-canvas:focus {
+.canvas:focus {
   outline: none;
+}
+
+.art {
+  position: absolute;
+  max-width: 100%;
+  max-height: 100%;
+  /* transform: scale(1.25); */
+  /* filter: saturate(150%); */
+  mix-blend-mode: overlay;
+  -webkit-mask-image: radial-gradient(closest-side, white 0%, transparent 100%);
+  mask-image: radial-gradient(closest-side, white 0%, transparent 100%);
+  transition: opacity var(--fast);
+  pointer-events: none;
 }
 </style>

@@ -1,10 +1,7 @@
 <template>
-  <header>
-    <Background
-      class="background"
-      :style="{ opacity: playing ? 0.75 : 0.25 }"
-    />
-    <Logo
+  <header class="header">
+    <TheBackground class="background" />
+    <TheLogo
       class="logo"
       :style="{
         opacity: playing ? 0 : 1,
@@ -15,13 +12,13 @@
 </template>
 
 <script setup lang="ts">
-import Background from "@/components/Background.vue";
-import Logo from "@/components/Logo.vue";
+import TheBackground from "@/components/TheBackground.vue";
+import TheLogo from "@/components/TheLogo.vue";
 import { playing } from "@/global/state";
 </script>
 
 <style scoped>
-header {
+.header {
   position: relative;
   display: flex;
   justify-content: center;
@@ -30,8 +27,9 @@ header {
   padding: 40px;
   background: black;
   color: white;
+  overflow: hidden;
+  box-shadow: 0 0 100px #9c27b040, 0 0 10px 2px #9c27b040;
   z-index: 0;
-  box-shadow: var(--jumbo-shadow);
 }
 
 .logo {
