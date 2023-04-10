@@ -17,7 +17,7 @@
   --shadow: 1px 2px 10px #00000020;
   --shadow-inset: inset 1px 1px 5px #00000010;
   --big-shadow: 2px 4px 20px #00000040;
-  --color-shadow: 0 0 50px -5px var(--secondary);
+  --color-shadow: 0 0 100px -20px var(--secondary);
 }
 
 * {

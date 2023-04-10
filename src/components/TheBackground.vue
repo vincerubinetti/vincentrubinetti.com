@@ -3,7 +3,10 @@
     ref="canvas"
     v-bind="$attrs"
     class="canvas"
-    :style="{ opacity: playing ? 0.75 : 0.25 }"
+    :style="{
+      opacity: playing ? 0.75 : 0.25,
+      filter: playing ? '' : 'saturate(200%)',
+    }"
     title="Click and drag to rotate. Double click to reset camera. Ctrl/alt/shift + mouse wheel to zoom."
   ></canvas>
   <svg
@@ -321,7 +324,7 @@ onBeforeUnmount(() => {
   z-index: -1;
   animation: fade 5s ease both;
   user-select: none;
-  transition: opacity 1s ease;
+  transition: opacity 1s ease, filter 1s ease;
 }
 
 .canvas:focus {

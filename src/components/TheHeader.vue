@@ -1,7 +1,7 @@
 <template>
   <header class="header">
-    <TheBackground class="background" />
-    <img class="art" :src="art" :style="{ opacity: playing ? 0.5 : 0 }" />
+    <TheBackground />
+    <img class="art" :src="art" :style="{ opacity: playing ? 0.25 : 0 }" />
     <TheLogo
       class="logo"
       :style="{
