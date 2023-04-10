@@ -1,11 +1,10 @@
 <template>
   <canvas
     ref="canvas"
-    v-if="!reduceMotion"
     v-bind="$attrs"
     class="canvas"
     :style="{ opacity: playing ? 0.75 : 0.25 }"
-    title="Click and drag to rotate. Double click to reset camera. Ctrl + mouse wheel to zoom."
+    title="Click and drag to rotate. Double click to reset camera. Ctrl/alt/shift + mouse wheel to zoom."
   ></canvas>
   <svg
     ref="svg"
@@ -17,12 +16,15 @@
       d="M423.05 212.02c-38.2-38.9-93.87-68.43-105.09-189.2C317.7 10.59 307.71.75 295.42.75c-12.45 0-22.55 10.1-22.55 22.55v658.53c-38.15-28.12-95.44-37.04-152.16-19.13C35.86 689.5-15.57 766.18 5.84 833.97 27.25 901.76 113.39 935 198.24 908.2c71.66-22.63 119.49-80.85 119.72-139.24V251c14.67 3.46 143.84 18.57 143.84 158.94 0 91.49-35.58 139.35-56.59 174.76-5.21 8.78-2.67 20.11 5.79 25.84 8.1 5.5 19.05 4.08 25.45-3.33 25.68-29.72 84.79-109.03 84.79-209.38.01-99.93-57.48-144.35-98.19-185.81Z"
     />
   </svg>
-  <img class="art" :src="art" :style="{ opacity: playing ? 0.5 : 0 }" />
 </template>
 
 <script setup lang="ts">
 import { ref, onMounted, computed, onBeforeUnmount } from "vue";
-import { useEventListener, useMediaQuery } from "@vueuse/core";
+import {
+  useEventListener,
+  useMediaQuery,
+  useIntersectionObserver,
+} from "@vueuse/core";
 import {
   AddEquation,
   AdditiveBlending,
@@ -46,22 +48,24 @@ import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import { SVGLoader } from "three/examples/jsm/loaders/SVGLoader.js";
 import Stats from "three/addons/libs/stats.module.js";
 import { bounce, clamp, cos, degToRad, rand, sin, triangle } from "@/util/math";
-import { art, playing, smoothedLevel } from "@/global/state";
+import { playing, smoothedLevel } from "@/global/state";
 import { useInterval } from "@/util/composables";
 import { repeat } from "@/util/func";
-
-const reduceMotion = useMediaQuery("(prefers-reduced-motion: reduce)");
-
-/** particle spawn interval */
-const interval = computed(() =>
-  smoothedLevel.value <= 0.01
-    ? Infinity
-    : Math.pow(1 - smoothedLevel.value, 1) * 100
-);
 
 /** elements */
 const canvas = ref();
 const svg = ref();
+
+/** track if user doesn't like motion */
+const reduceMotion = useMediaQuery("(prefers-reduced-motion: reduce)");
+
+/** track if in view */
+const isVisible = ref(false);
+useIntersectionObserver(
+  canvas,
+  ([{ isIntersecting }]) => (isVisible.value = isIntersecting),
+  { threshold: 0 }
+);
 
 /** main objects */
 let renderer: WebGLRenderer;
@@ -70,6 +74,13 @@ let camera: PerspectiveCamera;
 let clock: Clock;
 let controls: OrbitControls;
 let stats: typeof Stats;
+
+/** particle spawn interval */
+const interval = computed(() =>
+  smoothedLevel.value <= 0.01 || reduceMotion.value
+    ? Infinity
+    : Math.pow(1 - smoothedLevel.value, 1) * 100
+);
 
 onMounted(() => {
   const debug = window.location.href.includes("debug");
@@ -80,8 +91,8 @@ onMounted(() => {
   camera = new PerspectiveCamera(45, 1, 0.01, 10000);
   clock = new Clock();
   controls = new OrbitControls(camera, renderer.domElement);
-  controls.enableDamping = true;
   controls.enablePan = false;
+  controls.enableRotate = window.matchMedia("(hover: hover)").matches;
   if (debug) {
     stats = new Stats();
     document.body.append(stats.dom);
@@ -170,6 +181,8 @@ onMounted(() => {
   /** generate particles */
   let angle = 0;
   const spawn = (increment = 0) => {
+    if (!isVisible.value) return;
+
     const particle = shape.clone();
     particle.geometry = shape.geometry.clone();
     particle.material = shape.material.clone();
@@ -204,6 +217,8 @@ onMounted(() => {
 
   let blend = 0;
   useEventListener(window, "keydown", ({ key }) => {
+    if (!isVisible.value) return;
+
     /** spawn a bunch of particles on command */
     if (key === "v") repeat(() => spawn(20), 360 / 20);
     /** change blending */
@@ -212,8 +227,13 @@ onMounted(() => {
 
   /** main frame loop */
   renderer.setAnimationLoop(() => {
+    if (!isVisible.value) return;
+
     /** factor of reference fps */
-    const d = Math.min(clock.getDelta() * 120, 1);
+    let d = Math.min(clock.getDelta() * 120, 1);
+
+    /** reduce motion */
+    if (reduceMotion.value) d = d / 4;
 
     /** lights */
     const lights = <PointLight[]>scene.getObjectsByProperty("name", "light");
@@ -230,7 +250,8 @@ onMounted(() => {
         light.userData.vz * d * (1 + smoothedLevel.value * 20);
 
       /** brightness */
-      light.intensity = 2 + smoothedLevel.value * 2;
+      if (!reduceMotion.value)
+        light.intensity = 1.5 + smoothedLevel.value * 1.5;
     }
 
     /** particles */
@@ -246,10 +267,9 @@ onMounted(() => {
       particle.rotation.z = degToRad(particle.userData.a);
 
       /** transparency */
-      // particle.renderOrder = particle.userData.life;
       const alpha = clamp(
         Math.min(
-          0.75 - Math.abs(particle.position.z) / 10,
+          0.5 - Math.pow(Math.abs(particle.position.z) / 10, 2),
           (2 * 300 - particle.userData.life * 2) / 300
         ),
         0,
@@ -273,9 +293,9 @@ onMounted(() => {
     }
 
     /** update */
-    controls.update();
     camera.updateProjectionMatrix();
     renderer.render(scene, camera);
+    controls?.update();
 
     if (debug) {
       stats?.update();
@@ -301,24 +321,10 @@ onBeforeUnmount(() => {
   z-index: -1;
   animation: fade 5s ease both;
   user-select: none;
-  touch-action: auto;
   transition: opacity 1s ease;
 }
 
 .canvas:focus {
   outline: none;
-}
-
-.art {
-  position: absolute;
-  max-width: 100%;
-  max-height: 100%;
-  /* transform: scale(1.25); */
-  /* filter: saturate(150%); */
-  mix-blend-mode: overlay;
-  -webkit-mask-image: radial-gradient(closest-side, white 0%, transparent 100%);
-  mask-image: radial-gradient(closest-side, white 0%, transparent 100%);
-  transition: opacity var(--fast);
-  pointer-events: none;
 }
 </style>

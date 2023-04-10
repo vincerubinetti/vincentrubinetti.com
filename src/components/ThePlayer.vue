@@ -118,7 +118,7 @@
           />
         </div>
 
-        <div class="controls-row">
+        <div v-if="!isIOS" class="controls-row">
           <AppButton
             class="mute-control button"
             :icon="muteIcon"
@@ -202,19 +202,18 @@
         />
         <span class="track-title">{{ t.title }}</span>
         <span class="track-tags">{{ t.tags.join(" ") }}</span>
-        <AppCount :count="t.plays" :flip="true">
-          <PlayIcon />
-        </AppCount>
+        <AppCount :icon="PlayIcon" :count="t.plays" :flip="true" />
       </AppButton>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { computed, ref, watch } from "vue";
+import { computed, onMounted, ref, watch } from "vue";
 import { useScriptTag } from "@vueuse/core";
 import { waitForEvent } from "@/util/func";
 import { max } from "@/util/math";
+import { useOs } from "@/util/composables";
 import { playing, level, art } from "@/global/state";
 import { promisifySc } from "@/util/soundcloud";
 import { formatTime, formatTimeVerbose, linkify } from "@/util/string";
@@ -246,6 +245,10 @@ type Props = {
 
 const props = defineProps<Props>();
 
+/** detect ios */
+const isIOS = useOs(/(iPhone|iPad)/g);
+
+/** objects */
 const iframe = ref<HTMLIFrameElement>();
 let widget: any;
 
@@ -272,30 +275,7 @@ type Track = {
   tags: string[];
 };
 /** list of tracks in playlist */
-const tracks = ref<Track[]>(
-  Array(10)
-    .fill({})
-    .map((_, index) => ({
-      id: index,
-      length: 4 * 60 * 1000,
-      waveform: "0 -10, 100 -10",
-      levels: [],
-      art: placeholder,
-      title: ". . .",
-      date: "",
-      description: "",
-      bandcamp: "",
-      plays: 0,
-      likes: 0,
-      comments: 0,
-      downloads: 0,
-      reposts: 0,
-      created: new Date(),
-      modified: new Date(),
-      url: "",
-      tags: [],
-    }))
-);
+const tracks = ref<Track[]>([]);
 
 /** state */
 const loading = ref(true);
@@ -319,20 +299,32 @@ const muteIcon = computed(() => {
   return VolumeHighIcon;
 });
 
+/** latest onReady run */
+let latest = Symbol();
+
 /** cache of full track info */
 const cache: Record<Props["id"], Track[]> = {};
 
 /** soundcloud callback - on widget ready */
 /** https://stackoverflow.com/questions/48550585/soundcloud-api-getsounds-only-returns-the-first-5-objects */
 const onReady = async () => {
-  const { id = "" } = props;
-
-  /** check if still latest/current playlist */
-  const isStale = () => id !== props.id;
+  /** last resort fallback countdown */
+  const fallback = window.setTimeout(() => {
+    onError("Tracks not loaded after a few seconds");
+  }, 3 * 1000);
 
   try {
+    /** capture playlist id, which can change partway through func */
+    const { id: playlist = "" } = props;
+
+    /** current onReady run */
+    const current = (latest = Symbol());
+
+    /** check if still latest onReady run */
+    const isCanceled = () => latest != current;
+
     /** load new tracks from cache */
-    const newTracks: Track[] = cache[id] || [];
+    const newTracks: Track[] = cache[playlist] || [];
 
     if (!newTracks.length) {
       /** get number of tracks */
@@ -340,7 +332,7 @@ const onReady = async () => {
       let sounds = await promisifySc<_Track[]>(
         (resolve) => widget.getSounds(resolve),
         (result) => !!result?.length,
-        isStale
+        isCanceled
       );
 
       /** fill-in missing track information */
@@ -380,10 +372,11 @@ const onReady = async () => {
           tags: getTags(sound.tag_list + ` "${sound.genre || ""}"`) || "",
         });
 
-        if (isStale()) throw Error("stale");
+        if (isCanceled()) throw Error("canceled");
 
         /** move to next track */
         widget.next();
+        widget.seekTo(0);
         widget.pause();
       }
 
@@ -393,7 +386,7 @@ const onReady = async () => {
       widget.pause();
 
       /** set cache */
-      cache[id] = newTracks;
+      cache[playlist] = newTracks;
     }
 
     /** finish loading */
@@ -410,7 +403,7 @@ const onReady = async () => {
     await promisifySc<_Track[]>(
       (resolve) => widget.getSounds(resolve),
       (result) => !!result?.length,
-      isStale
+      isCanceled
     );
 
     /** hook up callback events  */
@@ -419,9 +412,18 @@ const onReady = async () => {
     widget.bind(window.SC.Widget.Events.PAUSE, onPause);
     widget.bind(window.SC.Widget.Events.FINISH, onFinish);
     widget.bind(window.SC.Widget.Events.ERROR, onError);
+
+    /** cancel fallback */
+    window.clearTimeout(fallback);
   } catch (error) {
-    if ((error as Error).message.includes("stale")) console.info("STALE");
-    else onError(error);
+    if (
+      (error instanceof Error && error.message == "canceled") ||
+      (typeof error == "string" && error == "canceled")
+    ) {
+      console.info("CANCELED");
+      /** cancel fallback */
+      window.clearTimeout(fallback);
+    } else onError(error);
   }
 };
 
@@ -555,6 +557,11 @@ watch(
   () => props.id,
   async () => {
     /** reset state */
+    widget.unbind(window.SC.Widget.Events.PLAY_PROGRESS);
+    widget.unbind(window.SC.Widget.Events.PLAY);
+    widget.unbind(window.SC.Widget.Events.PAUSE);
+    widget.unbind(window.SC.Widget.Events.FINISH);
+    widget.unbind(window.SC.Widget.Events.ERROR);
     loading.value = true;
     playing.value = false;
     percent.value = 0;
@@ -593,7 +600,7 @@ const onClickWaveform = (event: MouseEvent) => {
   var { left, width } = element.getBoundingClientRect();
   const percent = (event.clientX - left) / width;
   widget.seekTo(percent * (track.value?.length || 0));
-  widget.play();
+  if (!playing.value) widget.play();
 };
 
 /** when user presses key on waveform */
@@ -621,7 +628,9 @@ const onClickTrack = (index: number) => {
 };
 
 /** when volume changes */
-watch([volume, muted], () => widget.setVolume(muted.value ? 0 : volume.value));
+watch([volume, muted], () => {
+  widget.setVolume(muted.value ? 0 : volume.value);
+});
 </script>
 
 <style scoped>
@@ -778,23 +787,25 @@ watch([volume, muted], () => widget.setVolume(muted.value ? 0 : volume.value));
   align-items: center;
   gap: 10px;
   padding: 0;
-  padding-right: 10px;
+  padding-right: 10px !important;
 }
 
 .track-art {
+  flex-shrink: 0;
   width: 40px;
   height: 40px;
 }
 
 .track-marker {
-  width: 0;
+  flex-shrink: 0;
+  height: 0.01em;
   opacity: 0.5;
-  transition-property: width, margin;
+  transition-property: height, margin;
   transition: var(--fast);
 }
 
 .track-marker[data-selected="true"] {
-  width: 15px;
+  height: 1em;
   margin: 0 5px 0 10px;
 }
 

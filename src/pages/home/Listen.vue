@@ -1,5 +1,5 @@
 <template>
-  <AppSection>
+  <AppSection id="listen">
     <div class="buttons">
       <AppButton
         v-for="({ title, id, icon }, index) of playlists"
@@ -55,7 +55,7 @@ const playlist = ref(playlists[0]);
 }
 
 .button > :deep(svg) {
-  height: 0 !important;
+  height: 0.01em !important;
   margin-right: -10px;
   transition: var(--fast);
   transition-property: height, margin;

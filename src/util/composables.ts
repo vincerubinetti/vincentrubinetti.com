@@ -1,5 +1,6 @@
-import { ComputedRef, onBeforeUnmount, ref, watch } from "vue";
+import { ComputedRef, onBeforeUnmount, onMounted, ref, watch } from "vue";
 
+/** interval that can speed up or slow down */
 export const useInterval = (func: Function, interval: ComputedRef<number>) => {
   const running = ref(false);
   let timeout: number;
@@ -16,4 +17,10 @@ export const useInterval = (func: Function, interval: ComputedRef<number>) => {
       run();
   });
   onBeforeUnmount(() => window.clearTimeout(timeout));
+};
+
+export const useOs = (regex: RegExp) => {
+  const os = ref(false);
+  onMounted(() => (os.value = regex.test(window.navigator.userAgent)));
+  return os;
 };

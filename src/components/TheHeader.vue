@@ -1,6 +1,7 @@
 <template>
   <header class="header">
     <TheBackground class="background" />
+    <img class="art" :src="art" :style="{ opacity: playing ? 0.5 : 0 }" />
     <TheLogo
       class="logo"
       :style="{
@@ -14,7 +15,7 @@
 <script setup lang="ts">
 import TheBackground from "@/components/TheBackground.vue";
 import TheLogo from "@/components/TheLogo.vue";
-import { playing } from "@/global/state";
+import { art, playing } from "@/global/state";
 </script>
 
 <style scoped>
@@ -28,8 +29,19 @@ import { playing } from "@/global/state";
   background: black;
   color: white;
   overflow: hidden;
-  box-shadow: 0 0 100px #9c27b040, 0 0 10px 2px #9c27b040;
+  box-shadow: var(--color-shadow);
   z-index: 0;
+}
+
+.art {
+  position: absolute;
+  max-width: 100%;
+  max-height: 100%;
+  mix-blend-mode: overlay;
+  -webkit-mask-image: radial-gradient(closest-side, white 0%, transparent 100%);
+  mask-image: radial-gradient(closest-side, white 0%, transparent 100%);
+  transition: opacity var(--fast);
+  pointer-events: none;
 }
 
 .logo {

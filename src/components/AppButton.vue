@@ -93,6 +93,7 @@ const _color = computed(() => types[props.type || ""].color);
   line-height: 1.2em;
   letter-spacing: inherit;
   text-decoration: none;
+  white-space: nowrap;
   cursor: pointer;
   transition: var(--fast);
   transition-property: background, color, box-shadow, transform;
@@ -123,6 +124,7 @@ const _color = computed(() => types[props.type || ""].color);
 
 .button[data-outline="true"]:where(:hover, :focus):after {
   animation: outline 0.3s linear;
+  will-change: clip-path, border-color;
 }
 
 @keyframes outline {
@@ -154,8 +156,8 @@ const _color = computed(() => types[props.type || ""].color);
 .button[data-design="glass"] {
   color: white;
   letter-spacing: 1px;
-  backdrop-filter: saturate(200%) blur(5px);
-  mix-blend-mode: screen;
+  -webkit-backdrop-filter: saturate(200%) blur(3px);
+  backdrop-filter: saturate(200%) blur(3px);
 }
 
 .button[data-design="glass"]:before {

@@ -19,7 +19,7 @@ export const promisifySc = <T>(
         reject("canceled");
         return;
       }
-      console.info("Try", _try + 1);
+      // console.info("Try", _try + 1);
       const result = await new Promise((resolve: Resolve<T>) => {
         func(resolve);
         window.setTimeout(() => resolve(undefined), interval);

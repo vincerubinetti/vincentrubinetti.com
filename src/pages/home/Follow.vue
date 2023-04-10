@@ -1,5 +1,10 @@
 <template>
-  <AppSection class="discography" :background="background" :dark="true">
+  <AppSection
+    id="follow"
+    class="discography"
+    :background="background"
+    :dark="true"
+  >
     <AppButton
       href="https://vincerubinetti.bandcamp.com/"
       :outline="true"
@@ -55,6 +60,7 @@ const links: { type: keyof typeof types; url: string }[] = [
 .discography {
   padding-top: 100px !important;
   padding-bottom: 100px !important;
+  align-items: flex-start !important;
 }
 
 .discography > p {
@@ -62,19 +68,29 @@ const links: { type: keyof typeof types; url: string }[] = [
 }
 
 .buttons {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 15px;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+@media (max-width: 800px) {
+  .discography {
+    align-items: center !important;
+  }
 }
 
 @media (max-width: 800px) {
   .buttons {
+    display: grid;
     grid-template-columns: repeat(2, 1fr);
   }
 }
+
 @media (max-width: 500px) {
   .buttons {
-    grid-template-columns: repeat(1, 1fr);
+    display: flex;
+    flex-direction: column;
   }
 }
 </style>

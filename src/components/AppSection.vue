@@ -1,13 +1,16 @@
 <template>
   <section ref="section" class="section" :data-dark="dark">
-    <img
-      v-if="background"
-      :src="background"
-      class="background"
-      :style="{
-        transform: `translateY(${translate}%) scale(${scale})`,
-      }"
-    />
+    <div v-if="background" class="background">
+      <img
+        class="image"
+        :src="background"
+        :style="{
+          opacity: 0,
+          transform: `translate(${translateX}%, ${translateY}%) scale(${scale})`,
+        }"
+      />
+      <div class="gradient"></div>
+    </div>
     <slot />
   </section>
 </template>
@@ -15,6 +18,7 @@
 <script setup lang="ts">
 import { computed, ref } from "vue";
 import { useElementBounding } from "@vueuse/core";
+import { clamp } from "@/util/math";
 
 const scale = 2;
 
@@ -28,13 +32,17 @@ defineProps<Props>();
 const section = ref();
 
 const { top, height } = useElementBounding(section);
-const translate = computed(() => {
+
+const percent = computed(() => {
   if (typeof window === "undefined") return 0;
   const percent =
     (window.innerHeight - top.value) / (window.innerHeight + height.value);
-  const offset = 2 * (percent - 0.5);
-  return offset * (scale - 1) * 50;
+  clamp(percent, 0, 1);
+  return percent;
 });
+
+const translateX = computed(() => -(scale - 1) * 50);
+const translateY = computed(() => 2 * (percent.value - 0.5) * (scale - 1) * 50);
 </script>
 
 <style scoped>
@@ -44,8 +52,7 @@ const translate = computed(() => {
   flex-direction: column;
   align-items: center;
   gap: 40px;
-  padding: 60px max(40px, calc((100% - 1100px) / 2));
-  overflow: hidden;
+  padding: 60px max(60px, calc((100% - 1100px) / 2));
   z-index: 0;
 }
 
@@ -56,22 +63,42 @@ const translate = computed(() => {
 .section[data-dark="true"] {
   background: black;
   color: white;
-  box-shadow: 0 0 100px #9c27b040, 0 0 10px 2px #9c27b040;
+  box-shadow: var(--color-shadow);
   z-index: 1;
 }
 
 .background {
   position: absolute;
   inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  opacity: 0.15;
+  overflow: hidden;
   z-index: -1;
 }
 
+.image {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 100%;
+  opacity: 0.25 !important;
+  filter: saturate(50%);
+  -webkit-mask-image: linear-gradient(90deg, transparent, white);
+  mask-image: linear-gradient(90deg, transparent, white);
+}
+
+.gradient {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    var(--tertiary),
+    var(--secondary),
+    var(--primary)
+  );
+  opacity: 0.25;
+}
+
 @media (max-width: 600px) {
-  section {
+  .section {
     padding-left: 20px;
     padding-right: 20px;
   }

@@ -1,5 +1,11 @@
 <template>
-  <input class="input" type="range" :value="modelValue" @input="onInput" />
+  <input
+    class="input"
+    type="range"
+    :value="modelValue"
+    @input="onInput"
+    @change="onInput"
+  />
 </template>
 
 <script setup lang="ts">
