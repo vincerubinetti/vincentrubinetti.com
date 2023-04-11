@@ -1,15 +1,22 @@
 <template>
   <header>
-    <AppSection class="header" :dark="true" :background="true">
-      <TheBackground />
-      <img class="art" :src="art" :style="{ opacity: playing ? 1 : 0 }" />
-      <TheLogo
-        class="logo"
-        :style="{
-          opacity: playing ? 0 : 1,
-          pointerEvents: playing ? 'none' : '',
-        }"
+    <AppSection class="header" :dark="true" :background="true" :data-big="big">
+      <TheBackground v-if="big" />
+      <img
+        v-if="big"
+        class="art"
+        :src="art"
+        :style="{ opacity: playing ? 1 : 0 }"
+        alt=""
       />
+      <a :href="!big ? '/' : undefined" class="logo">
+        <TheLogo
+          :style="{
+            opacity: playing ? 0 : 1,
+            pointerEvents: playing ? 'none' : '',
+          }"
+        />
+      </a>
     </AppSection>
   </header>
 </template>
@@ -18,6 +25,12 @@
 import TheBackground from "@/components/TheBackground.vue";
 import TheLogo from "@/components/TheLogo.vue";
 import { art, playing } from "@/global/state";
+
+type Props = {
+  big?: boolean;
+};
+
+defineProps<Props>();
 </script>
 
 <style scoped>
@@ -26,13 +39,16 @@ import { art, playing } from "@/global/state";
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 500px;
   padding: 40px;
   background: black;
   color: white;
   overflow: hidden;
   box-shadow: 0 0 100px #9c27b080;
   z-index: 0;
+}
+
+.header[data-big="true"] {
+  min-height: 500px;
 }
 
 .art {
@@ -47,11 +63,13 @@ import { art, playing } from "@/global/state";
 }
 
 .logo {
-  transition: opacity 1s ease;
+  transition: opacity var(--slow);
 }
 
 .logo {
+  display: flex;
   width: 100%;
   max-width: 500px;
+  color: inherit;
 }
 </style>

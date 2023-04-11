@@ -1,5 +1,5 @@
 <template>
-  <svg viewBox="0 0 585 100">
+  <svg viewBox="0 0 585 95">
     <defs>
       <mask id="stroke">
         <path
@@ -168,10 +168,10 @@
         Z
       "
     />
-    <text x="135" y="13" class="title" role="heading" aria-level="1">
+    <text x="135" y="14" class="title" role="heading" aria-level="1">
       VINCENT RUBINETTI
     </text>
-    <text x="139" y="63" class="subtitle">COMPOSER, PRODUCER, AND MORE</text>
+    <text x="139" y="64" class="subtitle">COMPOSER, PRODUCER, AND MORE</text>
   </svg>
 </template>
 

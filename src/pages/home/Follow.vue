@@ -1,5 +1,12 @@
 <template>
-  <AppSection id="follow" class="follow" :background="background" :dark="true">
+  <AppSection
+    v-appear
+    id="follow"
+    heading="Follow"
+    class="follow"
+    :background="background"
+    :dark="true"
+  >
     <AppButton
       href="https://vincerubinetti.bandcamp.com/"
       :outline="true"
@@ -14,7 +21,7 @@
 
     <div class="spacer" />
 
-    <div class="buttons">
+    <div v-appear class="buttons">
       <AppButton
         v-for="(link, index) in links"
         :key="index"

@@ -1,0 +1,14 @@
+---
+import Header from "@/components/TheHeader.vue";
+import Studio from "@/pages/studio/Studio.vue";
+import Layout from "@/layouts/Layout.astro";
+import Footer from "@/components/TheFooter.vue";
+---
+
+<Layout title="Studio | Vincent Rubinetti">
+  <Header client:idle />
+  <main>
+    <Studio client:idle />
+  </main>
+  <Footer client:idle />
+</Layout>

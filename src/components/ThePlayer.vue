@@ -18,11 +18,11 @@
     "
   />
 
-  <div v-if="!error" id="listen-player" role="tabpanel" class="player">
+  <div v-if="!error" id="listen-player" class="player">
     <div class="current" :data-loading="loading">
       <div class="art">
-        <img :src="track?.art || placeholder" />
-        <img :src="track?.art || placeholder" />
+        <img :src="track?.art || placeholder" alt="" />
+        <img :src="track?.art || placeholder" alt="album art" />
       </div>
 
       <div class="info">
@@ -30,12 +30,12 @@
           {{ track?.title }}
         </div>
 
-        <div class="counts">
+        <div v-appear class="counts">
           <AppCount
             v-if="track?.bandcamp"
-            v-tippy="'High quality download on Bandcamp'"
             :to="track?.bandcamp"
             :icon="DownloadIcon"
+            v-tippy="'High quality download on Bandcamp'"
           />
           <AppCount
             v-if="track?.description"
@@ -43,12 +43,12 @@
             tabindex="0"
             v-tippy="linkify(track?.description)"
           />
-
           <AppCount
             v-if="track?.date"
             :icon="DateIcon"
             :count="track?.date"
-            :aria-label="`song was finished ${track?.date}`"
+            v-tippy="'Date when song was finished'"
+            tabindex="0"
           />
           <AppCount
             v-if="track?.plays"
@@ -56,7 +56,6 @@
             :count="track?.plays"
             :to="track?.url"
             v-tippy="'Plays on SoundCloud'"
-            :aria-label="`${track?.plays} plays on SoundCloud`"
           />
           <AppCount
             v-if="track?.likes"
@@ -64,7 +63,6 @@
             :count="track?.likes"
             :to="track?.url"
             v-tippy="'Likes on SoundCloud'"
-            :aria-label="`${track?.likes} likes on SoundCloud`"
           />
           <AppCount
             v-if="track?.downloads"
@@ -72,7 +70,6 @@
             :count="track?.downloads"
             :to="track?.url"
             v-tippy="'Downloads on SoundCloud'"
-            :aria-label="`${track?.downloads} downloads on SoundCloud`"
           />
           <AppCount
             v-if="track?.comments"
@@ -80,7 +77,6 @@
             :count="track?.comments"
             :to="track?.url"
             v-tippy="'Comments on SoundCloud'"
-            :aria-label="`${track?.comments} comments on SoundCloud`"
           />
           <AppCount
             v-if="track?.reposts"
@@ -88,13 +84,12 @@
             :count="track?.reposts"
             :to="track?.url"
             v-tippy="'Reposts on SoundCloud'"
-            :aria-label="`${track?.reposts} reposts on SoundCloud`"
           />
         </div>
       </div>
 
       <div class="controls">
-        <div class="controls-row">
+        <div v-appear class="controls-row">
           <AppButton
             class="play-control"
             :icon="PreviousIcon"
@@ -118,7 +113,7 @@
           />
         </div>
 
-        <div v-if="!isIOS" class="controls-row">
+        <div v-if="!isIOS" v-appear class="controls-row">
           <AppButton
             class="mute-control button"
             :icon="VolumeIcon"
@@ -185,7 +180,7 @@
       </div>
     </div>
 
-    <div class="tracks" :data-loading="loading">
+    <div v-appear class="tracks" :data-loading="loading">
       <AppButton
         v-for="(t, index) in tracks"
         :key="index"
@@ -194,7 +189,7 @@
         :aria-label="`play ${t.title}`"
         :aria-current="t.id === track?.id"
       >
-        <img :src="t.art" class="track-art" />
+        <img :src="t.art" class="track-art" alt="" />
         <NoteIcon
           class="track-marker"
           :data-selected="t.id === track?.id"
@@ -210,7 +205,7 @@
 
 <script setup lang="ts">
 import { computed, onMounted, ref, watch } from "vue";
-import { useScriptTag } from "@vueuse/core";
+import { useEventListener, useScriptTag } from "@vueuse/core";
 import { waitForEvent } from "@/util/func";
 import { max } from "@/util/math";
 import { useOs } from "@/util/composables";
@@ -514,6 +509,7 @@ const onPlay = async () => {
   track.value = tracks.value[index];
   art.value = track.value.art;
   playing.value = true;
+  window.dispatchEvent(new Event("stop-youtube"));
 };
 
 /** soundcloud callback - on track pause */
@@ -575,6 +571,7 @@ watch(
 /** when user clicks controls */
 const onClickPrevious = () => {
   if (position.value < 2) widget.prev();
+  percent.value = 0;
   widget.seekTo(0);
   widget.play();
 };
@@ -585,6 +582,7 @@ const onClickPause = () => {
   widget.pause();
 };
 const onClickNext = () => {
+  percent.value = 0;
   widget.next();
   widget.seekTo(0);
   widget.play();
@@ -622,6 +620,7 @@ const onKeyWaveform = (event: KeyboardEvent) => {
 
 /** when user selects track */
 const onClickTrack = (index: number) => {
+  percent.value = 0;
   widget.skip(index);
   widget.seekTo(0);
   track.value = tracks.value[index];
@@ -630,6 +629,11 @@ const onClickTrack = (index: number) => {
 /** when volume changes */
 watch([volume, muted], () => {
   widget.setVolume(muted.value ? 0 : volume.value);
+});
+
+onMounted(() => {
+  /** allow global event to stop playback */
+  useEventListener(window, "stop-soundcloud", onClickPause);
 });
 </script>
 

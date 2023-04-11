@@ -1,19 +1,28 @@
 <template>
-  <AppSection id="contact">
+  <AppSection v-appear id="contact" heading="Contact">
     <p>
       To use the <b>3Blue1Brown music</b>,
-      <a href="https://vincerubinetti.github.io/using-the-music-of-3blue1brown/"
+      <a
+        href="https://vincerubinetti.github.io/using-the-music-of-3blue1brown/"
+        target="_blank"
         >go here</a
       >. If you want to use my other music in your videos/projects, commission
       custom music or other services, or just talk about anything interesting,
       please write me a message:
     </p>
 
-    <div v-html="email" />
+    <div v-html="vinceEmail" v-appear />
 
-    <form class="form" @submit="onSubmit">
-      <input class="textbox" required name="name" placeholder="Full Name" />
+    <form v-appear class="form" @submit="onSubmit">
       <input
+        v-model="name"
+        class="textbox"
+        required
+        name="name"
+        placeholder="Full Name"
+      />
+      <input
+        v-model="email"
         class="textbox"
         required
         type="email"
@@ -21,6 +30,7 @@
         placeholder="Email"
       />
       <textarea
+        v-model="message"
         class="textbox"
         required
         name="message"
@@ -34,8 +44,13 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
+import { useLocalStorage, useScriptTag } from "@vueuse/core";
 
-const email = ref("");
+const name = useLocalStorage("name", "");
+const email = useLocalStorage("email", "");
+const message = useLocalStorage("message", "");
+
+const vinceEmail = ref("");
 
 onMounted(() => {
   /** encode email link to reduce spam */
@@ -45,7 +60,9 @@ onMounted(() => {
       .split("")
       .map((char) => `&#${char.charCodeAt(0)};`)
       .join("");
-  email.value = `<a href="${encode("mailto:" + address)}">${encode(address)}</a>`;
+  vinceEmail.value = `<a href="${encode(
+    "mailto:" + address
+  )}" target="_blank">${encode(address)}</a>`;
 });
 
 /** google captcha */
@@ -110,6 +127,8 @@ const onSubmit = async (event: Event) => {
       "Sorry, there was an issue sending your message. Try emailing me directly; my email address is right next to the contact form."
     );
 };
+
+useScriptTag("https://www.google.com/recaptcha/api.js");
 </script>
 
 <style scoped>

@@ -1,6 +1,6 @@
 <template>
-  <AppSection id="Listen">
-    <div class="buttons">
+  <AppSection id="listen" heading="Listen">
+    <div v-appear class="buttons">
       <AppButton
         v-for="({ title, id, icon }, index) of playlists"
         :key="index"
@@ -10,10 +10,9 @@
         :outline="playlist.id !== id"
         :design="playlist.id === id ? 'dark' : undefined"
         :data-active="playlist.id === id"
-        :data-draw="playlist.id === id"
+        :data-draw="playlist.id === id ? '' : undefined"
         :aria-current="playlist.id === id"
         :aria-label="`load ${title} playlist`"
-        role="tab"
         aria-controls="listen-player"
         @click="playlist = playlists[index]"
       />
@@ -48,7 +47,7 @@ const playlist = ref(playlists[0]);
 .buttons {
   display: grid;
   grid-template-columns: repeat(6, 1fr);
-  gap: 10px 30px;
+  gap: 20px;
   width: 100%;
 }
 
@@ -68,7 +67,7 @@ const playlist = ref(playlists[0]);
   margin-right: 0;
 }
 
-@media (max-width: 1180px) {
+@media (max-width: 900px) {
   .buttons {
     grid-template-columns: repeat(3, 1fr);
   }
@@ -80,8 +79,9 @@ const playlist = ref(playlists[0]);
   }
 }
 
-@media (max-width: 350px) {
+@media (max-width: 400px) {
   .buttons {
+    gap: 10px;
     grid-template-columns: repeat(1, 1fr);
   }
 }

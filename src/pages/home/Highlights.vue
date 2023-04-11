@@ -1,31 +1,31 @@
 <template>
-  <AppSection id="Highlights">
-    <div class="gallery">
+  <AppSection v-appear id="highlights" heading="Highlights">
+    <div v-appear class="gallery">
       <AppButton
         v-for="(highlight, index) in highlights"
         :key="index"
         class="button"
-        role="tab"
         aria-controls="highlights-player"
         :aria-label="highlight.title"
-        @click="selected = highlight"
+        @click="onClickHighlight(highlight)"
       >
         <div class="overlay">
           <div class="title">{{ highlight.title }}</div>
         </div>
-        <img :src="highlight.image" class="image" />
+        <img :src="highlight.image" class="image" alt="" />
       </AppButton>
     </div>
 
-    <div ref="player" id="highlights-player" class="player">
+    <div v-appear ref="theater" id="highlights-player" class="player">
       <iframe
+        ref="iframe"
         class="iframe"
         style="aspect-ratio: 16 / 9; min-height: 200px"
         :src="src"
         allowfullscreen
-        title="Video player"
+        allow="autoplay"
+        frameborder="no"
         loading="lazy"
-        role="tabpanel"
       />
 
       <h3>{{ selected.title }}</h3>
@@ -36,7 +36,7 @@
         <span>{{ selected.genre }}</span>
       </div>
       <p v-html="selected.description" />
-      <div class="buttons">
+      <div v-appear class="buttons">
         <AppButton
           v-for="(link, index) in selected.links"
           :key="index"
@@ -51,7 +51,8 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref, watch } from "vue";
+import { computed, onMounted, ref, watch } from "vue";
+import { useEventListener, useScriptTag } from "@vueuse/core";
 import type { icons } from "@/components/AppButton.vue";
 import harmony from "@/assets/harmony-of-a-hunter-returns.jpg";
 import emerald from "@/assets/emerald-cloud-lab.jpg";
@@ -61,8 +62,7 @@ import hacky from "@/assets/hacky-zack.jpg";
 import high from "@/assets/high-noon-revolver.jpg";
 import ink from "@/assets/ink.jpg";
 import remixes from "@/assets/remixes-and-remakes.jpg";
-
-const player = ref();
+import { waitForEvent } from "@/util/func";
 
 type Highlight = {
   title: string;
@@ -83,7 +83,7 @@ const highlights: Highlight[] = [
     credits: "Music, orchestration 2022",
     genre: "Orchestral, electronic",
     description:
-      "Arrangements of three beloved tracks from the Metroid series, featured on the acclaimed fan album <a href='https://harmony.shinesparkers.net/'>Harmony of a Hunter Returns</a> celebrating the 35 year anniversary of Metroid.",
+      "Arrangements of three beloved tracks from the Metroid series, featured on the acclaimed fan album <a href='https://harmony.shinesparkers.net/' target='_blank'>Harmony of a Hunter Returns</a> celebrating the 35 year anniversary of Metroid.",
     links: [
       {
         url: "https://vincerubinetti.bandcamp.com/album/metroid",
@@ -99,7 +99,7 @@ const highlights: Highlight[] = [
     credits: "Music, sound-mixing, 2019",
     genre: "Classical, hybrid electronic",
     description:
-      "<a href='https://www.emeraldcloudlab.com/'>Emerald Cloud Lab</a> is an advanced remote laboratory that allows scientists to automate their experiments. Narration by Grant Sanderson.",
+      "<a href='https://www.emeraldcloudlab.com/' target='_blank'>Emerald Cloud Lab</a> is an advanced remote laboratory that allows scientists to automate their experiments. Narration by Grant Sanderson.",
     links: [
       {
         url: "https://vincerubinetti.bandcamp.com/album/emerald-cloud-lab",
@@ -115,7 +115,7 @@ const highlights: Highlight[] = [
     credits: "Music, 2016 - present",
     genre: "Classical, hybrid electronic",
     description:
-      "<a href='https://www.3blue1brown.com/'>3Blue1Brown</a> is a <a href='https://www.youtube.com/channel/UCYO_jab_esuFRV4b17AJtAw'>Youtube channel</a> that produces elucidating and captivating videos about mathematical concepts, with exquisite animations and a focus on intuitive understanding.",
+      "<a href='https://www.3blue1brown.com/' target='_blank'>3Blue1Brown</a> is a <a href='https://www.youtube.com/channel/UCYO_jab_esuFRV4b17AJtAw' target='_blank'>Youtube channel</a> that produces elucidating and captivating videos about mathematical concepts, with exquisite animations and a focus on intuitive understanding.",
     links: [
       {
         url: "https://vincerubinetti.bandcamp.com/album/the-music-of-3blue1brown",
@@ -139,10 +139,10 @@ const highlights: Highlight[] = [
     image: minute,
     video: "zcqZHYo7ONs",
     credits:
-      "Music, w/ <a href='https://soundcloud.com/drschroeder'>Nathaniel Schroeder</a>, 2017",
+      "Music, w/ <a href='https://soundcloud.com/drschroeder' target='_blank'>Nathaniel Schroeder</a>, 2017",
     genre: "Classical, soft-rock",
     description:
-      "A collaboration video project between <a href='https://www.youtube.com/user/minutephysics'>Minute Physics</a> and <a href='https://www.youtube.com/channel/UCYO_jab_esuFRV4b17AJtAw'>3Blue1Brown</a> on Bell's Theorem.",
+      "A collaboration video project between <a href='https://www.youtube.com/user/minutephysics' target='_blank'>Minute Physics</a> and <a href='https://www.youtube.com/channel/UCYO_jab_esuFRV4b17AJtAw' target='_blank'>3Blue1Brown</a> on Bell's Theorem.",
     links: [
       {
         url: "https://www.youtube.com/watch?v=zcqZHYo7ONs",
@@ -272,20 +272,61 @@ const highlights: Highlight[] = [
   },
 ];
 
+const theater = ref();
+const iframe = ref();
+let player: any;
+
 const selected = ref<Highlight>(highlights[0]);
 
 const src = computed(() => {
   const { playlist = "", video = "" } = selected.value;
+  const params = new URLSearchParams();
+  if (playlist) params.set("list", playlist);
+  params.set("autoplay", "1");
+  params.set("enablejsapi", "1");
+  if (typeof window !== "undefined") params.set("origin", window.location.host);
   if (playlist)
-    return `https://www.youtube.com/embed/videoseries?list=${playlist}&autoplay=1`;
-  else if (video) return `https://www.youtube.com/embed/${video}?autoplay=1`;
+    return `https://www.youtube.com/embed/videoseries?${params.toString()}`;
+  else if (video)
+    return `https://www.youtube.com/embed/${video}?${params.toString()}`;
   else return "";
 });
 
-watch(selected, () => {
-  console.log(player.value);
-  player.value?.scrollIntoView({ behavior: "smooth", block: "start" });
+const onClickHighlight = async (highlight: Highlight) => {
+  selected.value = highlight;
+  theater.value?.scrollIntoView({ behavior: "smooth", block: "start" });
+  window.dispatchEvent(new Event("stop-soundcloud"));
+};
+
+onMounted(() => {
+  window.onYouTubeIframeAPIReady = onLoad;
+
+  /** allow global event to stop playback */
+  useEventListener(window, "stop-youtube", () => {
+    player?.stopVideo?.();
+  });
 });
+
+/** load youtube player */
+const onLoad = () => {
+  player = new window.YT.Player(iframe.value, {
+    events: {
+      onStateChange: (event: any) => {
+        if (event.data === 1)
+          window.dispatchEvent(new Event("stop-soundcloud"));
+      },
+    },
+  });
+};
+
+/** when selected src changes */
+watch(src, async () => {
+  await waitForEvent(iframe.value, "load");
+  onLoad();
+});
+
+/** load youtube api script */
+useScriptTag("https://www.youtube.com/iframe_api");
 </script>
 
 <style scoped>
@@ -329,7 +370,6 @@ watch(selected, () => {
 
 .iframe {
   width: 100%;
-  border: none;
   aspect-ratio: 16 / 9;
   min-height: 200px;
 }

@@ -86,7 +86,7 @@ onMounted(() => {
   const debug = window.location.href.includes("debug");
 
   /** main objects */
-  renderer = new WebGLRenderer({ canvas: canvas.value });
+  renderer = new WebGLRenderer({ canvas: canvas.value, alpha: true });
   scene = new Scene();
   camera = new PerspectiveCamera(45, 1, 0.01, 10000);
   clock = new Clock();
@@ -318,9 +318,9 @@ onBeforeUnmount(() => {
   width: 100% !important;
   height: 100% !important;
   z-index: -2;
-  animation: fade 5s ease both;
   user-select: none;
-  transition: opacity 1s ease, filter 1s ease;
+  transition: var(--slow);
+  transition-property: opacity, filter;
 }
 
 .canvas:focus {

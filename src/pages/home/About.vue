@@ -1,7 +1,13 @@
 <template>
-  <AppSection id="About" class="about" :dark="true" :background="background">
-    <div class="row">
-      <img :src="profile" class="profile" />
+  <AppSection
+    id="about"
+    heading="About"
+    class="about"
+    :dark="true"
+    :background="background"
+  >
+    <div v-appear class="row">
+      <img :src="profile" class="profile" alt="picture of vince"/>
       <p class="p">
         I am a life-long lover of music. Over the past 10+ years I've worked on
         video games, videos, advertisements, ensemble pieces, and a variety of
@@ -12,7 +18,7 @@
       </p>
     </div>
 
-    <div class="buttons">
+    <div v-appear class="buttons">
       <AppButton
         v-for="(link, index) in links"
         :key="index"

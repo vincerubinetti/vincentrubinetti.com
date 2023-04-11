@@ -1,12 +1,16 @@
 <template>
   <component
     :is="component"
+    ref="button"
     class="button"
     :href="href"
     :data-outline="outline"
     :data-design="design"
     :data-text="!!text"
-    :style="{ '--color': color }"
+    :style="{
+      '--color': color,
+      '--outline-duration': width + height + 200 + 'ms',
+    }"
     target="_blank"
   >
     <component v-if="IconComponent" :is="IconComponent" class="icon" />
@@ -27,6 +31,7 @@ import HeadphonesIcon from "@/assets/headphones.svg?component";
 import LeafIcon from "@/assets/leaf.svg?component";
 import NotesIcon from "@/assets/notes.svg?component";
 import EnvelopeIcon from "@/assets/envelope.svg?component";
+import { useElementSize } from "@vueuse/core";
 
 export const icons = {
   "": {
@@ -81,7 +86,7 @@ export const icons = {
 </script>
 
 <script setup lang="ts">
-import { FunctionalComponent, computed } from "vue";
+import { FunctionalComponent, computed, ref } from "vue";
 
 type Props = {
   icon?: keyof typeof icons | FunctionalComponent;
@@ -93,6 +98,8 @@ type Props = {
 
 const props = defineProps<Props>();
 
+const button = ref();
+
 const component = computed(() => (props.href ? "a" : "button"));
 
 const IconComponent = computed(() =>
@@ -101,6 +108,10 @@ const IconComponent = computed(() =>
 const color = computed(() =>
   typeof props.icon === "string" ? icons[props.icon].color : ""
 );
+
+const { width, height } = useElementSize(button, undefined, {
+  box: "border-box",
+});
 </script>
 
 <style scoped>
@@ -153,28 +164,37 @@ const color = computed(() =>
 }
 
 .button[data-outline="true"]:where(:hover, :focus):after {
-  animation: outline 0.3s linear;
+  animation: outline var(--outline-duration) linear;
   will-change: clip-path, border-color;
 }
 
 @keyframes outline {
   0%,
   100% {
-    border-color: transparent;
     clip-path: inset(0 0 97% 0);
   }
-
   25% {
-    border-color: var(--primary);
     clip-path: inset(0 97% 0 0);
   }
   50% {
-    border-color: var(--secondary);
     clip-path: inset(97% 0 0 0);
   }
   75% {
-    border-color: var(--tertiary);
     clip-path: inset(0 0 0 97%);
+  }
+
+  0%,
+  100% {
+    border-color: transparent;
+  }
+  10% {
+    border-color: var(--primary);
+  }
+  50% {
+    border-color: var(--secondary);
+  }
+  90% {
+    border-color: var(--tertiary);
   }
 }
 
@@ -195,7 +215,7 @@ const color = computed(() =>
   position: absolute;
   inset: 0;
   border-radius: inherit;
-  background: var(--gray);
+  background: white;
   opacity: 0.25;
   z-index: -1;
   transition: var(--fast);

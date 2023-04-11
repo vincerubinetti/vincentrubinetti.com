@@ -18,6 +18,7 @@
 
   --rounded: 5px;
   --fast: 0.35s ease;
+  --slow: 1s ease;
   --shadow: 1px 2px 10px #40405020;
 }
 
@@ -50,12 +51,19 @@ h3 {
   margin: 0;
   width: 100%;
   color: var(--dark-gray);
-  text-align: left;
   font-size: var(--large);
   font-weight: inherit;
   line-height: 1.5em;
   text-transform: uppercase;
   letter-spacing: 0.5px;
+}
+
+h2 {
+  text-align: center;
+}
+
+img {
+  max-width: 100%;
 }
 
 p {
@@ -77,7 +85,22 @@ svg {
   overflow: visible;
 }
 
-[data-draw="true"]:where(:hover, :focus) path {
+[data-appear] {
+  animation: appear 1s both;
+}
+
+@keyframes appear {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+[data-draw]:where(:hover, :focus) path {
   stroke-dasharray: var(--length);
   animation: draw 1s both;
 }

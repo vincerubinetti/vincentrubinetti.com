@@ -1,12 +1,12 @@
 <template>
   <section
     ref="section"
-    :id="(id || '').split(' ').join('-').toLowerCase()"
+    :id="id ? id : undefined"
     class="section"
     :data-dark="dark"
   >
-    <h2 v-if="id" class="heading visually-hidden">
-      {{ id }}
+    <h2 v-if="heading" class="heading visually-hidden">
+      {{ heading }}
     </h2>
     <div v-if="background" class="background" aria-hidden="true">
       <img
@@ -17,6 +17,7 @@
           transform: `translate(0%, ${translate}%) scale(${scale})`,
           opacity: clamp(width - 300, 0, 1000) / 1000,
         }"
+        alt=""
       />
       <div class="color" />
     </div>
@@ -32,6 +33,7 @@ import { clamp } from "@/util/math";
 
 type Props = {
   id?: string;
+  heading?: string;
   background?: string | boolean;
   dark?: boolean;
 };
