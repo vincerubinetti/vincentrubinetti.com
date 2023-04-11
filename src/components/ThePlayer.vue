@@ -2,7 +2,7 @@
   <iframe
     ref="iframe"
     class="iframe"
-    :src="`https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/${id}&amp;amp;color=ff5500&amp;amp;auto_play=false&amp;amp;hide_related=true&amp;amp;show_comments=true&amp;amp;show_user=true&amp;amp;show_reposts=false`"
+    :src="`https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/${playlist}&amp;amp;color=ff5500&amp;amp;auto_play=false&amp;amp;hide_related=true&amp;amp;show_comments=true&amp;amp;show_user=true&amp;amp;show_reposts=false`"
     allow="autoplay"
     frameborder="no"
     loading="lazy"
@@ -16,13 +16,13 @@
             pointerEvents: 'none',
           }
     "
-  ></iframe>
+  />
 
-  <div v-if="!error" class="player">
+  <div v-if="!error" id="listen-player" role="tabpanel" class="player">
     <div class="current" :data-loading="loading">
       <div class="art">
-        <img :src="track?.art" />
-        <img :src="track?.art" />
+        <img :src="track?.art || placeholder" />
+        <img :src="track?.art || placeholder" />
       </div>
 
       <div class="info">
@@ -121,7 +121,7 @@
         <div v-if="!isIOS" class="controls-row">
           <AppButton
             class="mute-control button"
-            :icon="muteIcon"
+            :icon="VolumeIcon"
             @click="muted = !muted"
             :aria-label="muted ? 'unmute' : 'mute'"
           />
@@ -151,13 +151,13 @@
         :aria-label="formatTimeVerbose(position)"
       >
         <polygon
-          fill="#808080"
+          fill="var(--gray)"
           :style="{ transform: 'scaleY(-0.35)' }"
           opacity="0.15"
           :points="track?.waveform"
         />
         <polygon
-          :fill="playing ? 'var(--gray)' : '#808080'"
+          :fill="playing ? 'var(--dark-gray)' : 'var(--gray)'"
           opacity="0.15"
           :points="track?.waveform"
           :style="{
@@ -165,9 +165,9 @@
             'clip-path': `inset(0 ${percentLeft}% 0 0)`,
           }"
         />
-        <polygon fill="#808080" opacity="0.5" :points="track?.waveform" />
+        <polygon fill="var(--gray)" opacity="0.5" :points="track?.waveform" />
         <polygon
-          :fill="playing ? 'var(--gray)' : '#808080'"
+          :fill="playing ? 'var(--dark-gray)' : 'var(--gray)'"
           :points="track?.waveform"
           :style="{
             'clip-path': `inset(0 ${percentLeft}% 0 0)`,
@@ -240,7 +240,7 @@ import placeholder from "@/assets/placeholder.jpg";
 
 type Props = {
   /** playlist id */
-  id: string;
+  playlist: string;
 };
 
 const props = defineProps<Props>();
@@ -291,7 +291,7 @@ const position = computed(
   () => (percent.value * (track.value?.length || 0)) / 1000
 );
 const length = computed(() => (track.value?.length || 0) / 1000);
-const muteIcon = computed(() => {
+const VolumeIcon = computed(() => {
   if (muted.value) return VolumeMutedIcon;
   if (volume.value < 25) return VolumeNoneIcon;
   if (volume.value < 50) return VolumeLowIcon;
@@ -303,7 +303,7 @@ const muteIcon = computed(() => {
 let latest = Symbol();
 
 /** cache of full track info */
-const cache: Record<Props["id"], Track[]> = {};
+const cache: Record<Props["playlist"], Track[]> = {};
 
 /** soundcloud callback - on widget ready */
 /** https://stackoverflow.com/questions/48550585/soundcloud-api-getsounds-only-returns-the-first-5-objects */
@@ -315,7 +315,7 @@ const onReady = async () => {
 
   try {
     /** capture playlist id, which can change partway through func */
-    const { id: playlist = "" } = props;
+    const { playlist = "" } = props;
 
     /** current onReady run */
     const current = (latest = Symbol());
@@ -554,7 +554,7 @@ useScriptTag("https://w.soundcloud.com/player/api.js", onLoad);
 
 /** when playlist switched */
 watch(
-  () => props.id,
+  () => props.playlist,
   async () => {
     /** reset state */
     widget.unbind(window.SC.Widget.Events.PLAY_PROGRESS);
@@ -677,7 +677,6 @@ watch([volume, muted], () => {
   width: 100px;
   height: 100px;
   flex-shrink: 0;
-  box-shadow: var(--shadow);
   align-self: flex-start;
 }
 
@@ -689,9 +688,8 @@ watch([volume, muted], () => {
 }
 
 .art > *:not(:last-child) {
-  filter: blur(10px) brightness(200%) saturate(200%);
+  filter: blur(10px) saturate(200%);
   opacity: 0.5;
-  z-index: -1;
 }
 
 .info {
@@ -780,6 +778,7 @@ watch([volume, muted], () => {
   display: flex;
   flex-direction: column;
   gap: 5px;
+  min-height: 300px;
 }
 
 .track {
@@ -819,7 +818,7 @@ watch([volume, muted], () => {
   66%,
   100% {
     opacity: 0.5;
-    color: var(--gray);
+    color: var(--dark-gray);
     transform: scale(1);
   }
   16.5%,

@@ -16,7 +16,6 @@
     "astro": "^2.1.0",
     "linkify-string": "^4.1.1",
     "linkifyjs": "^4.1.1",
-    "simple-parallax-js": "^5.6.2",
     "three": "^0.150.1",
     "vue": "^3.2.30",
     "vue-tippy": "v6"

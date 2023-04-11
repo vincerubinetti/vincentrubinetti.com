@@ -1,14 +1,16 @@
 <template>
-  <header class="header">
-    <TheBackground />
-    <img class="art" :src="art" :style="{ opacity: playing ? 0.25 : 0 }" />
-    <TheLogo
-      class="logo"
-      :style="{
-        opacity: playing ? 0 : 1,
-        pointerEvents: playing ? 'none' : '',
-      }"
-    />
+  <header>
+    <AppSection class="header" :dark="true" :background="true">
+      <TheBackground />
+      <img class="art" :src="art" :style="{ opacity: playing ? 1 : 0 }" />
+      <TheLogo
+        class="logo"
+        :style="{
+          opacity: playing ? 0 : 1,
+          pointerEvents: playing ? 'none' : '',
+        }"
+      />
+    </AppSection>
   </header>
 </template>
 
@@ -29,7 +31,7 @@ import { art, playing } from "@/global/state";
   background: black;
   color: white;
   overflow: hidden;
-  box-shadow: var(--color-shadow);
+  box-shadow: 0 0 100px #9c27b080;
   z-index: 0;
 }
 
@@ -37,7 +39,7 @@ import { art, playing } from "@/global/state";
   position: absolute;
   max-width: 100%;
   max-height: 100%;
-  mix-blend-mode: overlay;
+  mix-blend-mode: screen;
   -webkit-mask-image: radial-gradient(closest-side, white 0%, transparent 100%);
   mask-image: radial-gradient(closest-side, white 0%, transparent 100%);
   transition: opacity var(--fast);

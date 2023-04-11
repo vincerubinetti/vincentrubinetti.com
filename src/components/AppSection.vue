@@ -1,29 +1,38 @@
 <template>
-  <section ref="section" class="section" :data-dark="dark">
-    <div v-if="background" class="background">
+  <section
+    ref="section"
+    :id="(id || '').split(' ').join('-').toLowerCase()"
+    class="section"
+    :data-dark="dark"
+  >
+    <h2 v-if="id" class="heading visually-hidden">
+      {{ id }}
+    </h2>
+    <div v-if="background" class="background" aria-hidden="true">
       <img
+        v-if="typeof background === 'string'"
         class="image"
         :src="background"
         :style="{
-          opacity: 0,
-          transform: `translate(${translateX}%, ${translateY}%) scale(${scale})`,
+          transform: `translate(0%, ${translate}%) scale(${scale})`,
+          opacity: clamp(width - 300, 0, 1000) / 1000,
         }"
       />
-      <div class="gradient"></div>
+      <div class="color" />
     </div>
     <slot />
   </section>
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from "vue";
-import { useElementBounding } from "@vueuse/core";
+import { ref } from "vue";
+import { useWindowSize } from "@vueuse/core";
+import { useParallax } from "@/util/composables";
 import { clamp } from "@/util/math";
 
-const scale = 2;
-
 type Props = {
-  background?: string;
+  id?: string;
+  background?: string | boolean;
   dark?: boolean;
 };
 
@@ -31,39 +40,31 @@ defineProps<Props>();
 
 const section = ref();
 
-const { top, height } = useElementBounding(section);
+const { scale, translate } = useParallax(section, 2);
 
-const percent = computed(() => {
-  if (typeof window === "undefined") return 0;
-  const percent =
-    (window.innerHeight - top.value) / (window.innerHeight + height.value);
-  clamp(percent, 0, 1);
-  return percent;
-});
-
-const translateX = computed(() => -(scale - 1) * 50);
-const translateY = computed(() => 2 * (percent.value - 0.5) * (scale - 1) * 50);
+const { width } = useWindowSize();
 </script>
 
 <style scoped>
 .section {
   position: relative;
   display: flex;
-  flex-direction: column;
+  justify-content: center;
   align-items: center;
-  gap: 40px;
-  padding: 60px max(60px, calc((100% - 1100px) / 2));
+  flex-direction: column;
+  gap: 50px;
+  padding: 100px max(50px, calc((100% - 1100px) / 2));
   z-index: 0;
 }
 
 .section:nth-child(even) {
-  background: #fafafa;
+  background: var(--off-white);
 }
 
 .section[data-dark="true"] {
-  background: black;
+  background: var(--off-black);
   color: white;
-  box-shadow: var(--color-shadow);
+  box-shadow: 2px 4px 20px #40405040;
   z-index: 1;
 }
 
@@ -72,35 +73,31 @@ const translateY = computed(() => 2 * (percent.value - 0.5) * (scale - 1) * 50);
   inset: 0;
   overflow: hidden;
   z-index: -1;
+  pointer-events: none;
 }
 
 .image {
   position: absolute;
   top: 0;
-  right: 0;
   height: 100%;
-  opacity: 0.25 !important;
-  filter: saturate(50%);
-  -webkit-mask-image: linear-gradient(90deg, transparent, white);
-  mask-image: linear-gradient(90deg, transparent, white);
+  filter: sepia(100%) saturate(200%) hue-rotate(234deg);
 }
 
-.gradient {
+.color {
   position: absolute;
   inset: 0;
-  background: linear-gradient(
-    90deg,
-    var(--tertiary),
-    var(--secondary),
-    var(--primary)
-  );
-  opacity: 0.25;
+  background: radial-gradient(
+      ellipse at 25% 150%,
+      #e8009760 0%,
+      transparent 50%
+    ),
+    radial-gradient(ellipse at 75% -50%, #0085f260 0%, transparent 50%);
 }
 
-@media (max-width: 600px) {
+@media (max-width: 800px) {
   .section {
-    padding-left: 20px;
-    padding-right: 20px;
+    padding: 60px 30px;
+    align-items: center !important;
   }
 }
 </style>

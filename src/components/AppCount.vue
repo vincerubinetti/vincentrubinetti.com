@@ -33,7 +33,6 @@ defineProps<Props>();
   height: min-content;
   padding: 5px;
   color: var(--gray);
-  opacity: 0.5;
   font-size: var(--tiny);
   line-height: 0;
   text-decoration: none;
@@ -41,7 +40,6 @@ defineProps<Props>();
 
 .count[href]:hover {
   color: var(--primary);
-  opacity: 1;
 }
 
 .icon {

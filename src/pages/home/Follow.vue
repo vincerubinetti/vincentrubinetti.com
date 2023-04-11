@@ -1,86 +1,95 @@
 <template>
-  <AppSection
-    id="follow"
-    class="discography"
-    :background="background"
-    :dark="true"
-  >
+  <AppSection id="follow" class="follow" :background="background" :dark="true">
     <AppButton
       href="https://vincerubinetti.bandcamp.com/"
       :outline="true"
       design="glass"
-      type="bandcamp"
+      icon="bandcamp"
       text="Complete Discography"
     />
-    <p>
+    <p class="p">
       <b>Download</b> and <b>stream</b> the official, highest-quality, most
       up-to-date versions of <i>all of my music</i>, on <b>Bandcamp</b>.
     </p>
-  </AppSection>
 
-  <AppSection>
+    <div class="spacer" />
+
     <div class="buttons">
       <AppButton
         v-for="(link, index) in links"
         :key="index"
-        :type="link.type"
+        :icon="link.icon"
+        :text="link.text"
         :href="link.url"
         :outline="true"
+        design="glass"
       />
     </div>
-    <p><b>Share</b> and <b>stream</b> <i>select</i> songs and albums.</p>
+    <p class="p">
+      <b>Stream</b> and <b>share</b> <i>select</i> songs and albums.
+    </p>
   </AppSection>
 </template>
 
 <script setup lang="ts">
-import type { types } from "@/components/AppButton.vue";
-import background from "@/assets/discography.jpg";
+import type { icons } from "@/components/AppButton.vue";
+import background from "@/assets/sheet-music.jpg";
 
-const links: { type: keyof typeof types; url: string }[] = [
+type Link = { url: string; icon: keyof typeof icons; text: string };
+
+const links: Link[] = [
   {
-    type: "soundcloud",
     url: "https://soundcloud.com/vincerubinetti",
+    icon: "soundcloud",
+    text: "SoundCloud",
   },
   {
-    type: "applemusic",
     url: "https://music.apple.com/us/artist/vincent-rubinetti/274886492",
+    icon: "apple",
+    text: "Apple Music",
   },
   {
-    type: "spotify",
     url: "https://open.spotify.com/artist/2SRhEEt2tlDQWxzwfUo9Dl",
+    icon: "spotify",
+    text: "Spotify",
   },
   {
-    type: "youtube",
     url: "https://www.youtube.com/c/VincentRubinetti",
+    icon: "youtube",
+    text: "YouTube",
   },
 ];
 </script>
 
 <style scoped>
-.discography {
-  padding-top: 100px !important;
-  padding-bottom: 100px !important;
+.follow {
   align-items: flex-start !important;
 }
 
-.discography > p {
-  max-width: 480px;
+.follow :deep(.image) {
+  right: 0;
+  -webkit-mask-image: linear-gradient(-90deg, #fff4, transparent);
+  mask-image: linear-gradient(-90deg, #fff4, transparent);
+}
+
+.spacer {
+  margin: -10px 0;
+}
+
+.p {
+  margin-top: -20px;
+  max-width: 500px;
 }
 
 .buttons {
   display: flex;
   justify-content: center;
+  align-items: center;
   flex-wrap: wrap;
   gap: 20px;
 }
 
-@media (max-width: 800px) {
-  .discography {
-    align-items: center !important;
-  }
-}
-
-@media (max-width: 800px) {
+@media (max-width: 820px) {
   .buttons {
     display: grid;
     grid-template-columns: repeat(2, 1fr);

@@ -10,14 +10,15 @@
   --secondary-light: #ea80fc;
   --tertiary: #2196f3;
   --tertiary-light: #82b1ff;
-  --gray: #40404f;
+  --off-white: #fafafa;
+  --light-gray: #d0d0e0;
+  --gray: #a0a0b0;
+  --dark-gray: #404050;
+  --off-black: #101020;
 
   --rounded: 5px;
   --fast: 0.35s ease;
-  --shadow: 1px 2px 10px #00000020;
-  --shadow-inset: inset 1px 1px 5px #00000010;
-  --big-shadow: 2px 4px 20px #00000040;
-  --color-shadow: 0 0 100px -20px var(--secondary);
+  --shadow: 1px 2px 10px #40405020;
 }
 
 * {
@@ -27,7 +28,6 @@
 html,
 body {
   min-height: 100vh;
-  color: var(--gray);
   font-family: "Roboto";
   font-weight: 300;
   font-size: 14pt;
@@ -43,6 +43,19 @@ body {
 
 main {
   flex-grow: 1;
+}
+
+h2,
+h3 {
+  margin: 0;
+  width: 100%;
+  color: var(--dark-gray);
+  text-align: left;
+  font-size: var(--large);
+  font-weight: inherit;
+  line-height: 1.5em;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 p {
@@ -85,12 +98,20 @@ svg {
   }
 }
 
+.visually-hidden {
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+}
+
 .tippy-box {
   max-width: min(90vw, 500px) !important;
-  background: var(--gray) !important;
+  background: var(--dark-gray) !important;
   border-radius: var(--rounded) !important;
   font-size: var(--tiny) !important;
-  box-shadow: var(--big-shadow);
+  box-shadow: 1px 1px 10px #00000080;
 }
 
 .tippy-content {
@@ -101,7 +122,7 @@ svg {
 }
 
 .tippy-arrow {
-  color: var(--gray) !important;
+  color: var(--dark-gray) !important;
 }
 
 .tippy-box a {

@@ -1,5 +1,5 @@
 <template>
-  <AppSection id="listen">
+  <AppSection id="Listen">
     <div class="buttons">
       <AppButton
         v-for="({ title, id, icon }, index) of playlists"
@@ -13,10 +13,12 @@
         :data-draw="playlist.id === id"
         :aria-current="playlist.id === id"
         :aria-label="`load ${title} playlist`"
+        role="tab"
+        aria-controls="listen-player"
         @click="playlist = playlists[index]"
       />
     </div>
-    <Player :id="playlist.id" />
+    <Player :playlist="playlist.id" />
   </AppSection>
 </template>
 

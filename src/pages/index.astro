@@ -4,6 +4,9 @@ import Layout from "@/layouts/Layout.astro";
 import Listen from "@/pages/home/Listen.vue";
 import Follow from "@/pages/home/Follow.vue";
 import Highlights from "@/pages/home/Highlights.vue";
+import About from "@/pages/home/About.vue";
+import Contact from "@/pages/home/Contact.vue";
+import Footer from "@/components/TheFooter.vue";
 ---
 
 <Layout title="Vincent Rubinetti | Composer, producer, and more">
@@ -12,5 +15,8 @@ import Highlights from "@/pages/home/Highlights.vue";
     <Listen client:idle />
     <Follow client:idle />
     <Highlights client:idle />
+    <About client:idle />
+    <Contact client:idle />
   </main>
+  <Footer client:idle />
 </Layout>

@@ -3,12 +3,9 @@
     ref="canvas"
     v-bind="$attrs"
     class="canvas"
-    :style="{
-      opacity: playing ? 0.75 : 0.25,
-      filter: playing ? '' : 'saturate(200%)',
-    }"
+    :style="{ opacity: playing ? 1 : 0.25 }"
     title="Click and drag to rotate. Double click to reset camera. Ctrl/alt/shift + mouse wheel to zoom."
-  ></canvas>
+  />
   <svg
     ref="svg"
     xmlns="http://www.w3.org/2000/svg"
@@ -82,7 +79,7 @@ let stats: typeof Stats;
 const interval = computed(() =>
   smoothedLevel.value <= 0.01 || reduceMotion.value
     ? Infinity
-    : Math.pow(1 - smoothedLevel.value, 1) * 100
+    : Math.pow(1 - smoothedLevel.value, 2) * 100
 );
 
 onMounted(() => {
@@ -193,7 +190,7 @@ onMounted(() => {
     particle.name = "particle";
     particle.userData = {
       life: 0,
-      a: (angle += increment || 36 + smoothedLevel.value * 45),
+      a: (angle += increment || 36 + smoothedLevel.value * 10),
       r: 2,
       va: -0.1,
       vr: 0.001,
@@ -253,8 +250,7 @@ onMounted(() => {
         light.userData.vz * d * (1 + smoothedLevel.value * 20);
 
       /** brightness */
-      if (!reduceMotion.value)
-        light.intensity = 1.5 + smoothedLevel.value * 1.5;
+      if (!reduceMotion.value) light.intensity = 2 + smoothedLevel.value;
     }
 
     /** particles */
@@ -264,7 +260,7 @@ onMounted(() => {
       particle.userData.a += particle.userData.va * d;
       particle.userData.r += particle.userData.vr * d;
       particle.position.z +=
-        particle.userData.vz * d * (0.1 + smoothedLevel.value * 10);
+        particle.userData.vz * d * (smoothedLevel.value * 8);
       particle.position.x = cos(particle.userData.a) * particle.userData.r;
       particle.position.y = sin(particle.userData.a) * particle.userData.r;
       particle.rotation.z = degToRad(particle.userData.a);
@@ -272,7 +268,7 @@ onMounted(() => {
       /** transparency */
       const alpha = clamp(
         Math.min(
-          0.5 - Math.pow(Math.abs(particle.position.z) / 10, 2),
+          0.5 - Math.pow(Math.abs(particle.position.z) / 10, 1.5),
           (2 * 300 - particle.userData.life * 2) / 300
         ),
         0,
@@ -321,7 +317,7 @@ onBeforeUnmount(() => {
   inset: 0;
   width: 100% !important;
   height: 100% !important;
-  z-index: -1;
+  z-index: -2;
   animation: fade 5s ease both;
   user-select: none;
   transition: opacity 1s ease, filter 1s ease;

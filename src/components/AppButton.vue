@@ -5,12 +5,12 @@
     :href="href"
     :data-outline="outline"
     :data-design="design"
-    :data-text="!!_text"
-    :style="{ '--color': _color }"
+    :data-text="!!text"
+    :style="{ '--color': color }"
     target="_blank"
   >
-    <component v-if="_icon" :is="_icon" class="icon" />
-    <span v-if="_text">{{ _text }}</span>
+    <component v-if="IconComponent" :is="IconComponent" class="icon" />
+    <span v-if="text" class="text">{{ text }}</span>
     <slot />
   </component>
 </template>
@@ -18,40 +18,64 @@
 <script lang="ts">
 import BandcampIcon from "@/assets/bandcamp.svg?component";
 import SoundCloudIcon from "@/assets/soundcloud.svg?component";
-import AppleMusicIcon from "@/assets/apple.svg?component";
+import AppleIcon from "@/assets/apple.svg?component";
 import SpotifyIcon from "@/assets/spotify.svg?component";
 import YouTubeIcon from "@/assets/youtube.svg?component";
+import SteamIcon from "@/assets/steam.svg?component";
+import CodeIcon from "@/assets/code.svg?component";
+import HeadphonesIcon from "@/assets/headphones.svg?component";
+import LeafIcon from "@/assets/leaf.svg?component";
+import NotesIcon from "@/assets/notes.svg?component";
+import EnvelopeIcon from "@/assets/envelope.svg?component";
 
-export const types = {
+export const icons = {
   "": {
-    icon: "",
-    text: "",
+    component: "",
     color: "",
   },
   bandcamp: {
-    icon: BandcampIcon,
-    text: "Bandcamp",
+    component: BandcampIcon,
     color: "#14b8a6",
   },
   soundcloud: {
-    icon: SoundCloudIcon,
-    text: "SoundCloud",
+    component: SoundCloudIcon,
     color: "#f97316",
   },
-  applemusic: {
-    icon: AppleMusicIcon,
-    text: "Apple Music",
+  apple: {
+    component: AppleIcon,
     color: "#f43f5e",
   },
   spotify: {
-    icon: SpotifyIcon,
-    text: "Spotify",
+    component: SpotifyIcon,
     color: "#22c55e",
   },
   youtube: {
-    icon: YouTubeIcon,
-    text: "YouTube",
+    component: YouTubeIcon,
     color: "#ef4444",
+  },
+  steam: {
+    component: SteamIcon,
+    color: "#3b82f6",
+  },
+  code: {
+    component: CodeIcon,
+    color: "#a855f7",
+  },
+  headphones: {
+    component: HeadphonesIcon,
+    color: "#f43f5e",
+  },
+  leaf: {
+    component: LeafIcon,
+    color: "#10b981",
+  },
+  notes: {
+    component: NotesIcon,
+    color: "#06b6d4",
+  },
+  envelope: {
+    component: EnvelopeIcon,
+    color: "#06b6d4",
   },
 };
 </script>
@@ -60,21 +84,23 @@ export const types = {
 import { FunctionalComponent, computed } from "vue";
 
 type Props = {
-  icon?: FunctionalComponent;
+  icon?: keyof typeof icons | FunctionalComponent;
   text?: string;
   href?: string;
   outline?: boolean;
   design?: "dark" | "glass";
-  type?: keyof typeof types;
 };
 
 const props = defineProps<Props>();
 
 const component = computed(() => (props.href ? "a" : "button"));
 
-const _icon = computed(() => props.icon || types[props.type || ""].icon);
-const _text = computed(() => props.text || types[props.type || ""].text);
-const _color = computed(() => types[props.type || ""].color);
+const IconComponent = computed(() =>
+  typeof props.icon === "string" ? icons[props.icon].component : props.icon
+);
+const color = computed(() =>
+  typeof props.icon === "string" ? icons[props.icon].color : ""
+);
 </script>
 
 <style scoped>
@@ -84,16 +110,16 @@ const _color = computed(() => types[props.type || ""].color);
   justify-content: center;
   align-items: center;
   gap: 10px;
+  max-width: 100%;
   padding: 0;
   border-radius: var(--rounded);
   border: none;
   background: none;
-  color: inherit;
+  color: var(--dark-gray);
   font: inherit;
-  line-height: 1.2em;
+  line-height: 1.5em;
   letter-spacing: inherit;
   text-decoration: none;
-  white-space: nowrap;
   cursor: pointer;
   transition: var(--fast);
   transition-property: background, color, box-shadow, transform;
@@ -106,12 +132,15 @@ const _color = computed(() => types[props.type || ""].color);
 
 .button:where(:hover, :focus) {
   box-shadow: var(--shadow);
-  transform: translate(-1px, -1px);
 }
 
 .button:active {
-  box-shadow: var(--shadow-inset);
+  box-shadow: inset 1px 1px 5px #40405010;
   transform: translate(0, 0);
+}
+
+.button[data-outline="true"]:where(:hover, :focus) {
+  transform: translate(-1px, -1px);
 }
 
 .button[data-outline="true"]:after {
@@ -120,6 +149,7 @@ const _color = computed(() => types[props.type || ""].color);
   inset: 0;
   border: solid 2px transparent;
   border-radius: inherit;
+  z-index: 1;
 }
 
 .button[data-outline="true"]:where(:hover, :focus):after {
@@ -149,14 +179,14 @@ const _color = computed(() => types[props.type || ""].color);
 }
 
 .button[data-design="dark"] {
-  background: var(--gray);
+  background: var(--dark-gray);
   color: white;
 }
 
 .button[data-design="glass"] {
   color: white;
   letter-spacing: 1px;
-  -webkit-backdrop-filter: saturate(200%) blur(3px);
+  -webkit-backdrop-filter: saturate(300%) blur(3px);
   backdrop-filter: saturate(200%) blur(3px);
 }
 
@@ -166,13 +196,15 @@ const _color = computed(() => types[props.type || ""].color);
   inset: 0;
   border-radius: inherit;
   background: var(--gray);
-  opacity: 0.5;
+  opacity: 0.25;
   z-index: -1;
-  transition: opacity var(--fast);
+  transition: var(--fast);
+  transition-property: background, opacity;
 }
 
-.button[data-design="glass"]:hover:before {
-  opacity: 1;
+.button[data-design="glass"]:where(:hover, :focus):before {
+  background: black;
+  opacity: 0.5;
 }
 
 .icon {
@@ -190,5 +222,11 @@ const _color = computed(() => types[props.type || ""].color);
 
 .button:where(:hover, :focus) > .icon {
   color: var(--color);
+}
+
+.text {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 </style>
