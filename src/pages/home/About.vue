@@ -7,7 +7,7 @@
     :background="background"
   >
     <div v-appear class="row">
-      <img :src="profile" class="profile" alt="picture of vince"/>
+      <img :src="profile" class="profile" alt="picture of vince" />
       <p class="p">
         I am a life-long lover of music. Over the past 10+ years I've worked on
         video games, videos, advertisements, ensemble pieces, and a variety of
@@ -34,7 +34,7 @@
 
 <script setup lang="ts">
 import type { icons } from "@/components/AppButton.vue";
-import profile from "@/assets/profile.jpg";
+import profile from "@/assets/vince.png";
 import background from "@/assets/piano.jpg";
 
 type Link = { url: string; icon: keyof typeof icons; text: string };
@@ -82,6 +82,7 @@ const links: Link[] = [
   width: 200px;
   height: 200px;
   max-width: 100%;
+  mix-blend-mode: luminosity;
 }
 
 .p {
