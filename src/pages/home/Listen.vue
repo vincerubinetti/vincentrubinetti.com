@@ -69,20 +69,20 @@ const playlist = ref(playlists[0]);
 
 @media (max-width: 900px) {
   .buttons {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: 1fr 1fr 1fr;
   }
 }
 
 @media (max-width: 600px) {
   .buttons {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: 1fr 1fr;
   }
 }
 
 @media (max-width: 400px) {
   .buttons {
     gap: 10px;
-    grid-template-columns: repeat(1, 1fr);
+    grid-template-columns: 1fr;
   }
 }
 </style>

@@ -34,6 +34,7 @@ import {
   CustomBlending,
   DstColorFactor,
   ExtrudeGeometry,
+  HexColorString,
   Mesh,
   MeshPhongMaterial,
   OneFactor,
@@ -137,7 +138,7 @@ onMounted(() => {
   scene.add(sphere);
 
   /** light colors */
-  const colors = [
+  const colors: HexColorString[] = [
     "#e91e63",
     "#e91e63",
     "#9c27b0",
@@ -145,6 +146,8 @@ onMounted(() => {
     "#2196f3",
     "#2196f3",
   ];
+
+  // type ColorRepresentation
 
   /** generate lights */
   for (const color of colors) {

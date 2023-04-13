@@ -7,7 +7,12 @@
     :background="background"
   >
     <div v-appear class="row">
-      <img :src="profile" class="profile" alt="picture of vince" />
+      <img
+        :src="profile"
+        class="profile"
+        alt="picture of vince"
+        loading="lazy"
+      />
       <p class="p">
         I am a life-long lover of music. Over the past 10+ years I've worked on
         video games, videos, advertisements, ensemble pieces, and a variety of
@@ -98,22 +103,19 @@ const links: Link[] = [
 }
 
 @media (max-width: 820px) {
+  .row {
+    flex-direction: column;
+  }
+
   .buttons {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: 1fr 1fr;
   }
 }
 
 @media (max-width: 500px) {
   .buttons {
-    display: flex;
-    flex-direction: column;
-  }
-}
-
-@media (max-width: 800px) {
-  .row {
-    flex-direction: column;
+    grid-template-columns: 1fr;
   }
 }
 </style>

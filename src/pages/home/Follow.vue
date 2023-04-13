@@ -97,16 +97,19 @@ const links: Link[] = [
 }
 
 @media (max-width: 820px) {
+  .follow {
+    align-items: center !important;
+  }
+
   .buttons {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: 1fr 1fr;
   }
 }
 
 @media (max-width: 500px) {
   .buttons {
-    display: flex;
-    flex-direction: column;
+    grid-template-columns: 1fr;
   }
 }
 </style>

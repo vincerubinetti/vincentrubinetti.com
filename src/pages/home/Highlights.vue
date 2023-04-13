@@ -12,7 +12,7 @@
         <div class="overlay">
           <div class="title">{{ highlight.title }}</div>
         </div>
-        <img :src="highlight.image" class="image" alt="" />
+        <img :src="highlight.image" class="image" alt="" loading="lazy" />
       </AppButton>
     </div>
 

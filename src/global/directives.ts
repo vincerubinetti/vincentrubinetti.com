@@ -48,9 +48,9 @@ const cleanup = (element: HTMLElement) => {
 /** make element's children appear with staggered delay */
 export const vAppear: Directive<HTMLElement> = {
   mounted: (element) => {
-    // inView.observe(element);
+    inView.observe(element);
   },
   beforeUnmount: (element) => {
-    // inView.unobserve(element);
+    inView.unobserve(element);
   },
 };
