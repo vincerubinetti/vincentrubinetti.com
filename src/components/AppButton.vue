@@ -11,7 +11,7 @@
       '--color': color,
       '--outline-duration': width + height + 200 + 'ms',
     }"
-    target="_blank"
+    :target="href?.startsWith('http') ? '_blank' : ''"
   >
     <component v-if="IconComponent" :is="IconComponent" class="icon" />
     <span v-if="text" class="text">{{ text }}</span>

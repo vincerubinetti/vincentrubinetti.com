@@ -13,7 +13,7 @@
         <TheLogo
           :style="{
             opacity: playing ? 0 : 1,
-            pointerEvents: playing ? 'none' : '',
+            pointerEvents: playing ? 'none' : 'unset',
           }"
         />
       </a>
@@ -42,8 +42,6 @@ defineProps<Props>();
   padding: 40px;
   background: black;
   color: white;
-  overflow: hidden;
-  box-shadow: 0 0 100px #9c27b080;
   z-index: 0;
 }
 
@@ -63,13 +61,14 @@ defineProps<Props>();
 }
 
 .logo {
-  transition: opacity var(--slow);
-}
-
-.logo {
   display: flex;
   width: 100%;
   max-width: 500px;
   color: inherit;
+  transition: opacity var(--slow);
+}
+
+.logo svg {
+  width: 100%;
 }
 </style>

@@ -59,14 +59,10 @@ const { width } = useWindowSize();
   z-index: 0;
 }
 
-.section:nth-child(even) {
-  background: var(--off-white);
-}
-
 .section[data-dark="true"] {
   background: var(--off-black);
   color: white;
-  box-shadow: 2px 4px 20px #40405040;
+  box-shadow: 0 0 75px #9600b080;
   z-index: 1;
 }
 

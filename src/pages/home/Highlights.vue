@@ -277,12 +277,13 @@ const iframe = ref();
 let player: any;
 
 const selected = ref<Highlight>(highlights[0]);
+const autoplay = ref(false);
 
 const src = computed(() => {
   const { playlist = "", video = "" } = selected.value;
   const params = new URLSearchParams();
   if (playlist) params.set("list", playlist);
-  params.set("autoplay", "1");
+  if (autoplay.value) params.set("autoplay", "1");
   params.set("enablejsapi", "1");
   if (typeof window !== "undefined") params.set("origin", window.location.host);
   if (playlist)
@@ -296,6 +297,7 @@ const onClickHighlight = async (highlight: Highlight) => {
   selected.value = highlight;
   theater.value?.scrollIntoView({ behavior: "smooth", block: "start" });
   window.dispatchEvent(new Event("stop-soundcloud"));
+  autoplay.value = true;
 };
 
 onMounted(() => {

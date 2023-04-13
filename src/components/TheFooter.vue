@@ -1,6 +1,6 @@
 <template>
   <footer>
-    <AppSection class="footer" :dark="true" :background="true">
+    <AppSection class="footer" :dark="true" :background="background">
       &copy; {{ new Date().getFullYear() }} Vincent Rubinetti
     </AppSection>
   </footer>

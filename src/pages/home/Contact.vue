@@ -1,6 +1,6 @@
 <template>
   <AppSection v-appear id="contact" heading="Contact">
-    <p>
+    <p class="p">
       To use the <b>3Blue1Brown music</b>,
       <a
         href="https://vincerubinetti.github.io/using-the-music-of-3blue1brown/"
@@ -132,6 +132,10 @@ useScriptTag("https://www.google.com/recaptcha/api.js");
 </script>
 
 <style scoped>
+.p {
+  max-width: 700px;
+}
+
 .form {
   width: 100%;
   max-width: 500px;
@@ -157,5 +161,9 @@ useScriptTag("https://www.google.com/recaptcha/api.js");
   transform: scale(1.03);
   box-shadow: var(--shadow);
   z-index: 1;
+}
+
+textarea {
+  min-height: 100px;
 }
 </style>
