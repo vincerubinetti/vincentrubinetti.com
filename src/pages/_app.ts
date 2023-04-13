@@ -1,6 +1,5 @@
 import type { App } from "vue";
 import VueTippy from "vue-tippy";
-import "tippy.js/dist/tippy.css";
 import AppSection from "@/components/AppSection.vue";
 import AppButton from "@/components/AppButton.vue";
 import { vAppear } from "@/global/directives";
