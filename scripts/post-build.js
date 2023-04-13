@@ -3,6 +3,8 @@ import { config as loadEnv } from "dotenv";
 
 const { parsed: env } = loadEnv();
 
+if (!env) process.exit(0);
+
 const file = "./dist/email.php";
 
 let contents = readFileSync(file).toString();

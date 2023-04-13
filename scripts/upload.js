@@ -3,6 +3,8 @@ import Client from "ssh2-sftp-client";
 
 const { parsed: env } = loadEnv();
 
+if (!env) process.exit(0);
+
 const config = {
   host: env.WEBSITE_HOST,
   port: env.WEBSITE_PORT,
