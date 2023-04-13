@@ -16,7 +16,7 @@
       </AppButton>
     </div>
 
-    <div v-appear ref="theater" id="highlights-player" class="player">
+    <div v-appear ref="theater" id="highlights-player" class="theater">
       <iframe
         ref="iframe"
         class="iframe"
@@ -362,7 +362,7 @@ useScriptTag("https://www.youtube.com/iframe_api");
   width: 100%;
 }
 
-.player {
+.theater {
   display: flex;
   flex-direction: column;
   gap: 20px;
