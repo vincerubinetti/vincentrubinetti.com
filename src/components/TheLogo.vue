@@ -1,5 +1,5 @@
 <template>
-  <svg viewBox="0 0 585 95">
+  <svg viewBox="0 0 670 95">
     <defs>
       <mask id="stroke">
         <path
@@ -168,10 +168,10 @@
         Z
       "
     />
-    <text x="135" y="14" class="title" role="heading" aria-level="1">
+    <text x="135" y="13" class="title" role="heading" aria-level="1">
       VINCENT RUBINETTI
     </text>
-    <text x="139" y="64" class="subtitle">COMPOSER, PRODUCER, AND MORE</text>
+    <text x="141" y="67" class="subtitle">COMPOSER, PRODUCER, AND MORE</text>
   </svg>
 </template>
 
@@ -203,12 +203,12 @@
 }
 
 .title {
-  font-size: 40px;
+  font-size: 45px;
   animation: fade 2s both 1s;
 }
 
 .subtitle {
-  font-size: 19.65px;
+  font-size: 22.35px;
   opacity: 0.5;
   animation: fade 2s both 1.5s;
 }
