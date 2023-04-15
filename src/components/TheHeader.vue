@@ -9,13 +9,15 @@
         :style="{ opacity: playing ? 1 : 0 }"
         alt=""
       />
-      <a :href="!big ? '/' : undefined" class="logo">
-        <TheLogo
-          :style="{
-            opacity: playing ? 0 : 1,
-            pointerEvents: playing ? 'none' : 'unset',
-          }"
-        />
+      <a
+        :href="!big ? '/' : undefined"
+        class="logo"
+        :style="{
+          opacity: playing ? 0 : 1,
+          pointerEvents: playing ? 'none' : 'unset',
+        }"
+      >
+        <TheLogo />
       </a>
     </AppSection>
   </header>
