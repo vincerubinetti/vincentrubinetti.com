@@ -3,7 +3,7 @@
     <h2>Studio Setup</h2>
 
     <a :href="picture" target="_blank">
-      <img :src="picture" alt="picture of vince's studio" />
+      <img :src="picture" alt="picture of vince's studio" loading="lazy" />
     </a>
 
     <div class="grid">

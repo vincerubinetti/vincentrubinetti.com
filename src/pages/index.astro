@@ -13,11 +13,11 @@ import Footer from "@/components/TheFooter.vue";
   title="Vincent Rubinetti | Composer, producer, and more"
   description="Composer for media. Orchestral, electronic, and a wide variety of other styles. "
 >
-  <Header client:idle big={true} />
+  <Header client:load big={true} />
   <main>
-    <Listen client:idle />
+    <Listen client:load />
     <Follow client:idle />
-    <Highlights client:idle />
+    <Highlights client:visible />
     <About client:idle />
     <Contact client:idle />
   </main>

@@ -21,8 +21,8 @@
   <div v-if="!error" id="listen-player" class="player">
     <div class="current" :data-loading="loading">
       <div class="art">
-        <img :src="track?.art || placeholder" alt="" />
-        <img :src="track?.art || placeholder" alt="album art" />
+        <img :src="track?.art || placeholder" alt="" loading="lazy" />
+        <img :src="track?.art || placeholder" alt="album art" loading="lazy" />
       </div>
 
       <div class="info">
@@ -189,7 +189,7 @@
         :aria-label="`play ${t.title}`"
         :aria-current="t.id === track?.id"
       >
-        <img :src="t.art" class="track-art" alt="" />
+        <img :src="t.art" class="track-art" alt="" loading="lazy" />
         <NoteIcon
           class="track-marker"
           :data-selected="t.id === track?.id"

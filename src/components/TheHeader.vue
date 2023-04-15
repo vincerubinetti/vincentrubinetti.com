@@ -8,6 +8,7 @@
         :src="art"
         :style="{ opacity: playing ? 1 : 0 }"
         alt=""
+        loading="lazy"
       />
       <a
         :href="!big ? '/' : undefined"

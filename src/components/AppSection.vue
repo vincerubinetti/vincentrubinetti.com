@@ -18,6 +18,7 @@
           opacity: clamp(width - 300, 0, 1000) / 1000,
         }"
         alt=""
+        loading="lazy"
       />
       <div class="color" />
     </div>
