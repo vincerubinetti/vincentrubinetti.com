@@ -87,7 +87,6 @@ const links: Link[] = [
   width: 200px;
   height: 200px;
   max-width: 100%;
-  mix-blend-mode: screen;
 }
 
 .p {
