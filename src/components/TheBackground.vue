@@ -20,11 +20,7 @@
 
 <script setup lang="ts">
 import { ref, onMounted, computed, onBeforeUnmount } from "vue";
-import {
-  useEventListener,
-  useMediaQuery,
-  useIntersectionObserver,
-} from "@vueuse/core";
+import { useEventListener, useIntersectionObserver } from "@vueuse/core";
 import {
   AddEquation,
   AdditiveBlending,
@@ -58,7 +54,8 @@ const canvas = ref();
 const svg = ref();
 
 /** track if user doesn't like motion */
-const reduceMotion = useMediaQuery("(prefers-reduced-motion: reduce)");
+// const reduceMotion = useMediaQuery("(prefers-reduced-motion: reduce)");
+const reduceMotion = ref(false);
 
 /** track if in view */
 const isVisible = ref(false);
