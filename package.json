@@ -8,7 +8,7 @@
     "preview": "astro preview",
     "astro": "astro",
     "postinstall": "patch-package",
-    "upload": "node scripts/upload.js"
+    "upload": "yarn build && node scripts/upload.js"
   },
   "dependencies": {
     "@astrojs/vue": "^2.1.1",

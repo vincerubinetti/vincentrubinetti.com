@@ -1,5 +1,5 @@
 diff --git a/node_modules/three/examples/jsm/controls/OrbitControls.js b/node_modules/three/examples/jsm/controls/OrbitControls.js
-index 16169dc..570fb95 100644
+index eb4ffd0..3d6f927 100644
 --- a/node_modules/three/examples/jsm/controls/OrbitControls.js
 +++ b/node_modules/three/examples/jsm/controls/OrbitControls.js
 @@ -27,7 +27,7 @@ class OrbitControls extends EventDispatcher {
@@ -11,16 +11,16 @@ index 16169dc..570fb95 100644
  
  		// Set to false to disable this control
  		this.enabled = true;
-@@ -1037,7 +1037,7 @@ class OrbitControls extends EventDispatcher {
+@@ -1031,7 +1031,7 @@ class OrbitControls extends EventDispatcher {
  
  		function onMouseWheel( event ) {
  
 -			if ( scope.enabled === false || scope.enableZoom === false || state !== STATE.NONE ) return;
-+			if ( !( event.ctrlKey || event.altKey || event.shiftKey ) || scope.enabled === false || scope.enableZoom === false || state !== STATE.NONE ) return;
++			if ( !( event.altKey || event.shiftKey ) || scope.enabled === false || scope.enableZoom === false || state !== STATE.NONE ) return;
  
  			event.preventDefault();
  
-@@ -1199,7 +1199,7 @@ class OrbitControls extends EventDispatcher {
+@@ -1193,7 +1193,7 @@ class OrbitControls extends EventDispatcher {
  
  			if ( scope.enabled === false ) return;
  

@@ -4,7 +4,7 @@
     v-bind="$attrs"
     class="canvas"
     :style="{ opacity: playing ? 1 : 0.25 }"
-    title="Click and drag to rotate. Double click to reset camera. Ctrl/alt/shift + mouse wheel to zoom."
+    title="Click and drag to rotate. Double click to reset camera. Alt/shift + mouse wheel to zoom."
   />
   <svg
     ref="svg"
