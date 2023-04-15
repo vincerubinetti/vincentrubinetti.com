@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-1 -1 18 20">
+  <path
+    style="--length: 30"
+    fill="none"
+    stroke="currentColor"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    d="M1.5 11.5c0-.8.667-1 1-1v-1h2v7h-2v-1c-.8 0-1-.667-1-1v-3Zm0 0L.5 10V8c0-3.5 3-7 7.5-7s7.5 3.5 7.5 7v2l-1 1.5m0 0c0-.333-.2-1-1-1v-1h-2v7h2v-1c.333 0 1-.2 1-1v-3Z"
+  />
+</svg>

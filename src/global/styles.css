@@ -1,0 +1,157 @@
+:root {
+  --tiny: 0.85rem;
+  --medium: 1rem;
+  --large: 1.2rem;
+  --xl: 1.5rem;
+
+  --primary: #e91e63;
+  --primary-light: #ff80ab;
+  --secondary: #9c27b0;
+  --secondary-light: #ea80fc;
+  --tertiary: #2196f3;
+  --tertiary-light: #82b1ff;
+  --off-white: #fafafa;
+  --light-gray: #d0d0e0;
+  --gray: #a0a0b0;
+  --dark-gray: #404050;
+  --off-black: #101020;
+
+  --rounded: 5px;
+  --fast: 0.35s ease;
+  --slow: 1s ease;
+  --shadow: 1px 2px 10px #40405020;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  min-height: 100vh;
+  font-family: "Roboto";
+  font-weight: 300;
+  font-size: 14pt;
+  letter-spacing: 0.25px;
+  line-height: 2;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+}
+
+main {
+  flex-grow: 1;
+}
+
+h2,
+h3 {
+  margin: 0;
+  width: 100%;
+  color: var(--dark-gray);
+  font-size: var(--large);
+  font-weight: inherit;
+  line-height: 1.5em;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+h2 {
+  text-align: center;
+}
+
+img {
+  max-width: 100%;
+}
+
+p {
+  margin: 0;
+  text-align: justify;
+}
+
+a {
+  color: var(--primary);
+  transition: var(--fast);
+  transition-property: color, opacity;
+}
+
+a:where(:hover, :focus) {
+  color: var(--tertiary);
+}
+
+svg {
+  overflow: visible;
+}
+
+[data-appear] {
+  animation: appear 1s both;
+}
+
+@keyframes appear {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+[data-draw]:where(:hover, :focus) path {
+  stroke-dasharray: var(--length);
+  animation: draw 1s both;
+}
+
+@keyframes draw {
+  0% {
+    stroke-dashoffset: var(--length);
+    stroke: var(--primary-light);
+  }
+  33% {
+    stroke: var(--secondary-light);
+  }
+  66% {
+    stroke: var(--tertiary-light);
+  }
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+}
+
+.tippy-box {
+  max-width: min(90vw, 500px) !important;
+  background: var(--dark-gray) !important;
+  border-radius: var(--rounded) !important;
+  font-size: var(--tiny) !important;
+  box-shadow: 1px 1px 10px #00000080;
+}
+
+.tippy-content {
+  padding: 15px 20px !important;
+  line-height: 1.5em;
+  max-height: 300px !important;
+  overflow-y: auto;
+}
+
+.tippy-arrow {
+  color: var(--dark-gray) !important;
+}
+
+.tippy-box a {
+  color: var(--primary-light);
+}
+
+.tippy-box a:where(:focus, :hover) {
+  color: var(--tertiary-light);
+}
