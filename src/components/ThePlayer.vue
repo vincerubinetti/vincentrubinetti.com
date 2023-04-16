@@ -808,7 +808,7 @@ onMounted(() => {
 }
 
 .track-marker[data-selected="true"] {
-  height: 1em;
+  height: 0.75em;
   margin: 0 5px 0 10px;
 }
 
