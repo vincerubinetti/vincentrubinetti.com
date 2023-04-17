@@ -123,7 +123,6 @@ const setup: { [key: string]: string[] } = {
 .list {
   list-style: none;
   padding: 0;
-  line-height: 1.5em;
 }
 
 .item {

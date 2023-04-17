@@ -559,6 +559,7 @@ watch(
     widget.unbind(window.SC.Widget.Events.FINISH);
     widget.unbind(window.SC.Widget.Events.ERROR);
     loading.value = true;
+    error.value = false;
     playing.value = false;
     percent.value = 0;
     level.value = 0;
@@ -775,7 +776,6 @@ onMounted(() => {
   display: flex;
   justify-content: space-between;
   font-size: var(--tiny);
-  line-height: 1em;
 }
 
 .tracks {

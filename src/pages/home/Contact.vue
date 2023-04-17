@@ -13,7 +13,7 @@
 
     <div v-html="vinceEmail" v-appear />
 
-    <form v-appear class="form" @submit="onSubmit">
+    <form v-appear class="form" @submit="onSubmit" aria-label="contact form">
       <input
         v-model="name"
         class="textbox"

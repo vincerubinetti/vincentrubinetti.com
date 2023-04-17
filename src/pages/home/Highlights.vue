@@ -378,8 +378,9 @@ useScriptTag("https://www.youtube.com/iframe_api");
 
 .info {
   display: grid;
+  grid-template-columns: min-content 1fr;
+  gap: 10px 20px;
   width: 100%;
-  grid-template-columns: 100px 1fr;
 }
 
 .info > *:nth-child(odd) {

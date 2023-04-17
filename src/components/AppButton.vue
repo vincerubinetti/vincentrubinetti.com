@@ -128,7 +128,6 @@ const { width, height } = useElementSize(button, undefined, {
   background: none;
   color: var(--dark-gray);
   font: inherit;
-  line-height: 1.5em;
   letter-spacing: inherit;
   text-decoration: none;
   cursor: pointer;
@@ -233,20 +232,16 @@ const { width, height } = useElementSize(button, undefined, {
 }
 
 .button[data-text="true"] > .icon {
+  width: 1.2em;
   height: 1.2em;
 }
 
 .button[data-text="false"] > .icon {
+  width: 100%;
   height: 100%;
 }
 
 .button:where(:hover, :focus) > .icon {
   color: var(--color);
-}
-
-.text {
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  overflow: hidden;
 }
 </style>

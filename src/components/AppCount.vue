@@ -30,11 +30,9 @@ defineProps<Props>();
   justify-content: center;
   align-items: center;
   gap: 0.5em;
-  height: min-content;
   padding: 5px;
   color: var(--gray);
   font-size: var(--tiny);
-  line-height: 0;
   text-decoration: none;
 }
 
@@ -43,6 +41,7 @@ defineProps<Props>();
 }
 
 .icon {
+  width: 1em;
   height: 1em;
   flex-shrink: 0;
 }
