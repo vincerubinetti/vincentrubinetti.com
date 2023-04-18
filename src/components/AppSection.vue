@@ -96,7 +96,12 @@ const { width } = useWindowSize();
 @media (max-width: 800px) {
   .section {
     padding: 60px 30px;
-    align-items: center !important;
+  }
+}
+
+@media (max-width: 400px) {
+  .section {
+    padding: 40px 20px;
   }
 }
 </style>

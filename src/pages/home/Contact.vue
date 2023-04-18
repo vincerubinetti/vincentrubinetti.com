@@ -11,7 +11,7 @@
       please write me a message:
     </p>
 
-    <div v-html="vinceEmail" v-appear />
+    <div v-html="address" class="address" />
 
     <form v-appear class="form" @submit="onSubmit" aria-label="contact form">
       <input
@@ -31,7 +31,7 @@
       />
       <textarea
         v-model="message"
-        class="textbox"
+        class="textbox textarea"
         required
         name="message"
         placeholder="Message"
@@ -50,19 +50,20 @@ const name = useLocalStorage("name", "");
 const email = useLocalStorage("email", "");
 const message = useLocalStorage("message", "");
 
-const vinceEmail = ref("");
+const address = ref("");
+
+const encode = (string = "") =>
+  string
+    .split("")
+    .map((char) => `&#${char.charCodeAt(0)};`)
+    .join("");
 
 onMounted(() => {
   /** encode email link to reduce spam */
-  const address = "vince@vincentrubinetti.com";
-  const encode = (string = "") =>
-    string
-      .split("")
-      .map((char) => `&#${char.charCodeAt(0)};`)
-      .join("");
-  vinceEmail.value = `<a href="${encode(
-    "mailto:" + address
-  )}" target="_blank">${encode(address)}</a>`;
+  const mailto = encode("mailto:vince@vincentrubinetti.com");
+  const text = encode("vince@vincentrubinetti.com");
+
+  address.value = `<a href="${mailto}" target="_blank">${text}</a>`;
 });
 
 /** google captcha */
@@ -136,6 +137,10 @@ useScriptTag("https://www.google.com/recaptcha/api.js");
   max-width: 700px;
 }
 
+.address {
+  overflow-wrap: anywhere;
+}
+
 .form {
   width: 100%;
   max-width: 500px;
@@ -158,12 +163,12 @@ useScriptTag("https://www.google.com/recaptcha/api.js");
 }
 
 .textbox:focus {
-  transform: scale(1.03);
+  transform: scale(1.02);
   box-shadow: var(--shadow);
   z-index: 1;
 }
 
-textarea {
+.textarea {
   min-height: 100px;
 }
 </style>

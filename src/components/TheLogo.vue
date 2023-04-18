@@ -1,5 +1,5 @@
 <template>
-  <svg viewBox="0 0 670 95">
+  <svg viewBox="0 0 615 95">
     <defs>
       <mask id="stroke">
         <path

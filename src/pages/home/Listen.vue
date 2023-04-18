@@ -56,6 +56,7 @@ const playlist = ref(playlists[0]);
 }
 
 .button > :deep(svg) {
+  width: 0.01em !important;
   height: 0.01em !important;
   margin-right: -10px;
   transition: var(--fast);
@@ -63,11 +64,12 @@ const playlist = ref(playlists[0]);
 }
 
 .button[data-active="true"] > :deep(svg) {
+  width: 1.4em !important;
   height: 1.4em !important;
   margin-right: 0;
 }
 
-@media (max-width: 900px) {
+@media (max-width: 1000px) {
   .buttons {
     grid-template-columns: 1fr 1fr 1fr;
   }
