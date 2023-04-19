@@ -85,7 +85,11 @@ svg {
   overflow: visible;
 }
 
-[data-appear] {
+[data-appear="false"] {
+  opacity: 0;
+}
+
+[data-appear="true"] {
   animation: appear 1s both;
 }
 

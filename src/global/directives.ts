@@ -2,6 +2,7 @@ import type { Directive } from "vue";
 
 /** intersection listener */
 const inView = new IntersectionObserver((entries, observer) => {
+  console.log("hi");
   for (const { isIntersecting, target } of entries) {
     /** when element comes into view */
     if (!isIntersecting) continue;
@@ -26,7 +27,7 @@ const inView = new IntersectionObserver((entries, observer) => {
 /** start appear */
 const start = (element: HTMLElement, index: number) => {
   /** start animation */
-  element.setAttribute("data-appear", "");
+  element.setAttribute("data-appear", "true");
   /** delay based on child number */
   const delay = 50 * index;
   /** account for parent appear */
@@ -48,6 +49,9 @@ const cleanup = (element: HTMLElement) => {
 /** make element's children appear with staggered delay */
 export const vAppear: Directive<HTMLElement> = {
   mounted: (element) => {
+    element
+      .querySelectorAll(":scope > *")
+      .forEach((child) => child.setAttribute("data-appear", "false"));
     inView.observe(element);
   },
   beforeUnmount: (element) => {
