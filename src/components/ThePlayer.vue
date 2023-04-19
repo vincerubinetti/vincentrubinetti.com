@@ -718,6 +718,7 @@ onMounted(() => {
   gap: 5px 10px;
   flex-wrap: wrap;
   padding-right: 10px;
+  line-height: 1em;
 }
 
 .controls {
