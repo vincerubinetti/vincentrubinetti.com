@@ -2,7 +2,6 @@ import type { Directive } from "vue";
 
 /** intersection listener */
 const inView = new IntersectionObserver((entries, observer) => {
-  console.log("hi");
   for (const { isIntersecting, target } of entries) {
     /** when element comes into view */
     if (!isIntersecting) continue;

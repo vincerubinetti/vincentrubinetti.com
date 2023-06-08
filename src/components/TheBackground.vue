@@ -3,7 +3,7 @@
     ref="canvas"
     v-bind="$attrs"
     class="canvas"
-    :style="{ opacity: playing ? 1 : 0.25 }"
+    :style="{ opacity: playing ? 1 : 0 }"
     title="Click and drag to rotate. Double click to reset camera. Alt/shift + mouse wheel to zoom."
   />
   <svg
@@ -44,7 +44,7 @@ import {
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import { SVGLoader } from "three/examples/jsm/loaders/SVGLoader.js";
 import Stats from "three/addons/libs/stats.module.js";
-import { bounce, clamp, cos, degToRad, rand, sin, triangle } from "@/util/math";
+import { bounce, clamp, cos, degToRad, rand, sin } from "@/util/math";
 import { playing, smoothedLevel } from "@/global/state";
 import { useInterval } from "@/util/composables";
 import { repeat } from "@/util/func";
@@ -143,8 +143,6 @@ onMounted(() => {
     "#2196f3",
     "#2196f3",
   ];
-
-  // type ColorRepresentation
 
   /** generate lights */
   for (const color of colors) {

@@ -63,7 +63,7 @@ const { width } = useWindowSize();
 .section[data-dark="true"] {
   background: var(--off-black);
   color: white;
-  box-shadow: 0 0 75px #9600b080;
+  box-shadow: 0 0 75px #41004d80;
   z-index: 1;
 }
 
