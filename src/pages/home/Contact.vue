@@ -98,7 +98,7 @@ const onSubmit = async (event: Event) => {
 
   /** debug */
   console.groupCollapsed("Token");
-  console.log(token);
+  console.info(token);
   console.groupEnd();
 
   /** send email to server */
@@ -117,7 +117,7 @@ const onSubmit = async (event: Event) => {
 
   /** debug */
   console.groupCollapsed("Response");
-  console.log(response);
+  console.info(response);
   console.groupEnd();
 
   /** alert response */

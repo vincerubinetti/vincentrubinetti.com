@@ -11,6 +11,7 @@
         ? {}
         : {
             position: 'fixed',
+            top: 0,
             opacity: 0,
             visibility: 'hidden',
             pointerEvents: 'none',
@@ -303,10 +304,11 @@ const cache: Record<Props["playlist"], Track[]> = {};
 /** soundcloud callback - on widget ready */
 /** https://stackoverflow.com/questions/48550585/soundcloud-api-getsounds-only-returns-the-first-5-objects */
 const onReady = async () => {
-  /** last resort fallback countdown */
-  const fallback = window.setTimeout(() => {
-    onError("Tracks not loaded after a few seconds");
-  }, 3 * 1000);
+  /** timeout countdown */
+  const timeout = window.setTimeout(
+    () => onError("Tracks not loaded after a few seconds"),
+    3 * 1000
+  );
 
   try {
     /** capture playlist id, which can change partway through func */
@@ -321,6 +323,7 @@ const onReady = async () => {
     /** load new tracks from cache */
     const newTracks: Track[] = cache[playlist] || [];
 
+    /** if no cached track data */
     if (!newTracks.length) {
       /** get number of tracks */
       console.info("Tracks");
@@ -394,7 +397,9 @@ const onReady = async () => {
       console.info("Full tracks", newTracks);
     } else throw Error("No tracks");
 
-    /** after widget ACTUALLY ready, when getSounds returns something... */
+    /** wait for getSounds to return something (even if using tracks from cache)
+     * because widget not ACTUALLY ready until it does, and binding callbacks
+     * directly below (keep co-located) will fail */
     await promisifySc<_Track[]>(
       (resolve) => widget.getSounds(resolve),
       (result) => !!result?.length,
@@ -408,16 +413,16 @@ const onReady = async () => {
     widget.bind(window.SC.Widget.Events.FINISH, onFinish);
     widget.bind(window.SC.Widget.Events.ERROR, onError);
 
-    /** cancel fallback */
-    window.clearTimeout(fallback);
+    /** cancel timeout */
+    window.clearTimeout(timeout);
   } catch (error) {
     if (
       (error instanceof Error && error.message == "canceled") ||
       (typeof error == "string" && error == "canceled")
     ) {
       console.info("CANCELED");
-      /** cancel fallback */
-      window.clearTimeout(fallback);
+      /** cancel timeout */
+      window.clearTimeout(timeout);
     } else onError(error);
   }
 };
@@ -534,13 +539,26 @@ const onError = (...args: any[]) => {
 /** load soundcloud widget */
 const onLoad = async () => {
   try {
-    /** load widget */
+    /** timeout countdown */
+    const timeout = window.setTimeout(
+      () => onError("Widget not ready after a few seconds"),
+      3 * 1000
+    );
+
     loading.value = true;
+
+    /** catch misc unlikely errors */
     if (!iframe.value) return;
     if (!window.SC) throw Error("SC not defined");
     widget = window.SC.Widget(iframe.value);
     if (!widget) throw Error("Widget couldn't be hooked up");
-    widget.bind(window.SC.Widget.Events.READY, onReady);
+
+    /** wait for widget to be ready */
+    widget.bind(window.SC.Widget.Events.READY, () => {
+      onReady();
+      /** cancel timeout */
+      window.clearTimeout(timeout);
+    });
   } catch (error) {
     onError(error);
   }
@@ -553,18 +571,20 @@ watch(
   () => props.playlist,
   async () => {
     /** reset state */
-    widget.unbind(window.SC.Widget.Events.PLAY_PROGRESS);
-    widget.unbind(window.SC.Widget.Events.PLAY);
-    widget.unbind(window.SC.Widget.Events.PAUSE);
-    widget.unbind(window.SC.Widget.Events.FINISH);
-    widget.unbind(window.SC.Widget.Events.ERROR);
+    widget?.unbind(window.SC.Widget.Events.PLAY_PROGRESS);
+    widget?.unbind(window.SC.Widget.Events.PLAY);
+    widget?.unbind(window.SC.Widget.Events.PAUSE);
+    widget?.unbind(window.SC.Widget.Events.FINISH);
+    widget?.unbind(window.SC.Widget.Events.ERROR);
     loading.value = true;
     error.value = false;
     playing.value = false;
     percent.value = 0;
     level.value = 0;
 
+    /** wait for new iframe src to load */
     await waitForEvent(iframe.value, "load");
+
     onLoad();
   }
 );
