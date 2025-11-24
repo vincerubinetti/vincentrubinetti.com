@@ -16,9 +16,12 @@ RewriteRule ^/?$ "https\:\/\/vincentrubinetti\.com\/" [R=301,L]
   HeaderName /listing-header.html
   IndexOptions NameWidth=*
   IndexOptions Charset=UTF-8
-  AddIcon /icons/folder.png ^^DIRECTORY^^
-  AddIconByType /icons/audio.png audio/*
-  AddIconByType /icons/pdf.png application/pdf
-  AddIcon /icons/project.png .sib .mscz
-  DefaultIcon /icons/file.png
+  AddIcon /icons/folder.svg ^^DIRECTORY^^
+  AddIconByType /icons/mp3.svg audio/mpeg
+  AddIconByType /icons/wav.svg audio/x-wav
+  AddIconByType /icons/ogg.svg audio/ogg
+  AddIconByType /icons/pdf.svg application/pdf
+  AddIconByType /icons/midi.svg audio/midi
+  AddIcon /icons/score.svg .sib .mscz
+  DefaultIcon /icons/file.svg
 </ifModule>
