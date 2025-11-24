@@ -1,31 +1,32 @@
 {
-  "name": "website",
   "type": "module",
-  "version": "0.0.1",
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build && node scripts/post-build.js",
+    "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "postinstall": "patch-package",
-    "upload": "yarn build && node scripts/upload.js"
+    "lint": "eslint . --fix",
+    "format": "prettier --write src/",
+    "test:types": "tsc -b",
+    "test:lint": "eslint .",
+    "test:format": "prettier --check src/",
+    "test": "bun run test:types && bun run test:lint && bun run test:format",
+    "clean": "rm -rf node_modules dist bun.lock && bun pm cache rm"
   },
   "dependencies": {
-    "@astrojs/vue": "^2.1.1",
-    "@vueuse/core": "^9.13.0",
-    "astro": "^2.2.2",
-    "linkify-string": "^4.1.1",
-    "linkifyjs": "^4.1.1",
-    "three": "^0.151.3",
-    "vue": "^3.2.47",
-    "vue-tippy": "v6"
+    "@tailwindcss/vite": "^4.1.17",
+    "astro": "^5.16.0",
+    "tailwindcss": "^4.1.17"
   },
   "devDependencies": {
-    "@types/three": "^0.150.1",
-    "dotenv": "^16.0.3",
-    "patch-package": "^6.5.1",
-    "postinstall-postinstall": "^2.1.0",
-    "ssh2-sftp-client": "^9.0.4",
-    "vite-svg-loader": "^4.0.0"
+    "@ianvs/prettier-plugin-sort-imports": "^4.7.0",
+    "@typescript-eslint/parser": "^8.47.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-astro": "^1.5.0",
+    "eslint-plugin-better-tailwindcss": "^3.7.11",
+    "eslint-plugin-prettier": "^5.5.4",
+    "prettier": "^3.6.2",
+    "prettier-plugin-astro": "^0.14.1",
+    "typescript-eslint": "^8.47.0"
   }
 }

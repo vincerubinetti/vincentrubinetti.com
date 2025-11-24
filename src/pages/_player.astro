@@ -1,0 +1,35 @@
+---
+const playlists = [
+  "Best Of",
+  "Orchestral",
+  "Electronic",
+  "Pop/Rock",
+  "Other",
+  "Remixes",
+];
+---
+
+<section class="bg-zinc-900 text-white">
+  <h2 class="sr-only">Playlists</h2>
+
+  <div
+    class={`
+      grid grid-cols-6 place-content-center gap-2 self-center
+      max-md:grid-cols-3
+      max-sm:grid-cols-2
+    `}
+  >
+    {
+      playlists.map((playlist) => (
+        <button
+          class={`
+            bg-zinc-900 p-4
+            hover:bg-zinc-800
+          `}
+        >
+          {playlist}
+        </button>
+      ))
+    }
+  </div>
+</section>

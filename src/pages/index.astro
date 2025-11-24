@@ -1,25 +1,36 @@
 ---
-import Header from "@/components/TheHeader.vue";
-import Layout from "@/layouts/Layout.astro";
-import Listen from "@/pages/home/Listen.vue";
-import Follow from "@/pages/home/Follow.vue";
-import Highlights from "@/pages/home/Highlights.vue";
-import About from "@/pages/home/About.vue";
-import Contact from "@/pages/home/Contact.vue";
-import Footer from "@/components/TheFooter.vue";
+import Logo from "@/assets/vr.svg";
+import Player from "@/pages/_player.astro";
+import "@/styles.css";
 ---
 
-<Layout
-  title="Vincent Rubinetti | Composer, producer, and more"
-  description="Composer for media. Orchestral, electronic, and a wide variety of other styles. "
->
-  <Header client:load big={true} />
-  <main>
-    <Listen client:load />
-    <Follow client:idle />
-    <Highlights client:idle />
-    <About client:idle />
-    <Contact client:idle />
-  </main>
-  <Footer client:idle />
-</Layout>
+<html lang="en" class="font-sans font-light">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/icon.svg" />
+    <meta name="viewport" content="width=device-width" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap"
+      rel="stylesheet"
+    />
+
+    <title>Vincent Rubinetti</title>
+  </head>
+
+  <body class="flex min-h-screen flex-col">
+    <header class="bg-zinc-900 text-white">
+      <section class="gap-2! text-center">
+        <Logo class="size-12" />
+        <h1 class="text-2xl tracking-wider uppercase">Vincent Rubinetti</h1>
+        <div class="font-thin tracking-widest lowercase">
+          Composer • Developer • More
+        </div>
+      </section>
+    </header>
+
+    <Player />
+  </body>
+</html>

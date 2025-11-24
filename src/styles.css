@@ -1,0 +1,21 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Outfit", sans-serif;
+}
+
+body {
+  @apply leading-none;
+}
+
+section {
+  @apply flex flex-col items-center gap-8 px-[max(--spacing(8),(100%---spacing(200))/2)] py-8;
+}
+
+svg {
+  @apply shrink-0;
+}
+
+button {
+  @apply inline-flex gap-2 justify-center items-center cursor-pointer transition-all;
+}
