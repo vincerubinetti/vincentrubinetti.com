@@ -20,62 +20,85 @@
       </button>
     </div>
 
-    <!-- current track -->
-    <div v-if="selectedTrack" class="flex items-center gap-8">
-      <div>{{ selectedTrack.title }}</div>
-      <div class="flex items-center gap-2">
-        <Play />{{ selectedTrack.plays }}
-      </div>
-      <Info />
-    </div>
-
-    <!-- player -->
-    <div class="flex w-full items-center gap-8">
-      <!-- controls -->
-      <div class="flex items-center gap-2 text-3xl">
-        <button class="hover:bg-white/25">
-          <ChevronLeft />
-        </button>
-        <button class="hover:bg-white/25">
-          <Play />
-        </button>
-        <button class="hover:bg-white/25">
-          <ChevronRight />
-        </button>
-      </div>
-      <!-- waveform -->
-      <div class="grow bg-zinc-500"></div>
-      <!-- thumbnail -->
-      <img src="" />
-    </div>
-
-    <!-- tracks -->
-    <div class="flex w-full flex-col">
-      <button
-        v-for="(track, index) in tracks"
-        :key="index"
-        @click="selectedTrack = track"
-        class="flex items-center gap-4 pt-0! pb-0! pl-0! hover:bg-white/25"
+    <SoundCloud
+      :playlist="selectedPlaylist.id"
+      class="aspect-video w-full"
+      id="listen-player"
+    >
+      <template
+        #default="{
+          status,
+          tracks,
+          track,
+          playing,
+          volume,
+          time,
+          length,
+          waveform,
+        }"
       >
-        <img :src="track.image" class="size-14" />
-        <div class="flex grow gap-2 text-left">
-          <Music
-            :class="[track === selectedTrack ? 'opacity-100' : 'opacity-0']"
-          />
-          {{ track.title }}
-        </div>
-        <div class="flex items-center gap-2">
-          <Play />
-          {{ track.plays }}
-        </div>
-      </button>
-    </div>
+        <div v-if="status === 'loading'">Loading</div>
+
+        <template v-else-if="status === 'success'">
+          <!-- current track -->
+          <div v-if="track" class="flex items-center gap-8">
+            <div>{{ track.title }}</div>
+            <div class="flex items-center gap-2"><Play /></div>
+            <Info />
+          </div>
+
+          <!-- player -->
+          <div class="flex w-full items-center gap-8">
+            <!-- controls -->
+            <div class="flex items-center gap-2 text-3xl">
+              <button class="hover:bg-white/25">
+                <ChevronLeft />
+              </button>
+              <button class="hover:bg-white/25">
+                <Play />
+              </button>
+              <button class="hover:bg-white/25">
+                <ChevronRight />
+              </button>
+            </div>
+            <!-- waveform -->
+            <div class="grow bg-zinc-500"></div>
+            <!-- thumbnail -->
+            <img src="" />
+          </div>
+
+          <!-- tracks -->
+          <div class="flex w-full flex-col">
+            <button
+              v-for="(_track, index) in tracks"
+              :key="index"
+              class="flex items-center gap-4 pt-0! pb-0! pl-0! hover:bg-white/25"
+            >
+              <img :src="_track.image" class="size-14" />
+              <div class="flex grow gap-2 text-left">
+                <Music
+                  :class="[
+                    isEqual(_track, track) ? 'opacity-100' : 'opacity-0',
+                  ]"
+                />
+                {{ _track.title }}
+              </div>
+              <div class="flex items-center gap-2">
+                <Play />
+              </div>
+            </button>
+          </div>
+        </template>
+      </template>
+    </SoundCloud>
   </section>
 </template>
 
 <script setup lang="ts">
 import { ref } from "vue";
+import { isEqual } from "lodash-es";
 import { ChevronLeft, ChevronRight, Info, Music, Play } from "lucide-vue-next";
+import SoundCloud from "@/components/SoundCloud.vue";
 
 const playlists = [
   { title: "Best Of", id: "652705266" },
@@ -87,23 +110,4 @@ const playlists = [
 ];
 
 const selectedPlaylist = ref(playlists[0]);
-
-type Track = {
-  title: string;
-  image: string;
-  plays: string;
-};
-
-const selectedTrack = ref<Track>();
-
-const tracks = ref<Track[]>([
-  { title: "Final Breath", image: "", plays: "16k" },
-  { title: "Eternal Hope", image: "", plays: "4k" },
-  { title: "Skyward", image: "", plays: "4k" },
-  { title: "Mystic Forest", image: "", plays: "4k" },
-  { title: "Mystic Forest", image: "", plays: "4k" },
-  { title: "Mystic Forest", image: "", plays: "4k" },
-  { title: "Mystic Forest", image: "", plays: "4k" },
-  { title: "Mystic Forest", image: "", plays: "4k" },
-]);
 </script>
