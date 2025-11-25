@@ -1,0 +1,54 @@
+---
+import "@/styles.css";
+
+export interface Props {
+  title: string;
+  description: string;
+}
+
+const { title, description } = Astro.props;
+
+const url = "https://vincentrubinetti.com";
+const share = "share.jpg";
+---
+
+<html lang="en">
+  <head>
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=UA-42575210-1"></script>
+
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      window.dataLayer.push(["js", new Date()]);
+      window.dataLayer.push(["config", "UA-42575210-1"]);
+    </script>
+
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+
+    <title>{title}</title>
+
+    <link rel="icon" type="image/svg+xml" href="/icon.svg" />
+
+    <meta name="title" content={title} />
+    <meta name="description" content={description} />
+
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={url} />
+    <meta property="og:image" content={share} />
+    <meta property="og:type" content="website" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+
+  <body class="flex flex-col font-sans leading-none font-light">
+    <slot />
+  </body>
+</html>

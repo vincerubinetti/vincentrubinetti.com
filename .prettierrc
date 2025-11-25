@@ -1,5 +1,9 @@
 {
-  "plugins": ["prettier-plugin-astro", "@ianvs/prettier-plugin-sort-imports"],
+  "plugins": [
+    "prettier-plugin-astro",
+    "@ianvs/prettier-plugin-sort-imports",
+    "prettier-plugin-tailwindcss"
+  ],
   "overrides": [
     {
       "files": "*.astro",
@@ -9,7 +13,7 @@
     }
   ],
   "importOrder": [
-    "^react",
+    "^vue",
     "^@[a-zA-Z]",
     "^[a-zA-Z]",
     "^@/",

@@ -1,11 +1,16 @@
 @import "tailwindcss";
 
 @theme {
+  --breakpoint-xs: 20rem;
+  --breakpoint-sm: 30rem;
+  --breakpoint-md: 40rem;
+  --breakpoint-lg: 50rem;
+
   --font-sans: "Outfit", sans-serif;
 }
 
 body {
-  @apply leading-none;
+  @apply flex min-h-screen flex-col;
 }
 
 section {
@@ -17,5 +22,9 @@ svg {
 }
 
 button {
-  @apply inline-flex gap-2 justify-center items-center cursor-pointer transition-all;
+  @apply inline-flex cursor-pointer items-center justify-center gap-2 p-2 transition-all;
+}
+
+.lucide {
+  @apply h-[1em] w-[unset];
 }
