@@ -27,7 +27,7 @@ import { computed, ref, useTemplateRef, type UnwrapRef } from "vue";
 import { useScriptTag } from "@vueuse/core";
 import { debounce, max, range, uniq } from "lodash-es";
 import { generator, waitFor } from "@/util/misc";
-import type { Sound, Widget } from "./SoundCloud";
+import type { Events, Sound, Widget } from "./SoundCloud";
 
 type Props = {
   /** playlist id */
@@ -67,6 +67,7 @@ const waveform = ref<number[]>([]);
 
 /** soundcloud widget */
 let widget: Widget;
+let events: Events;
 
 type SlotProps = {
   status: UnwrapRef<typeof status>;
@@ -113,24 +114,32 @@ const onLoad = generator(async function* () {
 
     /** create soundcloud widget (iframe embed) */
     widget = window.SC.Widget(iframe.value);
+    events = window.SC.Widget.Events;
 
     if (!widget) throw Error("Widget couldn't be hooked up");
 
     /** wait for widget to be ready */
-    yield new Promise<void>((resolve) => {
-      widget.bind(window.SC!.Widget.Events.READY, debounce(resolve, 500));
-    });
+    yield new Promise<void>((resolve) => widget.bind(events.READY, resolve));
 
     /** reset */
     status.value = "loading";
     tracks.value = [];
 
+    /** get number of tracks */
+    let count = 0;
+    yield waitFor(() => {
+      widget.getSounds((sounds) => (count = sounds.length));
+      return count;
+    });
+
     /** go through each track and get details */
-    for (const index of range(30)) {
+    for (const _ of range(count)) {
       /** get current track */
       let track: Sound = {};
-      widget.getCurrentSound((sound) => (track = sound));
-      yield waitFor(async () => track.artwork_url);
+      yield waitFor(() => {
+        widget.getCurrentSound((sound) => (track = sound));
+        return track.artwork_url;
+      });
 
       /** add track */
       tracks.value.push({
@@ -142,11 +151,6 @@ const onLoad = generator(async function* () {
 
       /** move to next track */
       widget.next();
-      widget.seekTo(0);
-
-      /** if index same, we reached end */
-      const next = await new Promise(widget.getCurrentSoundIndex.bind(widget));
-      if (next === index) break;
     }
 
     /** go back to first track */
