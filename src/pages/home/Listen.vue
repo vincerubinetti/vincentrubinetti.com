@@ -21,6 +21,7 @@ import type { Track } from "@/components/SoundCloud.vue";
 import SoundCloud from "@/components/SoundCloud.vue";
 import { clickCoords } from "@/util/dom";
 import { formatTime, formatValue, linkify } from "@/util/string";
+import Background from "./background/Background.vue";
 
 const playlists = [
   { title: "Best Of", id: "652705266" },
@@ -86,8 +87,10 @@ const getBandcamp = (track: Track) =>
 </script>
 
 <template>
-  <section id="listen" class="bg-zinc-900 text-white">
+  <section id="listen" class="relative bg-zinc-900 text-white z-0">
     <h2 class="sr-only">Listen</h2>
+
+    <Background class="absolute inset-0 size-full -z-10" />
 
     <!-- playlists -->
     <div
