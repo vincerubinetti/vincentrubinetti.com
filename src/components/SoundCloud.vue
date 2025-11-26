@@ -1,31 +1,16 @@
-<template>
-  <iframe
-    v-bind="$attrs"
-    ref="iframe"
-    :src="src"
-    allow="autoplay"
-    frameborder="no"
-    loading="lazy"
-    :style="
-      status !== 'error' && {
-        position: 'fixed',
-        top: 0,
-        opacity: 0,
-        visibility: 'hidden',
-        pointerEvents: 'none',
-      }
-    "
-    @load="() => onLoad()"
-  />
-  <slot
-    v-bind="{ status, tracks, track, playing, volume, time, length, waveform }"
-  />
-</template>
+<script lang="ts">
+export type Track = Sound & {
+  waveform?: { x: number; y: number }[];
+  art?: string;
+  tags?: string[];
+};
+</script>
 
 <script setup lang="ts">
 import { computed, ref, useTemplateRef, type UnwrapRef } from "vue";
 import { useScriptTag } from "@vueuse/core";
-import { debounce, max, range, uniq } from "lodash-es";
+import { max, range, uniq } from "lodash-es";
+import { smooth } from "@/util/math";
 import { generator, waitFor } from "@/util/misc";
 import type { Events, Sound, Widget } from "./SoundCloud";
 
@@ -35,12 +20,6 @@ type Props = {
 };
 
 const { playlist } = defineProps<Props>();
-
-type Track = Sound & {
-  waveform?: number[];
-  art?: string;
-  tags?: string[];
-};
 
 /** assemble embed src */
 
@@ -104,6 +83,9 @@ const { scriptTag: apiScript } = useScriptTag(
   "https://w.soundcloud.com/player/api.js",
 );
 
+const playlistCache: Record<string, Track[]> = {};
+
+/** on iframe load */
 const onLoad = generator(async function* () {
   try {
     /** wait for soundcloud api script to load */
@@ -121,42 +103,54 @@ const onLoad = generator(async function* () {
     /** wait for widget to be ready */
     yield new Promise<void>((resolve) => widget.bind(events.READY, resolve));
 
-    /** reset */
     status.value = "loading";
-    tracks.value = [];
 
-    /** get number of tracks */
-    let count = 0;
-    yield waitFor(() => {
-      widget.getSounds((sounds) => (count = sounds.length));
-      return count;
-    });
+    /** load from cache */
+    tracks.value = playlistCache[playlist] || [];
 
-    /** go through each track and get details */
-    for (const _ of range(count)) {
-      /** get current track */
-      let track: Sound = {};
+    /** if nothing loaded from cache */
+    if (!tracks.value.length) {
+      /** get number of tracks */
+      let count = 0;
       yield waitFor(() => {
-        widget.getCurrentSound((sound) => (track = sound));
-        return track.artwork_url;
+        widget.getSounds((sounds) => (count = sounds.length));
+        return count;
       });
 
-      /** add track */
-      tracks.value.push({
-        ...track,
-        waveform: await getWaveform(track.waveform_url),
-        art: await getArt(track.artwork_url),
-        tags: getTags(track.tag_list),
-      });
+      /** go through each track and get details */
+      for (const index of range(count)) {
+        /** get current track */
+        let track: Sound = {};
+        yield waitFor(() => {
+          widget.getCurrentSound((sound) => (track = sound));
+          return track.artwork_url;
+        });
 
-      /** move to next track */
-      widget.next();
+        /** add track */
+        tracks.value.push({
+          ...track,
+          waveform: await getWaveform(track),
+          tags: getTags(track),
+        });
+
+        /** move to next track */
+        widget.next();
+
+        /** wait for track to actually change */
+        let currentIndex = -1;
+        yield waitFor(() => {
+          widget.getCurrentSoundIndex((index) => (currentIndex = index));
+          return currentIndex === index + 1 || index === count - 1;
+        });
+      }
+
+      playlistCache[playlist] = tracks.value;
     }
-
     /** go back to first track */
     widget.skip(0);
     widget.pause();
 
+    /** select first track */
     track.value = tracks.value[0];
 
     status.value = "success";
@@ -167,34 +161,31 @@ const onLoad = generator(async function* () {
 });
 
 /** get waveform data */
-const getWaveform = async (url = "") => {
-  if (!url) return [];
+const getWaveform = async (track: Track) => {
+  if (!track.waveform_url) return [];
   type Waveform = {
     width: number;
     height: number;
     samples: number[];
   };
-  const { height, samples } = (await (await fetch(url)).json()) as Waveform;
-  const maximum = max(samples) || height;
-  return samples.map((value) => value / maximum);
-};
+  const { height, samples } = (await (
+    await fetch(track.waveform_url)
+  ).json()) as Waveform;
 
-/** get art url */
-const getArt = async (url = "") => {
-  if (!url) return "";
-  /** try to get higher res art */
-  const bigurl = url.replace("large", "t500x500");
-  try {
-    await fetch(bigurl);
-    return bigurl;
-  } catch (error) {}
-  return url;
+  const maximum = max(samples) || height;
+  const simplified = smooth(
+    samples.map((value) => value / maximum),
+    2,
+  );
+  simplified.unshift(0);
+  simplified.push(0);
+  return simplified.map((y, i, a) => ({ x: i / a.length, y }));
 };
 
 /** parse and de-duplicate tags */
-const getTags = (string = "") =>
+const getTags = (track: Track) =>
   uniq(
-    (string.match(/"[^"]*"|\S+/g) || [])
+    ((track.tag_list ?? "").match(/"[^"]*"|\S+/g) ?? [])
       .map((tag) =>
         tag
           .toLowerCase()
@@ -206,3 +197,27 @@ const getTags = (string = "") =>
       .filter(Boolean),
   );
 </script>
+
+<template>
+  <iframe
+    v-bind="$attrs"
+    ref="iframe"
+    :src="src"
+    allow="autoplay"
+    frameborder="no"
+    loading="lazy"
+    :style="
+      status !== 'error' && {
+        position: 'fixed',
+        top: 0,
+        opacity: 0,
+        visibility: 'hidden',
+        pointerEvents: 'none',
+      }
+    "
+    @load="() => onLoad()"
+  />
+  <slot
+    v-bind="{ status, tracks, track, playing, volume, time, length, waveform }"
+  />
+</template>
