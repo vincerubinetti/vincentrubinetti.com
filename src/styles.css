@@ -18,16 +18,16 @@ section {
 }
 
 svg {
-  @apply shrink-0;
+  @apply shrink-0 overflow-visible;
 }
 
 a {
-  @apply text-sky-500 underline underline-offset-2 transition-all hover:text-current;
+  @apply text-sky-500 underline underline-offset-2 transition-colors hover:text-current;
 }
 
 button,
 .button {
-  @apply inline-flex cursor-pointer items-center justify-center gap-2 p-2 text-current transition-all hover:bg-current/10;
+  @apply inline-flex cursor-pointer items-center justify-center gap-2 p-2 text-current transition-colors hover:bg-current/10;
 }
 
 .lucide {
@@ -38,6 +38,7 @@ button,
   @apply [stroke-linecap:butt]! [stroke-linejoin:miter]!;
 }
 
-.lucide-play {
+.lucide-play,
+.lucide-pause {
   @apply fill-current stroke-0;
 }

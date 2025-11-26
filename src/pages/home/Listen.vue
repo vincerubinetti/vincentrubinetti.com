@@ -8,6 +8,7 @@ import {
   Download,
   Heart,
   MessageCircle,
+  Pause,
   Play,
   RefreshCcw,
   Tag,
@@ -15,9 +16,11 @@ import {
   ZoomOut,
 } from "lucide-vue-next";
 import slugify from "slugify";
+import Slider from "@/components/Slider.vue";
 import type { Track } from "@/components/SoundCloud.vue";
 import SoundCloud from "@/components/SoundCloud.vue";
-import { formatValue, linkify } from "@/util/string";
+import { clickCoords } from "@/util/dom";
+import { formatTime, formatValue, linkify } from "@/util/string";
 
 const playlists = [
   { title: "Best Of", id: "652705266" },
@@ -88,7 +91,7 @@ const getBandcamp = (track: Track) =>
 
     <!-- playlists -->
     <div
-      class="max-xs:grid-cols-1 grid w-full grid-cols-6 max-lg:grid-cols-3 max-md:grid-cols-2"
+      class="max-xs:grid-cols-1 grid w-full grid-cols-6 gap-2 max-lg:grid-cols-3 max-md:grid-cols-2"
     >
       <button
         v-for="({ title, id }, index) of playlists"
@@ -119,41 +122,119 @@ const getBandcamp = (track: Track) =>
           playing,
           volume,
           time,
-          length,
-          waveform,
+          previous,
+          play,
+          pause,
+          next,
+          seek,
+          setTrack,
+          setVolume,
         }"
       >
-        <div v-if="status === 'loading'">Loading</div>
+        <div
+          v-if="status === 'loading'"
+          class="grid h-100 w-full animate-pulse place-content-center bg-white/10"
+        >
+          Loading
+        </div>
 
         <div
           v-else-if="status === 'success' && track"
           class="flex w-full flex-col items-center gap-4"
         >
           <!-- player -->
-          <div class="flex w-full items-center gap-4">
+          <div class="flex w-full gap-4">
             <!-- transport controls -->
             <div class="flex flex-col">
               <div class="flex items-center gap-2 text-2xl">
-                <button>
+                <button
+                  title="Previous track"
+                  @click="
+                    if (time < 2000) previous();
+                    seek(0);
+                    play();
+                  "
+                >
                   <ChevronLeft />
                 </button>
-                <button>
-                  <Play />
+                <button title="Play/Pause" @click="playing ? pause() : play()">
+                  <Play v-if="!playing" />
+                  <Pause v-if="playing" />
                 </button>
-                <button>
+                <button
+                  title="Next track"
+                  @click="
+                    next();
+                    seek(0);
+                    play();
+                  "
+                >
                   <ChevronRight />
                 </button>
               </div>
+              <Slider
+                :model-value="[volume]"
+                :min="0"
+                :max="1"
+                :step="0.05"
+                @update:model-value="(value) => setVolume(value?.[0] ?? 1)"
+              />
             </div>
 
             <!-- waveform -->
-            <div class="grow">
+            <button
+              class="group relative grow p-0!"
+              title="Seek"
+              @click="seek(clickCoords($event).x * (track.duration ?? 1))"
+              @keydown.right.prevent="seek(time + 5000)"
+              @keydown.left.prevent="seek(time - 5000)"
+              @keydown.space.prevent="playing ? pause() : play()"
+            >
               <svg
-                viewBox="0 0 1 1"
+                viewBox="0 0 1 1.5"
                 preserveAspectRatio="none"
-                class="h-12 w-full fill-zinc-500"
+                class="h-0 min-h-full w-full"
               >
+                <filter id="waveform-filter">
+                  <feFlood
+                    flood-color="red"
+                    flood-opacity="1"
+                    x="0"
+                    y="0"
+                    height="1"
+                    :width="time / (track.duration ?? 1)"
+                    result="left-alpha"
+                  />
+                  <feFlood
+                    flood-color="red"
+                    flood-opacity="0.25"
+                    :x="time / (track.duration ?? 1)"
+                    y="0"
+                    height="1"
+                    :width="1 - time / (track.duration ?? 1)"
+                    result="right-alpha"
+                  />
+                  <feComposite
+                    in="SourceGraphic"
+                    in2="left-alpha"
+                    operator="in"
+                    result="left-waveform"
+                  />
+                  <feComposite
+                    in="SourceGraphic"
+                    in2="right-alpha"
+                    operator="in"
+                    result="right-waveform"
+                  />
+                  <feMerge>
+                    <feMergeNode in="left-waveform" />
+                    <feMergeNode in="right-waveform" />
+                  </feMerge>
+                </filter>
                 <polygon
+                  id="waveform"
+                  filter="url(#waveform-filter)"
+                  class="fill-white"
                   :points="
                     track?.waveform
                       ?.map(({ x, y }) => `${x},${1 - y * 0.8}`)
@@ -161,38 +242,59 @@ const getBandcamp = (track: Track) =>
                       ?.join(' ')
                   "
                 />
+                <use
+                  href="#waveform"
+                  transform="translate(0, 1) scale(1, -0.5) translate(0, -1)"
+                  :opacity="0.25"
+                />
               </svg>
-            </div>
+              <div
+                class="absolute top-full -translate-x-1/2 translate-y-1 text-sm opacity-0 transition-opacity group-hover:opacity-100"
+                :style="{ left: `${(time / (track.duration ?? 1)) * 100}%` }"
+              >
+                {{ formatTime(time) }}
+              </div>
+              <div
+                class="absolute top-full right-0 translate-y-1 text-sm opacity-0 transition-opacity group-hover:opacity-100"
+              >
+                {{ formatTime(track.duration ?? 0) }}
+              </div>
+            </button>
+          </div>
 
-            <!-- actions -->
-            <div class="flex flex-col">
-              <a
-                :href="getBandcamp(track)"
-                class="button"
-                target="_blank"
-                title="Download on Bandcamp"
-              >
-                <Download />
-              </a>
-              <button
-                :aria-expanded="showInfo"
-                aria-controls="track-info"
-                title="Toggle track info"
-                @click="showInfo = !showInfo"
-              >
-                <ZoomOut v-if="showInfo" />
-                <ZoomIn v-else />
-              </button>
-            </div>
+          <!-- track overview -->
+          <div class="flex w-full flex-wrap items-center justify-center gap-2">
+            <div class="font-medium">{{ track.title }}</div>
+            <a
+              :href="getBandcamp(track)"
+              class="button"
+              target="_blank"
+              title="Download on Bandcamp"
+            >
+              <Download />
+            </a>
+            <button
+              :aria-expanded="showInfo"
+              aria-controls="track-info"
+              title="Toggle track info"
+              @click="showInfo = !showInfo"
+            >
+              <ZoomOut v-if="showInfo" />
+              <ZoomIn v-else />
+            </button>
           </div>
 
           <!-- track info -->
           <div
             id="track-info"
-            class="flex w-full flex-col gap-4 overflow-hidden transition-all"
+            class="flex w-full flex-col gap-4 overflow-hidden transition-[max-height]"
             :class="showInfo ? 'max-h-100' : 'max-h-0'"
           >
-            <div class="flex w-full flex-wrap justify-center gap-4">
+            <!-- track details -->
+            <div
+              class="flex w-full flex-wrap items-center justify-center gap-4 opacity-50"
+            >
+              <div v-for="tag in track.tags" :key="tag">#{{ tag }}</div>
               <div
                 v-for="({ icon, text, title }, index) of getStats(track)"
                 :key="index"
@@ -203,30 +305,43 @@ const getBandcamp = (track: Track) =>
                 {{ text }}
               </div>
             </div>
-            <div class="flex flex-wrap justify-center gap-4">
-              <span v-for="tag in track.tags" :key="tag">#{{ tag }}</span>
-            </div>
+
+            <!-- track description -->
             <div
               class="overflow-y-auto leading-tight"
               v-html="getDescription(track)"
             />
           </div>
 
-          <!-- tracks -->
+          <!-- track list -->
           <div class="flex w-full flex-col">
             <template v-for="(_track, index) in tracks" :key="index">
               <button
-                class="flex h-14 gap-4! p-0! pr-4! aria-selected:bg-white/10"
+                class="group flex h-14 gap-4! p-0! pr-4! aria-selected:bg-white/10"
                 :aria-selected="isEqual(track, _track)"
                 :title="`Play ${_track.title}`"
+                @click="
+                  setTrack(index);
+                  seek(0);
+                  play();
+                "
               >
-                <img :src="_track.artwork_url" class="h-full" />
+                <img :src="_track.artwork_url ?? ''" class="h-full" />
                 <div class="z-0 flex h-full grow items-center gap-2 text-left">
                   {{ _track.title }}
                 </div>
-                <div class="flex items-center gap-2 text-sm">
-                  <Play />
-                  {{ formatValue(_track.playback_count) }}
+                <div class="relative text-sm opacity-50">
+                  <div
+                    class="absolute right-0 flex items-center gap-2 opacity-100 transition-opacity group-hover:opacity-0"
+                  >
+                    <Play />
+                    {{ formatValue(_track.playback_count) }}
+                  </div>
+                  <div
+                    class="truncate opacity-0 transition-opacity group-hover:flex group-hover:opacity-100"
+                  >
+                    {{ _track.tags?.map((tag) => `#${tag}`).join(" ") }}
+                  </div>
                 </div>
               </button>
             </template>

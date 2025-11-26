@@ -66,114 +66,118 @@ export type Events = AudioEvents & UIEvents;
 export type EventCallback<Value extends EventValue> =
   Value extends AudioEventValue ? AudioEventCallback : UIEventCallback;
 
-export type Sound = {
-  artwork_url?: string;
-  caption?: null;
-  commentable?: boolean;
-  comment_count?: number;
-  created_at?: Date;
-  description?: string;
-  downloadable?: boolean;
-  download_count?: number;
-  duration?: number;
-  full_duration?: number;
-  embeddable_by?: string;
-  genre?: string;
-  has_downloads_left?: boolean;
-  id?: number;
-  kind?: string;
-  label_name?: null;
-  last_modified?: Date;
-  license?: string;
-  likes_count?: number;
-  permalink?: string;
-  permalink_url?: string;
-  playback_count?: number;
-  public?: boolean;
-  publisher_metadata?: PublisherMetadata;
-  purchase_title?: null;
-  purchase_url?: null;
-  release_date?: null;
-  reposts_count?: number;
-  secret_token?: null;
-  sharing?: string;
-  state?: string;
-  streamable?: boolean;
-  tag_list?: string;
-  title?: string;
-  uri?: string;
-  urn?: string;
-  user_id?: number;
-  visuals?: null;
-  waveform_url?: string;
-  display_date?: Date;
-  media?: Media;
-  station_urn?: string;
-  station_permalink?: string;
-  track_authorization?: string;
-  monetization_model?: string;
-  policy?: string;
-  user?: User;
-  playable?: boolean;
-  _resource_id?: number;
-  _resource_type?: string;
+type Optional<T extends object> = {
+  [Key in keyof T]?: T[Key] | null;
 };
 
-export type Media = {
-  transcodings?: Transcoding[];
-};
+export type Sound = Optional<{
+  artwork_url: string;
+  caption: string;
+  commentable: boolean;
+  comment_count: number;
+  created_at: Date | string;
+  description: string;
+  downloadable: boolean;
+  download_count: number;
+  duration: number;
+  full_duration: number;
+  embeddable_by: string;
+  genre: string;
+  has_downloads_left: boolean;
+  id: number;
+  kind: string;
+  label_name: string;
+  last_modified: Date | string;
+  license: string;
+  likes_count: number;
+  permalink: string;
+  permalink_url: string;
+  playback_count: number;
+  public: boolean;
+  publisher_metadata: PublisherMetadata;
+  purchase_title: string;
+  purchase_url: string;
+  release_date: Date | string;
+  reposts_count: number;
+  secret_token: string;
+  sharing: string;
+  state: string;
+  streamable: boolean;
+  tag_list: string;
+  title: string;
+  uri: string;
+  urn: string;
+  user_id: number;
+  visuals: unknown[];
+  waveform_url: string;
+  display_date: Date | string;
+  media: Media;
+  station_urn: string;
+  station_permalink: string;
+  track_authorization: string;
+  monetization_model: string;
+  policy: string;
+  user: User;
+  playable: boolean;
+  _resource_id: number;
+  _resource_type: string;
+}>;
 
-export type Transcoding = {
-  url?: string;
-  preset?: string;
-  duration?: number;
-  snipped?: boolean;
-  format?: Format;
-  quality?: string;
-  is_legacy_transcoding?: boolean;
-};
+export type Media = Optional<{
+  transcodings: Transcoding[];
+}>;
 
-export type Format = {
-  protocol?: string;
-  mime_type?: string;
-};
+export type Transcoding = Optional<{
+  url: string;
+  preset: string;
+  duration: number;
+  snipped: boolean;
+  format: Format;
+  quality: string;
+  is_legacy_transcoding: boolean;
+}>;
 
-export type PublisherMetadata = {
-  id?: number;
-  urn?: string;
-  artist?: string;
-  album_title?: string;
-  contains_music?: boolean;
-};
+export type Format = Optional<{
+  protocol: string;
+  mime_type: string;
+}>;
 
-export type User = {
-  avatar_url?: string;
-  first_name?: string;
-  followers_count?: number;
-  full_name?: string;
-  id?: number;
-  kind?: string;
-  last_modified?: Date;
-  last_name?: string;
-  permalink?: string;
-  permalink_url?: string;
-  uri?: string;
-  urn?: string;
-  username?: string;
-  verified?: boolean;
-  city?: string;
-  country_code?: string;
-  badges?: Badges;
-  station_urn?: string;
-  station_permalink?: string;
-};
+export type PublisherMetadata = Optional<{
+  id: number;
+  urn: string;
+  artist: string;
+  album_title: string;
+  contains_music: boolean;
+}>;
 
-export type Badges = {
-  pro?: boolean;
-  creator_mid_tier?: boolean;
-  pro_unlimited?: boolean;
-  verified?: boolean;
-};
+export type User = Optional<{
+  avatar_url: string;
+  first_name: string;
+  followers_count: number;
+  full_name: string;
+  id: number;
+  kind: string;
+  last_modified: Date | string;
+  last_name: string;
+  permalink: string;
+  permalink_url: string;
+  uri: string;
+  urn: string;
+  username: string;
+  verified: boolean;
+  city: string;
+  country_code: string;
+  badges: Badges;
+  station_urn: string;
+  station_permalink: string;
+}>;
+
+export type Badges = Optional<{
+  pro: boolean;
+  creator_mid_tier: boolean;
+  pro_unlimited: boolean;
+  verified: boolean;
+}>;
 
 declare global {
   interface Window {

@@ -8,11 +8,11 @@ export type Track = Sound & {
 
 <script setup lang="ts">
 import { computed, ref, useTemplateRef, type UnwrapRef } from "vue";
-import { useScriptTag } from "@vueuse/core";
-import { max, range, uniq } from "lodash-es";
+import { useEventListener, useScriptTag } from "@vueuse/core";
+import { clamp, max, range, uniq } from "lodash-es";
 import { smooth } from "@/util/math";
 import { generator, waitFor } from "@/util/misc";
-import type { Events, Sound, Widget } from "./SoundCloud";
+import type { AudioData, Events, Sound, Widget } from "./SoundCloud";
 
 type Props = {
   /** playlist id */
@@ -39,10 +39,6 @@ const playing = ref<boolean>(false);
 const volume = ref<number>(1);
 /** current time in seconds */
 const time = ref<number>(0);
-/** total length in seconds */
-const length = ref<number>();
-/** waveform data */
-const waveform = ref<number[]>([]);
 
 /** soundcloud widget */
 let widget: Widget;
@@ -55,8 +51,13 @@ type SlotProps = {
   playing: UnwrapRef<typeof playing>;
   volume: UnwrapRef<typeof volume>;
   time: UnwrapRef<typeof time>;
-  length: UnwrapRef<typeof length>;
-  waveform: UnwrapRef<typeof waveform>;
+  previous: typeof previous;
+  play: typeof play;
+  pause: typeof pause;
+  next: typeof next;
+  seek: typeof seek;
+  setTrack: typeof setTrack;
+  setVolume: typeof setVolume;
 };
 
 type Slots = {
@@ -85,79 +86,88 @@ const { scriptTag: apiScript } = useScriptTag(
 
 const playlistCache: Record<string, Track[]> = {};
 
+/** handle error */
+const onError = (error?: unknown) => {
+  console.error(error);
+  status.value = "error";
+};
+
 /** on iframe load */
 const onLoad = generator(async function* () {
-  try {
-    /** wait for soundcloud api script to load */
-    yield waitFor(() => apiScript.value);
+  /** wait for soundcloud api script to load */
+  yield waitFor(() => apiScript.value);
 
-    if (!iframe.value) throw Error("iframe not defined");
-    if (!window.SC) throw Error("SC not defined");
+  if (!iframe.value) throw Error("iframe not defined");
+  if (!window.SC) throw Error("SC not defined");
 
-    /** create soundcloud widget (iframe embed) */
-    widget = window.SC.Widget(iframe.value);
-    events = window.SC.Widget.Events;
+  /** create soundcloud widget (iframe embed) */
+  widget = window.SC.Widget(iframe.value);
+  events = window.SC.Widget.Events;
 
-    if (!widget) throw Error("Widget couldn't be hooked up");
+  if (!widget) throw Error("Widget couldn't be hooked up");
 
-    /** wait for widget to be ready */
-    yield new Promise<void>((resolve) => widget.bind(events.READY, resolve));
+  /** wait for widget to be ready */
+  yield new Promise<void>((resolve) => widget.bind(events.READY, resolve));
 
-    status.value = "loading";
+  status.value = "loading";
 
-    /** load from cache */
-    tracks.value = playlistCache[playlist] || [];
+  /** load from cache */
+  tracks.value = playlistCache[playlist] || [];
 
-    /** if nothing loaded from cache */
-    if (!tracks.value.length) {
-      /** get number of tracks */
-      let count = 0;
+  /** if nothing loaded from cache */
+  if (!tracks.value.length) {
+    /** get number of tracks */
+    let count = 0;
+    yield waitFor(() => {
+      widget.getSounds((sounds) => (count = sounds.length));
+      return count;
+    });
+
+    /** go through each track and get details */
+    for (const index of range(count)) {
+      /** get current track */
+      let track: Sound = {};
       yield waitFor(() => {
-        widget.getSounds((sounds) => (count = sounds.length));
-        return count;
+        widget.getCurrentSound((sound) => (track = sound));
+        return track.artwork_url;
       });
 
-      /** go through each track and get details */
-      for (const index of range(count)) {
-        /** get current track */
-        let track: Sound = {};
-        yield waitFor(() => {
-          widget.getCurrentSound((sound) => (track = sound));
-          return track.artwork_url;
-        });
+      /** add track */
+      tracks.value.push({
+        ...track,
+        waveform: await getWaveform(track),
+        tags: getTags(track),
+      });
 
-        /** add track */
-        tracks.value.push({
-          ...track,
-          waveform: await getWaveform(track),
-          tags: getTags(track),
-        });
+      /** move to next track */
+      widget.next();
 
-        /** move to next track */
-        widget.next();
-
-        /** wait for track to actually change */
-        let currentIndex = -1;
-        yield waitFor(() => {
-          widget.getCurrentSoundIndex((index) => (currentIndex = index));
-          return currentIndex === index + 1 || index === count - 1;
-        });
-      }
-
-      playlistCache[playlist] = tracks.value;
+      /** wait for track to actually change */
+      let currentIndex = -1;
+      yield waitFor(() => {
+        widget.getCurrentSoundIndex((index) => (currentIndex = index));
+        return currentIndex === index + 1 || index === count - 1;
+      });
     }
-    /** go back to first track */
-    widget.skip(0);
-    widget.pause();
 
-    /** select first track */
-    track.value = tracks.value[0];
-
-    status.value = "success";
-  } catch (error) {
-    console.error(error);
-    status.value = "error";
+    playlistCache[playlist] = tracks.value;
   }
+
+  /** go back to first track */
+  widget.skip(0);
+  widget.pause();
+
+  /** select first track */
+  track.value = tracks.value[0];
+
+  /** hook up callback events  */
+  widget.bind(events.PLAY_PROGRESS, onPlayProgress);
+  widget.bind(events.PLAY, onPlay);
+  widget.bind(events.PAUSE, onPause);
+  widget.bind(events.FINISH, onFinish);
+  widget.bind(events.ERROR, onError);
+
+  status.value = "success";
 });
 
 /** get waveform data */
@@ -196,6 +206,60 @@ const getTags = (track: Track) =>
       )
       .filter(Boolean),
   );
+
+/** previous track */
+const previous = () => widget.prev();
+
+/** play current track */
+const play = () => widget.play();
+
+/** pause current track */
+const pause = () => widget.pause();
+
+/** next track */
+const next = () => widget.next();
+
+/** seek to time */
+const seek = (ms: number) => {
+  ms = clamp(ms, 0, track.value?.duration ?? 1);
+  widget.seekTo(ms);
+  time.value = ms;
+};
+
+/** set track by index */
+const setTrack = (index: number) => widget.skip(index);
+
+/** set volume */
+const setVolume = (value: number) => {
+  widget.setVolume(value * 100);
+  volume.value = value;
+};
+
+/** on play progress */
+const onPlayProgress = ({ currentPosition }: AudioData) =>
+  (time.value = currentPosition);
+
+/** on track start */
+const onPlay = async () => {
+  let currentIndex = -1;
+  widget.getCurrentSoundIndex((index) => (currentIndex = index));
+  await waitFor(() => currentIndex !== -1);
+  track.value = tracks.value[currentIndex];
+  /** event triggered on seek when paused too, so check if paused */
+  widget.isPaused((paused) => {
+    playing.value = !paused;
+    if (playing.value) window.dispatchEvent(new Event("soundcloud-play"));
+  });
+};
+
+/** allow global event to stop playback */
+useEventListener(window, "stop-soundcloud", pause);
+
+/** on track pause */
+const onPause = () => (playing.value = false);
+
+/** on track finish */
+const onFinish = () => (playing.value = false);
 </script>
 
 <template>
@@ -215,9 +279,23 @@ const getTags = (track: Track) =>
         pointerEvents: 'none',
       }
     "
-    @load="() => onLoad()"
+    @load="() => onLoad().catch(onError)"
   />
   <slot
-    v-bind="{ status, tracks, track, playing, volume, time, length, waveform }"
+    v-bind="{
+      status,
+      tracks,
+      track,
+      playing,
+      volume,
+      time,
+      previous,
+      play,
+      pause,
+      next,
+      seek,
+      setTrack,
+      setVolume,
+    }"
   />
 </template>
