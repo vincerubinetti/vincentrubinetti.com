@@ -2,7 +2,7 @@
   <iframe
     v-bind="$attrs"
     ref="iframe"
-    :src="`https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/${playlist}&amp;amp;color=ff5500&amp;amp;auto_play=false&amp;amp;hide_related=true&amp;amp;show_comments=true&amp;amp;show_user=true&amp;amp;show_reposts=false`"
+    :src="src"
     allow="autoplay"
     frameborder="no"
     loading="lazy"
@@ -23,24 +23,28 @@
 </template>
 
 <script setup lang="ts">
-import { ref, useTemplateRef, type UnwrapRef } from "vue";
+import { computed, ref, useTemplateRef, type UnwrapRef } from "vue";
 import { useScriptTag } from "@vueuse/core";
+import { debounce, max, range, uniq } from "lodash-es";
 import { generator, waitFor } from "@/util/misc";
-import { awaitEvent, type Events, type Widget } from "./SoundCloud";
+import type { Sound, Widget } from "./SoundCloud";
 
 type Props = {
   /** playlist id */
   playlist: string;
 };
 
-defineProps<Props>();
+const { playlist } = defineProps<Props>();
+
+type Track = Sound & {
+  waveform?: number[];
+  art?: string;
+  tags?: string[];
+};
+
+/** assemble embed src */
 
 defineOptions({ inheritAttrs: false });
-
-export type Track = {
-  title: string;
-  image: string;
-};
 
 /** iframe element */
 const iframe = useTemplateRef("iframe");
@@ -62,7 +66,7 @@ const length = ref<number>();
 const waveform = ref<number[]>([]);
 
 /** soundcloud widget */
-let widget: Widget | undefined;
+let widget: Widget;
 
 type SlotProps = {
   status: UnwrapRef<typeof status>;
@@ -81,46 +85,120 @@ type Slots = {
 
 defineSlots<Slots>();
 
+const src = computed(() => {
+  const baseUrl = new URL("https://w.soundcloud.com/player");
+  const apiUrl = new URL(`https://api.soundcloud.com/playlists/${playlist}`);
+  apiUrl.searchParams.set("color", "ff5500");
+  apiUrl.searchParams.set("auto_play", "false");
+  apiUrl.searchParams.set("hide_related", "true");
+  apiUrl.searchParams.set("show_comments", "true");
+  apiUrl.searchParams.set("show_user", "true");
+  apiUrl.searchParams.set("show_reposts", "false");
+  baseUrl.searchParams.set("url", window.encodeURI(apiUrl.toString()));
+  return baseUrl.toString();
+});
+
 /** soundcloud api script */
 const { scriptTag: apiScript } = useScriptTag(
   "https://w.soundcloud.com/player/api.js",
 );
 
-const onLoad = generator(
-  async function* () {
-    try {
-      /** reset */
-      status.value = "loading";
-      widget = undefined;
+const onLoad = generator(async function* () {
+  try {
+    /** wait for soundcloud api script to load */
+    yield waitFor(() => apiScript.value);
 
-      /** wait for soundcloud api script to load */
-      yield waitFor(() => (apiScript.value ? true : undefined));
+    if (!iframe.value) throw Error("iframe not defined");
+    if (!window.SC) throw Error("SC not defined");
 
-      if (!iframe.value) throw Error("Iframe not defined");
-      if (!window.SC) throw Error("SC not defined");
+    /** create soundcloud widget (iframe embed) */
+    widget = window.SC.Widget(iframe.value);
 
-      /** create soundcloud widget (iframe embed) */
-      widget = window.SC.Widget(iframe.value);
+    if (!widget) throw Error("Widget couldn't be hooked up");
 
-      if (!widget) throw Error("Widget couldn't be hooked up");
+    /** wait for widget to be ready */
+    yield new Promise<void>((resolve) => {
+      widget.bind(window.SC!.Widget.Events.READY, debounce(resolve, 500));
+    });
 
-      /** wait for widget to be ready */
-      yield awaitEvent(widget, "READY");
+    /** reset */
+    status.value = "loading";
+    tracks.value = [];
 
-      /** get playlist track count */
-      let count = 0;
-      widget.getSounds((sounds) => (count = sounds.length));
-      yield waitFor(() => (count > 0 ? count : undefined));
+    /** go through each track and get details */
+    for (const index of range(30)) {
+      /** get current track */
+      let track: Sound = {};
+      widget.getCurrentSound((sound) => (track = sound));
+      yield waitFor(async () => track.artwork_url);
 
-      status.value = "success";
-    } catch (error) {
-      console.error((error as Error).message);
-      status.value = "error";
+      /** add track */
+      tracks.value.push({
+        ...track,
+        waveform: await getWaveform(track.waveform_url),
+        art: await getArt(track.artwork_url),
+        tags: getTags(track.tag_list),
+      });
+
+      /** move to next track */
+      widget.next();
+      widget.seekTo(0);
+
+      /** if index same, we reached end */
+      const next = await new Promise(widget.getCurrentSoundIndex.bind(widget));
+      if (next === index) break;
     }
-  },
-  (error) => {
+
+    /** go back to first track */
+    widget.skip(0);
+    widget.pause();
+
+    track.value = tracks.value[0];
+
+    status.value = "success";
+  } catch (error) {
     console.error(error);
     status.value = "error";
-  },
-);
+  }
+});
+
+/** get waveform data */
+const getWaveform = async (url = "") => {
+  if (!url) return [];
+  type Waveform = {
+    width: number;
+    height: number;
+    samples: number[];
+  };
+  const { height, samples } = (await (await fetch(url)).json()) as Waveform;
+  const maximum = max(samples) || height;
+  return samples.map((value) => value / maximum);
+};
+
+/** get art url */
+const getArt = async (url = "") => {
+  if (!url) return "";
+  /** try to get higher res art */
+  const bigurl = url.replace("large", "t500x500");
+  try {
+    await fetch(bigurl);
+    return bigurl;
+  } catch (error) {}
+  return url;
+};
+
+/** parse and de-duplicate tags */
+const getTags = (string = "") =>
+  uniq(
+    (string.match(/"[^"]*"|\S+/g) || [])
+      .map((tag) =>
+        tag
+          .toLowerCase()
+          .replaceAll('"', "")
+          .replaceAll(" ", "-")
+          .replaceAll("-&-", "&")
+          .trim(),
+      )
+      .filter(Boolean),
+  );
 </script>

@@ -27,7 +27,7 @@ export type Widget = {
 };
 
 type LoadOptions = {
-  callback?: () => void;
+  callback?(): void;
   [param: string]: unknown;
 };
 
@@ -65,17 +65,6 @@ export type EventValue = AudioEventValue | UIEventValue;
 export type Events = AudioEvents & UIEvents;
 export type EventCallback<Value extends EventValue> =
   Value extends AudioEventValue ? AudioEventCallback : UIEventCallback;
-
-declare global {
-  interface Window {
-    SC?: {
-      Widget: {
-        (element: string | HTMLIFrameElement): Widget;
-        Events: Events;
-      };
-    };
-  }
-}
 
 export type Sound = {
   artwork_url?: string;
@@ -186,15 +175,13 @@ export type Badges = {
   verified?: boolean;
 };
 
-/** wait for widget to emit event */
-export const awaitEvent = <Key extends EventKey>(widget: Widget, event: Key) =>
-  new Promise<Parameters<EventCallback<Events[Key]>>>((resolve, reject) => {
-    const eventValue = window.SC?.Widget.Events[event];
-    if (!eventValue) throw Error(`${event} not found`);
-    // @ts-ignore
-    widget.bind(eventValue, (...args) => {
-      widget.unbind(eventValue);
-      // @ts-ignore
-      args.length ? resolve(...args) : resolve([]);
-    });
-  });
+declare global {
+  interface Window {
+    SC?: {
+      Widget: {
+        (element: string | HTMLIFrameElement): Widget;
+        Events: Events;
+      };
+    };
+  }
+}

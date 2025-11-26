@@ -74,7 +74,7 @@
               :key="index"
               class="flex items-center gap-4 pt-0! pb-0! pl-0! hover:bg-white/25"
             >
-              <img :src="_track.image" class="size-14" />
+              <img :src="_track.artwork_url" class="size-14" />
               <div class="flex grow gap-2 text-left">
                 <Music
                   :class="[
@@ -85,6 +85,7 @@
               </div>
               <div class="flex items-center gap-2">
                 <Play />
+                {{ formatValue(_track.playback_count) }}
               </div>
             </button>
           </div>
@@ -99,6 +100,7 @@ import { ref } from "vue";
 import { isEqual } from "lodash-es";
 import { ChevronLeft, ChevronRight, Info, Music, Play } from "lucide-vue-next";
 import SoundCloud from "@/components/SoundCloud.vue";
+import { formatValue } from "@/util/string";
 
 const playlists = [
   { title: "Best Of", id: "652705266" },
