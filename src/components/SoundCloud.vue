@@ -31,12 +31,8 @@ type Props = {
 
 const { playlist } = defineProps<Props>();
 
-type Emit = {
-  level: [number];
-  colors: [number[][]];
-};
-
-const emit = defineEmits<Emit>();
+const level = defineModel<number>("level");
+const colors = defineModel<number[][]>("colors");
 
 defineOptions({ inheritAttrs: false });
 
@@ -223,7 +219,7 @@ const getColors = async (track: Track) => {
   img.crossOrigin = "Anonymous";
   img.src = track.artwork_url || "";
   await new Promise((resolve) => (img.onload = () => resolve(true)));
-  return new ColorThief().getPalette(img, 3) as number[][];
+  return new ColorThief().getPalette(img, 5, 1) as number[][];
 };
 
 /** previous track */
@@ -286,12 +282,11 @@ useIntervalFn(() => {
   const waveform = track.value?.waveform?.raw || [];
   const percent = time.value / (track.value?.duration ?? 1);
   const sample = Math.floor(percent * waveform.length);
-  const level = waveform[sample]?.y || 0;
-  emit("level", level);
+  level.value = waveform[sample]?.y || 0;
 }, 20);
 
 /** update colors */
-watchEffect(() => emit("colors", track.value?.colors || []));
+watchEffect(() => (colors.value = track.value?.colors || []));
 </script>
 
 <template>

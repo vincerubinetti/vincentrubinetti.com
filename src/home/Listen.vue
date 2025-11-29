@@ -112,8 +112,8 @@ const getBandcamp = (track: Track) =>
     id="listen-player"
     class="aspect-video w-full"
     :playlist="selectedPlaylist.id"
-    @level="(value) => (level = value)"
-    @colors="(value) => (colors = value)"
+    v-model:level="level"
+    v-model:colors="colors"
   >
     <template
       #default="{

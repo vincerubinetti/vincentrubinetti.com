@@ -1,3 +1,5 @@
+#version 300 es
+
 #ifdef GL_ES
 precision highp float;
 #endif
@@ -6,40 +8,37 @@ uniform float u_time;
 uniform vec2 u_resolution;
 uniform vec2 u_mouse;
 uniform float u_level;
-uniform vec3 u_color_1;
-uniform vec3 u_color_2;
-uniform vec3 u_color_3;
+uniform vec3 u_colors[5];
+
+out vec4 outColor;
 
 #define PI 3.14159265
 
 float _sin(float x) {
-  return sin(2.0 * PI * x);
+  return sin(2.0f * PI * x);
 }
 
 float _cos(float x) {
-  return cos(2.0 * PI * x);
+  return cos(2.0f * PI * x);
 }
 
 void main() {
-  vec2 xy = (2.0 * gl_FragCoord.xy - u_resolution.xy) / min(u_resolution.x, u_resolution.y);
+  vec2 uv = (2.0f * gl_FragCoord.xy - u_resolution.xy) / min(u_resolution.x, u_resolution.y);
 
-  float t = u_time / 10.0;
+  float time = u_time / 10.0f;
 
-  vec3 color = vec3(0.0);
+  vec3 color = vec3(0.0f);
 
-  vec2 a_xy = vec2(_cos(t), _sin(t));
-  t += 0.33;
-  vec2 b_xy = vec2(_cos(t), _sin(t));
-  t += 0.33;
-  vec2 c_xy = vec2(_cos(t), _sin(t));
+  const float colors = 5.0f;
 
-  float r = 1.0;
-  float a_strength = clamp(r - length(xy - a_xy), 0.0, 1.0);
-  color += a_strength * u_color_1;
-  float b_strength = clamp(r - length(xy - b_xy), 0.0, 1.0);
-  color += b_strength * u_color_2;
-  float c_strength = clamp(r - length(xy - c_xy), 0.0, 1.0);
-  color += c_strength * u_color_3;
+  for(float index = 0.0f; index < colors; index++) {
+    float percent = index / colors;
+    float radius = 0.75f + _sin(3.0f * time + percent) * 0.25f;
+    vec2 xy = vec2(_cos(time + percent), _sin(time + percent));
+    float dist = length(xy - uv) / radius;
+    float strength = 1.0f / (1.0f + pow(dist, 4.0f));
+    color += strength * u_colors[int(index)] / colors;
+  }
 
-  gl_FragColor = vec4(color, 1.0);
+  outColor = vec4(color, 1.0f);
 }
