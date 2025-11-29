@@ -20,6 +20,7 @@ import type { Track } from "@/components/SoundCloud.vue";
 import SoundCloud from "@/components/SoundCloud.vue";
 import { clickCoords } from "@/util/dom";
 import { formatTime, formatValue, linkify } from "@/util/string";
+import { colors, level } from "./state";
 
 const playlists = [
   { title: "Best Of", id: "652705266" },
@@ -108,9 +109,11 @@ const getBandcamp = (track: Track) =>
   </div>
 
   <SoundCloud
-    :playlist="selectedPlaylist.id"
-    class="aspect-video w-full"
     id="listen-player"
+    class="aspect-video w-full"
+    :playlist="selectedPlaylist.id"
+    @level="(value) => (level = value)"
+    @colors="(value) => (colors = value)"
   >
     <template
       #default="{
@@ -234,7 +237,7 @@ const getBandcamp = (track: Track) =>
                 filter="url(#waveform-filter)"
                 class="fill-white"
                 :points="
-                  track?.waveform
+                  track?.waveform?.simplified
                     ?.map(({ x, y }) => `${x},${1 - y * 0.8}`)
                     ?.flat()
                     ?.join(' ')

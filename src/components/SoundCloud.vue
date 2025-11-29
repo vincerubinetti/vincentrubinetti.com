@@ -1,14 +1,24 @@
 <script lang="ts">
 export type Track = Sound & {
-  waveform?: { x: number; y: number }[];
-  art?: string;
+  waveform?: {
+    raw: { x: number; y: number }[];
+    simplified: { x: number; y: number }[];
+  };
   tags?: string[];
+  colors?: number[][];
 };
 </script>
 
 <script setup lang="ts">
-import { computed, ref, useTemplateRef, type UnwrapRef } from "vue";
-import { useEventListener, useScriptTag } from "@vueuse/core";
+import {
+  computed,
+  ref,
+  useTemplateRef,
+  watchEffect,
+  type UnwrapRef,
+} from "vue";
+import { useEventListener, useIntervalFn, useScriptTag } from "@vueuse/core";
+import ColorThief from "colorthief/dist/color-thief.mjs";
 import { clamp, max, range, uniq } from "lodash-es";
 import { smooth } from "@/util/math";
 import { generator, waitFor } from "@/util/misc";
@@ -21,7 +31,12 @@ type Props = {
 
 const { playlist } = defineProps<Props>();
 
-/** assemble embed src */
+type Emit = {
+  level: [number];
+  colors: [number[][]];
+};
+
+const emit = defineEmits<Emit>();
 
 defineOptions({ inheritAttrs: false });
 
@@ -66,6 +81,7 @@ type Slots = {
 
 defineSlots<Slots>();
 
+/** assemble embed src */
 const src = computed(() => {
   const baseUrl = new URL("https://w.soundcloud.com/player");
   const apiUrl = new URL(`https://api.soundcloud.com/playlists/${playlist}`);
@@ -137,6 +153,7 @@ const onLoad = generator(async function* () {
         ...track,
         waveform: await getWaveform(track),
         tags: getTags(track),
+        colors: await getColors(track),
       });
 
       /** move to next track */
@@ -172,24 +189,17 @@ const onLoad = generator(async function* () {
 
 /** get waveform data */
 const getWaveform = async (track: Track) => {
-  if (!track.waveform_url) return [];
-  type Waveform = {
-    width: number;
-    height: number;
-    samples: number[];
-  };
+  if (!track.waveform_url) return { raw: [], simplified: [] };
+  type Waveform = { width: number; height: number; samples: number[] };
   const { height, samples } = (await (
     await fetch(track.waveform_url)
   ).json()) as Waveform;
-
   const maximum = max(samples) || height;
-  const simplified = smooth(
-    samples.map((value) => value / maximum),
-    2,
-  );
-  simplified.unshift(0);
-  simplified.push(0);
-  return simplified.map((y, i, a) => ({ x: i / a.length, y }));
+  const raw = samples.map((value) => value / maximum);
+  const simplified = [0, ...smooth(raw, 2), 0];
+  const toXy = (array: number[]) =>
+    array.map((y, i, a) => ({ x: i / a.length, y }));
+  return { raw: toXy(raw), simplified: toXy(simplified) };
 };
 
 /** parse and de-duplicate tags */
@@ -206,6 +216,15 @@ const getTags = (track: Track) =>
       )
       .filter(Boolean),
   );
+
+/** get dominant colors of art */
+const getColors = async (track: Track) => {
+  const img = new Image();
+  img.crossOrigin = "Anonymous";
+  img.src = track.artwork_url || "";
+  await new Promise((resolve) => (img.onload = () => resolve(true)));
+  return new ColorThief().getPalette(img, 3) as number[][];
+};
 
 /** previous track */
 const previous = () => widget.prev();
@@ -260,6 +279,19 @@ const onPause = () => (playing.value = false);
 
 /** on track finish */
 const onFinish = () => (playing.value = false);
+
+/* update level */
+useIntervalFn(() => {
+  if (!playing.value) return;
+  const waveform = track.value?.waveform?.raw || [];
+  const percent = time.value / (track.value?.duration ?? 1);
+  const sample = Math.floor(percent * waveform.length);
+  const level = waveform[sample]?.y || 0;
+  emit("level", level);
+}, 20);
+
+/** update colors */
+watchEffect(() => emit("colors", track.value?.colors || []));
 </script>
 
 <template>
