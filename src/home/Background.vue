@@ -2,7 +2,7 @@
 import { computed, useTemplateRef, watchEffect } from "vue";
 import { useElementSize } from "@vueuse/core";
 import GlslCanvas from "glslCanvas";
-import shader from "./shader.frag?raw";
+import shader from "./background.frag?raw";
 
 const canvas = useTemplateRef("canvas");
 
@@ -17,8 +17,8 @@ const { width, height } = useElementSize(canvas);
 watchEffect(() => {
   if (!canvas.value) return;
   let scale = 1;
-  canvas.value.width = width.value * scale;
-  canvas.value.height = height.value * scale;
+  canvas.value.width = Math.min(1000, width.value * scale);
+  canvas.value.height = Math.min(1000, height.value * scale);
 });
 </script>
 

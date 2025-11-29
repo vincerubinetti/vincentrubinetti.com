@@ -1,7 +1,8 @@
 ---
+import Background from "@/home/Background.vue";
+import Listen from "@/home/Listen.vue";
+import Title from "@/home/Title.vue";
 import Layout from "@/layouts/Layout.astro";
-import Listen from "@/pages/home/Listen.vue";
-import Title from "@/pages/home/Title.vue";
 ---
 
 <Layout
@@ -9,7 +10,10 @@ import Title from "@/pages/home/Title.vue";
   description="Composer for media. Orchestral, electronic, and a wide variety of other styles."
 >
   <body>
-    <Title />
-    <Listen client:only />
+    <header class="relative z-0 bg-zinc-900 text-white">
+      <Background client:only class="absolute inset-0 size-full -z-10" />
+      <Title />
+      <Listen client:only />
+    </header>
   </body>
 </Layout>
