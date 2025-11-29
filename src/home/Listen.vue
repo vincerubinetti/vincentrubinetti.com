@@ -237,7 +237,7 @@ const getBandcamp = (track: Track) =>
                 filter="url(#waveform-filter)"
                 class="fill-white"
                 :points="
-                  track?.waveform?.simplified
+                  track?.waveform?.smoothed
                     ?.map(({ x, y }) => `${x},${1 - y * 0.8}`)
                     ?.flat()
                     ?.join(' ')

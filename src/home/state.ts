@@ -1,4 +1,4 @@
-import { ref, watchEffect } from "vue";
+import { ref } from "vue";
 
 export const level = ref(0);
 

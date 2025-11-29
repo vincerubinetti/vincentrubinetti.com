@@ -2,7 +2,7 @@
 export type Track = Sound & {
   waveform?: {
     raw: { x: number; y: number }[];
-    simplified: { x: number; y: number }[];
+    smoothed: { x: number; y: number }[];
   };
   tags?: string[];
   colors?: number[][];
@@ -20,7 +20,7 @@ import {
 import { useEventListener, useIntervalFn, useScriptTag } from "@vueuse/core";
 import ColorThief from "colorthief/dist/color-thief.mjs";
 import { clamp, max, range, uniq } from "lodash-es";
-import { smooth } from "@/util/math";
+import { lerp, smooth } from "@/util/math";
 import { generator, waitFor } from "@/util/misc";
 import type { AudioData, Events, Sound, Widget } from "./SoundCloud";
 
@@ -185,17 +185,17 @@ const onLoad = generator(async function* () {
 
 /** get waveform data */
 const getWaveform = async (track: Track) => {
-  if (!track.waveform_url) return { raw: [], simplified: [] };
+  if (!track.waveform_url) return { raw: [], smoothed: [] };
   type Waveform = { width: number; height: number; samples: number[] };
   const { height, samples } = (await (
     await fetch(track.waveform_url)
   ).json()) as Waveform;
   const maximum = max(samples) || height;
   const raw = samples.map((value) => value / maximum);
-  const simplified = [0, ...smooth(raw, 2), 0];
+  const smoothed = [0, ...smooth(raw, 2), 0];
   const toXy = (array: number[]) =>
     array.map((y, i, a) => ({ x: i / a.length, y }));
-  return { raw: toXy(raw), simplified: toXy(simplified) };
+  return { raw: toXy(raw), smoothed: toXy(smoothed) };
 };
 
 /** parse and de-duplicate tags */
@@ -251,8 +251,29 @@ const setVolume = (value: number) => {
 };
 
 /** on play progress */
-const onPlayProgress = ({ currentPosition }: AudioData) =>
-  (time.value = currentPosition);
+const onPlayProgress = ({ currentPosition }: AudioData) => {
+  time.value = currentPosition;
+  /** waveform samples */
+  const waveform = track.value?.waveform?.raw || [];
+  /** percent through track */
+  const percent = time.value / (track.value?.duration ?? 1);
+  /** fractional sample index */
+  const indexPercent = (percent * waveform.length) % 1;
+  /** lower sample index */
+  const leftIndex = Math.floor(percent * waveform.length);
+  /** upper sample index */
+  const rightIndex = Math.ceil(percent * waveform.length);
+  /** lower sample level */
+  const leftSample = waveform[leftIndex]?.y ?? 0;
+  /** upper sample level */
+  const rightSample = waveform[rightIndex]?.y ?? 0;
+  /** interpolated sample level */
+  level.value = level.value = lerp(indexPercent, 0, 1, leftSample, rightSample);
+  /** if paused, set level to 0 */
+  widget.isPaused((paused) => {
+    if (paused) level.value = 0;
+  });
+};
 
 /** on track start */
 const onPlay = async () => {
@@ -272,18 +293,8 @@ useEventListener(window, "stop-soundcloud", pause);
 
 /** on track pause */
 const onPause = () => (playing.value = false);
-
 /** on track finish */
 const onFinish = () => (playing.value = false);
-
-/* update level */
-useIntervalFn(() => {
-  if (!playing.value) return;
-  const waveform = track.value?.waveform?.raw || [];
-  const percent = time.value / (track.value?.duration ?? 1);
-  const sample = Math.floor(percent * waveform.length);
-  level.value = waveform[sample]?.y || 0;
-}, 20);
 
 /** update colors */
 watchEffect(() => (colors.value = track.value?.colors || []));

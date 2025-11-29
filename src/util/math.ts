@@ -25,3 +25,17 @@ export const smooth = (data: number[], radius: number) =>
       return m * x + b;
     })
     .filter((_, i) => i % radius === 0);
+
+/** linear interpolate */
+
+/** linear interpolate */
+export const lerp = (
+  value: number,
+  sourceMin: number,
+  sourceMax: number,
+  targetMin: number,
+  targetMax: number,
+) =>
+  targetMin +
+  clamp((value - sourceMin) / (sourceMax - sourceMin || 1), 0, 1) *
+    (targetMax - targetMin);
