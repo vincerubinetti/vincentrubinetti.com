@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import { isEqual } from "lodash-es";
+import { isEqual, range } from "lodash-es";
 import {
   Calendar,
   ChevronLeft,
@@ -95,10 +95,8 @@ const getBandcamp = (track: Track) =>
     <button
       v-for="({ title, id }, index) of playlists"
       :key="index"
-      class="group border-b-2"
-      :class="[
-        selectedPlaylist.id === id ? 'border-white' : 'border-transparent',
-      ]"
+      class="relative before:absolute before:bottom-0 before:h-0.5 before:bg-current before:transition-[width]"
+      :class="[selectedPlaylist.id === id ? 'before:w-full' : 'before:w-0']"
       :aria-current="selectedPlaylist.id === id"
       :title="`Load ${title} playlist`"
       aria-controls="listen-player"
@@ -135,7 +133,7 @@ const getBandcamp = (track: Track) =>
     >
       <div
         v-if="status === 'loading'"
-        class="grid h-100 w-full animate-pulse place-content-center bg-white/10"
+        class="grid h-100 w-full animate-pulse place-content-center bg-current/10"
       >
         Loading
       </div>
@@ -199,21 +197,19 @@ const getBandcamp = (track: Track) =>
             >
               <filter id="waveform-filter">
                 <feFlood
-                  flood-color="red"
                   flood-opacity="1"
                   x="0"
                   y="0"
                   height="1"
-                  :width="time / (track.duration ?? 1)"
+                  :width="(time || 1) / (track.duration ?? 1)"
                   result="left-alpha"
                 />
                 <feFlood
-                  flood-color="red"
                   flood-opacity="0.25"
-                  :x="time / (track.duration ?? 1)"
+                  :x="(time || 1) / (track.duration ?? 1)"
                   y="0"
                   height="1"
-                  :width="1 - time / (track.duration ?? 1)"
+                  :width="1 - (time || 1) / (track.duration ?? 1)"
                   result="right-alpha"
                 />
                 <feComposite
@@ -258,6 +254,7 @@ const getBandcamp = (track: Track) =>
             </div>
             <div
               class="absolute top-full right-0 translate-y-1 text-sm opacity-0 transition-opacity group-hover:opacity-100"
+              :style="{ opacity: time / (track.duration ?? 1) < 0.9 ? 1 : 0 }"
             >
               {{ formatTime(track.duration ?? 0) }}
             </div>
@@ -319,7 +316,7 @@ const getBandcamp = (track: Track) =>
         <div class="flex w-full flex-col">
           <template v-for="(_track, index) in tracks" :key="index">
             <button
-              class="group flex h-14 gap-4! p-0! pr-4! aria-selected:bg-white/10"
+              class="group flex h-14 gap-4! p-0! pr-4! aria-selected:bg-current/10"
               :aria-selected="isEqual(track, _track)"
               :title="`Play ${_track.title}`"
               @click="

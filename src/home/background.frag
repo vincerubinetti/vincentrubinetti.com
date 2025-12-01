@@ -93,7 +93,7 @@ void main() {
     float radius = 0.75f;
     float dist = length(xy - uv) / radius;
     float bright = 1.0f / (1.0f + pow(dist, 4.0f));
-    // composite on frame
+    // composite
     lights += bright * u_colors[int(index)];
   }
 
@@ -111,8 +111,8 @@ void main() {
     float amp = 0.05f;
     float freq = 2.0f + 1.0f * percent;
     float phase = 0.1f * u_play - percent;
-    float bright = wave(xy, width, soft, amp, freq, phase);
-    // composite on frame
+    float bright = 0.25f * wave(xy, width, soft, amp, freq, phase);
+    // composite
     waves += bright * u_colors[int(index)];
   }
 

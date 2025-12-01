@@ -24,7 +24,7 @@ watchEffect(() => {
 let play = 0;
 useIntervalFn(() => {
   if (!glsl.value) return;
-  play += 0.01 + 0.25 * smoothedLevel.value ** 6;
+  play += 0.01 + 0.15 * smoothedLevel.value ** 4;
   glsl.value.setUniform("u_play", play);
 }, 20);
 
@@ -55,6 +55,6 @@ watchEffect(() => {
   <canvas
     ref="canvas"
     class="transition-opacity duration-1000"
-    :class="playing ? 'opacity-25' : 'opacity-10'"
+    :class="playing ? 'opacity-50' : 'opacity-10'"
   ></canvas>
 </template>

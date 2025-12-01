@@ -7,6 +7,8 @@
   --breakpoint-lg: 50rem;
 
   --font-sans: "Outfit", sans-serif;
+
+  --color-link: color-mix(in srgb, currentColor 50%, var(--color-indigo-500));
 }
 
 body {
@@ -23,12 +25,12 @@ svg {
 }
 
 a {
-  @apply text-sky-500 underline underline-offset-2 transition-colors hover:text-current;
+  @apply text-link underline underline-offset-2 transition-colors hover:text-current;
 }
 
 button,
 .button {
-  @apply inline-flex cursor-pointer items-center justify-center gap-2 p-2 text-current transition-colors hover:bg-current/10;
+  @apply inline-flex cursor-pointer items-center justify-center gap-2 rounded p-2 text-current transition-colors hover:bg-current/10;
 }
 
 .lucide {
