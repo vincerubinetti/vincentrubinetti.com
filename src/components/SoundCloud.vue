@@ -112,14 +112,17 @@ const onLoad = generator(async function* () {
   /** wait for soundcloud api script to load */
   yield waitFor(() => apiScript.value);
 
+  /** check for iframe element */
   if (!iframe.value) throw Error("iframe not defined");
+  /** wait for soundcloud global */
   if (!window.SC) throw Error("SC not defined");
 
   /** create soundcloud widget (iframe embed) */
   widget = window.SC.Widget(iframe.value);
   events = window.SC.Widget.Events;
-
   if (!widget) throw Error("Widget couldn't be hooked up");
+
+  widget.bind(events.READY, () => console.log("ready"));
 
   /** wait for widget to be ready */
   yield new Promise<void>((resolve) => widget.bind(events.READY, resolve));
@@ -143,6 +146,7 @@ const onLoad = generator(async function* () {
       /** get current track */
       let track: Sound = {};
       yield waitFor(() => {
+        /** try multiple times because sometimes doesn't return full details */
         widget.getCurrentSound((sound) => (track = sound));
         return track.artwork_url;
       });
@@ -150,6 +154,7 @@ const onLoad = generator(async function* () {
       /** add track */
       tracks.value.push({
         ...track,
+        /** derive extra props */
         waveform: await getWaveform(track),
         tags: getTags(track),
         colors: await getColors(track),
@@ -166,6 +171,7 @@ const onLoad = generator(async function* () {
       });
     }
 
+    /** update cache */
     playlistCache[playlist] = tracks.value;
   }
 
@@ -272,7 +278,7 @@ const onPlayProgress = ({ currentPosition }: AudioData) => {
   const rightSample = waveform[rightIndex]?.y ?? 0;
   /** interpolated sample level */
   level.value = level.value = lerp(indexPercent, 0, 1, leftSample, rightSample);
-  /** if paused, set level to 0 */
+  /** if paused, set level to 0. progress events continue to trickle in after stop event. */
   widget.isPaused((paused) => {
     if (paused) level.value = 0;
   });
@@ -318,11 +324,14 @@ watchEffect(() => emit("level", level.value));
     frameborder="no"
     loading="lazy"
     :style="
+      /** if any error, show original iframe */
       status !== 'error' && {
-        position: 'fixed',
-        top: 0,
+        /** visibly hide */
         opacity: 0,
         visibility: 'hidden',
+        /** if we don't keep in viewport, sometimes widget doesn't load properly */
+        position: 'fixed',
+        top: 0,
         pointerEvents: 'none',
       }
     "
