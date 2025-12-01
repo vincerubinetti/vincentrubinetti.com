@@ -189,3 +189,12 @@ declare global {
     };
   }
 }
+
+export type Track = Sound & {
+  waveform?: {
+    raw: { x: number; y: number }[];
+    smoothed: { x: number; y: number }[];
+  };
+  tags?: string[];
+  colors?: number[][];
+};

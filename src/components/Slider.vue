@@ -22,12 +22,12 @@ const value = defineModel<number[]>();
       :min="min"
       :max="max"
       :step="step"
-      class="relative flex h-5 w-full cursor-pointer touch-none items-center  hover:bg-current/10"
+      class="relative flex h-5 w-full cursor-pointer touch-none items-center px-2 hover:bg-current/10"
     >
       <SliderTrack class="relative h-1 grow rounded-full bg-current/10">
         <SliderRange class="absolute h-full rounded-full bg-current" />
       </SliderTrack>
-      <SliderThumb class="h-3 w-3 rounded-full bg-current" aria-label="Volume" />
+      <SliderThumb class="size-3 rounded-full bg-current" aria-label="Volume" />
     </SliderRoot>
   </div>
 </template>

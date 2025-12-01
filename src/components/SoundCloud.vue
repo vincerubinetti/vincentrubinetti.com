@@ -1,14 +1,3 @@
-<script lang="ts">
-export type Track = Sound & {
-  waveform?: {
-    raw: { x: number; y: number }[];
-    smoothed: { x: number; y: number }[];
-  };
-  tags?: string[];
-  colors?: number[][];
-};
-</script>
-
 <script setup lang="ts">
 import {
   computed,
@@ -22,7 +11,7 @@ import ColorThief from "colorthief/dist/color-thief.mjs";
 import { clamp, max, range, uniq } from "lodash-es";
 import { lerp, smooth } from "@/util/math";
 import { generator, waitFor } from "@/util/misc";
-import type { AudioData, Events, Sound, Widget } from "./SoundCloud";
+import type { AudioData, Events, Sound, Track, Widget } from "./SoundCloud";
 
 type Props = {
   /** playlist id */
@@ -30,9 +19,6 @@ type Props = {
 };
 
 const { playlist } = defineProps<Props>();
-
-const level = defineModel<number>("level");
-const colors = defineModel<number[][]>("colors");
 
 defineOptions({ inheritAttrs: false });
 
@@ -43,25 +29,42 @@ const status = ref<"loading" | "error" | "success">("loading");
 /** playlist tracks */
 const tracks = ref<Track[]>([]);
 /** current track */
-const track = ref<Track>();
+const track = ref<Track>({});
 /** is playing */
-const playing = ref<boolean>(false);
-/** volume, 0-1 */
-const volume = ref<number>(1);
+const playing = ref(false);
 /** current time in seconds */
-const time = ref<number>(0);
+const time = ref(0);
+/** volume, 0-1 */
+const volume = ref(1);
+/** sound meter */
+const level = ref(0);
 
 /** soundcloud widget */
 let widget: Widget;
 let events: Events;
 
+type Emit = {
+  status: [UnwrapRef<typeof status>];
+  tracks: [UnwrapRef<typeof tracks>];
+  track: [UnwrapRef<typeof track>];
+  playing: [UnwrapRef<typeof playing>];
+  time: [UnwrapRef<typeof time>];
+  volume: [UnwrapRef<typeof volume>];
+  level: [UnwrapRef<typeof level>];
+};
+
+const emit = defineEmits<Emit>();
+
 type SlotProps = {
+  /** props */
   status: UnwrapRef<typeof status>;
   tracks: UnwrapRef<typeof tracks>;
   track: UnwrapRef<typeof track>;
   playing: UnwrapRef<typeof playing>;
-  volume: UnwrapRef<typeof volume>;
   time: UnwrapRef<typeof time>;
+  volume: UnwrapRef<typeof volume>;
+  level: UnwrapRef<typeof level>;
+  /** methods */
   previous: typeof previous;
   play: typeof play;
   pause: typeof pause;
@@ -219,7 +222,7 @@ const getColors = async (track: Track) => {
   img.crossOrigin = "Anonymous";
   img.src = track.artwork_url || "";
   await new Promise((resolve) => (img.onload = () => resolve(true)));
-  return new ColorThief().getPalette(img, 5, 1) as number[][];
+  return new ColorThief().getPalette(img, 5, 2) as number[][];
 };
 
 /** previous track */
@@ -296,8 +299,14 @@ const onPause = () => (playing.value = false);
 /** on track finish */
 const onFinish = () => (playing.value = false);
 
-/** update colors */
-watchEffect(() => (colors.value = track.value?.colors || []));
+/** emit state changes */
+watchEffect(() => emit("status", status.value));
+watchEffect(() => emit("tracks", tracks.value));
+watchEffect(() => emit("track", track.value));
+watchEffect(() => emit("playing", playing.value));
+watchEffect(() => emit("time", time.value));
+watchEffect(() => emit("volume", volume.value));
+watchEffect(() => emit("level", level.value));
 </script>
 
 <template>
@@ -325,8 +334,9 @@ watchEffect(() => (colors.value = track.value?.colors || []));
       tracks,
       track,
       playing,
-      volume,
       time,
+      volume,
+      level,
       previous,
       play,
       pause,

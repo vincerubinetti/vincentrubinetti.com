@@ -16,11 +16,11 @@ import {
 } from "lucide-vue-next";
 import slugify from "slugify";
 import Slider from "@/components/Slider.vue";
-import type { Track } from "@/components/SoundCloud.vue";
+import type { Track } from "@/components/SoundCloud";
 import SoundCloud from "@/components/SoundCloud.vue";
 import { clickCoords } from "@/util/dom";
 import { formatTime, formatValue, linkify } from "@/util/string";
-import { colors, level } from "./state";
+import { level, playing, track } from "./state";
 
 const playlists = [
   { title: "Best Of", id: "652705266" },
@@ -112,8 +112,9 @@ const getBandcamp = (track: Track) =>
     id="listen-player"
     class="aspect-video w-full"
     :playlist="selectedPlaylist.id"
-    v-model:level="level"
-    v-model:colors="colors"
+    @track="track = $event"
+    @playing="playing = $event"
+    @level="level = $event"
   >
     <template
       #default="{

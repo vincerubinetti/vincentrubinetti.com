@@ -1,15 +1,14 @@
 import eslintJs from "@eslint/js";
 import eslintPluginAstro from "eslint-plugin-astro";
-import eslintPluginPrettier from "eslint-plugin-prettier";
 import eslintPluginPrettierRecommended from "eslint-plugin-prettier/recommended";
 import eslintPluginVue from "eslint-plugin-vue";
 import { defineConfig, globalIgnores } from "eslint/config";
 import globals from "globals";
 import typescriptEslint from "typescript-eslint";
 
-export default defineConfig([
+export default defineConfig(
   globalIgnores(["dist", ".astro"]),
-  ...eslintPluginAstro.configs.recommended,
+  eslintPluginAstro.configs.recommended,
   {
     files: ["**/*.{astro,vue,ts}"],
     extends: [
@@ -18,9 +17,6 @@ export default defineConfig([
       typescriptEslint.configs.recommended,
       eslintPluginPrettierRecommended,
     ],
-    plugins: {
-      prettier: eslintPluginPrettier,
-    },
     languageOptions: {
       ecmaVersion: 2020,
       globals: globals.browser,
@@ -33,4 +29,4 @@ export default defineConfig([
       "@typescript-eslint/consistent-type-imports": "error",
     },
   },
-]);
+);
