@@ -1,5 +1,6 @@
 ---
 import Background from "@/home/Background.vue";
+import Follow from "@/home/Follow.astro";
 import Listen from "@/home/Listen.vue";
 import Title from "@/home/Title.vue";
 import Layout from "@/layouts/Layout.astro";
@@ -15,5 +16,8 @@ import Layout from "@/layouts/Layout.astro";
       <Title />
       <Listen client:only />
     </header>
+    <main>
+      <Follow />
+    </main>
   </body>
 </Layout>

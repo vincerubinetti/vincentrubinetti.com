@@ -95,7 +95,7 @@ const getBandcamp = (track: Track) =>
     <button
       v-for="({ title, id }, index) of playlists"
       :key="index"
-      class="relative before:absolute before:bottom-0 before:h-0.5 before:bg-current before:transition-[width]"
+      class="button-dark relative before:absolute before:bottom-0 before:h-0.5 before:bg-current before:transition-[width]"
       :class="[selectedPlaylist.id === id ? 'before:w-full' : 'before:w-0']"
       :aria-current="selectedPlaylist.id === id"
       :title="`Load ${title} playlist`"
@@ -145,9 +145,10 @@ const getBandcamp = (track: Track) =>
         <!-- player -->
         <div class="flex w-full gap-4">
           <!-- transport controls -->
-          <div class="flex flex-col">
-            <div class="flex items-center gap-2 text-2xl">
+          <div class="flex flex-col gap-1">
+            <div class="flex items-center text-lg">
               <button
+                class="button-dark"
                 title="Previous track"
                 @click="
                   if (time < 2000) previous();
@@ -157,11 +158,16 @@ const getBandcamp = (track: Track) =>
               >
                 <ChevronLeft />
               </button>
-              <button title="Play/Pause" @click="playing ? pause() : play()">
+              <button
+                class="button-dark"
+                title="Play/Pause"
+                @click="playing ? pause() : play()"
+              >
                 <Play v-if="!playing" />
                 <Pause v-if="playing" />
               </button>
               <button
+                class="button-dark"
                 title="Next track"
                 @click="
                   next();
@@ -172,18 +178,20 @@ const getBandcamp = (track: Track) =>
                 <ChevronRight />
               </button>
             </div>
-            <Slider
-              :model-value="[volume]"
-              :min="0"
-              :max="1"
-              :step="0.05"
-              @update:model-value="(value) => setVolume(value?.[0] ?? 1)"
-            />
+            <div class="px-2">
+              <Slider
+                :model-value="[volume]"
+                :min="0"
+                :max="1"
+                :step="0.05"
+                @update:model-value="(value) => setVolume(value?.[0] ?? 1)"
+              />
+            </div>
           </div>
 
           <!-- waveform -->
           <button
-            class="group relative grow p-0!"
+            class="button-dark group relative grow p-0!"
             title="Seek"
             @click="seek(clickCoords($event).x * (track.duration ?? 1))"
             @keydown.right.prevent="seek(time + 5000)"
@@ -247,14 +255,17 @@ const getBandcamp = (track: Track) =>
               />
             </svg>
             <div
-              class="absolute top-full -translate-x-1/2 translate-y-1 text-sm opacity-0 transition-opacity group-hover:opacity-100"
+              class="absolute top-full -translate-x-1/2 text-sm opacity-0 transition-opacity group-hover:opacity-100"
               :style="{ left: `${(time / (track.duration ?? 1)) * 100}%` }"
             >
               {{ formatTime(time) }}
             </div>
             <div
-              class="absolute top-full right-0 translate-y-1 text-sm opacity-0 transition-opacity group-hover:opacity-100"
-              :style="{ opacity: time / (track.duration ?? 1) < 0.9 ? 1 : 0 }"
+              class="absolute top-full right-0 text-sm opacity-0 transition-opacity group-hover:opacity-100"
+              :style="{
+                visibility:
+                  time / (track.duration ?? 1) < 0.9 ? undefined : 'hidden',
+              }"
             >
               {{ formatTime(track.duration ?? 0) }}
             </div>
@@ -266,13 +277,14 @@ const getBandcamp = (track: Track) =>
           <div class="font-medium">{{ track.title }}</div>
           <a
             :href="getBandcamp(track)"
-            class="button"
+            class="button-dark"
             target="_blank"
             title="Download on Bandcamp"
           >
             <Download />
           </a>
           <button
+            class="button-dark"
             :aria-expanded="showInfo"
             aria-controls="track-info"
             title="Toggle track info"
@@ -316,7 +328,7 @@ const getBandcamp = (track: Track) =>
         <div class="flex w-full flex-col">
           <template v-for="(_track, index) in tracks" :key="index">
             <button
-              class="group flex h-14 gap-4! p-0! pr-4! aria-selected:bg-current/10"
+              class="button-dark group flex h-14 gap-4! p-0! pr-4! aria-selected:bg-current/10"
               :aria-selected="isEqual(track, _track)"
               :title="`Play ${_track.title}`"
               @click="
@@ -326,20 +338,22 @@ const getBandcamp = (track: Track) =>
               "
             >
               <img :src="_track.artwork_url ?? ''" class="h-full" />
-              <div class="z-0 flex h-full grow items-center gap-2 text-left">
+              <div class="z-0 flex h-full items-center gap-2 text-left">
                 {{ _track.title }}
               </div>
-              <div class="relative text-sm opacity-50">
+              <div
+                class="relative flex h-full grow items-center justify-end overflow-hidden text-sm opacity-50"
+              >
                 <div
-                  class="absolute right-0 flex items-center gap-2 opacity-100 transition-opacity group-hover:opacity-0"
+                  class="truncate opacity-0 transition-opacity group-hover:opacity-100"
+                >
+                  {{ _track.tags?.map((tag) => `#${tag}`).join(" ") }}
+                </div>
+                <div
+                  class="absolute flex items-center gap-2 opacity-100 transition-opacity group-hover:opacity-0"
                 >
                   <Play />
                   {{ formatValue(_track.playback_count) }}
-                </div>
-                <div
-                  class="truncate opacity-0 transition-opacity group-hover:flex group-hover:opacity-100"
-                >
-                  {{ _track.tags?.map((tag) => `#${tag}`).join(" ") }}
                 </div>
               </div>
             </button>

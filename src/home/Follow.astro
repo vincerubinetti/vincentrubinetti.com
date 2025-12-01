@@ -1,0 +1,71 @@
+---
+import Apple from "@/assets/icons/apple.svg";
+import Bandcamp from "@/assets/icons/bandcamp.svg";
+import SoundCloud from "@/assets/icons/soundcloud.svg";
+import Spotify from "@/assets/icons/spotify.svg";
+import YouTube from "@/assets/icons/youtube.svg";
+---
+
+<section
+  class="inset-shadow relative flex flex-col gap-6 p-6 md:p-10 lg:p-16 xl:p-20 2xl:p-24"
+>
+  <h2 class="sr-only">Follow</h2>
+
+  <div class="flex flex-col gap-2">
+    <a
+      href="https://vincerubinetti.bandcamp.com/"
+      class="button hover:bg-emerald-500/25"
+      target="_blank"
+    >
+      <Bandcamp />
+      Complete Discography
+    </a>
+
+    <p class="max-w-100">
+      <b>Download</b> and <b>stream</b> the official, highest-quality, most up-to-date
+      versions of <i>all of my music</i>, on <b>Bandcamp</b>.
+    </p>
+  </div>
+
+  <div class="flex flex-col items-center gap-2">
+    <div class="flex flex-wrap gap-2">
+      <a
+        href="https://soundcloud.com/vincerubinetti"
+        class="button hover:bg-orange-500/25"
+        target="_blank"
+      >
+        <SoundCloud />
+        SoundCloud
+      </a>
+      <a
+        href="https://music.apple.com/us/artist/vincent-rubinetti/274886492"
+        class="button hover:bg-red-500/25"
+        target="_blank"
+      >
+        <Apple />
+        Apple Music
+      </a>
+      <a
+        href="https://open.spotify.com/artist/2SRhEEt2tlDQWxzwfUo9Dl"
+        class="button hover:bg-orange-500/25"
+        target="_blank"
+      >
+        <Spotify />
+        Spotify
+      </a>
+      <a
+        href="https://www.youtube.com/c/VincentRubinetti"
+        class="button hover:bg-red-500/25"
+        target="_blank"
+      >
+        <YouTube />
+        YouTube
+      </a>
+    </div>
+
+    <p class="max-w-100">
+      <b>Stream</b> and <b>share</b>
+      <i>select</i> songs and albums.
+    </p>
+  </div>
+</section>
