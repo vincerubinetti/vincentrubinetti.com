@@ -205,7 +205,7 @@ const getWaveform = async (track: Track) => {
 /** parse and de-duplicate tags */
 const getTags = (track: Track) =>
   uniq(
-    ((track.tag_list ?? "").match(/"[^"]*"|\S+/g) ?? [])
+    ((`${track.tag_list ?? ""} "${track.genre ?? ""}"`).match(/"[^"]*"|\S+/g) ?? [])
       .map((tag) =>
         tag
           .toLowerCase()

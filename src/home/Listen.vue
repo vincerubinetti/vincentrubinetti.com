@@ -13,12 +13,12 @@ import {
   Play,
   RefreshCcw,
 } from "lucide-vue-next";
-import slugify from "slugify";
 import Slider from "@/components/Slider.vue";
 import type { Track } from "@/components/SoundCloud";
 import SoundCloud from "@/components/SoundCloud.vue";
 import { clickCoords } from "@/util/dom";
 import { formatTime, formatValue, linkify } from "@/util/string";
+import bandcamp from "./bandcamp.json";
 import { level, playing, track } from "./state";
 
 const playlists = [
@@ -81,7 +81,11 @@ const getDescription = (track: Track) =>
 
 /** get associated bandcamp album */
 const getBandcamp = (track: Track) =>
-  `https://vincerubinetti.bandcamp.com/track/${slugify(track.title ?? "", { lower: true, strict: true })}`;
+  `https://vincerubinetti.bandcamp.com/${
+    (bandcamp as Record<string, string>)[
+      track.title?.toLowerCase() ?? ""
+    ]?.replaceAll(" ", "-") ?? ""
+  }`;
 </script>
 
 <template>
