@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import { isEqual, range } from "lodash-es";
+import { isEqual } from "lodash-es";
 import {
   Calendar,
   ChevronLeft,
@@ -273,12 +273,11 @@ const getBandcamp = (track: Track) =>
         </div>
 
         <!-- track overview -->
-        <div class="flex w-full flex-wrap items-center justify-center gap-2">
+        <div class="flex w-full flex-wrap items-center justify-center gap-4">
           <div class="font-medium">{{ track.title }}</div>
           <a
             :href="getBandcamp(track)"
             class="button-dark"
-            target="_blank"
             title="Download on Bandcamp"
           >
             <Download />
@@ -328,7 +327,7 @@ const getBandcamp = (track: Track) =>
         <div class="flex w-full flex-col">
           <template v-for="(_track, index) in tracks" :key="index">
             <button
-              class="button-dark group flex h-14 gap-4! p-0! pr-4! aria-selected:bg-current/10"
+              class="button-dark group flex h-14 items-center gap-4! p-0! pr-4! aria-selected:bg-current/10"
               :aria-selected="isEqual(track, _track)"
               :title="`Play ${_track.title}`"
               @click="
@@ -338,11 +337,11 @@ const getBandcamp = (track: Track) =>
               "
             >
               <img :src="_track.artwork_url ?? ''" class="h-full" />
-              <div class="z-0 flex h-full items-center gap-2 text-left">
+              <div>
                 {{ _track.title }}
               </div>
               <div
-                class="relative flex h-full grow items-center justify-end overflow-hidden text-sm opacity-50"
+                class="relative flex grow justify-end overflow-hidden text-sm opacity-50"
               >
                 <div
                   class="truncate opacity-0 transition-opacity group-hover:opacity-100"

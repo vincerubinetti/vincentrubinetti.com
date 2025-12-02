@@ -24,6 +24,22 @@ const share = "share.jpg";
       window.dataLayer.push(["config", "UA-42575210-1"]);
     </script>
 
+    <script>
+      /** make all external links open in a new tab */
+      new MutationObserver(() => {
+        const links = document.querySelectorAll<HTMLAnchorElement>(
+          "a[href]:not([target])",
+        );
+        for (const link of links) {
+          if (
+            new URL(link.href, window.location.origin).origin !==
+            window.location.origin
+          )
+            link.setAttribute("target", "_blank");
+        }
+      }).observe(document.body, { childList: true, subtree: true });
+    </script>
+
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
 

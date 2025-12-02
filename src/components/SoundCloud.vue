@@ -6,7 +6,7 @@ import {
   watchEffect,
   type UnwrapRef,
 } from "vue";
-import { useEventListener, useIntervalFn, useScriptTag } from "@vueuse/core";
+import { useEventListener, useScriptTag } from "@vueuse/core";
 import ColorThief from "colorthief/dist/color-thief.mjs";
 import { clamp, max, range, uniq } from "lodash-es";
 import { lerp, smooth } from "@/util/math";
@@ -121,8 +121,6 @@ const onLoad = generator(async function* () {
   widget = window.SC.Widget(iframe.value);
   events = window.SC.Widget.Events;
   if (!widget) throw Error("Widget couldn't be hooked up");
-
-  widget.bind(events.READY, () => console.log("ready"));
 
   /** wait for widget to be ready */
   yield new Promise<void>((resolve) => widget.bind(events.READY, resolve));

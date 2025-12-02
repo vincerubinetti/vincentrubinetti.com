@@ -1,4 +1,5 @@
 import linkifyStr from "linkify-string";
+import { micromark } from "micromark";
 
 /** format arbitrary value */
 export const formatValue = (value: unknown) => {
@@ -31,3 +32,7 @@ const shortenUrl = (url: string) => {
 /** replace links in plain text with anchors */
 export const linkify = (content = "") =>
   linkifyStr(content, { format: shortenUrl, nl2br: true, target: "_blank" });
+
+/** markdown to html */
+export const renderMarkdown = (markdown = "") =>
+  micromark(markdown).replace("<p>", "").replace("</p>", "");

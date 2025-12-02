@@ -10,5 +10,13 @@ export default defineConfig({
     plugins: [svgLoader({ svgo: false }), tailwindcss()],
   },
 
-  integrations: [vue()],
+  integrations: [
+    vue({
+      template: {
+        compilerOptions: {
+          isCustomElement: (tag) => tag.startsWith("youtube-video"),
+        },
+      },
+    }),
+  ],
 });

@@ -8,4 +8,6 @@ declare interface Window {
   dataLayer: any;
   // eslint-disable-next-line
   grecaptcha: any;
+  // eslint-disable-next-line
+  YT: any;
 }

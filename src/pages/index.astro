@@ -1,6 +1,10 @@
 ---
+import About from "@/home/About.vue";
 import Background from "@/home/Background.vue";
-import Follow from "@/home/Follow.astro";
+import Contact from "@/home/Contact.vue";
+import Follow from "@/home/Follow.vue";
+import Footer from "@/home/Footer.vue";
+import Highlights from "@/home/Highlights.vue";
 import Listen from "@/home/Listen.vue";
 import Title from "@/home/Title.vue";
 import Layout from "@/layouts/Layout.astro";
@@ -11,13 +15,17 @@ import Layout from "@/layouts/Layout.astro";
   description="Composer for media. Orchestral, electronic, and a wide variety of other styles."
 >
   <body>
-    <header class="relative z-0 bg-zinc-900 text-white">
+    <header class="dark">
       <Background client:only class="absolute inset-0 -z-10 size-full" />
       <Title />
       <Listen client:only />
     </header>
     <main>
       <Follow />
+      <Highlights client:only />
+      <About />
+      <Contact client:only />
     </main>
+    <Footer />
   </body>
 </Layout>
