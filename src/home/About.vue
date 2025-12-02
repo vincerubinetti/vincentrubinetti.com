@@ -6,6 +6,12 @@ import profile from "@/assets/images/vince.png?url";
 
 <template>
   <section class="dark">
+    <div
+      class="absolute inset-0 -z-10 mask-x-from-50% mask-x-to-100% opacity-25"
+    >
+      <img :src="piano" alt="" class="h-full w-full object-cover" />
+    </div>
+
     <div class="flex items-center gap-8 max-md:flex-col">
       <img :src="profile" alt="" class="size-40 rounded-full" />
       <p>

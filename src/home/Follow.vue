@@ -7,13 +7,13 @@ import YouTube from "@/assets/icons/youtube.svg?component";
 </script>
 
 <template>
-  <section class="bg-zinc-100">
+  <section class="bg-zinc-50">
     <h2 class="sr-only">Follow</h2>
 
     <div class="flex flex-col items-center gap-4">
       <a
         href="https://vincerubinetti.bandcamp.com/"
-        class="button hover:bg-emerald-500/25"
+        class="button text-lg hover:text-teal-500"
       >
         <Bandcamp />
         Complete Discography
@@ -31,28 +31,28 @@ import YouTube from "@/assets/icons/youtube.svg?component";
       >
         <a
           href="https://music.apple.com/us/artist/vincent-rubinetti/274886492"
-          class="button hover:bg-red-500/25"
+          class="button hover:text-rose-500"
         >
           <Apple />
           Apple Music
         </a>
         <a
           href="https://open.spotify.com/artist/2SRhEEt2tlDQWxzwfUo9Dl"
-          class="button hover:bg-orange-500/25"
+          class="button hover:text-emerald-500"
         >
           <Spotify />
           Spotify
         </a>
         <a
           href="https://soundcloud.com/vincerubinetti"
-          class="button hover:bg-orange-500/25"
+          class="button hover:text-orange-500"
         >
           <SoundCloud />
           SoundCloud
         </a>
         <a
           href="https://www.youtube.com/c/VincentRubinetti"
-          class="button hover:bg-red-500/25"
+          class="button hover:text-red-500"
         >
           <YouTube />
           YouTube

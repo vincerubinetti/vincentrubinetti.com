@@ -2,7 +2,15 @@ import { ref } from "vue";
 import { useIntervalFn } from "@vueuse/core";
 import type { Track } from "@/components/SoundCloud";
 
-export const track = ref<Track>({});
+export const track = ref<Track>({
+  colors: [
+    [0, 0, 0],
+    [0, 0, 0],
+    [0, 0, 0],
+    [0, 0, 0],
+    [0, 0, 0],
+  ],
+});
 export const playing = ref(false);
 export const level = ref(0);
 

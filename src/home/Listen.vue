@@ -149,15 +149,16 @@ const getBandcamp = (track: Track) =>
         <div class="flex w-full flex-col">
           <template v-for="(_track, index) in tracks" :key="index">
             <button
-              class="button-dark group h-14 gap-4! p-0! pr-4!"
+              class="button-dark group h-14 gap-4! p-0! pr-4! aria-pressed:rounded-br-none aria-pressed:bg-white/10"
               :title="`Play ${_track.title}`"
+              :aria-pressed="isEqual(track, _track)"
               @click="
                 setTrack(index);
                 seek(0);
                 play();
               "
             >
-              <img :src="_track.artwork_url ?? ''" class="h-full" />
+              <img :src="_track.artwork_url ?? ''" alt="" class="h-full" />
               <div class="text-left">
                 {{ _track.title }}
               </div>
@@ -178,7 +179,10 @@ const getBandcamp = (track: Track) =>
               </div>
             </button>
 
-            <div v-if="isEqual(track, _track)" class="flex flex-col gap-4 p-2">
+            <div
+              v-if="isEqual(track, _track)"
+              class="flex flex-col rounded-br bg-white/10 p-2"
+            >
               <div
                 class="flex min-h-14 items-center justify-center gap-2 max-sm:flex-wrap"
               >
@@ -220,6 +224,7 @@ const getBandcamp = (track: Track) =>
                     :min="0"
                     :max="1"
                     :step="0.05"
+                    aria-label="Volume"
                     @update:model-value="(value) => setVolume(value?.[0] ?? 1)"
                   />
                 </div>
@@ -335,7 +340,7 @@ const getBandcamp = (track: Track) =>
               <div
                 v-if="showInfo"
                 id="track-info"
-                class="flex flex-col gap-4 overflow-y-auto"
+                class="flex flex-col gap-4 overflow-y-auto p-2"
               >
                 <!-- track details -->
                 <div
@@ -353,10 +358,7 @@ const getBandcamp = (track: Track) =>
                 </div>
 
                 <!-- track description -->
-                <div
-                  class="pb-4 leading-tight"
-                  v-html="getDescription(track)"
-                />
+                <div class="leading-tight" v-html="getDescription(track)" />
               </div>
             </div>
           </template>

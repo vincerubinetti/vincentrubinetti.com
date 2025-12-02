@@ -127,6 +127,8 @@ const onLoad = generator(async function* () {
 
   status.value = "loading";
 
+  track.value = {};
+
   /** load from cache */
   tracks.value = playlistCache[playlist] || [];
 
@@ -205,7 +207,10 @@ const getWaveform = async (track: Track) => {
 /** parse and de-duplicate tags */
 const getTags = (track: Track) =>
   uniq(
-    ((`${track.tag_list ?? ""} "${track.genre ?? ""}"`).match(/"[^"]*"|\S+/g) ?? [])
+    (
+      `${track.tag_list ?? ""} "${track.genre ?? ""}"`.match(/"[^"]*"|\S+/g) ??
+      []
+    )
       .map((tag) =>
         tag
           .toLowerCase()

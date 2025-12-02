@@ -266,23 +266,41 @@ watchEffect(() =>
 
 /** stop youtube when soundcloud plays */
 useEventListener(window, "soundcloud-play", () => player.value?.pause());
+
+/** get color based on icon */
+const getIconColor = (icon: FunctionalComponent) => {
+  switch (icon) {
+    case Bandcamp:
+      return "hover:bg-emerald-500/25";
+    case Apple:
+      return "hover:bg-rose-500/25";
+    case Spotify:
+      return "hover:bg-emerald-500/25";
+    case YouTube:
+      return "hover:bg-red-500/25";
+    case Steam:
+      return "hover:bg-sky-500/25";
+    default:
+      return "";
+  }
+};
 </script>
 
 <template>
   <section>
     <h2 class="sr-only">Highlights</h2>
 
-    <div class="max-xs:grid-cols-1 grid grid-cols-4 gap-2 max-sm:grid-cols-2">
+    <div class="max-xs:grid-cols-1 grid grid-cols-4 gap-4 max-sm:grid-cols-2">
       <button
         v-for="(highlight, index) in highlights"
         :key="index"
-        class="button group relative p-0!"
+        class="group relative"
         aria-controls="highlights-player"
         :aria-label="highlight.title"
         @click="select(highlight)"
       >
         <div
-          class="absolute inset-0 flex items-center justify-center bg-black text-white opacity-0 transition-opacity group-hover:opacity-100"
+          class="absolute inset-0 flex items-center justify-center bg-black p-2 text-white opacity-0 transition-opacity group-hover:opacity-100"
         >
           {{ highlight.title }}
         </div>
@@ -290,7 +308,7 @@ useEventListener(window, "soundcloud-play", () => player.value?.pause());
       </button>
     </div>
 
-    <div class="grid grid-cols-2 gap-4 max-lg:grid-cols-1">
+    <div class="-mt-4 grid grid-cols-2 gap-4 max-lg:grid-cols-1">
       <youtube-video
         ref="player"
         id="highlights-player"
@@ -301,10 +319,10 @@ useEventListener(window, "soundcloud-play", () => player.value?.pause());
         allow="autoplay"
       ></youtube-video>
 
-      <div class="flex flex-col gap-4">
+      <div class="flex flex-col gap-2">
         <h3 class="text-lg font-semibold">{{ selected.title }}</h3>
 
-        <div class="grid grid-cols-[auto_1fr] gap-2">
+        <div class="grid grid-cols-[auto_1fr] gap-x-4 leading-relaxed">
           <span class="opacity-50">Credits</span>
           <span v-html="renderMarkdown(selected.credits)" />
           <span class="opacity-50">Genre</span>
@@ -319,6 +337,7 @@ useEventListener(window, "soundcloud-play", () => player.value?.pause());
             :key="index"
             :href="link.url"
             class="button"
+            :class="getIconColor(link.icon)"
             :title="link.text"
           >
             <component :is="link.icon" />

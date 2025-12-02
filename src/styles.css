@@ -9,6 +9,10 @@
   --font-sans: "Outfit", sans-serif;
 
   --color-link: color-mix(in srgb, currentColor, var(--color-sky-500) 50%);
+
+  --shadow:
+    0 3px 3px 0 color-mix(in srgb, currentColor, #0001 90%),
+    0 1px 2px -1px color-mix(in srgb, currentColor, #0001 90%);
 }
 
 body {
@@ -50,12 +54,12 @@ button {
 }
 
 @utility button {
-  @apply inline-flex items-center justify-center gap-2 rounded bg-zinc-500/10 p-2 transition-colors hover:bg-zinc-500/25;
+  @apply inline-flex items-center justify-center gap-2 rounded bg-current/5 p-2 transition-colors hover:bg-current/10;
 }
 
 input,
 textarea {
-  @apply rounded border border-zinc-500/25 bg-transparent p-2 placeholder:text-zinc-500/50 focus:border-zinc-500/50 focus:outline-none;
+  @apply rounded border border-zinc-300 p-3 placeholder:text-zinc-500/50;
 }
 
 .lucide {
@@ -65,8 +69,4 @@ textarea {
 .lucide-play,
 .lucide-pause {
   @apply fill-current stroke-0!;
-}
-
-@utility icon {
-  @apply h-[1em] fill-current;
 }
