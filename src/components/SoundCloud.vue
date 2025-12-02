@@ -144,7 +144,7 @@ const onLoad = generator(async function* () {
     /** go through each track and get details */
     for (const index of range(count)) {
       /** get current track */
-      let track: Sound = {};
+      let track: Partial<Sound> = {};
       yield waitFor(() => {
         /** try multiple times because sometimes doesn't return full details */
         widget.getCurrentSound((sound) => (track = sound));

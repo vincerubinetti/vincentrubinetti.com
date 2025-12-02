@@ -23,6 +23,7 @@ import YouTube from "@/assets/icons/youtube.svg?component";
 import { waitFor } from "@/util/misc";
 import { renderMarkdown } from "@/util/string";
 import "youtube-video-element";
+import { getColor } from "./colors";
 
 type Highlight = {
   title: string;
@@ -266,24 +267,6 @@ watchEffect(() =>
 
 /** stop youtube when soundcloud plays */
 useEventListener(window, "soundcloud-play", () => player.value?.pause());
-
-/** get color based on icon */
-const getIconColor = (icon: FunctionalComponent) => {
-  switch (icon) {
-    case Bandcamp:
-      return "hover:bg-emerald-500/25";
-    case Apple:
-      return "hover:bg-rose-500/25";
-    case Spotify:
-      return "hover:bg-emerald-500/25";
-    case YouTube:
-      return "hover:bg-red-500/25";
-    case Steam:
-      return "hover:bg-sky-500/25";
-    default:
-      return "";
-  }
-};
 </script>
 
 <template>
@@ -337,7 +320,7 @@ const getIconColor = (icon: FunctionalComponent) => {
             :key="index"
             :href="link.url"
             class="button"
-            :class="getIconColor(link.icon)"
+            :class="getColor(link.icon)"
             :title="link.text"
           >
             <component :is="link.icon" />

@@ -1,15 +1,13 @@
 <script setup lang="ts">
 import { Code, Headphones, Leaf, Music } from "lucide-vue-next";
-import piano from "@/assets/images/piano.jpg?url";
+import bg from "@/assets/images/sheet.jpg?url";
 import profile from "@/assets/images/vince.png?url";
 </script>
 
 <template>
   <section class="dark">
-    <div
-      class="absolute inset-0 -z-10 mask-x-from-50% mask-x-to-100% opacity-25"
-    >
-      <img :src="piano" alt="" class="h-full w-full object-cover" />
+    <div class="absolute inset-0 -z-10 opacity-10">
+      <img :src="bg" alt="" class="h-full w-full object-cover" />
     </div>
 
     <div class="flex items-center gap-8 max-md:flex-col">

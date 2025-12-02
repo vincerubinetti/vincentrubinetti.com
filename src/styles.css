@@ -10,13 +10,33 @@
 
   --color-link: color-mix(in srgb, currentColor, var(--color-sky-500) 50%);
 
-  --shadow:
-    0 3px 3px 0 color-mix(in srgb, currentColor, #0001 90%),
-    0 1px 2px -1px color-mix(in srgb, currentColor, #0001 90%);
+  --animate-stroke: draw-stroke 1s linear both;
+
+  @keyframes draw-stroke {
+    0% {
+      stroke-dasharray: 0.25 1.75;
+      stroke-dashoffset: 1;
+      opacity: 1;
+    }
+    50% {
+      stroke-dasharray: 0.25 1.75;
+      stroke-dashoffset: 0;
+      opacity: 1;
+    }
+    100% {
+      stroke-dasharray: 0.25 1.75;
+      stroke-dashoffset: -1;
+      opacity: 1;
+    }
+  }
 }
 
 body {
-  @apply flex min-h-screen flex-col;
+  @apply flex min-h-dvh flex-col;
+}
+
+main {
+  @apply grow;
 }
 
 header,
@@ -54,7 +74,7 @@ button {
 }
 
 @utility button {
-  @apply inline-flex items-center justify-center gap-2 rounded bg-current/5 p-2 transition-colors hover:bg-current/10;
+  @apply inline-flex items-center justify-center gap-2 rounded border border-current p-2 transition-colors hover:border-current hover:bg-current/10;
 }
 
 input,
