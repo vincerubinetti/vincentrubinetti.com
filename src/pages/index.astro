@@ -18,13 +18,13 @@ import Layout from "@/layouts/Layout.astro";
     <header class="dark">
       <Background client:only class="absolute inset-0 -z-10 size-full" />
       <Title />
-      <Listen client:only />
+      <Listen client:load />
     </header>
     <main>
       <Follow />
-      <Highlights client:only />
+      <Highlights client:load />
       <About />
-      <Contact client:only />
+      <Contact client:load />
     </main>
     <Footer />
   </body>

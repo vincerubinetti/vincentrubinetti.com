@@ -8,27 +8,10 @@
 
   --font-sans: "Outfit", sans-serif;
 
-  --color-link: color-mix(in srgb, currentColor, var(--color-sky-500) 50%);
+  --color-cream: hsl(30, 50%, 95%);
+  --color-link: hsl(180, 90%, 35%);
 
-  --animate-stroke: draw-stroke 1s linear both;
-
-  @keyframes draw-stroke {
-    0% {
-      stroke-dasharray: 0.25 1.75;
-      stroke-dashoffset: 1;
-      opacity: 1;
-    }
-    50% {
-      stroke-dasharray: 0.25 1.75;
-      stroke-dashoffset: 0;
-      opacity: 1;
-    }
-    100% {
-      stroke-dasharray: 0.25 1.75;
-      stroke-dashoffset: -1;
-      opacity: 1;
-    }
-  }
+  --radius: 7.5px;
 }
 
 body {
@@ -45,16 +28,37 @@ footer {
   @apply relative z-0 flex flex-col items-center gap-8 overflow-hidden px-[max(--spacing(12),(100%---spacing(200))/2)] py-12;
 }
 
+h1 {
+  @apply text-2xl tracking-wider uppercase;
+}
+
+h2 {
+  @apply text-xl font-medium;
+}
+
+h3 {
+  @apply text-lg font-medium;
+}
+
 @utility dark {
-  @apply bg-zinc-900! text-white;
+  @apply bg-black text-white;
 }
 
 p {
   @apply leading-relaxed;
 }
 
+ul,
+ol {
+  @apply space-y-2;
+}
+
+hr {
+  @apply w-full border-t-0 border-r-0 border-b border-l-0 border-current/10;
+}
+
 b {
-  @apply font-semibold;
+  @apply font-medium;
 }
 
 svg {
@@ -74,12 +78,12 @@ button {
 }
 
 @utility button {
-  @apply inline-flex items-center justify-center gap-2 rounded border border-current p-2 transition-colors hover:border-current hover:bg-current/10;
+  @apply inline-flex items-center justify-center gap-2 rounded bg-current/5 p-2 transition-all hover:bg-current/10;
 }
 
 input,
 textarea {
-  @apply rounded border border-zinc-300 p-3 placeholder:text-zinc-500/50;
+  @apply rounded border border-current/50 p-3 placeholder:text-current/50;
 }
 
 .lucide {

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import {
   computed,
+  onMounted,
   ref,
   useTemplateRef,
   watchEffect,
@@ -297,8 +298,11 @@ const onPlay = async () => {
   });
 };
 
-/** allow global event to stop playback */
-useEventListener(window, "stop-soundcloud", pause);
+/** prevent ssr error */
+onMounted(() =>
+  /** allow global event to stop playback */
+  useEventListener(window, "stop-soundcloud", pause),
+);
 
 /** on track pause */
 const onPause = () => (playing.value = false);

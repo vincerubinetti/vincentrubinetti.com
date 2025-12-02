@@ -1,6 +1,7 @@
 import type { FunctionalComponent } from "vue";
 import Apple from "@/assets/icons/apple.svg?component";
 import Bandcamp from "@/assets/icons/bandcamp.svg?component";
+import SoundCloud from "@/assets/icons/soundcloud.svg?component";
 import Spotify from "@/assets/icons/spotify.svg?component";
 import Steam from "@/assets/icons/steam.svg?component";
 import YouTube from "@/assets/icons/youtube.svg?component";
@@ -14,6 +15,8 @@ export const getColor = (icon: FunctionalComponent) => {
       return "hover:text-rose-500";
     case Spotify:
       return "hover:text-emerald-500";
+    case SoundCloud:
+      return "hover:text-orange-500";
     case YouTube:
       return "hover:text-red-500";
     case Steam:

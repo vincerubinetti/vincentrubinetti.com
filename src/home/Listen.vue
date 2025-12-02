@@ -86,6 +86,8 @@ const getBandcamp = (track: Track) =>
       track.title?.toLowerCase() ?? ""
     ]?.replaceAll(" ", "-") ?? ""
   }`;
+
+const { SSR } = import.meta.env;
 </script>
 
 <template>
@@ -110,6 +112,7 @@ const getBandcamp = (track: Track) =>
   </div>
 
   <SoundCloud
+    v-if="!SSR"
     id="listen-player"
     class="aspect-video w-full"
     :playlist="selectedPlaylist.id"
@@ -366,4 +369,5 @@ const getBandcamp = (track: Track) =>
       </div>
     </template>
   </SoundCloud>
+  <div v-else class="h-100 w-full bg-current/10"></div>
 </template>

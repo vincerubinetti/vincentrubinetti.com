@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import {
   computed,
+  onMounted,
   shallowRef,
   useTemplateRef,
   watchEffect,
@@ -265,8 +266,11 @@ watchEffect(() =>
   ),
 );
 
-/** stop youtube when soundcloud plays */
-useEventListener(window, "soundcloud-play", () => player.value?.pause());
+/** prevent ssr error */
+onMounted(() =>
+  /** stop youtube when soundcloud plays */
+  useEventListener(window, "soundcloud-play", () => player.value?.pause()),
+);
 </script>
 
 <template>
@@ -277,7 +281,7 @@ useEventListener(window, "soundcloud-play", () => player.value?.pause());
       <button
         v-for="(highlight, index) in highlights"
         :key="index"
-        class="group relative"
+        class="group relative overflow-hidden rounded"
         aria-controls="highlights-player"
         :aria-label="highlight.title"
         @click="select(highlight)"
@@ -303,7 +307,7 @@ useEventListener(window, "soundcloud-play", () => player.value?.pause());
       ></youtube-video>
 
       <div class="flex flex-col gap-2">
-        <h3 class="text-lg font-semibold">{{ selected.title }}</h3>
+        <h3>{{ selected.title }}</h3>
 
         <div class="grid grid-cols-[auto_1fr] gap-x-4 leading-relaxed">
           <span class="opacity-50">Credits</span>

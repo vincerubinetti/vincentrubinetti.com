@@ -8,13 +8,15 @@ import { getColor } from "./colors";
 </script>
 
 <template>
-  <section class="bg-zinc-50">
+  <section class="bg-cream">
+    <hr />
+
     <h2 class="sr-only">Follow</h2>
 
     <div class="flex flex-col items-center gap-4">
       <a
         href="https://vincerubinetti.bandcamp.com/"
-        class="button text-lg font-semibold"
+        class="button text-lg font-medium"
         :class="getColor(Bandcamp)"
       >
         <Bandcamp />
@@ -69,5 +71,7 @@ import { getColor } from "./colors";
         <b>Stream</b> and <b>share</b> <i>select</i> songs and albums.
       </p>
     </div>
+
+    <hr />
   </section>
 </template>
