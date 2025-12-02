@@ -62,13 +62,9 @@ textarea {
   @apply h-[1em] w-[unset];
 }
 
-.lucide * {
-  @apply [stroke-linecap:butt]! [stroke-linejoin:miter]!;
-}
-
 .lucide-play,
 .lucide-pause {
-  @apply fill-current stroke-0;
+  @apply fill-current stroke-0!;
 }
 
 @utility icon {

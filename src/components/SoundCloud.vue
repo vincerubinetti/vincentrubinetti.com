@@ -177,9 +177,6 @@ const onLoad = generator(async function* () {
   widget.skip(0);
   widget.pause();
 
-  /** select first track */
-  track.value = tracks.value[0];
-
   /** hook up callback events  */
   widget.bind(events.PLAY_PROGRESS, onPlayProgress);
   widget.bind(events.PLAY, onPlay);
@@ -194,15 +191,15 @@ const onLoad = generator(async function* () {
 const getWaveform = async (track: Track) => {
   if (!track.waveform_url) return { raw: [], smoothed: [] };
   type Waveform = { width: number; height: number; samples: number[] };
-  const { height, samples } = (await (
+  const { samples } = (await (
     await fetch(track.waveform_url)
   ).json()) as Waveform;
-  const maximum = max(samples) || height;
-  const raw = samples.map((value) => value / maximum);
-  const smoothed = [0, ...smooth(raw, 2), 0];
-  const toXy = (array: number[]) =>
-    array.map((y, i, a) => ({ x: i / a.length, y }));
-  return { raw: toXy(raw), smoothed: toXy(smoothed) };
+  const smoothed = [0, ...smooth(samples, 2), 0];
+  const toXy = (array: number[]) => {
+    const maximum = max(samples)!;
+    return array.map((y, i, a) => ({ x: i / a.length, y: y / maximum }));
+  };
+  return { raw: toXy(samples), smoothed: toXy(smoothed) };
 };
 
 /** parse and de-duplicate tags */
