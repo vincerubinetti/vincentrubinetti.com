@@ -361,7 +361,7 @@ const { SSR } = import.meta.env;
                 </div>
 
                 <!-- track description -->
-                <div class="leading-tight" v-html="getDescription(track)" />
+                <div class="leading-relaxed" v-html="getDescription(track)" />
               </div>
             </div>
           </template>

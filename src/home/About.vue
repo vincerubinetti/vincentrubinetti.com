@@ -10,7 +10,7 @@ import profile from "@/assets/images/vince.png?url";
       <img :src="bg" alt="" class="h-full w-full object-cover" />
     </div>
 
-    <div class="flex items-center gap-8 max-md:flex-col">
+    <div class="flex items-center gap-16 max-md:flex-col">
       <img :src="profile" alt="" class="size-40 rounded-full" />
       <p>
         I am a life-long lover of music. Over the past 10+ years I've worked on

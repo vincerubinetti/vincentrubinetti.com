@@ -1,5 +1,7 @@
 ---
 import "@/styles.css";
+import "@fontsource-variable/aleo";
+import "@fontsource-variable/outfit";
 
 export interface Props {
   title: string;
@@ -55,16 +57,9 @@ const share = "share.jpg";
     <meta property="og:url" content={url} />
     <meta property="og:image" content={share} />
     <meta property="og:type" content="website" />
-
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap"
-      rel="stylesheet"
-    />
   </head>
 
-  <body class="flex flex-col font-sans leading-none font-light">
+  <body>
     <slot />
   </body>
 </html>

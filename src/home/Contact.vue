@@ -96,46 +96,45 @@ useScriptTag("https://www.google.com/recaptcha/api.js");
   <section>
     <h2 class="sr-only">Contact</h2>
 
-    <p class="p">
-      To use the <b>3Blue1Brown music</b>,
-      <a href="https://vincerubinetti.github.io/using-the-music-of-3blue1brown/"
-        >go here</a
-      >. If you want to use my other music in your videos/projects, commission
-      custom music or other services, or just talk about anything interesting,
-      please write me a message:
-    </p>
+    <div class="grid grid-cols-2 gap-12 max-lg:grid-cols-1">
+      <div class="flex flex-col gap-4">
+        <p>
+          To use the <b>3Blue1Brown music</b>,
+          <a
+            href="https://vincerubinetti.github.io/using-the-music-of-3blue1brown/"
+            >go here</a
+          >.
+        </p>
+        <p>
+          If you want to use my other music in your videos/projects, commission
+          custom music or other services, or just chat, please write me a
+          message.
+        </p>
+        <span v-html="address" />
+      </div>
 
-    <div v-html="address" class="address" />
-
-    <form
-      class="flex w-100 max-w-full flex-col gap-4"
-      @submit="onSubmit"
-      aria-label="contact form"
-    >
-      <input
-        v-model="name"
-        class="textbox"
-        required
-        name="name"
-        placeholder="Full Name"
-      />
-      <input
-        v-model="email"
-        class="textbox"
-        required
-        type="email"
-        name="email"
-        placeholder="Email"
-      />
-      <textarea
-        v-model="message"
-        class="textbox textarea"
-        required
-        name="message"
-        placeholder="Message"
-        rows="5"
-      />
-      <button type="submit" class="button"><Send />Send</button>
-    </form>
+      <form
+        class="flex flex-col gap-4"
+        @submit="onSubmit"
+        aria-label="Contact form"
+      >
+        <input v-model="name" required name="name" placeholder="Full Name" />
+        <input
+          v-model="email"
+          required
+          type="email"
+          name="email"
+          placeholder="Email"
+        />
+        <textarea
+          v-model="message"
+          required
+          name="message"
+          placeholder="Message"
+          rows="5"
+        />
+        <button type="submit" class="button"><Send />Send</button>
+      </form>
+    </div>
   </section>
 </template>

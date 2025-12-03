@@ -9,30 +9,32 @@ import { getColor } from "./colors";
 
 <template>
   <section class="bg-cream">
-    <hr />
-
     <h2 class="sr-only">Follow</h2>
 
-    <div class="flex flex-col items-center gap-4">
+    <div
+      class="grid grid-cols-[1fr_1px_1fr] items-center gap-12 max-lg:grid-cols-1"
+    >
       <a
         href="https://vincerubinetti.bandcamp.com/"
-        class="button text-lg font-medium"
+        class="button"
         :class="getColor(Bandcamp)"
       >
         <Bandcamp />
         Complete Discography
       </a>
 
-      <p class="max-w-100">
+      <hr
+        class="col-start-2 row-span-2 h-[unset]! self-stretch bg-current/25 max-lg:hidden"
+      />
+
+      <p class=" ">
         <b>Download</b> and <b>stream</b> the official, highest-quality, most
         up-to-date versions of <i>all of my music</i>, on Bandcamp.
       </p>
-    </div>
 
-    <div class="flex flex-col items-center gap-4">
-      <div
-        class="flex flex-wrap justify-center gap-4 max-md:grid max-md:grid-cols-2 max-sm:grid-cols-1"
-      >
+      <hr class="lg:hidden" />
+
+      <div class="grid grid-cols-2 gap-4 max-xl:grid-cols-1">
         <a
           href="https://music.apple.com/us/artist/vincent-rubinetti/274886492"
           class="button"
@@ -67,11 +69,9 @@ import { getColor } from "./colors";
         </a>
       </div>
 
-      <p class="max-w-100">
+      <p class=" ">
         <b>Stream</b> and <b>share</b> <i>select</i> songs and albums.
       </p>
     </div>
-
-    <hr />
   </section>
 </template>

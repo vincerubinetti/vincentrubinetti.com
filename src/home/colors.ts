@@ -10,11 +10,11 @@ import YouTube from "@/assets/icons/youtube.svg?component";
 export const getColor = (icon: FunctionalComponent) => {
   switch (icon) {
     case Bandcamp:
-      return "hover:text-emerald-500";
+      return "hover:text-teal-500";
     case Apple:
       return "hover:text-rose-500";
     case Spotify:
-      return "hover:text-emerald-500";
+      return "hover:text-green-500";
     case SoundCloud:
       return "hover:text-orange-500";
     case YouTube:

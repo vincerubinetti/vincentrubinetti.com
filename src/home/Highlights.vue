@@ -277,7 +277,7 @@ onMounted(() =>
   <section>
     <h2 class="sr-only">Highlights</h2>
 
-    <div class="max-xs:grid-cols-1 grid grid-cols-4 gap-4 max-sm:grid-cols-2">
+    <div class="max-xs:grid-cols-1 grid grid-cols-4 gap-2 max-sm:grid-cols-2">
       <button
         v-for="(highlight, index) in highlights"
         :key="index"
@@ -295,7 +295,7 @@ onMounted(() =>
       </button>
     </div>
 
-    <div class="-mt-4 grid grid-cols-2 gap-4 max-lg:grid-cols-1">
+    <div class="grid grid-cols-2 gap-8 max-lg:grid-cols-1">
       <youtube-video
         ref="player"
         id="highlights-player"
@@ -306,10 +306,10 @@ onMounted(() =>
         allow="autoplay"
       ></youtube-video>
 
-      <div class="flex flex-col gap-2">
+      <div class="flex flex-col gap-4">
         <h3>{{ selected.title }}</h3>
 
-        <div class="grid grid-cols-[auto_1fr] gap-x-4 leading-relaxed">
+        <div class="grid grid-cols-[auto_1fr] gap-x-4 leading-loose">
           <span class="opacity-50">Credits</span>
           <span v-html="renderMarkdown(selected.credits)" />
           <span class="opacity-50">Genre</span>

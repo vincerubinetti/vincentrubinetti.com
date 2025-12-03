@@ -5,17 +5,25 @@
   --breakpoint-sm: 30rem;
   --breakpoint-md: 40rem;
   --breakpoint-lg: 50rem;
+  --breakpoint-xl: 60rem;
 
-  --font-sans: "Outfit", sans-serif;
+  --font-serif: "Aleo Variable", serif;
+  --font-sans: "Outfit Variable", sans-serif;
 
   --color-cream: hsl(30, 50%, 95%);
-  --color-link: hsl(180, 90%, 35%);
+  --color-link: color-mix(in srgb, hsl(180, 100%, 50%), currentColor 50%);
 
   --radius: 7.5px;
+
+  --width: --spacing(220);
+}
+
+html {
+  @apply text-[110%];
 }
 
 body {
-  @apply flex min-h-dvh flex-col;
+  @apply flex min-h-dvh flex-col font-serif text-[105%] leading-none;
 }
 
 main {
@@ -25,40 +33,36 @@ main {
 header,
 section,
 footer {
-  @apply relative z-0 flex flex-col items-center gap-8 overflow-hidden px-[max(--spacing(12),(100%---spacing(200))/2)] py-12;
-}
-
-h1 {
-  @apply text-2xl tracking-wider uppercase;
-}
-
-h2 {
-  @apply text-xl font-medium;
-}
-
-h3 {
-  @apply text-lg font-medium;
+  @apply relative z-0 flex flex-col items-center gap-12 px-[max(--spacing(16),(100%-var(--width))/2)] py-16;
 }
 
 @utility dark {
-  @apply bg-black text-white;
+  @apply z-10! bg-black text-white shadow-[0_0_20px_#0009];
+}
+
+h1 {
+  @apply font-sans text-2xl tracking-wider uppercase;
+}
+
+h2 {
+  @apply font-sans text-2xl font-medium;
+}
+
+h3 {
+  @apply font-sans text-xl;
 }
 
 p {
-  @apply leading-relaxed;
+  @apply leading-loose;
 }
 
 ul,
 ol {
-  @apply space-y-2;
+  @apply flex flex-col gap-2 leading-relaxed;
 }
 
 hr {
-  @apply w-full border-t-0 border-r-0 border-b border-l-0 border-current/10;
-}
-
-b {
-  @apply font-medium;
+  @apply h-px w-full border-0 bg-current/10;
 }
 
 svg {
@@ -74,16 +78,16 @@ button {
 }
 
 @utility button-dark {
-  @apply inline-flex items-center justify-center gap-2 rounded p-2 text-current transition-colors hover:bg-current/10;
+  @apply inline-flex items-center justify-center gap-2 rounded p-4 font-sans text-current transition-colors hover:bg-current/10;
 }
 
 @utility button {
-  @apply inline-flex items-center justify-center gap-2 rounded bg-current/5 p-2 transition-all hover:bg-current/10;
+  @apply inline-flex items-center justify-center gap-2 rounded bg-current/5 p-4 font-sans transition-all hover:bg-current/10;
 }
 
 input,
 textarea {
-  @apply rounded border border-current/50 p-3 placeholder:text-current/50;
+  @apply rounded border border-current/25 p-3 placeholder:text-current/50;
 }
 
 .lucide {
