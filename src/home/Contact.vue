@@ -94,7 +94,7 @@ useScriptTag("https://www.google.com/recaptcha/api.js");
 </script>
 
 <template>
-  <section>
+  <section class="bg-cream">
     <h2 class="sr-only">Contact</h2>
 
     <div class="grid grid-cols-2 gap-12 max-lg:grid-cols-1">
