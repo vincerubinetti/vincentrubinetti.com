@@ -6,10 +6,10 @@ import type { Track } from "@/components/SoundCloud";
 export const track = ref<Track>({
   colors: [
     [0, 0, 0],
-    [0, 0, 0],
-    [0, 0, 0],
-    [0, 0, 0],
-    [0, 0, 0],
+    [16, 16, 16],
+    [32, 32, 32],
+    [48, 48, 48],
+    [64, 64, 64],
   ],
 });
 

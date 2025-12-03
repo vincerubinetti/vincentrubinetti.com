@@ -7,7 +7,19 @@ import svgLoader from "vite-svg-loader";
 // https://astro.build/config
 export default defineConfig({
   vite: {
-    plugins: [svgLoader({ svgo: false }), tailwindcss()],
+    plugins: [
+      svgLoader({
+        svgoConfig: {
+          plugins: [
+            {
+              name: "addClassesToSVGElement",
+              params: { classNames: ["icon"] },
+            },
+          ],
+        },
+      }),
+      tailwindcss(),
+    ],
   },
 
   integrations: [

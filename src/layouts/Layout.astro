@@ -9,9 +9,6 @@ export interface Props {
 }
 
 const { title, description } = Astro.props;
-
-const url = "https://vincentrubinetti.com";
-const share = "share.jpg";
 ---
 
 <html lang="en">
@@ -54,8 +51,8 @@ const share = "share.jpg";
 
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:url" content={url} />
-    <meta property="og:image" content={share} />
+    <meta property="og:url" content="https://vincentrubinetti.com" />
+    <meta property="og:image" content="share.png" />
     <meta property="og:type" content="website" />
   </head>
 

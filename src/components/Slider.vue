@@ -2,6 +2,7 @@
 import { SliderRange, SliderRoot, SliderThumb, SliderTrack } from "reka-ui";
 
 type Props = {
+  label: string;
   /** minimum value */
   min?: number;
   /** maximum value */
@@ -27,7 +28,7 @@ const value = defineModel<number[]>();
       <SliderTrack class="relative h-1 grow rounded-full bg-current/10">
         <SliderRange class="absolute h-full rounded-full bg-current" />
       </SliderTrack>
-      <SliderThumb class="size-3 rounded-full bg-current" aria-label="Volume" />
+      <SliderThumb class="size-3 rounded-full bg-current" aria-label="label" />
     </SliderRoot>
   </div>
 </template>

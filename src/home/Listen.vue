@@ -81,11 +81,7 @@ const getDescription = (track: Track) =>
 
 /** get associated bandcamp album */
 const getBandcamp = (track: Track) =>
-  `https://vincerubinetti.bandcamp.com/${
-    (bandcamp as Record<string, string>)[
-      track.title?.toLowerCase() ?? ""
-    ]?.replaceAll(" ", "-") ?? ""
-  }`;
+  bandcamp.find((t) => t.track === track.title)?.album_link ?? "";
 
 const { SSR } = import.meta.env;
 </script>
@@ -227,7 +223,7 @@ const { SSR } = import.meta.env;
                     :min="0"
                     :max="1"
                     :step="0.05"
-                    aria-label="Volume"
+                    label="Volume"
                     @update:model-value="(value) => setVolume(value?.[0] ?? 1)"
                   />
                 </div>
