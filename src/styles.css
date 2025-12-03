@@ -53,7 +53,7 @@ main {
 header,
 section,
 footer {
-  @apply relative z-0 flex flex-col items-center gap-12 px-[max(--spacing(16),(100%-var(--width))/2)] py-16 max-lg:p-10 max-md:p-8 max-sm:p-6 max-xs:p-4;
+  @apply max-xs:p-4 relative z-0 flex flex-col items-center gap-12 px-[max(--spacing(16),(100%-var(--width))/2)] py-16 max-lg:p-10 max-md:p-8 max-sm:p-6;
 }
 
 @utility dark {
@@ -112,7 +112,7 @@ textarea {
 
 .icon,
 .lucide {
-  @apply h-[1em] w-[unset];
+  @apply h-[1.15em] w-[unset];
 }
 
 .lucide-play,

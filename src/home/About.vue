@@ -1,16 +1,17 @@
 <script setup lang="ts">
-import bg from "@/assets/images/sheet.jpg?url";
 import profile from "@/assets/images/vince.png?url";
+import bg from "@/assets/images/sheet.jpg?url";
 </script>
 
 <template>
   <section class="dark">
-    <div class="absolute inset-0 -z-10 opacity-10">
-      <img :src="bg" alt="" class="h-full w-full object-cover" />
-    </div>
+    <div
+      class="absolute inset-0 -z-10 bg-cover bg-fixed bg-center opacity-15"
+      :style="{ backgroundImage: `url(${bg})` }"
+    />
 
     <div class="flex items-center gap-16 max-md:flex-col">
-      <img :src="profile" alt="" class="size-40 rounded-full" />
+      <img :src="profile" alt="" class="size-50 rounded-full" />
       <p>
         I am a life-long lover of music. Over the past 10+ years I've worked on
         video games, videos, advertisements, ensemble pieces, and a variety of

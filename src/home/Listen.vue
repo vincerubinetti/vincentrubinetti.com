@@ -167,7 +167,7 @@ const { SSR } = import.meta.env;
                 <div
                   class="truncate opacity-0 transition-opacity group-hover:opacity-100"
                 >
-                  {{ _track.tags?.map((tag) => `#${tag}`).join(" ") }}
+                  {{ _track.tags?.join(",  ") }}
                 </div>
                 <div
                   class="absolute flex items-center gap-2 opacity-100 transition-opacity group-hover:opacity-0"

@@ -2,9 +2,18 @@
 import vue from "@astrojs/vue";
 import tailwindcss from "@tailwindcss/vite";
 import { defineConfig } from "astro/config";
+import { loadEnv } from "vite";
+import transformPlugin from "vite-plugin-transform";
 import svgLoader from "vite-svg-loader";
 
-// https://astro.build/config
+const env = loadEnv(import.meta.env.MODE, process.cwd(), [
+  "WEBSITE_",
+  "MAIL_",
+  "RECAPTCHA",
+]);
+
+console.log(env);
+
 export default defineConfig({
   vite: {
     plugins: [
@@ -19,6 +28,12 @@ export default defineConfig({
         },
       }),
       tailwindcss(),
+      transformPlugin({
+        tStart: "__{",
+        tEnd: "}__",
+        replace: env,
+        replaceFiles: ["public/email.php"],
+      }),
     ],
   },
 

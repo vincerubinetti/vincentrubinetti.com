@@ -13,7 +13,7 @@ import { getColor } from "./colors";
     <h2 class="sr-only">Follow</h2>
 
     <div
-      class="grid grid-cols-[1fr_2px_1fr] items-center gap-12 max-lg:grid-cols-1"
+      class="grid grid-cols-[1fr_1fr] items-center gap-12 max-lg:grid-cols-1"
     >
       <a
         href="https://vincerubinetti.bandcamp.com/"
@@ -25,16 +25,12 @@ import { getColor } from "./colors";
         Complete Discography
       </a>
 
-      <hr
-        class="col-start-2 row-span-2 h-[unset]! self-stretch bg-current/25 max-lg:hidden"
-      />
-
-      <p class=" ">
+      <p>
         <b>Download</b> and <b>stream</b> the official, highest-quality, most
         up-to-date versions of <i>all of my music</i>, on Bandcamp.
       </p>
 
-      <hr class="lg:hidden" />
+      <hr class="col-start-1 -col-end-1" />
 
       <div class="grid grid-cols-2 gap-4 max-xl:grid-cols-1">
         <a
@@ -75,9 +71,7 @@ import { getColor } from "./colors";
         </a>
       </div>
 
-      <p class=" ">
-        <b>Stream</b> and <b>share</b> <i>select</i> songs and albums.
-      </p>
+      <p><b>Stream</b> and <b>share</b> <i>select</i> songs and albums.</p>
     </div>
   </section>
 </template>
