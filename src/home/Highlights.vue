@@ -24,6 +24,7 @@ import YouTube from "@/assets/icons/youtube.svg?component";
 import { waitFor } from "@/util/misc";
 import { renderMarkdown } from "@/util/string";
 import "youtube-video-element";
+import Outline from "@/components/Outline.vue";
 import { getColor } from "./colors";
 
 type Highlight = {
@@ -327,6 +328,7 @@ onMounted(() =>
             :class="getColor(link.icon)"
             :title="link.text"
           >
+            <Outline />
             <component :is="link.icon" />
           </a>
         </div>

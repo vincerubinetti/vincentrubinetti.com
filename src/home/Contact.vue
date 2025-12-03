@@ -2,6 +2,7 @@
 import { onMounted, ref } from "vue";
 import { useLocalStorage, useScriptTag } from "@vueuse/core";
 import { Send } from "lucide-vue-next";
+import Outline from "@/components/Outline.vue";
 
 /** form state */
 const name = useLocalStorage("name", "");
@@ -133,7 +134,7 @@ useScriptTag("https://www.google.com/recaptcha/api.js");
           placeholder="Message"
           rows="5"
         />
-        <button type="submit" class="button"><Send />Send</button>
+        <button type="submit" class="button"><Outline /><Send />Send</button>
       </form>
     </div>
   </section>

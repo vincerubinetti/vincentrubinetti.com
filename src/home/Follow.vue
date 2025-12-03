@@ -4,6 +4,7 @@ import Bandcamp from "@/assets/icons/bandcamp.svg?component";
 import SoundCloud from "@/assets/icons/soundcloud.svg?component";
 import Spotify from "@/assets/icons/spotify.svg?component";
 import YouTube from "@/assets/icons/youtube.svg?component";
+import Outline from "@/components/Outline.vue";
 import { getColor } from "./colors";
 </script>
 
@@ -12,13 +13,14 @@ import { getColor } from "./colors";
     <h2 class="sr-only">Follow</h2>
 
     <div
-      class="grid grid-cols-[1fr_1px_1fr] items-center gap-12 max-lg:grid-cols-1"
+      class="grid grid-cols-[1fr_2px_1fr] items-center gap-12 max-lg:grid-cols-1"
     >
       <a
         href="https://vincerubinetti.bandcamp.com/"
         class="button"
         :class="getColor(Bandcamp)"
       >
+        <Outline />
         <Bandcamp />
         Complete Discography
       </a>
@@ -40,6 +42,7 @@ import { getColor } from "./colors";
           class="button"
           :class="getColor(Apple)"
         >
+          <Outline />
           <Apple />
           Apple Music
         </a>
@@ -48,6 +51,7 @@ import { getColor } from "./colors";
           class="button"
           :class="getColor(Spotify)"
         >
+          <Outline />
           <Spotify />
           Spotify
         </a>
@@ -56,6 +60,7 @@ import { getColor } from "./colors";
           class="button"
           :class="getColor(SoundCloud)"
         >
+          <Outline />
           <SoundCloud />
           SoundCloud
         </a>
@@ -64,6 +69,7 @@ import { getColor } from "./colors";
           class="button"
           :class="getColor(YouTube)"
         >
+          <Outline />
           <YouTube />
           YouTube
         </a>

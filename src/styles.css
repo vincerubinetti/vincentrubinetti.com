@@ -7,6 +7,8 @@
   --breakpoint-lg: 50rem;
   --breakpoint-xl: 60rem;
 
+  --width: --spacing(220);
+
   --font-serif: "Aleo Variable", serif;
   --font-sans: "Outfit Variable", sans-serif;
 
@@ -15,7 +17,25 @@
 
   --radius: 7.5px;
 
-  --width: --spacing(220);
+  --animate-outline: draw-outline 0.5s linear both;
+
+  @keyframes draw-outline {
+    0% {
+      opacity: 0;
+      stroke-dashoffset: 1;
+      stroke-dasharray: 0.25 0.75;
+    }
+    50% {
+      opacity: 1;
+      stroke-dashoffset: 0.5;
+      stroke-dasharray: 0.25 0.75;
+    }
+    100% {
+      opacity: 0;
+      stroke-dashoffset: 0;
+      stroke-dasharray: 0.25 0.75;
+    }
+  }
 }
 
 html {
@@ -37,7 +57,7 @@ footer {
 }
 
 @utility dark {
-  @apply z-10! bg-black text-white shadow-[0_0_20px_#0009];
+  @apply z-10! bg-black text-white;
 }
 
 h1 {
@@ -78,11 +98,11 @@ button {
 }
 
 @utility button-dark {
-  @apply inline-flex items-center justify-center gap-2 rounded p-4 font-sans text-current transition-colors hover:bg-current/10;
+  @apply relative inline-flex items-center justify-center gap-2 rounded p-4 font-sans text-current transition-all hover:-translate-y-px hover:bg-current/10;
 }
 
 @utility button {
-  @apply inline-flex items-center justify-center gap-2 rounded bg-current/5 p-4 font-sans transition-all hover:bg-current/10;
+  @apply relative inline-flex items-center justify-center gap-2 rounded bg-current/5 p-4 font-sans transition-all hover:-translate-y-px hover:bg-current/10;
 }
 
 input,

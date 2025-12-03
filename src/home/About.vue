@@ -2,6 +2,7 @@
 import { Code, Headphones, Leaf, Music } from "lucide-vue-next";
 import bg from "@/assets/images/sheet.jpg?url";
 import profile from "@/assets/images/vince.png?url";
+import Outline from "@/components/Outline.vue";
 </script>
 
 <template>
@@ -24,18 +25,22 @@ import profile from "@/assets/images/vince.png?url";
 
     <div class="flex flex-wrap justify-center gap-4">
       <a href="https://github.com/vincerubinetti" class="button">
+        <Outline />
         <Code />
         Software
       </a>
       <a href="studio" class="button">
+        <Outline />
         <Headphones />
         Studio
       </a>
       <a href="stems" class="button">
+        <Outline />
         <Leaf />
         Stems
       </a>
       <a href="sheets" class="button">
+        <Outline />
         <Music />
         Sheets
       </a>
