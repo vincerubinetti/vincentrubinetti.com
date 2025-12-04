@@ -17,6 +17,7 @@ import Slider from "@/components/Slider.vue";
 import type { Track } from "@/components/SoundCloud";
 import SoundCloud from "@/components/SoundCloud.vue";
 import { clickCoords } from "@/util/dom";
+import { sleep } from "@/util/misc";
 import { formatTime, formatValue, linkify } from "@/util/string";
 import bandcamp from "./bandcamp.json";
 import { level, playing, track } from "./state";
@@ -143,13 +144,18 @@ const { SSR } = import.meta.env;
         <div class="flex w-full flex-col">
           <template v-for="(_track, index) in tracks" :key="index">
             <button
-              class="button-dark group h-14 gap-4! p-0! pr-4! aria-pressed:rounded-br-none aria-pressed:bg-white/10"
+              class="button-dark group h-14 gap-4! p-0! pr-4! leading-snug aria-pressed:rounded-br-none aria-pressed:bg-white/10"
               :title="`Play ${_track.title}`"
               :aria-pressed="isEqual(track, _track)"
               @click="
-                setTrack(index);
-                seek(0);
-                play();
+                async (event) => {
+                  setTrack(index);
+                  seek(0);
+                  play();
+                  const target = event.currentTarget as HTMLElement;
+                  await sleep(100);
+                  target.scrollIntoView({ block: 'nearest' });
+                }
               "
             >
               <img :src="_track.artwork_url ?? ''" alt="" class="h-full" />
