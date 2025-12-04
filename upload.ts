@@ -20,9 +20,7 @@ const target = WEBSITE_TARGET;
 
 const sftp = new Client();
 await sftp.connect(config);
-sftp.on("upload", (info: { source: unknown }) =>
-  console.info(`Uploaded ${info.source}`),
-);
+sftp.on("upload", (info) => console.info(`Uploaded ${info.source}`));
 const result = await sftp.uploadDir(source, target);
 console.info(result);
 await sftp.chmod(target + "email.php", 0o755);

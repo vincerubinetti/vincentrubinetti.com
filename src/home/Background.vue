@@ -3,6 +3,7 @@ import { computed, useTemplateRef, watchEffect } from "vue";
 import { useIntervalFn, useMouse, useWindowSize } from "@vueuse/core";
 import Color from "color";
 import { Canvas } from "glsl-canvas-js";
+import type { Canvas as CanvasType } from "glsl-canvas-js/dist/esm/glsl";
 import shader from "./background.frag?raw";
 import { playing, smoothedLevel, track } from "./state";
 
@@ -11,7 +12,14 @@ const canvas = useTemplateRef("canvas");
 /** attach glsl lib to canvas element */
 const glsl = computed(() => {
   if (!canvas.value) return null;
-  return new Canvas(canvas.value, { fragmentString: shader });
+  return new Canvas(canvas.value, { fragmentString: shader }) as CanvasType;
+});
+
+/** play/pause */
+watchEffect(() => {
+  if (!glsl.value) return;
+  if (playing.value) glsl.value.play();
+  else glsl.value.pause();
 });
 
 /** set shader "level" uniform */
@@ -32,7 +40,7 @@ useIntervalFn(() => {
 watchEffect(() => {
   if (!glsl.value) return;
   track.value?.colors?.map((color, index) =>
-    glsl.value.setUniform(
+    glsl.value?.setUniform(
       `u_colors[${index}]`,
       new Color(color).lightness(25).unitArray(),
     ),
