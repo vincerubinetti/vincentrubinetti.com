@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, type VNode } from "vue";
+import { ref } from "vue";
 import { isEqual } from "lodash-es";
 import {
   Calendar,

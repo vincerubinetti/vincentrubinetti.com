@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import profile from "@/assets/images/vince.png?url";
 import bg from "@/assets/images/sheet.jpg?url";
+import profile from "@/assets/images/vince.png?url";
 </script>
 
 <template>

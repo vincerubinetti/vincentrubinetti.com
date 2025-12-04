@@ -17,7 +17,7 @@ import Layout from "@/layouts/Layout.astro";
 >
   <body>
     <header class="dark">
-      <Background client:only class="absolute inset-0 -z-10 size-full" />
+      <Background client:only="vue" class="absolute inset-0 -z-10 size-full" />
       <Title />
       <Listen client:load />
     </header>

@@ -1,32 +1,66 @@
-import eslintJs from "@eslint/js";
+import vueParser from "vue-eslint-parser";
+import eslint from "@eslint/js";
+import astroParser from "astro-eslint-parser";
 import eslintPluginAstro from "eslint-plugin-astro";
-import eslintPluginPrettierRecommended from "eslint-plugin-prettier/recommended";
-import eslintPluginVue from "eslint-plugin-vue";
+import pluginVue from "eslint-plugin-vue";
 import { defineConfig, globalIgnores } from "eslint/config";
 import globals from "globals";
-import typescriptEslint from "typescript-eslint";
+import tseslint from "typescript-eslint";
 
 export default defineConfig(
   globalIgnores(["dist", ".astro"]),
-  eslintPluginAstro.configs.recommended,
+  eslint.configs.recommended,
+  ...tseslint.configs.recommended,
+  ...pluginVue.configs["flat/essential"],
+  ...eslintPluginAstro.configs.recommended,
   {
-    files: ["**/*.{astro,vue,ts}"],
-    extends: [
-      eslintPluginVue.configs.recommended,
-      eslintJs.configs.recommended,
-      typescriptEslint.configs.recommended,
-      eslintPluginPrettierRecommended,
-    ],
     languageOptions: {
-      ecmaVersion: 2020,
-      globals: globals.browser,
+      sourceType: "module",
+      globals: {
+        ...globals.node,
+        ...globals.browser,
+      },
+    },
+  },
+  {
+    files: ["**/*.astro"],
+    languageOptions: {
+      parser: astroParser,
+      parserOptions: {
+        sourceType: "module",
+        parser: "@typescript-eslint/parser",
+        extraFileExtensions: [".astro"],
+      },
+    },
+  },
+  {
+    files: ["**/*.vue"],
+    languageOptions: {
+      parser: vueParser,
+      parserOptions: {
+        sourceType: "module",
+        parser: "@typescript-eslint/parser",
+        extraFileExtensions: [".vue"],
+      },
     },
     rules: {
-      "prettier/prettier": "warn",
+      "vue/multi-word-component-names": "off",
+    },
+  },
+  {
+    rules: {
       "prefer-const": ["error", { destructuring: "all" }],
-      "@typescript-eslint/no-unused-vars": ["warn", { caughtErrors: "none" }],
-      "@typescript-eslint/consistent-type-definitions": ["error", "type"],
-      "@typescript-eslint/consistent-type-imports": "error",
+      "@typescript-eslint/no-explicit-any": "warn",
+      "@typescript-eslint/no-unused-vars": [
+        "warn",
+        {
+          caughtErrors: "none",
+          argsIgnorePattern: "^_",
+          varsIgnorePattern: "^_",
+        },
+      ],
+      "@typescript-eslint/consistent-type-definitions": ["warn", "type"],
+      "@typescript-eslint/consistent-type-imports": "warn",
     },
   },
 );
