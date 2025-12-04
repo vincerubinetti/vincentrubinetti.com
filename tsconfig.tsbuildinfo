@@ -1,0 +1,1 @@
+{"root":["./.astro/types.d.ts","./astro.config.mjs","./eslint.config.js","./upload.ts","./src/env.d.ts","./src/components/soundcloud.ts","./src/home/colors.ts","./src/home/state.ts","./src/util/dom.ts","./src/util/math.ts","./src/util/misc.ts","./src/util/string.ts"],"version":"5.9.3"}

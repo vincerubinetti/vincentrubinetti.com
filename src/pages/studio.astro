@@ -1,17 +1,21 @@
 ---
-import Header from "@/components/TheHeader.vue";
-import Studio from "@/pages/studio/Studio.vue";
+import Footer from "@/home/Footer.vue";
+import Title from "@/home/Title.vue";
 import Layout from "@/layouts/Layout.astro";
-import Footer from "@/components/TheFooter.vue";
+import Studio_ from "@/studio/Studio.vue";
 ---
 
 <Layout
-  title="Studio | Vincent Rubinetti"
-  description="My studio setup. Instruments, equipment, software, plugins, etc."
+  title="Studio"
+  description="A look inside my music studio, gear, and workflow."
 >
-  <Header client:idle />
-  <main>
-    <Studio client:idle />
-  </main>
-  <Footer client:idle />
+  <body>
+    <header class="dark">
+      <Title />
+    </header>
+    <main>
+      <Studio_ />
+    </main>
+    <Footer />
+  </body>
 </Layout>

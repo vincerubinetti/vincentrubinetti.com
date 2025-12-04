@@ -1,11 +1,47 @@
-import { defineConfig } from "astro/config";
+// @ts-check
 import vue from "@astrojs/vue";
+import tailwindcss from "@tailwindcss/vite";
+import { defineConfig } from "astro/config";
+import { loadEnv } from "vite";
+import transformPlugin from "vite-plugin-transform";
 import svgLoader from "vite-svg-loader";
 
-// https://astro.build/config
+const env = loadEnv(import.meta.env.MODE, process.cwd(), [
+  "WEBSITE_",
+  "MAIL_",
+  "RECAPTCHA",
+]);
+
 export default defineConfig({
-  integrations: [vue({ appEntrypoint: "/src/pages/_app" })],
   vite: {
-    plugins: [svgLoader()],
+    plugins: [
+      svgLoader({
+        svgoConfig: {
+          plugins: [
+            {
+              name: "addClassesToSVGElement",
+              params: { classNames: ["icon"] },
+            },
+          ],
+        },
+      }),
+      tailwindcss(),
+      transformPlugin({
+        tStart: "__{",
+        tEnd: "}__",
+        replace: env,
+        replaceFiles: ["public/email.php"],
+      }),
+    ],
   },
+
+  integrations: [
+    vue({
+      template: {
+        compilerOptions: {
+          isCustomElement: (tag) => tag.startsWith("youtube-video"),
+        },
+      },
+    }),
+  ],
 });

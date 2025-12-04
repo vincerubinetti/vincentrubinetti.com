@@ -1,30 +1,41 @@
-export const sin = (degrees = 0) => Math.sin(degToRad(degrees));
-export const cos = (degrees = 0) => Math.cos(degToRad(degrees));
+import { clamp, range } from "lodash-es";
 
-export const degToRad = (degrees = 0) => (2 * Math.PI * degrees) / 360;
+/** smooth and prune data */
+export const smooth = (data: number[], radius: number) =>
+  data
+    .map((_, x) => {
+      // https://www.mathsisfun.com/data/least-squares-regression.html
+      let count = 0;
+      let sumXY = 0;
+      let sumX = 0;
+      let sumY = 0;
+      let sumXsq = 0;
+      const window = range(x - radius, x + radius + 1);
+      for (let x of window) {
+        x = clamp(x, 0, data.length - 1);
+        const y = data[x];
+        count++;
+        sumXY += x * y;
+        sumX += x;
+        sumY += y;
+        sumXsq += x * x;
+      }
+      const m = (count * sumXY - sumX * sumY) / (count * sumXsq - sumX * sumX);
+      const b = (sumY - m * sumX) / count;
+      return m * x + b;
+    })
+    .filter((_, i) => i % radius === 0);
 
-export const clamp = (number = 0, min = 0, max = 0) =>
-  Math.max(min, Math.min(number, max));
+/** linear interpolate */
 
-export const rand = (min = 0, max = 1) => min + Math.random() * (max - min);
-
-export const bounce = (position = 0, limit = 0, velocity = 0) => {
-  if (position > limit) return -Math.abs(velocity);
-  if (position < -limit) return Math.abs(velocity);
-  return velocity;
-};
-
-export const triangle = (x = 0.5, l = 0, r = 1, b = 1, t = 0) =>
-  (b - t) * Math.abs((l + r - 2 * x) / (l - r)) + t;
-
-export const max = (array: number[]) => {
-  let max = -Infinity;
-  for (const value of array) if (value > max) max = value;
-  return max;
-};
-
-export const min = (array: number[]) => {
-  let min = Infinity;
-  for (const value of array) if (value < min) min = value;
-  return min;
-};
+/** linear interpolate */
+export const lerp = (
+  value: number,
+  sourceMin: number,
+  sourceMax: number,
+  targetMin: number,
+  targetMax: number,
+) =>
+  targetMin +
+  clamp((value - sourceMin) / (sourceMax - sourceMin || 1), 0, 1) *
+    (targetMax - targetMin);

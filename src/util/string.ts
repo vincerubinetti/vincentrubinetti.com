@@ -1,38 +1,38 @@
 import linkifyStr from "linkify-string";
+import { micromark } from "micromark";
 
-export const formatCount = (number = 0): string =>
-  number.toLocaleString(undefined, { notation: "compact" }).toLowerCase();
+/** format arbitrary value */
+export const formatValue = (value: unknown) => {
+  if (typeof value !== "number") return value;
+  if (value === undefined || value === null) return "-";
+  return value?.toLocaleString(undefined, { notation: "compact" });
+};
 
-export const formatTime = (seconds = 0) =>
-  [Math.floor(seconds / 60), Math.floor(seconds % 60)]
-    .map((part) => String(part).padStart(2, "0"))
+/** format time in mm:ss */
+export const formatTime = (ms: number) => {
+  const mins = Math.floor(ms / 1000 / 60);
+  const secs = Math.floor((ms / 1000) % 60);
+  return [mins, secs]
+    .map((part, index) =>
+      index === 0 ? part : part.toString().padStart(2, "0"),
+    )
     .join(":");
+};
 
-export const formatTimeVerbose = (seconds = 0) =>
-  [
-    String(Math.floor(seconds / 60)),
-    "minutes",
-    String(Math.floor(seconds % 60)),
-    "seconds",
-  ].join(" ");
+/** prune url string */
+const shortenUrl = (url: string) => {
+  try {
+    const { origin, pathname } = new URL(url);
+    return origin + pathname;
+  } catch (error) {
+    return url;
+  }
+};
 
+/** replace links in plain text with anchors */
 export const linkify = (content = "") =>
-  linkifyStr(content, {
-    format: (value) => {
-      try {
-        const { hostname, pathname, search, hash } = new URL(value);
-        return truncate(
-          hostname.replace(/^www\./, "") +
-            pathname.replace(/\/$/, "") +
-            search +
-            hash
-        );
-      } catch (error) {
-        return truncate(value);
-      }
-    },
-    nl2br: true,
-  });
+  linkifyStr(content, { format: shortenUrl, nl2br: true, target: "_blank" });
 
-export const truncate = (string = "", limit = 40) =>
-  string.length > limit ? string.substring(0, limit - 3) + "..." : string;
+/** markdown to html */
+export const renderMarkdown = (markdown = "") =>
+  micromark(markdown).replace("<p>", "").replace("</p>", "");

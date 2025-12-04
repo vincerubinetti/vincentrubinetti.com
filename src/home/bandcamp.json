@@ -1,0 +1,658 @@
+[
+  {
+    "track": "Dark",
+    "album_link": "https://vincerubinetti.bandcamp.com/track/dark-2"
+  },
+  {
+    "track": "Memoir",
+    "album_link": "https://vincerubinetti.bandcamp.com/album/galois"
+  },
+  {
+    "track": "Obsession",
+    "album_link": "https://vincerubinetti.bandcamp.com/album/galois"
+  },
+  {
+    "track": "Banquet",
+    "album_link": "https://vincerubinetti.bandcamp.com/album/galois"
+  },
+  {
+    "track": "Prison",
+    "album_link": "https://vincerubinetti.bandcamp.com/album/galois"
+  },
+  {
+    "track": "The Night Before",
+    "album_link": "https://vincerubinetti.bandcamp.com/album/galois"
+  },
+  {
+    "track": "Commanders of the Agile Skies",
+    "album_link": "https://vincerubinetti.bandcamp.com/album/singles-collection-3"
+  },
+  {
+    "track": "Final Breath",
+    "album_link": "https://vincerubinetti.bandcamp.com/album/singles-collection-3"
+  },
+  {
+    "track": "Tigris",
+    "album_link": "https://vincerubinetti.bandcamp.com/album/singles-collection-3"
+  },
+  {
+    "track": "JJ's Beat",
+    "album_link": "https://vincerubinetti.bandcamp.com/album/singles-collection-3"
+  },
+  {
+    "track": "Voilà, Delivery Specialist",
+    "album_link": "https://vincerubinetti.bandcamp.com/album/singles-collection-3"
+  },
+  {
+    "track": "Verdant One",
+    "album_link": "https://vincerubinetti.bandcamp.com/album/singles-collection-3"
+  },
+  {
+    "track": "Starlite",
+    "album_link": "https://vincerubinetti.bandcamp.com/album/singles-collection-3"
+  },
+  {
+    "track": "Chromatic Horizon",
+    "album_link": "https://vincerubinetti.bandcamp.com/album/singles-collection-3"
+  },
+  {
+    "track": "Dark",
+    "album_link": "https://vincerubinetti.bandcamp.com/album/singles-collection-3"
+  },
+  {
+    "track": "Revolutions of the Wheel",
+    "album_link": "https://vincerubinetti.bandcamp.com/album/singles-collection-3"
+  },
+  {
+    "track": "End Fault",
+    "album_link": "https://vincerubinetti.bandcamp.com/album/singles-collection-3"
+  },
+  {
+    "track": "Victory March",
+    "album_link": "https://vincerubinetti.bandcamp.com/album/singles-collection-3"
+  },
+  {
+    "track": "Paroxysm",
+    "album_link": "https://vincerubinetti.bandcamp.com/album/singles-collection-3"
+  },
+  {
+    "track": "Ball Smasher",
+    "album_link": "https://vincerubinetti.bandcamp.com/album/singles-collection-3"
+  },
+  {
+    "track": "Thank You",
+    "album_link": "https://vincerubinetti.bandcamp.com/album/saltash"
+  },
+  {
+    "track": "Waves",
+    "album_link": "https://vincerubinetti.bandcamp.com/album/saltash"
+  },
+  {
+    "track": "The Vermont Strut",
+    "album_link": "https://vincerubinetti.bandcamp.com/album/saltash"
+  },
+  {
+    "track": "Through Depths and Beyond",
+    "album_link": "https://vincerubinetti.bandcamp.com/album/metroid"
+  },
+  {
+    "track": "The Cunning God of Death",
+    "album_link": "https://vincerubinetti.bandcamp.com/album/metroid"
+  },
+  {
+    "track": "Call of the Warrior",
+    "album_link": "https://vincerubinetti.bandcamp.com/album/metroid"
+  },
+  {
+    "track": "Silence",
+    "album_link": "https://vincerubinetti.bandcamp.com/album/silence"
+  },
+  {
+    "track": "Silence (instrumental)",
+    "album_link": "https://vincerubinetti.bandcamp.com/album/silence"
+  },
+  {
+    "track": "Vanishing Point",
+    "album_link": "https://vincerubinetti.bandcamp.com/album/emerald-cloud-lab"
+  },
+  {
+    "track": "Covalence A",
+    "album_link": "https://vincerubinetti.bandcamp.com/album/emerald-cloud-lab"
+  },
+  {
+    "track": "Covalence B",
+    "album_link": "https://vincerubinetti.bandcamp.com/album/emerald-cloud-lab"
+  },
+  {
+    "track": "Zeta",
+    "album_link": "https://vincerubinetti.bandcamp.com/album/the-music-of-3blue1brown"
+  },
+  {
+    "track": "Heartbeat",
+    "album_link": "https://vincerubinetti.bandcamp.com/album/the-music-of-3blue1brown"
+  },
+  {
+    "track": "Sixes",
+    "album_link": "https://vincerubinetti.bandcamp.com/album/the-music-of-3blue1brown"
+  },
+  {
+    "track": "Euler's Clock",
+    "album_link": "https://vincerubinetti.bandcamp.com/album/the-music-of-3blue1brown"
+  },
+  {
+    "track": "One, Two, Zeta",
+    "album_link": "https://vincerubinetti.bandcamp.com/album/the-music-of-3blue1brown"
+  },
+  {
+    "track": "Grant's Etude",
+    "album_link": "https://vincerubinetti.bandcamp.com/album/the-music-of-3blue1brown"
+  },
+  {
+    "track": "Grant's New Etude",
+    "album_link": "https://vincerubinetti.bandcamp.com/album/the-music-of-3blue1brown"
+  },
+  {
+    "track": "Grant's Opus",
+    "album_link": "https://vincerubinetti.bandcamp.com/album/the-music-of-3blue1brown"
+  },
+  {
+    "track": "The Wallis Ballade",
+    "album_link": "https://vincerubinetti.bandcamp.com/album/the-music-of-3blue1brown"
+  },
+  {
+    "track": "Stepwise",
+    "album_link": "https://vincerubinetti.bandcamp.com/album/the-music-of-3blue1brown"
+  },
+  {
+    "track": "Quaternions",
+    "album_link": "https://vincerubinetti.bandcamp.com/album/the-music-of-3blue1brown"
+  },
+  {
+    "track": "Reflections",
+    "album_link": "https://vincerubinetti.bandcamp.com/album/the-music-of-3blue1brown"
+  },
+  {
+    "track": "Resonance",
+    "album_link": "https://vincerubinetti.bandcamp.com/album/the-music-of-3blue1brown"
+  },
+  {
+    "track": "Serendipity",
+    "album_link": "https://vincerubinetti.bandcamp.com/album/the-music-of-3blue1brown"
+  },
+  {
+    "track": "Trinkets",
+    "album_link": "https://vincerubinetti.bandcamp.com/album/the-music-of-3blue1brown"
+  },
+  {
+    "track": "Hypothesis",
+    "album_link": "https://vincerubinetti.bandcamp.com/album/the-music-of-3blue1brown"
+  },
+  {
+    "track": "Wading",
+    "album_link": "https://vincerubinetti.bandcamp.com/album/the-music-of-3blue1brown"
+  },
+  {
+    "track": "Centroid",
+    "album_link": "https://vincerubinetti.bandcamp.com/album/the-music-of-3blue1brown"
+  },
+  {
+    "track": "Spirals",
+    "album_link": "https://vincerubinetti.bandcamp.com/album/the-music-of-3blue1brown"
+  },
+  {
+    "track": "Endpoint",
+    "album_link": "https://vincerubinetti.bandcamp.com/album/the-music-of-3blue1brown"
+  },
+  {
+    "track": "Fractals",
+    "album_link": "https://vincerubinetti.bandcamp.com/album/the-music-of-3blue1brown"
+  },
+  {
+    "track": "Occlusion",
+    "album_link": "https://vincerubinetti.bandcamp.com/album/the-music-of-3blue1brown"
+  },
+  {
+    "track": "Fives",
+    "album_link": "https://vincerubinetti.bandcamp.com/album/the-music-of-3blue1brown"
+  },
+  {
+    "track": "Transformation",
+    "album_link": "https://vincerubinetti.bandcamp.com/album/the-music-of-3blue1brown"
+  },
+  {
+    "track": "Clarity",
+    "album_link": "https://vincerubinetti.bandcamp.com/album/the-music-of-3blue1brown"
+  },
+  {
+    "track": "Focal Point",
+    "album_link": "https://vincerubinetti.bandcamp.com/album/the-music-of-3blue1brown"
+  },
+  {
+    "track": "Fragments",
+    "album_link": "https://vincerubinetti.bandcamp.com/album/the-music-of-3blue1brown"
+  },
+  {
+    "track": "Gnomon",
+    "album_link": "https://vincerubinetti.bandcamp.com/album/the-music-of-3blue1brown"
+  },
+  {
+    "track": "Orbit",
+    "album_link": "https://vincerubinetti.bandcamp.com/album/the-music-of-3blue1brown"
+  },
+  {
+    "track": "Far Away",
+    "album_link": "https://vincerubinetti.bandcamp.com/album/the-music-of-3blue1brown"
+  },
+  {
+    "track": "Quantum Blue",
+    "album_link": "https://vincerubinetti.bandcamp.com/album/the-music-of-3blue1brown"
+  },
+  {
+    "track": "The 3Blue1Brown Experience",
+    "album_link": "https://vincerubinetti.bandcamp.com/album/the-music-of-3blue1brown"
+  },
+  {
+    "track": "Constructs",
+    "album_link": "https://vincerubinetti.bandcamp.com/album/remixes-and-remakes"
+  },
+  {
+    "track": "Rumble",
+    "album_link": "https://vincerubinetti.bandcamp.com/album/remixes-and-remakes"
+  },
+  {
+    "track": "Flourish",
+    "album_link": "https://vincerubinetti.bandcamp.com/album/remixes-and-remakes"
+  },
+  {
+    "track": "Going Up",
+    "album_link": "https://vincerubinetti.bandcamp.com/album/remixes-and-remakes"
+  },
+  {
+    "track": "Haunted Chase",
+    "album_link": "https://vincerubinetti.bandcamp.com/album/remixes-and-remakes"
+  },
+  {
+    "track": "Bad Boss Boogie",
+    "album_link": "https://vincerubinetti.bandcamp.com/album/remixes-and-remakes"
+  },
+  {
+    "track": "Rainbow",
+    "album_link": "https://vincerubinetti.bandcamp.com/album/remixes-and-remakes"
+  },
+  {
+    "track": "Play of the Game",
+    "album_link": "https://vincerubinetti.bandcamp.com/album/remixes-and-remakes"
+  },
+  {
+    "track": "The Name's Kong",
+    "album_link": "https://vincerubinetti.bandcamp.com/album/remixes-and-remakes"
+  },
+  {
+    "track": "Encounter in the Abyss",
+    "album_link": "https://vincerubinetti.bandcamp.com/album/remixes-and-remakes"
+  },
+  {
+    "track": "Leafy",
+    "album_link": "https://vincerubinetti.bandcamp.com/album/remixes-and-remakes"
+  },
+  {
+    "track": "Battlefield",
+    "album_link": "https://vincerubinetti.bandcamp.com/album/remixes-and-remakes"
+  },
+  {
+    "track": "Industrial Hysteria",
+    "album_link": "https://vincerubinetti.bandcamp.com/album/remixes-and-remakes"
+  },
+  {
+    "track": "Gear Grinding",
+    "album_link": "https://vincerubinetti.bandcamp.com/album/remixes-and-remakes"
+  },
+  {
+    "track": "Sewer Surfin'",
+    "album_link": "https://vincerubinetti.bandcamp.com/album/remixes-and-remakes"
+  },
+  {
+    "track": "Feel the Beat",
+    "album_link": "https://vincerubinetti.bandcamp.com/album/remixes-and-remakes"
+  },
+  {
+    "track": "Anywhere But Here",
+    "album_link": "https://vincerubinetti.bandcamp.com/album/remixes-and-remakes"
+  },
+  {
+    "track": "Suave",
+    "album_link": "https://vincerubinetti.bandcamp.com/album/remixes-and-remakes"
+  },
+  {
+    "track": "Flying Spheres",
+    "album_link": "https://vincerubinetti.bandcamp.com/album/remixes-and-remakes"
+  },
+  {
+    "track": "Taking Flight",
+    "album_link": "https://vincerubinetti.bandcamp.com/album/aleph-0"
+  },
+  {
+    "track": "HackyZack",
+    "album_link": "https://vincerubinetti.bandcamp.com/album/hackyzack"
+  },
+  {
+    "track": "Introduction",
+    "album_link": "https://vincerubinetti.bandcamp.com/album/hackyzack"
+  },
+  {
+    "track": "Isolation",
+    "album_link": "https://vincerubinetti.bandcamp.com/album/hackyzack"
+  },
+  {
+    "track": "Denial",
+    "album_link": "https://vincerubinetti.bandcamp.com/album/hackyzack"
+  },
+  {
+    "track": "Self-destruction",
+    "album_link": "https://vincerubinetti.bandcamp.com/album/hackyzack"
+  },
+  {
+    "track": "Expectations",
+    "album_link": "https://vincerubinetti.bandcamp.com/album/hackyzack"
+  },
+  {
+    "track": "Manipulation",
+    "album_link": "https://vincerubinetti.bandcamp.com/album/hackyzack"
+  },
+  {
+    "track": "Acceptance",
+    "album_link": "https://vincerubinetti.bandcamp.com/album/hackyzack"
+  },
+  {
+    "track": "Conclusion",
+    "album_link": "https://vincerubinetti.bandcamp.com/album/hackyzack"
+  },
+  {
+    "track": "Main Theme",
+    "album_link": "https://vincerubinetti.bandcamp.com/album/fara-unreleased"
+  },
+  {
+    "track": "Grass Overworld",
+    "album_link": "https://vincerubinetti.bandcamp.com/album/fara-unreleased"
+  },
+  {
+    "track": "Grass Overworld (with mandolin)",
+    "album_link": "https://vincerubinetti.bandcamp.com/album/fara-unreleased"
+  },
+  {
+    "track": "Grass Guardian",
+    "album_link": "https://vincerubinetti.bandcamp.com/album/fara-unreleased"
+  },
+  {
+    "track": "Grass Encounter (unfinished)",
+    "album_link": "https://vincerubinetti.bandcamp.com/album/fara-unreleased"
+  },
+  {
+    "track": "High Noon",
+    "album_link": "https://vincerubinetti.bandcamp.com/album/high-noon-revolver"
+  },
+  {
+    "track": "Trigger Finger (Desert)",
+    "album_link": "https://vincerubinetti.bandcamp.com/album/high-noon-revolver"
+  },
+  {
+    "track": "Tame the Wild (Forest)",
+    "album_link": "https://vincerubinetti.bandcamp.com/album/high-noon-revolver"
+  },
+  {
+    "track": "Into the Blue (Underwater Temple)",
+    "album_link": "https://vincerubinetti.bandcamp.com/album/high-noon-revolver"
+  },
+  {
+    "track": "Avast (Haunted Pirate Ship)",
+    "album_link": "https://vincerubinetti.bandcamp.com/album/high-noon-revolver"
+  },
+  {
+    "track": "Dust and Ruin (Destroyed Village)",
+    "album_link": "https://vincerubinetti.bandcamp.com/album/high-noon-revolver"
+  },
+  {
+    "track": "Showdown",
+    "album_link": "https://vincerubinetti.bandcamp.com/album/high-noon-revolver"
+  },
+  {
+    "track": "Wanted",
+    "album_link": "https://vincerubinetti.bandcamp.com/album/high-noon-revolver"
+  },
+  {
+    "track": "Smoking Gun",
+    "album_link": "https://vincerubinetti.bandcamp.com/album/high-noon-revolver"
+  },
+  {
+    "track": "Transparent (Title)",
+    "album_link": "https://vincerubinetti.bandcamp.com/album/ink"
+  },
+  {
+    "track": "Inkling (Tutorial)",
+    "album_link": "https://vincerubinetti.bandcamp.com/album/ink"
+  },
+  {
+    "track": "Drops (World 1)",
+    "album_link": "https://vincerubinetti.bandcamp.com/album/ink"
+  },
+  {
+    "track": "Reveal (World 2)",
+    "album_link": "https://vincerubinetti.bandcamp.com/album/ink"
+  },
+  {
+    "track": "Splash (World 3)",
+    "album_link": "https://vincerubinetti.bandcamp.com/album/ink"
+  },
+  {
+    "track": "Flood (Boss)",
+    "album_link": "https://vincerubinetti.bandcamp.com/album/ink"
+  },
+  {
+    "track": "Colors (Credits)",
+    "album_link": "https://vincerubinetti.bandcamp.com/album/ink"
+  },
+  {
+    "track": "Keys, Please - Menu",
+    "album_link": "https://vincerubinetti.bandcamp.com/album/game-jams"
+  },
+  {
+    "track": "Keys, Please - Tutorial",
+    "album_link": "https://vincerubinetti.bandcamp.com/album/game-jams"
+  },
+  {
+    "track": "Keys, Please - Level",
+    "album_link": "https://vincerubinetti.bandcamp.com/album/game-jams"
+  },
+  {
+    "track": "Keys, Please - Game Over",
+    "album_link": "https://vincerubinetti.bandcamp.com/album/game-jams"
+  },
+  {
+    "track": "You're Invited! - Dance",
+    "album_link": "https://vincerubinetti.bandcamp.com/album/game-jams"
+  },
+  {
+    "track": "You're Invited! - Pop",
+    "album_link": "https://vincerubinetti.bandcamp.com/album/game-jams"
+  },
+  {
+    "track": "You're Invited! - Hip Hop",
+    "album_link": "https://vincerubinetti.bandcamp.com/album/game-jams"
+  },
+  {
+    "track": "You're Invited! - Lounge",
+    "album_link": "https://vincerubinetti.bandcamp.com/album/game-jams"
+  },
+  {
+    "track": "You're Invited! - Soul",
+    "album_link": "https://vincerubinetti.bandcamp.com/album/game-jams"
+  },
+  {
+    "track": "You're Invited! - Rock",
+    "album_link": "https://vincerubinetti.bandcamp.com/album/game-jams"
+  },
+  {
+    "track": "You're Invited! - Celtic",
+    "album_link": "https://vincerubinetti.bandcamp.com/album/game-jams"
+  },
+  {
+    "track": "You're Invited! - Nickelbuck",
+    "album_link": "https://vincerubinetti.bandcamp.com/album/game-jams"
+  },
+  {
+    "track": "Depths",
+    "album_link": "https://vincerubinetti.bandcamp.com/album/gemstone-keeper"
+  },
+  {
+    "track": "Translocate",
+    "album_link": "https://vincerubinetti.bandcamp.com/album/gemstone-keeper"
+  },
+  {
+    "track": "Gemstones",
+    "album_link": "https://vincerubinetti.bandcamp.com/album/gemstone-keeper"
+  },
+  {
+    "track": "Encounter",
+    "album_link": "https://vincerubinetti.bandcamp.com/album/gemstone-keeper"
+  },
+  {
+    "track": "Luster",
+    "album_link": "https://vincerubinetti.bandcamp.com/album/gemstone-keeper"
+  },
+  {
+    "track": "Redrawn to Life",
+    "album_link": "https://vincerubinetti.bandcamp.com/album/singles-collection-2"
+  },
+  {
+    "track": "Flip",
+    "album_link": "https://vincerubinetti.bandcamp.com/album/singles-collection-2"
+  },
+  {
+    "track": "Tunnel Through The Cosmos",
+    "album_link": "https://vincerubinetti.bandcamp.com/album/singles-collection-2"
+  },
+  {
+    "track": "Dusk",
+    "album_link": "https://vincerubinetti.bandcamp.com/album/singles-collection-2"
+  },
+  {
+    "track": "Niente",
+    "album_link": "https://vincerubinetti.bandcamp.com/album/singles-collection-2"
+  },
+  {
+    "track": "Tiamat",
+    "album_link": "https://vincerubinetti.bandcamp.com/album/singles-collection-2"
+  },
+  {
+    "track": "Overdrive",
+    "album_link": "https://vincerubinetti.bandcamp.com/album/singles-collection-2"
+  },
+  {
+    "track": "The Avenger",
+    "album_link": "https://vincerubinetti.bandcamp.com/album/singles-collection-2"
+  },
+  {
+    "track": "Beginnings",
+    "album_link": "https://vincerubinetti.bandcamp.com/album/singles-collection-2"
+  },
+  {
+    "track": "Mirage",
+    "album_link": "https://vincerubinetti.bandcamp.com/album/singles-collection-2"
+  },
+  {
+    "track": "Overture",
+    "album_link": "https://vincerubinetti.bandcamp.com/album/singles-collection-1"
+  },
+  {
+    "track": "Across the Clouds",
+    "album_link": "https://vincerubinetti.bandcamp.com/album/singles-collection-1"
+  },
+  {
+    "track": "Solenne",
+    "album_link": "https://vincerubinetti.bandcamp.com/album/singles-collection-1"
+  },
+  {
+    "track": "Eccentricity",
+    "album_link": "https://vincerubinetti.bandcamp.com/album/singles-collection-1"
+  },
+  {
+    "track": "Bit Blender",
+    "album_link": "https://vincerubinetti.bandcamp.com/album/singles-collection-1"
+  },
+  {
+    "track": "Folly Your Heart",
+    "album_link": "https://vincerubinetti.bandcamp.com/album/singles-collection-1"
+  },
+  {
+    "track": "Are You Here",
+    "album_link": "https://vincerubinetti.bandcamp.com/album/singles-collection-1"
+  },
+  {
+    "track": "Ending",
+    "album_link": "https://vincerubinetti.bandcamp.com/album/singles-collection-1"
+  },
+  {
+    "track": "Modern Design",
+    "album_link": "https://vincerubinetti.bandcamp.com/album/singles-collection-1"
+  },
+  {
+    "track": "Deep Woods",
+    "album_link": "https://vincerubinetti.bandcamp.com/album/singles-collection-1"
+  },
+  {
+    "track": "After Hours",
+    "album_link": "https://vincerubinetti.bandcamp.com/album/singles-collection-1"
+  },
+  {
+    "track": "Jagamba",
+    "album_link": "https://vincerubinetti.bandcamp.com/album/singles-collection-1"
+  },
+  {
+    "track": "Civil Collapse",
+    "album_link": "https://vincerubinetti.bandcamp.com/album/singles-collection-1"
+  },
+  {
+    "track": "Chronogenesis",
+    "album_link": "https://vincerubinetti.bandcamp.com/album/singles-collection-1"
+  },
+  {
+    "track": "Dance of the Devil",
+    "album_link": "https://vincerubinetti.bandcamp.com/album/singles-collection-1"
+  },
+  {
+    "track": "Victory Fanfare",
+    "album_link": "https://vincerubinetti.bandcamp.com/album/singles-collection-1"
+  },
+  {
+    "track": "Defeat Fanfare",
+    "album_link": "https://vincerubinetti.bandcamp.com/album/singles-collection-1"
+  },
+  {
+    "track": "Noetic Force",
+    "album_link": "https://vincerubinetti.bandcamp.com/album/singles-collection-1"
+  },
+  {
+    "track": "Set for the Spark",
+    "album_link": "https://vincerubinetti.bandcamp.com/album/singles-collection-1"
+  },
+  {
+    "track": "Defiance",
+    "album_link": "https://vincerubinetti.bandcamp.com/album/singles-collection-1"
+  },
+  {
+    "track": "Downtown Dubai",
+    "album_link": "https://vincerubinetti.bandcamp.com/album/singles-collection-1"
+  },
+  {
+    "track": "Prime Impulse",
+    "album_link": "https://vincerubinetti.bandcamp.com/album/singles-collection-1"
+  },
+  {
+    "track": "Can't Stop",
+    "album_link": "https://vincerubinetti.bandcamp.com/album/singles-collection-1"
+  },
+  {
+    "track": "Artlu Gnorts",
+    "album_link": "https://vincerubinetti.bandcamp.com/album/singles-collection-1"
+  }
+]
