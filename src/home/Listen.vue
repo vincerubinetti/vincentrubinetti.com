@@ -180,7 +180,9 @@ const { SSR } = import.meta.env;
               v-if="track.id === _track.id"
               class="flex flex-col rounded-br bg-white/10 p-2"
             >
-              <div class="gap flex items-center justify-center">
+              <div
+                class="gap flex items-center justify-center max-md:flex-wrap"
+              >
                 <!-- controls -->
                 <button
                   class="button-dark"
@@ -212,20 +214,10 @@ const { SSR } = import.meta.env;
                 >
                   <ChevronRight />
                 </button>
-                <div class="w-16 shrink-0 px-2 max-md:hidden">
-                  <Slider
-                    :model-value="[volume]"
-                    :min="0"
-                    :max="1"
-                    :step="0.05"
-                    label="Volume"
-                    @update:model-value="(value) => setVolume(value?.[0] ?? 1)"
-                  />
-                </div>
 
                 <!-- waveform -->
                 <button
-                  class="button-dark group h-12 w-full grow px-2 py-0 max-sm:-order-1 max-sm:w-full"
+                  class="button-dark group h-12 w-full grow px-2 py-0 max-md:-order-1"
                   title="Seek"
                   @click="seek(clickCoords($event).x * (track.duration ?? 1))"
                   @keydown.right.prevent="seek(time + 5000)"
@@ -308,6 +300,17 @@ const { SSR } = import.meta.env;
                     {{ formatTime(track.duration ?? 0) }}
                   </div>
                 </button>
+
+                <div class="w-16 shrink-0 px-2 max-sm:hidden">
+                  <Slider
+                    :model-value="[volume]"
+                    :min="0"
+                    :max="1"
+                    :step="0.05"
+                    label="Volume"
+                    @update:model-value="(value) => setVolume(value?.[0] ?? 1)"
+                  />
+                </div>
 
                 <!-- actions -->
                 <div class="flex items-center">
