@@ -110,6 +110,12 @@ const onError = (error?: unknown) => {
 
 /** on iframe load */
 const onLoad = generator(async function* () {
+  /** reset values */
+  status.value = "loading";
+  time.value = 0;
+  level.value = 0;
+  track.value = {};
+
   /** wait for soundcloud api script to load */
   yield waitFor(() => apiScript.value);
 
@@ -122,27 +128,24 @@ const onLoad = generator(async function* () {
   widget = window.SC.Widget(iframe.value);
   events = window.SC.Widget.Events;
   if (!widget) throw Error("Widget couldn't be hooked up");
-  console.log(widget)
 
   /** wait for widget to be ready */
   yield new Promise<void>((resolve) => widget.bind(events.READY, resolve));
 
-  status.value = "loading";
-
-  track.value = {};
+  /** get number of tracks */
+  /** widget not *actually* ready (event bindings will fail) until getSounds
+   * returns something */
+  let count = 0;
+  yield waitFor(() => {
+    widget.getSounds((sounds) => (count = sounds.length));
+    return count;
+  });
 
   /** load from cache */
   tracks.value = playlistCache[playlist] || [];
 
   /** if nothing loaded from cache */
   if (!tracks.value.length) {
-    /** get number of tracks */
-    let count = 0;
-    yield waitFor(() => {
-      widget.getSounds((sounds) => (count = sounds.length));
-      return count;
-    });
-
     /** go through each track and get details */
     for (const index of range(count)) {
       /** get current track */
@@ -177,9 +180,10 @@ const onLoad = generator(async function* () {
     playlistCache[playlist] = tracks.value;
   }
 
-  /** go back to first track */
+  /** reset widget values */
   widget.skip(0);
   widget.pause();
+  widget.setVolume(volume.value * 100);
 
   /** hook up callback events  */
   widget.bind(events.PLAY_PROGRESS, onPlayProgress);

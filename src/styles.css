@@ -13,7 +13,7 @@
   --font-sans: "Outfit Variable", sans-serif;
 
   --color-cream: hsl(30, 50%, 95%);
-  --color-link: color-mix(in srgb, hsl(180, 100%, 50%), currentColor 25%);
+  --color-link: color-mix(in srgb, hsl(200, 100%, 50%), currentColor 35%);
 
   --radius: 7.5px;
 
@@ -38,10 +38,6 @@
   }
 }
 
-html {
-  @apply text-[110%];
-}
-
 body {
   @apply flex min-h-dvh flex-col font-serif text-[105%] leading-none;
 }
@@ -57,7 +53,7 @@ footer {
 }
 
 @utility dark {
-  @apply z-10! bg-black text-white;
+  @apply bg-black text-white;
 }
 
 h1 {

@@ -1,15 +1,17 @@
 <script setup lang="ts">
-import Logo from "@/assets/vr.svg?component";
+import Logo from "@/assets/brand/vr.svg?component";
 </script>
 
 <template>
-  <hgroup class="my-4 flex flex-col items-center gap-2 text-center">
-    <Logo class="size-12!" />
-    <a href="/" class="text-current! no-underline!"
-      ><h1>Vincent Rubinetti</h1></a
+  <a href="/" class="text-current! no-underline!">
+    <hgroup
+      class="my-4 flex items-center gap-8 text-center max-md:flex-col max-md:gap-2"
     >
-    <div class="font-light tracking-wider lowercase">
-      Composer • Developer • More
-    </div>
-  </hgroup>
+      <Logo class="size-10!" />
+      <h1>Vincent Rubinetti</h1>
+      <div class="font-light tracking-wider lowercase">
+        Composer • Developer • More
+      </div>
+    </hgroup>
+  </a>
 </template>

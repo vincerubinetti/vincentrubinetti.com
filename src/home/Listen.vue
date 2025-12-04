@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import { isEqual } from "lodash-es";
 import {
   Calendar,
   ChevronLeft,
@@ -146,7 +145,7 @@ const { SSR } = import.meta.env;
             <button
               class="button-dark group h-14 gap-4! p-0! pr-4! leading-snug aria-pressed:rounded-br-none aria-pressed:bg-white/10"
               :title="`Play ${_track.title}`"
-              :aria-pressed="isEqual(track, _track)"
+              :aria-pressed="track.id === _track.id"
               @click="
                 async (event) => {
                   setTrack(index);
@@ -178,7 +177,7 @@ const { SSR } = import.meta.env;
             </button>
 
             <div
-              v-if="isEqual(track, _track)"
+              v-if="track.id === _track.id"
               class="flex flex-col rounded-br bg-white/10 p-2"
             >
               <div class="gap flex items-center justify-center">
