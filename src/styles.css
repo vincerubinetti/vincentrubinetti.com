@@ -52,10 +52,6 @@ footer {
   @apply max-xs:p-4 relative z-0 flex flex-col items-center gap-12 px-[max(--spacing(14),(100%-var(--width))/2)] py-14 max-xl:gap-12 max-xl:p-12 max-lg:gap-10 max-lg:p-10 max-md:gap-8 max-md:p-8 max-sm:gap-6 max-sm:p-6;
 }
 
-@utility dark {
-  @apply bg-black text-white;
-}
-
 h1 {
   @apply font-sans text-2xl tracking-wider uppercase;
 }

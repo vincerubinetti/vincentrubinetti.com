@@ -3,7 +3,7 @@ import profile from "@/assets/images/vince.png?url";
 </script>
 
 <template>
-  <section class="dark">
+  <section class="text-white">
     <div class="flex items-center gap-16 max-lg:flex-col">
       <img :src="profile" alt="" class="size-50 rounded-full" />
       <p>

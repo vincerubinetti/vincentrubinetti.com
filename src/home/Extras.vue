@@ -4,7 +4,7 @@ import Outline from "@/components/Outline.vue";
 </script>
 
 <template>
-  <section>
+  <section class="bg-white">
     <h2 class="sr-only">Extras</h2>
 
     <div class="grid grid-cols-4 gap-4 max-md:grid-cols-2 max-sm:grid-cols-1">

@@ -15,8 +15,11 @@ import Layout from "@/layouts/Layout.astro";
   title="Vincent Rubinetti"
   description="Composer, developer, more. Orchestral, electronic, and a wide variety of other styles."
 >
-  <header class="dark">
-    <Background client:only="vue" class="absolute inset-0 -z-10 size-full" />
+  <header class="text-white">
+    <Background
+      client:only="vue"
+      class="fixed inset-0 -z-10 size-full bg-black"
+    />
     <Title />
     <Listen client:load />
   </header>

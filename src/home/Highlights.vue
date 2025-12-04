@@ -275,7 +275,7 @@ onMounted(() =>
 </script>
 
 <template>
-  <section>
+  <section class="bg-white">
     <h2 class="sr-only">Highlights</h2>
 
     <div class="max-xs:grid-cols-1 grid grid-cols-4 gap-2 max-sm:grid-cols-2">
