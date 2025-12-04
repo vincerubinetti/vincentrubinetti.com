@@ -10,7 +10,7 @@ import bg from "@/assets/images/sheet.jpg?url";
       :style="{ backgroundImage: `url(${bg})` }"
     />
 
-    <div class="flex items-center gap-16 max-md:flex-col">
+    <div class="flex items-center gap-16 max-lg:flex-col">
       <img :src="profile" alt="" class="size-50 rounded-full" />
       <p>
         I am a life-long lover of music. Over the past 10+ years I've worked on

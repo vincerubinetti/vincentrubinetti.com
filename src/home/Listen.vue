@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, type VNode } from "vue";
 import { isEqual } from "lodash-es";
 import {
   Calendar,
@@ -40,11 +40,6 @@ const getStats = (track: Track) => [
     icon: Calendar,
     text: track.description?.match(/📅 ?(.*)$/m)?.[1] || "",
     title: "Date finished",
-  },
-  {
-    icon: Play,
-    text: formatValue(track.playback_count),
-    title: "Plays on SoundCloud",
   },
   {
     icon: Heart,
@@ -91,7 +86,7 @@ const { SSR } = import.meta.env;
 
   <!-- playlists -->
   <div
-    class="max-xs:grid-cols-1 grid w-full grid-cols-6 gap-4 max-lg:grid-cols-3 max-md:grid-cols-2"
+    class="max-xs:grid-cols-1 -mb-4 grid w-full grid-cols-6 gap-4 max-lg:grid-cols-3 max-md:grid-cols-2"
   >
     <button
       v-for="({ title, id }, index) of playlists"
@@ -158,23 +153,21 @@ const { SSR } = import.meta.env;
               "
             >
               <img :src="_track.artwork_url ?? ''" alt="" class="h-full" />
-              <div class="text-left">
+              <div class="grow truncate text-left">
                 {{ _track.title }}
               </div>
               <div
-                class="relative flex grow justify-end overflow-hidden text-sm opacity-50"
+                class="flex items-center gap-1 text-right text-sm opacity-50 group-hover:hidden"
               >
-                <div
-                  class="truncate opacity-0 transition-opacity group-hover:opacity-100"
-                >
-                  {{ _track.tags?.join(",  ") }}
-                </div>
-                <div
-                  class="absolute flex items-center gap-2 opacity-100 transition-opacity group-hover:opacity-0"
-                >
+                <span class="truncate">
                   {{ formatValue(_track.playback_count) }}
-                  <Play />
-                </div>
+                </span>
+                <Play />
+              </div>
+              <div
+                class="hidden max-w-1/2 truncate text-right text-sm opacity-50 group-hover:block"
+              >
+                {{ _track.tags?.join(",  ") }}
               </div>
             </button>
 
@@ -182,43 +175,40 @@ const { SSR } = import.meta.env;
               v-if="isEqual(track, _track)"
               class="flex flex-col rounded-br bg-white/10 p-2"
             >
-              <div
-                class="flex min-h-14 items-center justify-center gap-2 max-sm:flex-wrap"
-              >
+              <div class="gap flex items-center justify-center">
                 <!-- controls -->
-                <div class="flex items-center">
-                  <button
-                    class="button-dark"
-                    title="Previous track"
-                    @click="
-                      if (time < 2000) previous();
-                      seek(0);
-                      play();
-                    "
-                  >
-                    <ChevronLeft />
-                  </button>
-                  <button
-                    class="button-dark"
-                    title="Play/Pause"
-                    @click="playing ? pause() : play()"
-                  >
-                    <Play v-if="!playing" />
-                    <Pause v-if="playing" />
-                  </button>
-                  <button
-                    class="button-dark"
-                    title="Next track"
-                    @click="
-                      next();
-                      seek(0);
-                      play();
-                    "
-                  >
-                    <ChevronRight />
-                  </button>
+                <button
+                  class="button-dark"
+                  title="Previous track"
+                  @click="
+                    if (time < 2000) previous();
+                    seek(0);
+                    play();
+                  "
+                >
+                  <ChevronLeft />
+                </button>
+                <button
+                  class="button-dark"
+                  title="Play/Pause"
+                  @click="playing ? pause() : play()"
+                >
+                  <Play v-if="!playing" />
+                  <Pause v-if="playing" />
+                </button>
+                <button
+                  class="button-dark"
+                  title="Next track"
+                  @click="
+                    next();
+                    seek(0);
+                    play();
+                  "
+                >
+                  <ChevronRight />
+                </button>
+                <div class="w-16 shrink-0 px-2 max-md:hidden">
                   <Slider
-                    class="w-16 max-sm:hidden"
                     :model-value="[volume]"
                     :min="0"
                     :max="1"
@@ -230,7 +220,7 @@ const { SSR } = import.meta.env;
 
                 <!-- waveform -->
                 <button
-                  class="button-dark group h-10 w-full grow p-0! max-sm:-order-1 max-sm:w-full"
+                  class="button-dark group h-12 w-full grow px-2 py-0 max-sm:-order-1 max-sm:w-full"
                   title="Seek"
                   @click="seek(clickCoords($event).x * (track.duration ?? 1))"
                   @keydown.right.prevent="seek(time + 5000)"
@@ -294,7 +284,7 @@ const { SSR } = import.meta.env;
                     />
                   </svg>
                   <div
-                    class="absolute top-full -translate-x-1/2 text-sm opacity-0 transition-opacity group-hover:opacity-100"
+                    class="absolute bottom-full -translate-x-1/2 text-sm opacity-0 transition-opacity group-hover:opacity-50"
                     :style="{
                       left: `${(time / (track.duration ?? 1)) * 100}%`,
                     }"
@@ -302,10 +292,10 @@ const { SSR } = import.meta.env;
                     {{ formatTime(time) }}
                   </div>
                   <div
-                    class="absolute top-full right-0 text-sm opacity-0 transition-opacity group-hover:opacity-100"
+                    class="absolute right-0 bottom-full text-sm opacity-0 transition-opacity group-hover:opacity-50"
                     :style="{
                       visibility:
-                        time / (track.duration ?? 1) < 0.9
+                        time / (track.duration ?? 1) < 0.75
                           ? undefined
                           : 'hidden',
                     }"
@@ -339,7 +329,7 @@ const { SSR } = import.meta.env;
               <div
                 v-if="showInfo"
                 id="track-info"
-                class="flex flex-col gap-4 overflow-y-auto p-2"
+                class="flex flex-col gap-4 p-4"
               >
                 <!-- track details -->
                 <div
@@ -357,7 +347,10 @@ const { SSR } = import.meta.env;
                 </div>
 
                 <!-- track description -->
-                <div class="leading-relaxed" v-html="getDescription(track)" />
+                <div
+                  class="leading-relaxed wrap-break-word"
+                  v-html="getDescription(track)"
+                />
               </div>
             </div>
           </template>

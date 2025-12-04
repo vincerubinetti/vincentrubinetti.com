@@ -12,8 +12,6 @@ const env = loadEnv(import.meta.env.MODE, process.cwd(), [
   "RECAPTCHA",
 ]);
 
-console.log(env);
-
 export default defineConfig({
   vite: {
     plugins: [
