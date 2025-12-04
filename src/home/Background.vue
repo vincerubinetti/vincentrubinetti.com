@@ -55,6 +55,6 @@ watchEffect(() => {
   <canvas
     ref="canvas"
     class="transition-opacity duration-1000"
-    :class="playing ? 'opacity-50' : 'opacity-25'"
+    :class="playing ? 'opacity-50' : 'opacity-0'"
   />
 </template>

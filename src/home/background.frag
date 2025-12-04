@@ -90,9 +90,9 @@ void main() {
     float y = _sin(u_time / 10.0f + percent);
     vec2 xy = vec2(x, y);
     // soft light
-    float radius = 0.75f;
+    float radius = 1.0f;
     float dist = length(xy - uv) / radius;
-    float bright = 1.0f / (1.0f + pow(dist, 4.0f));
+    float bright = 1.0f / (5.0f + pow(dist, 4.0f));
     // composite
     lights += bright * u_colors[int(index)];
   }

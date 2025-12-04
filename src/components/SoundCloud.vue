@@ -122,6 +122,7 @@ const onLoad = generator(async function* () {
   widget = window.SC.Widget(iframe.value);
   events = window.SC.Widget.Events;
   if (!widget) throw Error("Widget couldn't be hooked up");
+  console.log(widget)
 
   /** wait for widget to be ready */
   yield new Promise<void>((resolve) => widget.bind(events.READY, resolve));
