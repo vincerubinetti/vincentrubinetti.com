@@ -36,7 +36,7 @@ const playing = ref(false);
 /** current time in seconds */
 const time = ref(0);
 /** volume, 0-1 */
-const volume = ref(0.75);
+const volume = ref(0.85);
 /** sound meter */
 const level = ref(0);
 
