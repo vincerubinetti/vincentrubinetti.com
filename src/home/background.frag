@@ -75,8 +75,8 @@ void main() {
   // rotate "camera"
   vec3 xyz = vec3(uv, 0.5f);
   xyz = rotateZ(xyz, -0.05f * _sin(u_time / 50.0f));
-  xyz = rotateY(xyz, 0.02f * _sin(u_time / 60.0f));
-  xyz = rotateX(xyz, 0.02f * _sin(u_time / 70.0f));
+  xyz = rotateY(xyz, 0.02f * _sin(u_time / 75.0f));
+  xyz = rotateX(xyz, 0.02f * _sin(u_time / 100.0f));
 
   // background lights
   vec3 lights = vec3(0.0f);
