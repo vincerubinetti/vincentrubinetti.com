@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { computed, useTemplateRef, watchEffect } from "vue";
-import { useIntervalFn, useMouse, useWindowSize } from "@vueuse/core";
-import Color from "color";
+import { useIntervalFn } from "@vueuse/core";
 import { Canvas } from "glsl-canvas-js";
 import type { Canvas as CanvasType } from "glsl-canvas-js/dist/esm/glsl";
 import shader from "./background.frag?raw";
@@ -32,6 +31,7 @@ watchEffect(() => {
 let play = 0;
 useIntervalFn(() => {
   if (!glsl.value) return;
+  /** create "roving" value, fast when level high, slow when low */
   play += 0.01 + 0.15 * smoothedLevel.value ** 4;
   glsl.value.setUniform("u_play", play);
 }, 20);
@@ -40,22 +40,8 @@ useIntervalFn(() => {
 watchEffect(() => {
   if (!glsl.value) return;
   track.value?.colors?.map((color, index) =>
-    glsl.value?.setUniform(
-      `u_colors[${index}]`,
-      new Color(color).lightness(25).unitArray(),
-    ),
+    glsl.value?.setUniform(`u_colors[${index}]`, color),
   );
-});
-
-/** set shader "mouse" uniforms */
-const { x, y } = useMouse();
-const { width, height } = useWindowSize();
-watchEffect(() => {
-  if (!glsl.value) return;
-  const mouseX = -1 + 2 * (x.value / width.value);
-  const mouseY = -1 + 2 * (y.value / height.value);
-  glsl.value.setUniform("u_mouse_x", mouseX);
-  glsl.value.setUniform("u_mouse_y", mouseY);
 });
 </script>
 

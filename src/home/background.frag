@@ -6,14 +6,12 @@ precision highp float;
 
 uniform float u_time;
 uniform vec2 u_resolution;
-uniform float u_mouse_x;
-uniform float u_mouse_y;
 uniform float u_level;
 uniform float u_play;
-uniform vec3 u_colors[5];
+uniform vec3 u_colors[6];
 
 // number of colors
-const float colors = 5.0f;
+const float colors = 6.0f;
 
 out vec4 outColor;
 
@@ -76,9 +74,9 @@ void main() {
 
   // rotate "camera"
   vec3 xyz = vec3(uv, 0.5f);
-  xyz = rotateZ(xyz, -0.075f);
-  // xyz = rotateX(xyz, -u_mouse_y / 32.0f);
-  // xyz = rotateY(xyz, u_mouse_x / 32.0f);
+  xyz = rotateZ(xyz, -0.05f * _sin(u_time / 50.0f));
+  xyz = rotateY(xyz, 0.02f * _sin(u_time / 60.0f));
+  xyz = rotateX(xyz, 0.02f * _sin(u_time / 70.0f));
 
   // background lights
   vec3 lights = vec3(0.0f);

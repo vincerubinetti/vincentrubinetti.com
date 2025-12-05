@@ -8,8 +8,8 @@ import {
   type UnwrapRef,
 } from "vue";
 import { useEventListener, useScriptTag } from "@vueuse/core";
-import ColorThief from "colorthief/dist/color-thief.mjs";
 import { clamp, max, range, uniq } from "lodash-es";
+import { Vibrant } from "node-vibrant/browser";
 import { lerp, smooth } from "@/util/math";
 import { generator, waitFor } from "@/util/misc";
 import type { AudioData, Events, Sound, Track, Widget } from "./SoundCloud";
@@ -112,6 +112,7 @@ const onError = (error?: unknown) => {
 const onLoad = generator(async function* () {
   /** reset values */
   status.value = "loading";
+  playing.value = false;
   time.value = 0;
   level.value = 0;
   track.value = {};
@@ -133,13 +134,14 @@ const onLoad = generator(async function* () {
   yield new Promise<void>((resolve) => widget.bind(events.READY, resolve));
 
   /** get number of tracks */
-  /** widget not *actually* ready (event bindings will fail) until getSounds
-   * returns something */
   let count = 0;
   yield waitFor(() => {
+    /** try multiple times because sometimes returns empty */
     widget.getSounds((sounds) => (count = sounds.length));
     return count;
   });
+  /** do this regardless of cache because widget not *actually* ready (event
+   * bindings will fail) until getSounds returns something */
 
   /** load from cache */
   tracks.value = playlistCache[playlist] || [];
@@ -170,10 +172,8 @@ const onLoad = generator(async function* () {
 
       /** wait for track to actually change */
       let currentIndex = -1;
-      yield waitFor(() => {
-        widget.getCurrentSoundIndex((index) => (currentIndex = index));
-        return currentIndex === index + 1 || index === count - 1;
-      });
+      widget.getCurrentSoundIndex((index) => (currentIndex = index));
+      yield waitFor(() => currentIndex === index + 1 || index === count - 1);
     }
 
     /** update cache */
@@ -214,7 +214,7 @@ const getWaveform = async (track: Track) => {
 const getTags = (track: Track) =>
   uniq(
     (
-      `${track.tag_list ?? ""} "${track.genre ?? ""}"`.match(/"[^"]*"|\S+/g) ??
+      `"${track.genre ?? ""}" ${track.tag_list ?? ""}`.match(/"[^"]*"|\S+/g) ??
       []
     )
       .map((tag) =>
@@ -234,7 +234,17 @@ const getColors = async (track: Track) => {
   img.crossOrigin = "Anonymous";
   img.src = track.artwork_url || "";
   await new Promise((resolve) => (img.onload = () => resolve(true)));
-  return new ColorThief().getPalette(img, 5, 2) as number[][];
+  const palette = await new Vibrant(img).getPalette();
+  return [
+    palette.LightVibrant,
+    palette.Vibrant,
+    palette.DarkVibrant,
+    palette.LightMuted,
+    palette.Muted,
+    palette.DarkMuted,
+  ]
+    .filter((color) => color !== null)
+    .map(({ r, g, b }) => [r / 255, g / 255, b / 255]);
 };
 
 /** previous track */
