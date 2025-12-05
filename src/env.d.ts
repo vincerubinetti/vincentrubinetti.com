@@ -1,7 +1,7 @@
 /// <reference types="astro/client" />
 /// <reference types="vite-svg-loader" />
 
-declare module "*";
+declare module "vite-plugin-transform";
 
 // eslint-disable-next-line
 declare interface Window {

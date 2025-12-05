@@ -6,12 +6,6 @@ import { loadEnv } from "vite";
 import transformPlugin from "vite-plugin-transform";
 import svgLoader from "vite-svg-loader";
 
-const env = loadEnv(import.meta.env.MODE, process.cwd(), [
-  "WEBSITE_",
-  "MAIL_",
-  "RECAPTCHA",
-]);
-
 export default defineConfig({
   vite: {
     plugins: [
@@ -29,12 +23,15 @@ export default defineConfig({
       transformPlugin({
         tStart: "__{",
         tEnd: "}__",
-        replace: env,
+        replace: loadEnv(import.meta.env.MODE, process.cwd(), [
+          "WEBSITE_",
+          "MAIL_",
+          "RECAPTCHA",
+        ]),
         replaceFiles: ["public/email.php"],
       }),
     ],
   },
-
   integrations: [
     vue({
       template: {

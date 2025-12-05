@@ -68,19 +68,21 @@ const map = computed(() =>
 </script>
 
 <template>
-  <div class="dark flex h-[180px] w-[975px] flex-col items-center">
-    <h1 ref="ref" class="my-auto flex items-center gap-5 text-3xl!">
-      <Logo class="size-12!" />Vincent Rubinetti
+  <div
+    class="flex h-[180px] w-[975px] flex-col items-center bg-black text-white"
+  >
+    <h1 ref="ref" class="my-auto flex items-center gap-8">
+      <Logo class="size-10!" />Vincent Rubinetti
     </h1>
 
-    <div class="mb-5 flex items-center gap-5">
+    <div class="mb-5 flex items-center gap-5 font-sans">
       <div
         v-for="({ name, icon }, index) in links"
         ref="refs"
         :key="index"
         class="flex items-center gap-3 p-3"
       >
-        <component :is="icon" class="relative -top-0.5" />
+        <component :is="icon" />
         {{ name }}
       </div>
     </div>
