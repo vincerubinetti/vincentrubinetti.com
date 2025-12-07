@@ -21,11 +21,11 @@ import Bandcamp from "@/assets/icons/bandcamp.svg?component";
 import Spotify from "@/assets/icons/spotify.svg?component";
 import Steam from "@/assets/icons/steam.svg?component";
 import YouTube from "@/assets/icons/youtube.svg?component";
+import Outline from "@/components/Outline.vue";
 import { waitFor } from "@/util/misc";
 import { renderMarkdown } from "@/util/string";
-import "youtube-video-element";
-import Outline from "@/components/Outline.vue";
 import { getColor } from "./colors";
+import "youtube-video-element";
 
 type Highlight = {
   title: string;
@@ -46,7 +46,7 @@ const highlights: Highlight[] = [
     credits: "Music, orchestration 2022",
     genre: "Orchestral, electronic",
     description:
-      "Arrangements of three beloved tracks from the Metroid series, featured on the acclaimed fan album [Harmony of a Hunter Returns](https://harmony.shinesparkers.net) celebrating the 35 year anniversary of Metroid.",
+      "Arrangements of three beloved tracks from the Metroid series, featured on the acclaimed fan album [Harmony of a Hunter Returns](https://harmony.shinesparkers.net) celebrating the 35th anniversary of Metroid.",
     links: [
       {
         url: "https://vincerubinetti.bandcamp.com/album/metroid",
@@ -193,7 +193,7 @@ const highlights: Highlight[] = [
     credits: "Music, sound design, 2015",
     genre: "Ambient electronic",
     description:
-      "A game by Zack Bell Games. Reveal your surroundings by splashing colorful ink in this hardcore platformer reminiscent of Super Meat Boy.",
+      "A game by Zack Bell. Reveal your surroundings by splashing colorful ink in this hardcore platformer reminiscent of Super Meat Boy.",
     links: [
       {
         url: "https://store.steampowered.com/app/385710/INK/",
@@ -224,7 +224,7 @@ const highlights: Highlight[] = [
     credits: "Music, 2009 – present",
     genre: "Various",
     description:
-      "Over the years, Vince has authored a large collection of arrangements/remixes/remakes of classic game music that have gained popularity and [recognition](https://www.youtube.com/watch?v=ogX8Ygecxuc&feature=youtu.be&t=121) on YouTube.",
+      "Over the years, Vince has authored a large collection of arrangements/remixes/remakes have gained popularity and [recognition](https://www.youtube.com/watch?v=ogX8Ygecxuc&feature=youtu.be&t=121) on YouTube.",
     links: [
       {
         url: "https://vincerubinetti.bandcamp.com/album/remixes-and-remakes",

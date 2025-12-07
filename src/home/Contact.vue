@@ -100,18 +100,17 @@ useScriptTag("https://www.google.com/recaptcha/api.js");
     <div class="grid grid-cols-2 gap-12 max-lg:grid-cols-1">
       <div class="flex flex-col gap-4">
         <p>
-          To use the <b>3Blue1Brown music</b>,
+          To use the <b>3Blue1Brown music</b> in videos/projects,
           <a
             href="https://vincerubinetti.github.io/using-the-music-of-3blue1brown/"
             >go here</a
           >.
         </p>
         <p>
-          If you want to use my other music in your videos/projects, commission
-          custom music or other services, or just chat, please write me a
-          message.
+          If you want to use my other music, commission custom music or other
+          services, or just chat about anything, please write me a message.
+          <span v-html="address" />
         </p>
-        <span v-html="address" />
       </div>
 
       <form

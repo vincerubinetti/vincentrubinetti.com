@@ -10,9 +10,9 @@ import profile from "@/assets/images/vince.png?url";
         I am a life-long lover of music. Over the past 10+ years I've worked on
         video games, videos, advertisements, ensemble pieces, and a variety of
         other collaborations, serving as composer, producer, arranger, musician,
-        and more. My first goal in any musical project is to create the most
-        impactful work possible; to replicate the profound way that so many
-        great works of music have affected me. I also write software!
+        and more. My first goal in any project is to create the most impactful
+        work possible; to replicate the profound way that so many great works of
+        music have affected me. I also write software!
       </p>
     </div>
   </section>
