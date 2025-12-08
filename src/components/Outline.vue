@@ -1,7 +1,7 @@
 <template>
-  <svg class="group absolute inset-0 size-full">
+  <svg class="group draw absolute inset-0 size-full">
     <rect
-      class="group-hover:animate-outline opacity-0 group-hover:opacity-100"
+      class="opacity-0 group-hover:opacity-100"
       width="100%"
       height="100%"
       rx="7.5"
@@ -13,3 +13,27 @@
     />
   </svg>
 </template>
+
+<style scoped>
+:hover > .draw {
+  animation: draw 0.5s linear both;
+}
+
+@keyframes draw {
+  0% {
+    opacity: 0;
+    stroke-dashoffset: 1;
+    stroke-dasharray: 0.25 0.75;
+  }
+  50% {
+    opacity: 1;
+    stroke-dashoffset: 0.5;
+    stroke-dasharray: 0.25 0.75;
+  }
+  100% {
+    opacity: 0;
+    stroke-dashoffset: 0;
+    stroke-dasharray: 0.25 0.75;
+  }
+}
+</style>

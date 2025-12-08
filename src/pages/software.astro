@@ -1,0 +1,22 @@
+---
+import Footer from "@/home/Footer.vue";
+import Layout from "@/layouts/Layout.astro";
+import Title from "@/software/Title.vue";
+---
+
+<Layout
+  title="Software | Vincent Rubinetti"
+  description="A look inside my music studio, gear, and workflow."
+>
+  <header class="bg-cream">
+    <Title client:load />
+  </header>
+  <main></main>
+  <Footer class="bg-black text-white" />
+</Layout>
+
+<style is:global>
+  :root {
+    --radius: 0;
+  }
+</style>
