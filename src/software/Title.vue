@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { ref, useTemplateRef, watchEffect } from "vue";
-import { sleep } from "@/util/misc";
 
 const svg = useTemplateRef("svg");
 const word = useTemplateRef("word");
@@ -14,27 +13,30 @@ const hatch = 10;
 const text = "Vincent Rubinetti";
 const letters = text.split("");
 
-/** measured x positions of chars (w/ kerning etc) */
+/** measured positions of chars (w/ kerning etc) */
 const spacing = ref<DOMPoint[]>();
 
-/** measure text */
-watchEffect(async () => {
+watchEffect(() => {
   if (!svg.value) return;
   if (!word.value) return;
   if (spacing.value) return;
-  const _spacing = letters.map((_, index) =>
-    word.value!.getStartPositionOfChar(index),
-  );
-  await sleep();
+  /** fit view box to contents */
   const { x, y, width, height } = svg.value.getBBox();
   viewBox.value = [x, y, width, height];
-  await sleep();
-  spacing.value = _spacing;
+  /** measure text */
+  spacing.value = letters.map((_, index) =>
+    word.value!.getStartPositionOfChar(index),
+  );
 });
 </script>
 
 <template>
-  <svg ref="svg" class="max-w-100" :viewBox="viewBox.join(' ')">
+  <svg
+    ref="svg"
+    xmlns="http://www.w3.org/2000/svg"
+    class="max-w-100"
+    :viewBox="viewBox.join(' ')"
+  >
     <pattern
       id="hatch"
       patternUnits="userSpaceOnUse"
