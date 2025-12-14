@@ -26,7 +26,7 @@ watch([mouse.isOutside, mouse.elementX], () => {
     const position = mouse.elementX.value;
     const size = mouse.elementWidth.value;
     if (!size) return;
-    const percent = (position / size) ** 1;
+    const percent = 2 / 3 + position / size / 3;
     svg.value.pauseAnimations();
     svg.value.setCurrentTime(percent * duration);
   }
