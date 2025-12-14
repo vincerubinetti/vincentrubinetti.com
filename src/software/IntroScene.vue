@@ -1,10 +1,11 @@
 <script setup lang="ts">
-import { shallowRef } from "vue";
-import { useLoop, type TresObject } from "@tresjs/core";
+import { shallowRef, watchEffect } from "vue";
+import { useLoop } from "@tresjs/core";
 import { useIntervalFn } from "@vueuse/core";
 import { gsap } from "gsap";
 import { range, sample } from "lodash-es";
-import type { Mesh, OrthographicCamera } from "three";
+import { Color, Matrix4, Vector3 } from "three";
+import type { InstancedMesh, OrthographicCamera } from "three";
 import { LineMaterial } from "three/addons/lines/LineMaterial.js";
 import { LineSegments2 } from "three/addons/lines/LineSegments2.js";
 import { LineSegmentsGeometry } from "three/addons/lines/LineSegmentsGeometry.js";
@@ -13,30 +14,45 @@ import { cos, sin } from "@/util/math";
 /** scene parameters */
 const bounds = 5;
 const size = 1;
-const corner = 0.5;
+const corner = 1;
 
 /** point objects */
-const points = shallowRef<
-  { color: string; position: { x: number; y: number; z: number } }[]
->([]);
+const points = range(-bounds + 1, bounds)
+  .map((x) =>
+    range(-bounds + 1, bounds)
+      .map((y) =>
+        range(-bounds + 1, bounds).map((z) => ({
+          position: new Vector3(x, y, z),
+          scale: new Vector3(0, 0, 0),
+          transform: new Matrix4(),
+          color: new Color(`hsl(${sample([10, 30, 160, 200])}, 100%, 50%)`),
+          timeline: gsap.timeline(),
+        })),
+      )
+      .flat(),
+  )
+  .flat();
 
-/** populate points */
-for (const x of range(-bounds + 1, bounds))
-  for (const y of range(-bounds + 1, bounds))
-    for (const z of range(-bounds + 1, bounds))
-      points.value?.push({
-        position: { x, y, z },
-        color: `hsl(${sample([10, 30, 160, 200])}, 100%, 50%)`,
-      });
+/** put points closer to origin first */
+points.sort((a, b) => a.position.length() - b.position.length());
 
 /** scene objects */
 const camera = shallowRef<OrthographicCamera>();
-const pointGroup = shallowRef<TresObject>();
+const pointMesh = shallowRef<InstancedMesh>();
 
 /** turn off gsap default ticker */
 gsap.ticker.remove(gsap.updateRoot);
 
 const { onBeforeRender } = useLoop();
+
+/** update points static props */
+watchEffect(() => {
+  points.forEach(({ color }, index) => {
+    if (!pointMesh.value) return;
+    pointMesh.value.setColorAt(index, color);
+    pointMesh.value.instanceColor!.needsUpdate = true;
+  });
+});
 
 /** frame */
 onBeforeRender(({ elapsed }) => {
@@ -52,25 +68,30 @@ onBeforeRender(({ elapsed }) => {
 
   /** manually tick gsap forward */
   gsap.updateRoot(elapsed);
+
+  /** update points dynamic props */
+  points.forEach(({ position, scale, transform }, index) => {
+    if (!pointMesh.value) return;
+    transform.makeScale(scale.x, scale.y, scale.z);
+    transform.setPosition(position);
+    pointMesh.value.setMatrixAt(index, transform.clone());
+    pointMesh.value.instanceMatrix.needsUpdate = true;
+  });
 });
 
+/** periodically */
 useIntervalFn(() => {
-  if (!pointGroup.value) return;
+  if (!pointMesh.value) return;
 
   /** pick a random point */
-  const point = sample(pointGroup.value.children as Mesh[])!;
+  const point = sample(points)!;
+  if (point.timeline.isActive()) return;
   /** animate scale */
   const duration = 2;
   const ease = "power1.inOut";
-  let timeline: gsap.core.Timeline | undefined = point.userData.timeline;
-  if (timeline?.isActive()) return;
-  if (!timeline) {
-    point.userData.timeline = timeline = gsap
-      .timeline()
-      .to(point.scale, { x: 1, y: 1, z: 1, duration, ease })
-      .to(point.scale, { x: 0, y: 0, z: 0, duration, ease, delay: duration });
-  }
-  timeline.restart();
+  point.timeline
+    .to(point.scale, { x: 1, y: 1, z: 1, duration, ease })
+    .to(point.scale, { x: 0, y: 0, z: 0, duration, ease, delay: duration });
 }, 100);
 
 /** generate corner lines */
@@ -100,27 +121,20 @@ cornersGeometry.setPositions(
     )
     .flat(4),
 );
-const cornersMaterial = new LineMaterial({
-  color: 0xffffff,
-  linewidth: 2 * size,
-  vertexColors: true,
-});
+const cornersMaterial = new LineMaterial({ color: "black", linewidth: size });
 const corners = new LineSegments2(cornersGeometry, cornersMaterial);
 </script>
 
 <template>
   <TresOrthographicCamera ref="camera" :zoom="1 / bounds / 2" />
-  <TresGroup ref="pointGroup">
-    <TresMesh
-      v-for="({ color, position: { x, y, z } }, index) in points"
-      :key="index"
-      :position="[x, y, z]"
-      :scale="0"
-    >
-      <TresBoxGeometry :args="[size, size, size]" />
-      <TresMeshPhysicalMaterial :color="color" :roughness="1" :metalness="0" />
-    </TresMesh>
-  </TresGroup>
+  <TresInstancedMesh
+    ref="pointMesh"
+    :args="[undefined, undefined, points.length]"
+    :frustum-culled="false"
+  >
+    <TresBoxGeometry :args="[size, size, size]" />
+    <TresMeshPhysicalMaterial :roughness="1" :metalness="0" />
+  </TresInstancedMesh>
 
   <TresAmbientLight :intensity="5" color="white" />
   <TresDirectionalLight

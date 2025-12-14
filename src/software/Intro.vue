@@ -4,7 +4,7 @@ import Scene from "./IntroScene.vue";
 </script>
 
 <template>
-  <div class="size-200">
+  <div class="size-100">
     <TresCanvas
       transparency
       :clearAlpha="0"
