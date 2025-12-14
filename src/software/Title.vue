@@ -147,9 +147,9 @@ const hatch = 10;
           <animate
             attributeName="x"
             :to="w - p"
+            repeatCount="3"
             :dur="`${duration / 3}s`"
             fill="freeze"
-            repeatCount="3"
           />
           <animate
             attributeName="opacity"
@@ -176,9 +176,48 @@ const hatch = 10;
         <g clip-path="url(#clip-3)" v-html="svgContent" />
       </g>
 
-      <g class="stroke-marine fill-none stroke-3">
-        <path :d="['M', x, y + p, 'v', -p, 'h', p].join(' ')" />
-        <path :d="['M', x + w, y + h - p, 'v', p, 'h', -p].join(' ')" />
+      <g
+        class="stroke-marine fill-none stroke-3"
+        :style="{ transformOrigin }"
+        opacity="0"
+      >
+        <path :d="['M', x, y + p, 'v', -p, 'h', p].join(' ')">
+          <animateTransform
+            attributeName="transform"
+            type="translate"
+            :from="[-p, -p].join(' ')"
+            to="0 0"
+            :dur="`${duration / 3}s`"
+            :begin="`${duration}s`"
+            fill="freeze"
+            calcMode="spline"
+            keySplines="0 0 0.5 1"
+            keyTimes="0;1"
+          />
+        </path>
+        <path :d="['M', x + w, y + h - p, 'v', p, 'h', -p].join(' ')">
+          <animateTransform
+            attributeName="transform"
+            type="translate"
+            :from="[p, p].join(' ')"
+            to="0 0"
+            :dur="`${duration / 3}s`"
+            :begin="`${duration}s`"
+            fill="freeze"
+            calcMode="spline"
+            keySplines="0 0 0.5 1"
+            keyTimes="0;1"
+          />
+        </path>
+
+        <animate
+          attributeName="opacity"
+          from="0"
+          to="1"
+          :dur="`${duration / 3}s`"
+          :begin="`${duration}s`"
+          fill="freeze"
+        />
       </g>
     </svg>
 

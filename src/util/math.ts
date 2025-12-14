@@ -1,5 +1,10 @@
 import { clamp, range } from "lodash-es";
 
+export const tau = 2 * Math.PI;
+
+export const sin = (degrees: number) => Math.sin((degrees / 360) * tau);
+export const cos = (degrees: number) => Math.cos((degrees / 360) * tau);
+
 /** smooth and prune data */
 export const smooth = (data: number[], radius: number) =>
   data

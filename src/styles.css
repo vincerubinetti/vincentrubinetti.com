@@ -13,8 +13,9 @@
   --font-sans: "Outfit Variable", sans-serif;
 
   --color-cream: hsl(30, 50%, 95%);
-  --color-terracotta: hsl(10, 40%, 90%);
-  --color-mint: hsl(200, 40%, 90%);
+  --color-terracotta: hsl(10, 50%, 95%);
+  --color-sky: hsl(200, 50%, 95%);
+  --color-mint: hsl(160, 50%, 95%);
   --color-marine: hsl(200, 50%, 50%);
 
   --radius: 7.5px;
