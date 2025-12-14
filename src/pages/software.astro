@@ -1,22 +1,39 @@
 ---
 import Footer from "@/home/Footer.vue";
 import Layout from "@/layouts/Layout.astro";
+import Intro from "@/software/Intro.vue";
 import Title from "@/software/Title.vue";
 ---
 
 <Layout
   title="Software | Vincent Rubinetti"
-  description="Frontend developer and UX/UI designer"
+  description="Frontend developer · UX/UI designer"
 >
-  <header class="bg-cream">
+  <header class="bg-mint">
     <Title client:load />
   </header>
-  <main></main>
+  <main>
+    <Intro />
+  </main>
   <Footer class="bg-black text-white" />
 </Layout>
 
 <style is:global>
+  @reference "@/styles.css";
+
   :root {
     --radius: 0;
+  }
+
+  body {
+    @apply bg-cream;
+  }
+
+  .slant {
+    @apply relative;
+  }
+
+  .slant::before {
+    @apply bg-terracotta absolute inset-0 -z-10 -skew-y-2 content-[''];
   }
 </style>

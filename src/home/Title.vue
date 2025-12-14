@@ -9,9 +9,7 @@ import Logo from "@/assets/brand/vr.svg?component";
     >
       <Logo class="size-10!" />
       <h1>Vincent Rubinetti</h1>
-      <div class="font-light tracking-wider lowercase">
-        Composer • Developer • More
-      </div>
+      <div class="font-light tracking-wider">Composer · Developer · More</div>
     </hgroup>
   </a>
 </template>
