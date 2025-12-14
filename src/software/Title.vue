@@ -58,7 +58,7 @@ const hatch = 10;
 </script>
 
 <template>
-  <hgroup class="flex flex-col items-center gap-6 text-center">
+  <hgroup class="flex flex-col items-center gap-4 text-center">
     <h1 class="sr-only">Vincent Rubinetti</h1>
 
     <svg

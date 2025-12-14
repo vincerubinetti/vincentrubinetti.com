@@ -4,34 +4,34 @@ import { useLoop, type TresObject } from "@tresjs/core";
 import { useIntervalFn } from "@vueuse/core";
 import { gsap } from "gsap";
 import { range, sample } from "lodash-es";
-import type { OrthographicCamera } from "three";
+import type { Mesh, OrthographicCamera } from "three";
 import { LineMaterial } from "three/addons/lines/LineMaterial.js";
 import { LineSegments2 } from "three/addons/lines/LineSegments2.js";
 import { LineSegmentsGeometry } from "three/addons/lines/LineSegmentsGeometry.js";
 import { cos, sin } from "@/util/math";
 
 /** scene parameters */
-const bounds = 3;
+const bounds = 5;
 const size = 1;
 const corner = 0.5;
 
-/** ball objects */
-const balls = shallowRef<
+/** point objects */
+const points = shallowRef<
   { color: string; position: { x: number; y: number; z: number } }[]
 >([]);
 
-/** populate balls */
+/** populate points */
 for (const x of range(-bounds + 1, bounds))
   for (const y of range(-bounds + 1, bounds))
     for (const z of range(-bounds + 1, bounds))
-      balls.value?.push({
+      points.value?.push({
         position: { x, y, z },
         color: `hsl(${sample([10, 30, 160, 200])}, 100%, 50%)`,
       });
 
 /** scene objects */
 const camera = shallowRef<OrthographicCamera>();
-const ballGroup = shallowRef<TresObject>();
+const pointGroup = shallowRef<TresObject>();
 
 /** turn off gsap default ticker */
 gsap.ticker.remove(gsap.updateRoot);
@@ -55,8 +55,23 @@ onBeforeRender(({ elapsed }) => {
 });
 
 useIntervalFn(() => {
-  if (!ballGroup.value) return;
-});
+  if (!pointGroup.value) return;
+
+  /** pick a random point */
+  const point = sample(pointGroup.value.children as Mesh[])!;
+  /** animate scale */
+  const duration = 2;
+  const ease = "power1.inOut";
+  let timeline: gsap.core.Timeline | undefined = point.userData.timeline;
+  if (timeline?.isActive()) return;
+  if (!timeline) {
+    point.userData.timeline = timeline = gsap
+      .timeline()
+      .to(point.scale, { x: 1, y: 1, z: 1, duration, ease })
+      .to(point.scale, { x: 0, y: 0, z: 0, duration, ease, delay: duration });
+  }
+  timeline.restart();
+}, 100);
 
 /** generate corner lines */
 const cornersGeometry = new LineSegmentsGeometry();
@@ -95,13 +110,14 @@ const corners = new LineSegments2(cornersGeometry, cornersMaterial);
 
 <template>
   <TresOrthographicCamera ref="camera" :zoom="1 / bounds / 2" />
-  <TresGroup ref="ballGroup">
+  <TresGroup ref="pointGroup">
     <TresMesh
-      v-for="({ color, position: { x, y, z } }, index) in balls"
+      v-for="({ color, position: { x, y, z } }, index) in points"
       :key="index"
       :position="[x, y, z]"
+      :scale="0"
     >
-      <TresSphereGeometry :args="[size / 2, 32, 32]" />
+      <TresBoxGeometry :args="[size, size, size]" />
       <TresMeshPhysicalMaterial :color="color" :roughness="1" :metalness="0" />
     </TresMesh>
   </TresGroup>
