@@ -22,7 +22,7 @@ import brush from "@/assets/models/brush.glb?url";
 import check from "@/assets/models/check.glb?url";
 import star from "@/assets/models/star.glb?url";
 import type { pointerCoords } from "@/util/dom";
-import { cos, sin } from "@/util/math";
+import { cos, mod, sin } from "@/util/math";
 import { sleep } from "@/util/misc";
 
 /** scene parameters */
@@ -143,7 +143,15 @@ const rotate = { value: 0 };
 
 watchEffect(() => {
   /** rotate by pointer */
-  if (inside) gsap.to(rotate, { value: -(pointer?.x ?? 0) * 360 });
+  if (inside) {
+    gsap.killTweensOf(rotate);
+    const currentAngle = mod(rotate.value, 1);
+    const newAngle = mod(-(pointer?.x ?? 0.5), 1);
+    const positive = newAngle + 1 - currentAngle;
+    const negative = newAngle - currentAngle;
+    const diff = Math.abs(positive) < Math.abs(negative) ? positive : negative;
+    gsap.to(rotate, { value: rotate.value + diff });
+  }
 });
 
 /** frame */
@@ -151,8 +159,8 @@ onBeforeRender(({ elapsed, delta }) => {
   /* animate camera */
   if (camera.value) {
     const dist = 2 * bounds;
-    camera.value.position.x = sin(rotate.value) * dist;
-    camera.value.position.z = cos(rotate.value) * dist;
+    camera.value.position.x = sin(rotate.value * 360) * dist;
+    camera.value.position.z = cos(rotate.value * 360) * dist;
     camera.value.position.y = cos(45) * dist;
     camera.value.lookAt(0, 0, 0);
   }
@@ -160,7 +168,7 @@ onBeforeRender(({ elapsed, delta }) => {
   /** slow rotate */
   if (!inside) {
     gsap.killTweensOf(rotate);
-    rotate.value += (delta * 360) / 10;
+    rotate.value += delta / 10;
   }
 
   /** update points dynamic props */

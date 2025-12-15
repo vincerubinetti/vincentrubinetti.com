@@ -44,3 +44,6 @@ export const lerp = (
   targetMin +
   clamp((value - sourceMin) / (sourceMax - sourceMin || 1), 0, 1) *
     (targetMax - targetMin);
+
+/** modulo */
+export const mod = (n: number, d: number) => ((n % d) + d) % d;
