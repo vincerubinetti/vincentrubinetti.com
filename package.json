@@ -22,6 +22,7 @@
     "@tresjs/core": "^5.2.0",
     "@vueuse/core": "^14.1.0",
     "astro": "^5.16.4",
+    "get-pixels": "^3.3.3",
     "glsl-canvas-js": "^0.2.9",
     "gsap": "^3.14.2",
     "linkify-string": "^4.3.2",

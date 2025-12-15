@@ -15,7 +15,7 @@ import {
 import Slider from "@/components/Slider.vue";
 import type { Track } from "@/components/SoundCloud";
 import SoundCloud from "@/components/SoundCloud.vue";
-import { clickCoords } from "@/util/dom";
+import { pointerCoords } from "@/util/dom";
 import { sleep } from "@/util/misc";
 import { formatTime, formatValue, linkify } from "@/util/string";
 import bandcamp from "./bandcamp.json";
@@ -219,7 +219,7 @@ const { SSR } = import.meta.env;
                 <button
                   class="button-dark group h-12 w-full grow px-2 py-0 max-md:-order-1"
                   title="Seek"
-                  @click="seek(clickCoords($event).x * (track.duration ?? 1))"
+                  @click="seek(pointerCoords($event).x * (track.duration ?? 1))"
                   @keydown.right.prevent="seek(time + 5000)"
                   @keydown.left.prevent="seek(time - 5000)"
                   @keydown.space.prevent="playing ? pause() : play()"
