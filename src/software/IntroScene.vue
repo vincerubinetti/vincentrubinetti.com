@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { onMounted, shallowRef, watchEffect } from "vue";
+import { onMounted, shallowRef, watch, watchEffect } from "vue";
 import { useLoop } from "@tresjs/core";
 import { useIntervalFn } from "@vueuse/core";
 import { gsap } from "gsap";
-import { random, range, sample } from "lodash-es";
+import { range, sample } from "lodash-es";
 import {
   Box3,
   Color,
@@ -18,24 +18,40 @@ import { LineMaterial } from "three/addons/lines/LineMaterial.js";
 import { LineSegments2 } from "three/addons/lines/LineSegments2.js";
 import { LineSegmentsGeometry } from "three/addons/lines/LineSegmentsGeometry.js";
 import { GLTFLoader, type GLTF } from "three/addons/loaders/GLTFLoader.js";
-import brush from "@/assets/models/brush.glb?url";
+import arrow from "@/assets/models/arrow.glb?url";
 import check from "@/assets/models/check.glb?url";
+import flask from "@/assets/models/flask.glb?url";
 import star from "@/assets/models/star.glb?url";
 import type { pointerCoords } from "@/util/dom";
 import { cos, mod, sin } from "@/util/math";
-import { sleep } from "@/util/misc";
 
 /** scene parameters */
-const bounds = 11;
+const bounds = 10;
 const size = 1;
 const corner = 1;
 
 type Props = {
   pointer?: ReturnType<typeof pointerCoords>;
   inside?: boolean;
+  shape?: string;
 };
 
-const { pointer, inside } = defineProps<Props>();
+const { pointer, inside, shape } = defineProps<Props>();
+
+/** color palette */
+const colors = `
+  --color-cream: hsl(30, 100%, 97%);
+  --color-terracotta: hsl(10, 50%, 90%);
+  --color-mint: hsl(160, 50%, 90%);
+  --color-sky: hsl(200, 50%, 90%);
+`
+  .split("\n")
+  .map((line) => line.split(":")[1]?.trim().slice(0, -1))
+  .filter(Boolean)
+  .map((hsl) => hsl.match(/(\d+)\D+(\d+)\D+(\d+)/) ?? [])
+  .filter(Boolean)
+  .map(([, h, s, l]) => `hsl(${h}, ${s}%, ${+l / 2}%)`)
+  .map((color) => new Color(color));
 
 /** point objects */
 const points = range(-bounds + 1, bounds)
@@ -43,17 +59,21 @@ const points = range(-bounds + 1, bounds)
     range(-bounds + 1, bounds)
       .map((y) =>
         range(-bounds + 1, bounds).map((z) => {
+          /** position */
           const position = new Vector3(x, y, z);
+          /** scale */
           const scale = new Vector3(0, 0, 0);
+          /** combined transform */
           const transform = new Matrix4();
-          const color = new Color(
-            `hsl(${sample([10, 30, 160, 200])}, 100%, 50%)`,
-          );
+          /** color */
+          const color = sample(colors)!;
+          /** shape membership */
           const shapes: Record<string, boolean> = {};
+          /** inflate/deflate animation */
           const timeline = gsap
             .timeline({ paused: true })
             .to(scale, { x: 1, y: 1, z: 1 })
-            .to(scale, { x: 0, y: 0, z: 0, delay: 0.5 });
+            .to(scale, { x: 0, y: 0, z: 0 });
           return { position, scale, transform, color, shapes, timeline };
         }),
       )
@@ -66,7 +86,7 @@ points.sort((a, b) => a.position.length() - b.position.length());
 
 const loader = new GLTFLoader();
 const raycaster = new Raycaster();
-const shapes = { brush, check, star };
+const shapes = { arrow, check, flask, star };
 
 onMounted(async () => {
   /** load low poly 3d models */
@@ -111,20 +131,44 @@ onMounted(async () => {
   }
 });
 
-/** periodically switch model shapes */
-useIntervalFn(() => {
-  const name = sample(Object.keys(shapes)) || "";
-  for (const { shapes, timeline } of points) {
-    const on = !!shapes[name];
-    if (on) sleep(random(500)).then(() => timeline.restart());
-  }
-}, 2000);
+/** switch model shape */
+watch(
+  () => shape,
+  () => {
+    /** go through all points */
+    for (const point of points) {
+      const { shapes, timeline } = point;
+      /** should point be "on" */
+      const fill = !!shapes[shape ?? ""];
+      /** timeline progress */
+      const progress = timeline.progress();
+      /** cancel previous delayed call */
+      timeline.cancel?.kill();
+      if (fill) {
+        /** restart */
+        timeline.restart();
+        /** set color */
+        point.color =
+          colors[Object.keys(shapes).indexOf(shape ?? "") % colors.length];
+        /** pause in middle of animation */
+        timeline.cancel = gsap.delayedCall(0.5, () => timeline.pause());
+      } else if (!shape && progress > 0) {
+        /** if shape has turned off and in middle of animation, play to end */
+        timeline.resume();
+      } else {
+        /** immediately reset */
+        timeline.pause().seek(0);
+        /** clear color */
+        point.color = sample(colors)!;
+      }
+    }
+  },
+);
 
 /** twinkle */
 useIntervalFn(() => {
-  const { timeline } = sample(points) || {};
-  if (!timeline?.isActive()) timeline?.restart();
-}, 50);
+  sample(points)!.timeline.restart();
+}, 200);
 
 /** scene objects */
 const camera = shallowRef<OrthographicCamera>();
@@ -134,7 +178,10 @@ const pointMesh = shallowRef<InstancedMesh>();
 gsap.ticker.remove(gsap.updateRoot);
 
 /** gsap defaults */
-gsap.defaults({ ease: "power2.out", duration: 1 });
+gsap.defaults({
+  ease: "power2.out",
+  duration: 1,
+});
 
 const { onBeforeRender } = useLoop();
 
@@ -147,9 +194,9 @@ watchEffect(() => {
     gsap.killTweensOf(rotate);
     const currentAngle = mod(rotate.value, 1);
     const newAngle = mod(-(pointer?.x ?? 0.5), 1);
-    const positive = newAngle + 1 - currentAngle;
-    const negative = newAngle - currentAngle;
-    const diff = Math.abs(positive) < Math.abs(negative) ? positive : negative;
+    const cw = newAngle + 1 - currentAngle;
+    const ccw = newAngle - currentAngle;
+    const diff = Math.abs(cw) < Math.abs(ccw) ? cw : ccw;
     gsap.to(rotate, { value: rotate.value + diff });
   }
 });
@@ -168,7 +215,7 @@ onBeforeRender(({ elapsed, delta }) => {
   /** slow rotate */
   if (!inside) {
     gsap.killTweensOf(rotate);
-    rotate.value += delta / 10;
+    rotate.value += delta / 20;
   }
 
   /** update points dynamic props */

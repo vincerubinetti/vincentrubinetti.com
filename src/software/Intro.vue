@@ -10,19 +10,47 @@ const canvas = useTemplateRef("canvas");
 const pointer = ref<ReturnType<typeof pointerCoords>>();
 const { isOutside } = useMouseInElement(canvas);
 
-useEventListener(canvas, "pointermove", (event) => {
-  pointer.value = pointerCoords(event);
-});
+useEventListener(
+  canvas,
+  "pointermove",
+  (event) => (pointer.value = pointerCoords(event)),
+);
+
+/** list of "features" */
+const features = [
+  { model: "arrow", label: "Feature A" },
+  { model: "check", label: "Feature B" },
+  { model: "flask", label: "Feature C" },
+  { model: "star", label: "Feature D" },
+];
+
+/** selected feature shape name */
+const shape = ref<string>();
 </script>
 
 <template>
-  <div ref="canvas" class="size-100 border">
-    <TresCanvas
-      transparency
-      :clearAlpha="0"
-      :fail-if-major-performance-caveat="true"
-    >
-      <Scene :pointer="pointer" :inside="!isOutside" />
-    </TresCanvas>
-  </div>
+  <section>
+    <div class="flex items-center gap-8">
+      <div class="flex flex-col gap-4">
+        <button
+          v-for="({ model, label }, index) in features"
+          :key="index"
+          @mouseenter="shape = model"
+          @mouseleave="shape = undefined"
+          @click="shape = shape ? undefined : model"
+        >
+          {{ label }}
+        </button>
+      </div>
+      <div ref="canvas" class="size-75">
+        <TresCanvas
+          transparency
+          :clearAlpha="0"
+          :fail-if-major-performance-caveat="true"
+        >
+          <Scene :pointer="pointer" :inside="!isOutside" :shape="shape" />
+        </TresCanvas>
+      </div>
+    </div>
+  </section>
 </template>
