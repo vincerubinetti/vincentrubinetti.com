@@ -3,7 +3,7 @@ import { ref, useTemplateRef } from "vue";
 import { TresCanvas } from "@tresjs/core";
 import { useEventListener, useMouseInElement } from "@vueuse/core";
 import { pointerCoords } from "@/util/dom";
-import Scene from "./IntroScene.vue";
+import Scene from "./HeroScene.vue";
 
 const canvas = useTemplateRef("canvas");
 
@@ -31,12 +31,13 @@ const shape = ref<string>();
 <template>
   <section>
     <div class="flex items-center gap-8">
-      <div class="flex flex-col gap-4">
+      <div class="flex flex-col gap-2">
         <button
           v-for="({ model, label }, index) in features"
           :key="index"
+          class="border-b-2 p-2 font-sans transition-[border]"
+          :class="model === shape ? 'border-current' : 'border-transparent'"
           @mouseenter="shape = model"
-          @mouseleave="shape = undefined"
           @click="shape = shape ? undefined : model"
         >
           {{ label }}

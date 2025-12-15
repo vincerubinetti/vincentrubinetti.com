@@ -3,7 +3,7 @@ import { onMounted, shallowRef, watch, watchEffect } from "vue";
 import { useLoop } from "@tresjs/core";
 import { useIntervalFn } from "@vueuse/core";
 import { gsap } from "gsap";
-import { range, sample } from "lodash-es";
+import { random, range, sample } from "lodash-es";
 import {
   Box3,
   Color,
@@ -72,8 +72,8 @@ const points = range(-bounds + 1, bounds)
           /** inflate/deflate animation */
           const timeline = gsap
             .timeline({ paused: true })
-            .to(scale, { x: 1, y: 1, z: 1 })
-            .to(scale, { x: 0, y: 0, z: 0 });
+            .to(scale, { x: 1, y: 1, z: 1, delay: random(0, 0.5, true) })
+            .to(scale, { x: 0, y: 0, z: 0, delay: 0.5 });
           return { position, scale, transform, color, shapes, timeline };
         }),
       )
@@ -151,7 +151,7 @@ watch(
         point.color =
           colors[Object.keys(shapes).indexOf(shape ?? "") % colors.length];
         /** pause in middle of animation */
-        timeline.cancel = gsap.delayedCall(0.5, () => timeline.pause());
+        timeline.cancel = gsap.delayedCall(1, () => timeline.pause());
       } else if (!shape && progress > 0) {
         /** if shape has turned off and in middle of animation, play to end */
         timeline.resume();
@@ -179,7 +179,7 @@ gsap.ticker.remove(gsap.updateRoot);
 
 /** gsap defaults */
 gsap.defaults({
-  ease: "power2.out",
+  ease: "power1.out",
   duration: 1,
 });
 
