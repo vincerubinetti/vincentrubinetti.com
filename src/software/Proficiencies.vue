@@ -70,7 +70,7 @@ const proficiencies = [
       <div
         v-for="{ icons, name, description } in proficiencies"
         :key="name"
-        class="flex items-center gap-4"
+        class="relative flex items-center gap-4"
       >
         <div class="flex w-10 shrink-0 flex-col items-center gap-1">
           <component

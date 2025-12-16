@@ -6,7 +6,16 @@ import GitHub from "@/assets/logos/github.svg?component";
 
 <template>
   <section class="bg-cream">
-    <h2 class="sr-only">Overview</h2>
+    <h2 class="sr-only">Intro</h2>
+
+    <div class="bg-cream flex items-center gap-4 p-4">
+      <a href="https://github.com/vincerubinetti" class="button">
+        <GitHub />
+        GitHub
+      </a>
+
+      <p>Follow my professional collaborations and personal work</p>
+    </div>
 
     <div class="flex items-center gap-8 max-lg:flex-col">
       <h3 class="sr-only">About</h3>
@@ -28,14 +37,5 @@ import GitHub from "@/assets/logos/github.svg?component";
       <i>the best way to understand what I do is to see it yourself</i>.
       <CornerRightDown />
     </p>
-
-    <div class="bg-cream flex items-center gap-4">
-      <a href="https://github.com/vincerubinetti" class="button">
-        <GitHub />
-        GitHub
-      </a>
-
-      <p>Follow my professional collaborations and personal work</p>
-    </div>
   </section>
 </template>

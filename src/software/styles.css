@@ -4,18 +4,52 @@
   --color-terracotta: hsl(10, 50%, 90%);
   --color-mint: hsl(160, 50%, 90%);
   --color-sky: hsl(200, 50%, 90%);
-
-  --radius: 0;
 }
 
 @utility button {
-  @apply relative inline-flex items-center justify-center gap-2 rounded bg-current/5 p-4 font-sans text-current no-underline transition-all hover:bg-current/10;
+  @apply relative z-0 inline-flex items-center justify-center gap-2 p-4 font-sans text-current no-underline transition-all;
+
+  &::before {
+    @apply bg-mint absolute inset-0 -z-10 scale-x-0 transition-all content-[''];
+  }
+
+  &:hover::before {
+    @apply scale-x-100 -skew-5;
+  }
+
+  &::after {
+    @apply absolute inset-0 border-2 border-current mask-intersect transition-all content-[''];
+
+    mask-image:
+      linear-gradient(
+        to bottom,
+        black 0px,
+        black calc(var(--spacing) * 2),
+        transparent calc(var(--spacing) * 2),
+        transparent calc(100% - calc(var(--spacing) * 2)),
+        black calc(100% - calc(var(--spacing) * 2)),
+        black 100%
+      ),
+      linear-gradient(
+        to right,
+        black 0px,
+        black calc(var(--spacing) * 2),
+        transparent calc(var(--spacing) * 2),
+        transparent calc(100% - calc(var(--spacing) * 2)),
+        black calc(100% - calc(var(--spacing) * 2)),
+        black 100%
+      );
+  }
+
+  &:hover::after {
+    @apply scale-90;
+  }
 }
 
-.slant {
+@utility slant {
   @apply relative;
-}
 
-.slant::before {
-  @apply bg-terracotta absolute inset-0 -z-10 -skew-y-2 content-[''];
+  &::before {
+    @apply bg-terracotta absolute inset-0 -z-10 -skew-y-2 content-[''];
+  }
 }

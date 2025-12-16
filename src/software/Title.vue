@@ -58,7 +58,7 @@ const hatch = 10;
 </script>
 
 <template>
-  <hgroup class="flex flex-col items-center gap-4 text-center">
+  <hgroup class="flex flex-col items-center gap-2 text-center py-8">
     <h1 class="sr-only">Vincent Rubinetti</h1>
 
     <svg
@@ -174,50 +174,6 @@ const hatch = 10;
           v-html="svgContent"
         />
         <g clip-path="url(#clip-3)" v-html="svgContent" />
-      </g>
-
-      <g
-        class="stroke-marine fill-none stroke-3"
-        :style="{ transformOrigin }"
-        opacity="0"
-      >
-        <path :d="['M', x, y + p, 'v', -p, 'h', p].join(' ')">
-          <animateTransform
-            attributeName="transform"
-            type="translate"
-            :from="[-p, -p].join(' ')"
-            to="0 0"
-            :dur="`${duration / 3}s`"
-            :begin="`${duration}s`"
-            fill="freeze"
-            calcMode="spline"
-            keySplines="0 0 0.5 1"
-            keyTimes="0;1"
-          />
-        </path>
-        <path :d="['M', x + w, y + h - p, 'v', p, 'h', -p].join(' ')">
-          <animateTransform
-            attributeName="transform"
-            type="translate"
-            :from="[p, p].join(' ')"
-            to="0 0"
-            :dur="`${duration / 3}s`"
-            :begin="`${duration}s`"
-            fill="freeze"
-            calcMode="spline"
-            keySplines="0 0 0.5 1"
-            keyTimes="0;1"
-          />
-        </path>
-
-        <animate
-          attributeName="opacity"
-          from="0"
-          to="1"
-          :dur="`${duration / 3}s`"
-          :begin="`${duration}s`"
-          fill="freeze"
-        />
       </g>
     </svg>
 
