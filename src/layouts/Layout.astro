@@ -24,13 +24,9 @@ const { title, description } = Astro.props;
         const links = document.querySelectorAll<HTMLAnchorElement>(
           "a[href]:not([target])",
         );
-        for (const link of links) {
-          if (
-            new URL(link.href, window.location.origin).origin !==
-            window.location.origin
-          )
+        for (const link of links)
+          if (link.getAttribute("href")?.match(/^https?/))
             link.setAttribute("target", "_blank");
-        }
       }).observe(document.body, { childList: true, subtree: true });
     </script>
 

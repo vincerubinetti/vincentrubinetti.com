@@ -84,6 +84,12 @@ const points = range(-bounds + 1, bounds)
 /** put points closer to origin first */
 points.sort((a, b) => a.position.length() - b.position.length());
 
+/** turn off gsap default ticker */
+gsap.ticker.remove(gsap.updateRoot);
+
+/** gsap defaults */
+gsap.defaults({ ease: "power1.out", duration: 1 });
+
 const loader = new GLTFLoader();
 const raycaster = new Raycaster();
 const shapes = { arrow, check, flask, star };
@@ -174,17 +180,6 @@ useIntervalFn(() => {
 const camera = shallowRef<OrthographicCamera>();
 const pointMesh = shallowRef<InstancedMesh>();
 
-/** turn off gsap default ticker */
-gsap.ticker.remove(gsap.updateRoot);
-
-/** gsap defaults */
-gsap.defaults({
-  ease: "power1.out",
-  duration: 1,
-});
-
-const { onBeforeRender } = useLoop();
-
 /** camera angle */
 const rotate = { value: 0 };
 
@@ -200,6 +195,38 @@ watchEffect(() => {
     gsap.to(rotate, { value: rotate.value + diff });
   }
 });
+
+/** generate corner lines */
+const cornersGeometry = new LineSegmentsGeometry();
+cornersGeometry.setPositions(
+  [-bounds, bounds]
+    .map((x) =>
+      [-bounds, bounds].map((y) =>
+        [-bounds, bounds].map((z) =>
+          [
+            /** basis vectors */
+            [1, 0, 0],
+            [0, 1, 0],
+            [0, 0, 1],
+          ].map(([dx, dy, dz]) => [
+            /** from corner */
+            x,
+            y,
+            z,
+            /** back towards origin */
+            x - dx * Math.sign(x) * corner,
+            y - dy * Math.sign(y) * corner,
+            z - dz * Math.sign(z) * corner,
+          ]),
+        ),
+      ),
+    )
+    .flat(4),
+);
+const cornersMaterial = new LineMaterial({ color: "black", linewidth: size });
+const corners = new LineSegments2(cornersGeometry, cornersMaterial);
+
+const { onBeforeRender } = useLoop();
 
 /** frame */
 onBeforeRender(({ elapsed, delta }) => {
@@ -232,36 +259,6 @@ onBeforeRender(({ elapsed, delta }) => {
   /** manually tick gsap forward */
   gsap.updateRoot(elapsed);
 });
-
-/** generate corner lines */
-const cornersGeometry = new LineSegmentsGeometry();
-cornersGeometry.setPositions(
-  [-bounds, bounds]
-    .map((x) =>
-      [-bounds, bounds].map((y) =>
-        [-bounds, bounds].map((z) =>
-          [
-            /** basis vectors */
-            [1, 0, 0],
-            [0, 1, 0],
-            [0, 0, 1],
-          ].map(([dx, dy, dz]) => [
-            /** from corner */
-            x,
-            y,
-            z,
-            /** back towards origin */
-            x - dx * Math.sign(x) * corner,
-            y - dy * Math.sign(y) * corner,
-            z - dz * Math.sign(z) * corner,
-          ]),
-        ),
-      ),
-    )
-    .flat(4),
-);
-const cornersMaterial = new LineMaterial({ color: "black", linewidth: size });
-const corners = new LineSegments2(cornersGeometry, cornersMaterial);
 </script>
 
 <template>

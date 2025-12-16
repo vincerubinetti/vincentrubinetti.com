@@ -109,8 +109,8 @@ useScriptTag("https://www.google.com/recaptcha/api.js");
         <p>
           If you want to use my other music, commission custom music or other
           services, or just chat about anything, please write me a message.
-          <span v-html="address" />
         </p>
+        <p v-html="address" />
       </div>
 
       <form
