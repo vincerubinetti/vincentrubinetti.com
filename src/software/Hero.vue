@@ -43,6 +43,7 @@ const shape = ref<string>();
           {{ label }}
         </button>
       </div>
+
       <div ref="canvas" class="size-75">
         <TresCanvas
           transparency

@@ -8,10 +8,7 @@ import Outline from "@/components/Outline.vue";
     <h2 class="sr-only">Extras</h2>
 
     <div class="grid grid-cols-4 gap-4 max-md:grid-cols-2 max-sm:grid-cols-1">
-      <a
-        href="software"
-        class="button hover:text-indigo-500"
-      >
+      <a href="software" class="button hover:text-indigo-500">
         <Outline />
         <Code />
         Software

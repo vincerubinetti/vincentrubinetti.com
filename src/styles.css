@@ -9,88 +9,72 @@
 
   --width: --spacing(220);
 
-  --font-serif: "Aleo Variable", serif;
-  --font-sans: "Outfit Variable", sans-serif;
-
   --color-cream: hsl(30, 100%, 97%);
-  --color-terracotta: hsl(10, 50%, 90%);
-  --color-mint: hsl(160, 50%, 90%);
-  --color-sky: hsl(200, 50%, 90%);
   --color-marine: hsl(200, 50%, 50%);
 
-  --radius: 7.5px;
+  --font-serif: "Aleo Variable", serif;
+  --font-sans: "Outfit Variable", sans-serif;
 }
 
-body {
-  @apply flex min-h-dvh flex-col font-serif text-[105%] leading-none;
-}
+@layer components {
+  body {
+    @apply flex min-h-dvh flex-col font-serif text-[105%] leading-none;
+  }
 
-main {
-  @apply flex grow flex-col items-center;
-}
+  main {
+    @apply flex grow flex-col items-center;
+  }
 
-header,
-section,
-footer {
-  @apply relative z-0 flex w-full flex-col items-center gap-12 px-[max(--spacing(14),(100%-var(--width))/2)] py-14 max-xl:gap-12 max-xl:p-12 max-lg:gap-10 max-lg:p-10 max-md:gap-8 max-md:p-8 max-sm:gap-6 max-sm:p-6;
-}
+  header,
+  section,
+  footer {
+    @apply relative z-0 flex w-full flex-col items-center gap-12 px-[max(--spacing(14),(100%-var(--width))/2)] py-14 max-xl:gap-12 max-xl:p-12 max-lg:gap-10 max-lg:p-10 max-md:gap-8 max-md:p-8 max-sm:gap-6 max-sm:p-6;
+  }
 
-h1 {
-  @apply font-sans text-2xl tracking-wider uppercase;
-}
+  h1 {
+    @apply font-sans text-2xl tracking-wider uppercase;
+  }
 
-h2 {
-  @apply font-sans text-2xl font-medium;
-}
+  h2 {
+    @apply font-sans text-2xl font-medium;
+  }
 
-h3 {
-  @apply font-sans text-xl;
-}
+  h3 {
+    @apply font-sans text-xl;
+  }
 
-p {
-  @apply leading-loose;
-}
+  p {
+    @apply leading-loose;
+  }
 
-ul,
-ol {
-  @apply flex flex-col gap-2 leading-relaxed;
-}
+  ul,
+  ol {
+    @apply flex flex-col gap-2 leading-relaxed;
+  }
 
-hr {
-  @apply h-px w-full border-0 bg-current/10;
-}
+  hr {
+    @apply h-px w-full border-0 bg-current/10;
+  }
 
-svg {
-  @apply shrink-0 overflow-visible;
-}
+  svg {
+    @apply shrink-0 overflow-visible;
+  }
 
-a:not(.button):not(.button-dark) {
-  @apply text-marine underline underline-offset-2 transition-colors hover:text-current;
-}
+  a {
+    @apply text-marine underline underline-offset-2 transition-colors hover:text-current;
+  }
 
-button {
-  @apply cursor-pointer;
-}
+  button {
+    @apply cursor-pointer;
+  }
 
-@utility button-dark {
-  @apply relative inline-flex items-center justify-center gap-2 rounded p-4 font-sans text-current transition-all hover:bg-current/10;
-}
+  input,
+  textarea {
+    @apply rounded border border-current/25 bg-white p-3 placeholder:text-current/50;
+  }
 
-@utility button {
-  @apply relative inline-flex items-center justify-center gap-2 rounded bg-current/5 p-4 font-sans transition-all hover:bg-current/10;
-}
-
-input,
-textarea {
-  @apply rounded border border-current/25 bg-white p-3 placeholder:text-current/50;
-}
-
-.icon,
-.lucide {
-  @apply h-[1.15em] w-[unset];
-}
-
-.lucide-play,
-.lucide-pause {
-  @apply fill-current stroke-0!;
+  .icon,
+  .lucide {
+    @apply inline-block h-[1.15em] w-[unset];
+  }
 }

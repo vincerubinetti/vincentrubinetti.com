@@ -1,0 +1,21 @@
+@import "tailwindcss";
+
+@theme {
+  --color-terracotta: hsl(10, 50%, 90%);
+  --color-mint: hsl(160, 50%, 90%);
+  --color-sky: hsl(200, 50%, 90%);
+
+  --radius: 0;
+}
+
+@utility button {
+  @apply relative inline-flex items-center justify-center gap-2 rounded bg-current/5 p-4 font-sans text-current no-underline transition-all hover:bg-current/10;
+}
+
+.slant {
+  @apply relative;
+}
+
+.slant::before {
+  @apply bg-terracotta absolute inset-0 -z-10 -skew-y-2 content-[''];
+}

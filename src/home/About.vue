@@ -4,15 +4,18 @@ import profile from "@/assets/images/vince.png?url";
 
 <template>
   <section class="text-white">
-    <div class="flex items-center gap-16 max-lg:flex-col">
+    <div class="flex items-center gap-8 max-lg:flex-col">
       <img :src="profile" alt="" class="size-50 rounded-full" />
       <p>
-        I am a life-long lover of music. Over the past 10+ years I've worked on
-        video games, videos, advertisements, ensemble pieces, and a variety of
-        other collaborations, serving as composer, producer, arranger, musician,
-        and more. My first goal in any project is to create the most impactful
-        work possible; to replicate the profound way that so many great works of
-        music have affected me. I also write software!
+        I started writing music over 20 years ago, with a humble notation
+        program and an obsession with video game music. Throughout my academic
+        years, I was part of drumlines, choirs, and other bands, where I
+        continued to discover the emotions and perspectives that music has to
+        offer. Since those days, I've worked on indie games, videos, ads,
+        collabs, and all sorts of other projects, serving as composer, producer,
+        arranger, musician, and more. I am driven to create music that impacts
+        others in the same way that so many great works of art have profoundly
+        impacted me.
       </p>
     </div>
   </section>

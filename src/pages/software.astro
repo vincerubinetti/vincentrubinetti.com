@@ -1,8 +1,10 @@
 ---
 import Footer from "@/home/Footer.vue";
 import Layout from "@/layouts/Layout.astro";
-import Hero from "@/software/Hero.vue";
+import Intro from "@/software/Intro.vue";
+import Proficiencies from "@/software/Proficiencies.vue";
 import Title from "@/software/Title.vue";
+import "@/software/styles.css";
 ---
 
 <Layout
@@ -13,27 +15,8 @@ import Title from "@/software/Title.vue";
     <Title client:load />
   </header>
   <main>
-    <Hero client:load />
+    <Intro client:load />
+    <Proficiencies client:load />
   </main>
   <Footer class="bg-black text-white" />
 </Layout>
-
-<style is:global>
-  @reference "@/styles.css";
-
-  :root {
-    --radius: 0;
-  }
-
-  body {
-    @apply bg-cream;
-  }
-
-  .slant {
-    @apply relative;
-  }
-
-  .slant::before {
-    @apply bg-terracotta absolute inset-0 -z-10 -skew-y-2 content-[''];
-  }
-</style>
