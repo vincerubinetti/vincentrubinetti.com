@@ -40,10 +40,10 @@ const { pointer, inside, shape } = defineProps<Props>();
 
 /** color palette */
 const colors = `
-  --color-cream: hsl(30, 100%, 97%);
-  --color-terracotta: hsl(10, 50%, 90%);
-  --color-mint: hsl(160, 50%, 90%);
-  --color-sky: hsl(200, 50%, 90%);
+  --color-cream: hsl(30, 100%, 90%);
+  --color-terracotta: hsl(10, 100%, 90%);
+  --color-mint: hsl(160, 100%, 90%);
+  --color-sky: hsl(200, 100%, 90%);
 `
   .split("\n")
   .map((line) => line.split(":")[1]?.trim().slice(0, -1))

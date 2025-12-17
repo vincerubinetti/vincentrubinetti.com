@@ -8,7 +8,7 @@ import GitHub from "@/assets/logos/github.svg?component";
   <section class="bg-cream">
     <h2 class="sr-only">Intro</h2>
 
-    <div class="bg-cream flex items-center gap-4 p-4">
+    <div class="flex flex-wrap items-center justify-center gap-4">
       <a href="https://github.com/vincerubinetti" class="button">
         <GitHub />
         GitHub
@@ -16,7 +16,9 @@ import GitHub from "@/assets/logos/github.svg?component";
 
       <p>Follow my professional collaborations and personal work</p>
     </div>
+  </section>
 
+  <section>
     <div class="flex items-center gap-8 max-lg:flex-col">
       <h3 class="sr-only">About</h3>
       <img :src="profile" alt="" class="w-50" />

@@ -7,10 +7,8 @@
   --breakpoint-lg: 56rem;
   --breakpoint-xl: 68rem;
 
-  --width: --spacing(220);
-
-  --color-cream: hsl(30, 100%, 97%);
-  --color-marine: hsl(200, 50%, 50%);
+  --color-cream: hsl(30, 100%, 98%);
+  --color-marine: color-mix(in hsl, hsl(200, 100%, 50%), currentColor 25%);
 
   --font-serif: "Aleo Variable", serif;
   --font-sans: "Outfit Variable", sans-serif;

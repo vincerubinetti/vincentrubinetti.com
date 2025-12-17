@@ -58,124 +58,124 @@ const hatch = 10;
 </script>
 
 <template>
-  <hgroup class="flex flex-col items-center gap-2 text-center py-8">
+  <hgroup class="flex flex-col items-center gap-2 py-8 text-center">
     <h1 class="sr-only">Vincent Rubinetti</h1>
-
-    <svg
-      ref="svg"
-      xmlns="http://www.w3.org/2000/svg"
-      class="max-w-100"
-      :viewBox="[x, y, w, h].join(' ')"
-    >
-      <filter id="filter">
-        <feTurbulence
-          type="turbulence"
-          baseFrequency="0.25"
-          stitchTiles="noStitch"
-          result="turbulence"
-        />
-        <feDisplacementMap
-          in="SourceGraphic"
-          in2="turbulence"
-          scale="5"
-          xChannelSelector="G"
-          yChannelSelector="A"
-          result="displacement"
-        >
-          <animate
-            attributeName="scale"
-            to="1"
-            :dur="`${duration}s`"
-            fill="freeze"
-          />
-        </feDisplacementMap>
-      </filter>
-
-      <pattern
-        id="hatch"
-        patternUnits="userSpaceOnUse"
-        patternTransform="rotate(-45)"
-        :width="hatch"
-        :height="hatch"
+    <div class="corners-2 w-full">
+      <svg
+        ref="svg"
+        xmlns="http://www.w3.org/2000/svg"
+        :viewBox="[x, y, w, h].join(' ')"
       >
-        <path
-          class="stroke-marine stroke-3"
-          :d="['M', 0, hatch / 2, 'h', hatch].flat().join(' ')"
-        />
-      </pattern>
+        <filter id="filter">
+          <feTurbulence
+            type="turbulence"
+            baseFrequency="0.25"
+            stitchTiles="noStitch"
+            result="turbulence"
+          />
+          <feDisplacementMap
+            in="SourceGraphic"
+            in2="turbulence"
+            scale="5"
+            xChannelSelector="G"
+            yChannelSelector="A"
+            result="displacement"
+          >
+            <animate
+              attributeName="scale"
+              to="1"
+              :dur="`${duration}s`"
+              fill="freeze"
+            />
+          </feDisplacementMap>
+        </filter>
 
-      <clipPath v-for="i in range(3)" :key="i" :id="`clip-${i + 1}`">
-        <rect
-          :x="-p"
-          :y="-p"
-          width="0"
-          :height="h"
-          transform="skewX(-45)"
-          :style="{ transformOrigin }"
+        <pattern
+          id="hatch"
+          patternUnits="userSpaceOnUse"
+          patternTransform="rotate(-45)"
+          :width="hatch"
+          :height="hatch"
         >
-          <animate
-            attributeName="width"
-            from="0"
-            :to="w"
-            :dur="`${duration / 3}s`"
-            :begin="`${i * (duration / 3)}s`"
-            fill="freeze"
+          <path
+            class="stroke-marine stroke-3"
+            :d="['M', 0, hatch / 2, 'h', hatch].flat().join(' ')"
           />
-          <animate
-            v-if="i < 2"
-            attributeName="x"
-            :from="-p"
-            :to="w - p"
-            :dur="`${duration / 3}s`"
-            :begin="`${(i + 1) * (duration / 3)}s`"
-            fill="freeze"
-          />
-        </rect>
-      </clipPath>
+        </pattern>
 
-      <g>
-        <rect
-          class="stroke-marine stroke-3"
-          transform="skewX(-45)"
-          :x="-p"
-          :y="-p"
-          width="1"
-          :height="h"
-          opacity="0"
-          :style="{ transformOrigin }"
-        >
-          <animate
-            attributeName="x"
-            :to="w - p"
-            repeatCount="3"
-            :dur="`${duration / 3}s`"
-            fill="freeze"
-          />
-          <animate
-            attributeName="opacity"
-            values="0;1;1;0"
-            keyTimes="0;0.1;0.9;1"
-            :dur="`${duration}s`"
-            fill="freeze"
-          />
-        </rect>
+        <clipPath v-for="i in range(3)" :key="i" :id="`clip-${i + 1}`">
+          <rect
+            :x="-p"
+            :y="-p"
+            width="0"
+            :height="h"
+            transform="skewX(-45)"
+            :style="{ transformOrigin }"
+          >
+            <animate
+              attributeName="width"
+              from="0"
+              :to="w"
+              :dur="`${duration / 3}s`"
+              :begin="`${i * (duration / 3)}s`"
+              fill="freeze"
+            />
+            <animate
+              v-if="i < 2"
+              attributeName="x"
+              :from="-p"
+              :to="w - p"
+              :dur="`${duration / 3}s`"
+              :begin="`${(i + 1) * (duration / 3)}s`"
+              fill="freeze"
+            />
+          </rect>
+        </clipPath>
 
-        <g
-          clip-path="url(#clip-1)"
-          fill="url(#hatch)"
-          filter="url(#filter)"
-          v-html="svgContent"
-        />
-        <g
-          class="stroke-marine stroke-3"
-          fill="url(#hatch)"
-          clip-path="url(#clip-2)"
-          filter="url(#filter)"
-          v-html="svgContent"
-        />
-        <g clip-path="url(#clip-3)" v-html="svgContent" />
-      </g>
-    </svg>
+        <g>
+          <rect
+            class="stroke-marine stroke-3"
+            transform="skewX(-45)"
+            :x="-p"
+            :y="-p"
+            width="1"
+            :height="h"
+            opacity="0"
+            :style="{ transformOrigin }"
+          >
+            <animate
+              attributeName="x"
+              :to="w - p"
+              repeatCount="3"
+              :dur="`${duration / 3}s`"
+              fill="freeze"
+            />
+            <animate
+              attributeName="opacity"
+              values="0;1;1;0"
+              keyTimes="0;0.1;0.9;1"
+              :dur="`${duration}s`"
+              fill="freeze"
+            />
+          </rect>
+
+          <g
+            clip-path="url(#clip-1)"
+            fill="url(#hatch)"
+            filter="url(#filter)"
+            v-html="svgContent"
+          />
+          <g
+            class="stroke-marine stroke-3"
+            fill="url(#hatch)"
+            clip-path="url(#clip-2)"
+            filter="url(#filter)"
+            v-html="svgContent"
+          />
+          <g clip-path="url(#clip-3)" v-html="svgContent" />
+        </g>
+      </svg>
+    </div>
 
     <div class="font-light tracking-wider">
       Frontend developer · UX/UI designer

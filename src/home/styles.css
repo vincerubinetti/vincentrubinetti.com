@@ -1,6 +1,9 @@
 @import "tailwindcss";
+@import "@/styles.css";
 
 @theme {
+  --width: --spacing(200);
+
   --radius: 7.5px;
 }
 

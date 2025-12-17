@@ -1,16 +1,28 @@
 @import "tailwindcss";
+@import "@/styles.css";
 
 @theme {
-  --color-terracotta: hsl(10, 50%, 90%);
-  --color-mint: hsl(160, 50%, 90%);
-  --color-sky: hsl(200, 50%, 90%);
+  --width: --spacing(250);
+
+  --color-terracotta: hsl(10, 100%, 90%);
+  --color-mint: hsl(160, 100%, 90%);
+  --color-sky: hsl(200, 100%, 90%);
+
+  --tl-corner: radial-gradient(black 0, black 100%, transparent) top left / 8px
+    8px no-repeat;
+  --tr-corner: radial-gradient(black 0, black 100%, transparent) top right / 8px
+    8px no-repeat;
+  --br-corner: radial-gradient(black 0, black 100%, transparent) bottom right /
+    8px 8px no-repeat;
+  --bl-corner: radial-gradient(black 0, black 100%, transparent) bottom left /
+    8px 8px no-repeat;
 }
 
 @utility button {
   @apply relative z-0 inline-flex items-center justify-center gap-2 p-4 font-sans text-current no-underline transition-all;
 
   &::before {
-    @apply bg-mint absolute inset-0 -z-10 scale-x-0 transition-all content-[''];
+    @apply bg-terracotta absolute inset-0 -z-10 scale-x-0 transition-all content-[''];
   }
 
   &:hover::before {
@@ -18,31 +30,27 @@
   }
 
   &::after {
-    @apply absolute inset-0 border-2 border-current mask-intersect transition-all content-[''];
-
-    mask-image:
-      linear-gradient(
-        to bottom,
-        black 0px,
-        black calc(var(--spacing) * 2),
-        transparent calc(var(--spacing) * 2),
-        transparent calc(100% - calc(var(--spacing) * 2)),
-        black calc(100% - calc(var(--spacing) * 2)),
-        black 100%
-      ),
-      linear-gradient(
-        to right,
-        black 0px,
-        black calc(var(--spacing) * 2),
-        transparent calc(var(--spacing) * 2),
-        transparent calc(100% - calc(var(--spacing) * 2)),
-        black calc(100% - calc(var(--spacing) * 2)),
-        black 100%
-      );
+    @apply absolute inset-0 border-2 border-current transition-all content-[''] [mask:var(--tl-corner),var(--tr-corner),var(--br-corner),var(--bl-corner)];
   }
 
   &:hover::after {
-    @apply scale-90;
+    @apply scale-95 mask-size-[12px_12px];
+  }
+}
+
+@utility corners-2 {
+  @apply relative;
+
+  &::before {
+    @apply border-marine absolute inset-0 border-2 transition-all content-[''] [mask:var(--tl-corner),var(--br-corner)];
+  }
+}
+
+@utility corners-1 {
+  @apply relative;
+
+  &::before {
+    @apply absolute inset-0 border-2 border-zinc-400 transition-all content-[''] [mask:var(--tl-corner)];
   }
 }
 

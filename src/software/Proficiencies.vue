@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { Ellipsis } from "lucide-vue-next";
 import css from "@/assets/logos/css.svg?component";
 import d3 from "@/assets/logos/d3.svg?component";
 import html from "@/assets/logos/html.svg?component";
@@ -13,64 +14,61 @@ import vue from "@/assets/logos/vue.svg?component";
 const proficiencies = [
   {
     icons: [typescript],
-    name: "TypeScript",
     description:
       "<i>Extensive</i> experience building large, robust apps w/ <b>TypeScript</b>",
   },
   {
     icons: [react],
-    name: "React",
     description:
-      "<i>Extensive</i> experience building large apps w/ modern <b>React</b>",
+      "<i>Extensive</i> experience building large apps w/ modern functional composable <b>React</b>",
   },
   {
     icons: [vue],
-    name: "Vue",
     description:
       "<i>Extensive</i> experience building large apps w/ <b>Vue</b> 3 and composition API",
   },
   {
     icons: [html, css, javascript],
-    name: "HTML, CSS, JavaScript",
     description:
-      "<i>Extensive</i> <i>historical</i> and <i>modern</i> exp. w/ <i>vanilla</i> <b>HTML</b>, <b>CSS</b>, <b>JavaScript</b>",
+      "<i>Extensive</i> <i>historical</i> and <i>modern</i> experience w/ <i>vanilla</i> <b>HTML</b>, <b>CSS</b>, <b>JavaScript</b>",
   },
   {
     icons: [node],
-    name: "Node",
     description:
-      "Experience building data processing, automation, etc. w/ <b>Node</b>",
+      "Experience building pipelines, automation, scripts, etc. w/ <b>Node</b>",
   },
-  {
-    icons: [svg],
-    name: "SVG",
-    description:
-      "<i>Extensive</i> experience designing and animating SVGs by hand",
-  },
+
   {
     icons: [d3],
-    name: "D3",
     description:
       "<i>Extensive</i> experience creating custom interactive visualizations w/ <b>D3</b>",
   },
   {
+    icons: [svg],
+    description:
+      "<i>Extensive</i> experience designing and animating SVGs by hand",
+  },
+  {
     icons: [tailwind],
-    name: "Tailwind",
     description:
       "Experience building beautiful, responsive UIs w/ <b>Tailwind</b>",
+  },
+  {
+    icons: [Ellipsis],
+    description: "Much more",
   },
 ];
 </script>
 
 <template>
-  <section>
-    <div class="grid grid-cols-3 gap-8">
+  <section class="bg-terracotta/25">
+    <div class="grid grid-cols-3 gap-8 max-lg:grid-cols-2 max-md:grid-cols-1">
       <h3 class="sr-only">Proficiencies</h3>
 
       <div
-        v-for="{ icons, name, description } in proficiencies"
-        :key="name"
-        class="relative flex items-center gap-4"
+        v-for="({ icons, description }, index) in proficiencies"
+        :key="index"
+        class="corners-1 relative flex gap-4 pt-4 pl-4"
       >
         <div class="flex w-10 shrink-0 flex-col items-center gap-1">
           <component
@@ -81,8 +79,8 @@ const proficiencies = [
             :class="icons.length > 1 ? 'w-5/8!' : 'w-full!'"
           />
         </div>
-        <strong class="sr-only">{{ name }}</strong>
-        <p v-html="description" />
+
+        <p v-html="description" class="text-balance" />
       </div>
     </div>
   </section>

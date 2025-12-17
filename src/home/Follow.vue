@@ -23,7 +23,7 @@ import { getColor } from "./colors";
         Complete Discography
       </a>
 
-      <p>
+      <p class="text-balance">
         <b>Download</b> and <b>stream</b> the official, highest-quality, most
         up-to-date versions of <i>all of my music</i>, on Bandcamp.
       </p>
@@ -69,7 +69,9 @@ import { getColor } from "./colors";
         </a>
       </div>
 
-      <p><b>Stream</b> and <b>share</b> <i>select</i> songs and albums.</p>
+      <p class="text-balance">
+        <b>Stream</b> and <b>share</b> <i>select</i> songs and albums.
+      </p>
     </div>
   </section>
 </template>
