@@ -1,61 +1,52 @@
 <script setup lang="ts">
-import { Ellipsis } from "lucide-vue-next";
-import css from "@/assets/logos/css.svg?component";
-import d3 from "@/assets/logos/d3.svg?component";
-import html from "@/assets/logos/html.svg?component";
-import javascript from "@/assets/logos/javascript.svg?component";
-import node from "@/assets/logos/node.svg?component";
-import react from "@/assets/logos/react.svg?component";
-import svg from "@/assets/logos/svg.svg?component";
-import tailwind from "@/assets/logos/tailwind.svg?component";
-import typescript from "@/assets/logos/typescript.svg?component";
-import vue from "@/assets/logos/vue.svg?component";
+import Actions from "@/assets/logos/actions.svg?component";
+import Astro from "@/assets/logos/astro.svg?component";
+import Bun from "@/assets/logos/bun.svg?component";
+import Canvas from "@/assets/logos/canvas.svg?component";
+import Css from "@/assets/logos/css.svg?component";
+import D3 from "@/assets/logos/d3.svg?component";
+import Figma from "@/assets/logos/figma.svg?component";
+import Html from "@/assets/logos/html.svg?component";
+import JavaScript from "@/assets/logos/javascript.svg?component";
+import Jekyll from "@/assets/logos/jekyll.svg?component";
+import Next from "@/assets/logos/next.svg?component";
+import Node from "@/assets/logos/node.svg?component";
+import Playwright from "@/assets/logos/playwright.svg?component";
+import React from "@/assets/logos/react.svg?component";
+import Svg from "@/assets/logos/svg.svg?component";
+import Tailwind from "@/assets/logos/tailwind.svg?component";
+import TypeScript from "@/assets/logos/typescript.svg?component";
+import Vue from "@/assets/logos/vue.svg?component";
 
 const proficiencies = [
   {
-    icons: [typescript],
+    icons: { TypeScript, React, Vue },
     description:
-      "<i>Extensive</i> experience building large, robust apps w/ <b>TypeScript</b>",
+      "<i>Extensive</i> experience building large-scale apps w/ modern <b>TypeScript</b>, <b>React</b> & <b>Vue</b>",
   },
   {
-    icons: [react],
+    icons: { Html, Css, JavaScript },
     description:
-      "<i>Extensive</i> experience building large apps w/ modern functional composable <b>React</b>",
+      "<i>Extensive</i> <i>historical</i> & <i>modern</i> experience w/ <i>vanilla</i> <b>HTML</b>, <b>CSS</b>, & <b>JavaScript</b>",
   },
   {
-    icons: [vue],
+    icons: { Svg, Canvas, D3 },
     description:
-      "<i>Extensive</i> experience building large apps w/ <b>Vue</b> 3 and composition API",
+      "<i>Extensive</i> experience designing custom interactive, animated graphics w/ <b>SVG</b>, <b>Canvas</b>, & <b>D3</b>",
   },
   {
-    icons: [html, css, javascript],
+    icons: { Node, Bun, Actions },
     description:
-      "<i>Extensive</i> <i>historical</i> and <i>modern</i> experience w/ <i>vanilla</i> <b>HTML</b>, <b>CSS</b>, <b>JavaScript</b>",
+      "Experience building pipelines, automation, bots, & CLIs w/ <b>Node</b>, <b>Bun</b>, & <b>GitHub Actions</b>",
   },
   {
-    icons: [node],
+    icons: { Jekyll, Astro, Next },
     description:
-      "Experience building pipelines, automation, scripts, etc. w/ <b>Node</b>",
-  },
-
-  {
-    icons: [d3],
-    description:
-      "<i>Extensive</i> experience creating custom interactive visualizations w/ <b>D3</b>",
+      "Experience building static & server-rendered sites w/ <b>Jekyll</b>, <b>Astro</b>, & <b>Next</b>",
   },
   {
-    icons: [svg],
-    description:
-      "<i>Extensive</i> experience designing and animating SVGs by hand",
-  },
-  {
-    icons: [tailwind],
-    description:
-      "Experience building beautiful, responsive UIs w/ <b>Tailwind</b>",
-  },
-  {
-    icons: [Ellipsis],
-    description: "Much more",
+    icons: { Playwright, Tailwind, Figma },
+    description: "...and<br/>&nbsp;&nbsp;much<br/>&nbsp;&nbsp;&nbsp;&nbsp;more",
   },
 ];
 </script>
@@ -68,15 +59,15 @@ const proficiencies = [
       <div
         v-for="({ icons, description }, index) in proficiencies"
         :key="index"
-        class="corners-1 relative flex gap-4 pt-4 pl-4"
+        class="corners-1 relative flex gap-6 pt-4 pl-4"
       >
-        <div class="flex w-10 shrink-0 flex-col items-center gap-1">
+        <div class="flex w-6 shrink-0 flex-col items-center gap-3">
           <component
-            v-for="(icon, index) in icons"
+            v-for="(icon, name, index) in icons"
             :key="index"
             :is="icon"
-            class="h-auto!"
-            :class="icons.length > 1 ? 'w-5/8!' : 'w-full!'"
+            :alt="name"
+            class="aspect-square size-full h-[unset]!"
           />
         </div>
 

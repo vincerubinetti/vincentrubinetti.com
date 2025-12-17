@@ -19,14 +19,21 @@ const { title, description } = Astro.props;
 
     <script>
       /** make all external links open in a new tab */
-      new MutationObserver(() => {
+      const makeExternal = () => {
         const links = document.querySelectorAll<HTMLAnchorElement>(
           "a[href]:not([target])",
         );
-        for (const link of links)
+        for (const link of links) {
+          console.log(link.getAttribute("href"));
           if (link.getAttribute("href")?.match(/^https?/))
             link.setAttribute("target", "_blank");
-      }).observe(document.body, { childList: true, subtree: true });
+        }
+      };
+      window.addEventListener("load", makeExternal);
+      new MutationObserver(makeExternal).observe(document.body, {
+        childList: true,
+        subtree: true,
+      });
     </script>
 
     <meta charset="utf-8" />
