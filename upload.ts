@@ -18,10 +18,12 @@ const config = {
 const source = WEBSITE_SOURCE;
 const target = WEBSITE_TARGET;
 
+/** upload local directory w/ built website to remote host directory */
 const sftp = new Client();
 await sftp.connect(config);
 sftp.on("upload", (info) => console.info(`Uploaded ${info.source}`));
 const result = await sftp.uploadDir(source, target);
 console.info(result);
+/** make php file executable */
 await sftp.chmod(target + "email.php", 0o755);
 sftp.end();

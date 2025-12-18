@@ -5,8 +5,7 @@
   --width: --spacing(250);
 
   --color-terracotta: hsl(10, 100%, 90%);
-  --color-mint: hsl(160, 100%, 90%);
-  --color-sky: hsl(200, 100%, 90%);
+  --color-navy: hsl(200, 100%, 40%);
 
   --tl-corner: radial-gradient(black 0, black 100%, transparent) top left
     no-repeat;
@@ -31,35 +30,43 @@ h2 {
   @apply relative z-0;
 
   &::after {
-    @apply absolute inset-0 -z-10 opacity-25 content-[''];
+    @apply absolute inset-0 -z-10 opacity-10 content-[''];
     background-image: url("../assets/images/paper.svg");
   }
 }
 
 @utility button {
-  @apply relative z-0 inline-flex items-center justify-center gap-2 p-4 font-sans text-current no-underline transition-all;
+  @apply inline-flex items-center justify-center gap-2 p-4 font-sans text-current no-underline transition-all;
+}
+
+@utility highlight {
+  @apply relative;
 
   &::before {
-    @apply bg-terracotta absolute inset-0 -z-10 scale-x-0 transition-all content-[''];
+    @apply bg-terracotta absolute inset-0 scale-x-0 -skew-x-90 mix-blend-multiply transition-all content-[''];
   }
 
   &:hover::before {
-    @apply scale-x-100 -skew-5;
+    @apply scale-x-100 skew-x-0;
   }
+}
+
+@utility corners-4 {
+  @apply relative;
 
   &::after {
     @apply absolute inset-0 border-2 border-current mask-size-[8px_8px]! transition-all content-[''] [mask:var(--tl-corner),var(--tr-corner),var(--br-corner),var(--bl-corner)];
   }
 
   &:hover::after {
-    @apply scale-95 mask-size-[50%_50%];
+    @apply mask-size-[50%_50%]!;
   }
 }
 
 @utility corners-2 {
   @apply relative;
 
-  &::before {
+  &::after {
     @apply absolute inset-0 border-2 border-current mask-size-[8px_8px]! transition-all content-[''] [mask:var(--tl-corner),var(--br-corner)];
   }
 }
@@ -67,17 +74,17 @@ h2 {
 @utility corners-1 {
   @apply relative;
 
-  &::before {
-    @apply absolute inset-0 -z-10 border-2 border-current mask-size-[16px_16px]! transition-all content-[''] [mask:var(--tl-corner)];
+  &::after {
+    @apply absolute inset-0 border-2 border-current mask-size-[16px_16px]! transition-all content-[''] [mask:var(--tl-corner)];
   }
 
-  &:hover::before {
+  &:hover::after {
     @apply mask-size-[32px_32px]!;
   }
 }
 
 @utility slant {
-  @apply relative;
+  @apply relative z-0;
 
   &::before {
     @apply bg-terracotta absolute inset-0 -z-10 -skew-y-2 content-[''];

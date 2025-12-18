@@ -3,11 +3,14 @@ import GitHub from "@/assets/logos/github.svg?component";
 </script>
 
 <template>
-  <section class="bg-cream paper">
+  <section class="bg-terracotta/25 paper">
     <h2 class="sr-only">Intro</h2>
 
     <div class="flex flex-wrap items-center justify-center gap-4">
-      <a href="https://github.com/vincerubinetti" class="button">
+      <a
+        href="https://github.com/vincerubinetti"
+        class="button highlight corners-4"
+      >
         <GitHub />
         GitHub
       </a>

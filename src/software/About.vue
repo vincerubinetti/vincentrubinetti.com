@@ -8,7 +8,9 @@ import profile from "@/assets/images/vince.png?url";
     <h2 class="sr-only">About</h2>
 
     <div class="flex max-w-full items-center gap-8 max-lg:flex-col">
-      <img :src="profile" alt="" class="w-50" />
+      <div class="highlight w-50 shrink-0">
+        <img :src="profile" alt="" />
+      </div>
       <p>
         I started writing software over 20 years ago, making humble games,
         websites, and other tinkerings throughout my childhood. As the web grew,
@@ -21,9 +23,9 @@ import profile from "@/assets/images/vince.png?url";
       </p>
     </div>
 
-    <p>
-      But really,
-      <i>the best way to understand what I do is to see it yourself</i>.
+    <p class="highlight">
+      But really, the best way to understand what I do is to
+      <i>see it yourself</i>.
       <CornerRightDown />
     </p>
   </section>

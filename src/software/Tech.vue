@@ -32,7 +32,7 @@ const tech = [
   {
     icons: { Svg, Canvas, D3 },
     description:
-      "<i>Extensive</i> experience designing custom interactive, animated graphics w/ <b>SVG</b>, <b>Canvas</b>, & <b>D3</b>",
+      "<i>Extensive</i> experience designing custom, interactive, animated graphics w/ <b>SVG</b>, <b>Canvas</b>, & <b>D3</b>",
   },
   {
     icons: { Node, Bun, Actions },
