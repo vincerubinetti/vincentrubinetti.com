@@ -1,9 +1,10 @@
 ---
 import Footer from "@/home/Footer.vue";
 import Layout from "@/layouts/Layout.astro";
-import Intro from "@/software/Intro.vue";
+import About from "@/software/About.vue";
+import Header from "@/software/Header.vue";
+import SubHeader from "@/software/SubHeader.vue";
 import Tech from "@/software/Tech.vue";
-import Title from "@/software/Title.vue";
 import "@/software/styles.css";
 ---
 
@@ -11,12 +12,11 @@ import "@/software/styles.css";
   title="Software | Vincent Rubinetti"
   description="Frontend developer · UX/UI designer"
 >
-  <header class="bg-sky">
-    <Title client:load />
-  </header>
+  <Header client:load />
   <main>
-    <Intro client:load />
-    <Tech client:load />
+    <SubHeader />
+    <About />
+    <Tech />
   </main>
   <Footer class="bg-black text-white" />
 </Layout>

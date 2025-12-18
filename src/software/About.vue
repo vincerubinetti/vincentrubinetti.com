@@ -1,23 +1,9 @@
 <script setup lang="ts">
 import { CornerRightDown } from "lucide-vue-next";
 import profile from "@/assets/images/vince.png?url";
-import GitHub from "@/assets/logos/github.svg?component";
 </script>
 
 <template>
-  <section class="bg-cream">
-    <h2 class="sr-only">Intro</h2>
-
-    <div class="flex flex-wrap items-center justify-center gap-4">
-      <a href="https://github.com/vincerubinetti" class="button">
-        <GitHub />
-        GitHub
-      </a>
-
-      <p>Follow my professional collaborations and personal work</p>
-    </div>
-  </section>
-
   <section>
     <h2 class="sr-only">About</h2>
 

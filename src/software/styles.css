@@ -31,7 +31,7 @@ h2 {
   @apply relative z-0;
 
   &::after {
-    @apply absolute inset-0 -z-10 bg-size-[100px_100px] opacity-10 content-[''];
+    @apply absolute inset-0 -z-10 opacity-25 content-[''];
     background-image: url("../assets/images/paper.svg");
   }
 }
