@@ -2,7 +2,7 @@
 import { computed, useTemplateRef, watch } from "vue";
 import { useMouseInElement } from "@vueuse/core";
 import { range } from "lodash-es";
-import svgFile from "./title.svg?raw";
+import svgFile from "@/assets/brand/title.svg?raw";
 
 const svg = useTemplateRef("svg");
 

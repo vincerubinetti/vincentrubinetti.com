@@ -140,9 +140,7 @@ const setup = [
         class="flex flex-col gap-6 rounded bg-zinc-100 p-4"
         :class="[items.length > 10 && 'row-span-2']"
       >
-        <h3 class="flex items-center gap-2">
-          <component :is="icon" class="text-zinc-500" />{{ name }}
-        </h3>
+        <h3><component :is="icon" class="text-zinc-500" />{{ name }}</h3>
 
         <ul>
           <li v-for="(item, index) in items" :key="index" class="item">

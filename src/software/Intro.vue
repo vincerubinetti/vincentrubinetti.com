@@ -19,8 +19,9 @@ import GitHub from "@/assets/logos/github.svg?component";
   </section>
 
   <section>
-    <div class="flex items-center gap-8 max-lg:flex-col">
-      <h3 class="sr-only">About</h3>
+    <h2 class="sr-only">About</h2>
+
+    <div class="flex max-w-full items-center gap-8 max-lg:flex-col">
       <img :src="profile" alt="" class="w-50" />
       <p>
         I started writing software over 20 years ago, making humble games,

@@ -18,7 +18,7 @@ import Tailwind from "@/assets/logos/tailwind.svg?component";
 import TypeScript from "@/assets/logos/typescript.svg?component";
 import Vue from "@/assets/logos/vue.svg?component";
 
-const proficiencies = [
+const tech = [
   {
     icons: { TypeScript, React, Vue },
     description:
@@ -53,13 +53,13 @@ const proficiencies = [
 
 <template>
   <section class="bg-terracotta/25">
-    <div class="grid grid-cols-3 gap-8 max-lg:grid-cols-2 max-md:grid-cols-1">
-      <h3 class="sr-only">Proficiencies</h3>
+    <h2>Tech</h2>
 
+    <div class="grid grid-cols-3 gap-8 max-lg:grid-cols-2 max-md:grid-cols-1">
       <div
-        v-for="({ icons, description }, index) in proficiencies"
+        v-for="({ icons, description }, index) in tech"
         :key="index"
-        class="corners-1 relative flex gap-6 pt-4 pl-4"
+        class="corners-1 relative flex gap-6 pt-6 pl-6"
       >
         <div class="flex w-6 shrink-0 flex-col items-center gap-3">
           <component

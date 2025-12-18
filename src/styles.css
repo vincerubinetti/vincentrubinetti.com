@@ -29,16 +29,22 @@
     @apply relative z-0 flex w-full flex-col items-center gap-12 px-[max(--spacing(14),(100%-var(--width))/2)] py-14 max-xl:gap-12 max-xl:p-12 max-lg:gap-10 max-lg:p-10 max-md:gap-8 max-md:p-8 max-sm:gap-6 max-sm:p-6;
   }
 
+  h1,
+  h2,
+  h3 {
+    @apply flex items-center gap-2 font-sans tracking-wider;
+  }
+
   h1 {
-    @apply font-sans text-2xl tracking-wider uppercase;
+    @apply text-2xl uppercase;
   }
 
   h2 {
-    @apply font-sans text-2xl font-medium;
+    @apply text-2xl font-medium uppercase;
   }
 
   h3 {
-    @apply font-sans text-xl;
+    @apply text-xl font-medium;
   }
 
   p {

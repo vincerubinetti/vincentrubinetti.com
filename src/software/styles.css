@@ -18,6 +18,24 @@
     no-repeat;
 }
 
+h2 {
+  @apply w-full;
+
+  &::after {
+    @apply ml-4 h-0.5 grow opacity-25 content-[''];
+    background-image: url("../assets/images/dash.svg");
+  }
+}
+
+@utility paper {
+  @apply relative z-0;
+
+  &::after {
+    @apply absolute inset-0 -z-10 bg-size-[100px_100px] opacity-10 content-[''];
+    background-image: url("../assets/images/paper.svg");
+  }
+}
+
 @utility button {
   @apply relative z-0 inline-flex items-center justify-center gap-2 p-4 font-sans text-current no-underline transition-all;
 
