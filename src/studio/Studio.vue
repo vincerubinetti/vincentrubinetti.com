@@ -124,13 +124,13 @@ const setup = [
   <section>
     <h2>Studio</h2>
 
-    <div class="grid grid-cols-2 gap-4 max-md:grid-cols-1">
-      <a :href="picture">
+    <div class="grid grid-cols-2 items-start gap-4 max-md:grid-cols-1">
+      <a :href="picture" class="self-stretch overflow-hidden">
         <img
           :src="picture"
           alt=""
           loading="lazy"
-          class="size-full object-cover"
+          class="size-full object-cover transition-transform hover:scale-110"
         />
       </a>
 
