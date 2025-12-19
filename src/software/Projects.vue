@@ -57,20 +57,20 @@ for (const repo of Object.values(repos))
 
     <details>
       <summary class="highlight corners-4">
-        All GitHub work
+        All public GitHub work
         <ChevronDown />
       </summary>
 
       <h3>Orgs</h3>
       <div
-        class="grid w-full grid-cols-[repeat(auto-fit,minmax(calc(var(--spacing)*10),auto))] place-content-center gap-2"
+        class="max-xs:[--cols:1] grid w-full grid-cols-[repeat(var(--cols),auto)] place-content-center place-items-center gap-2 [--cols:5] max-sm:[--cols:3]"
       >
         <a
           v-for="({ name, avatar }, index) in orgs"
           :key="index"
           :href="`https://github.com/${name}`"
           :title="name"
-          class="flex flex-col items-center border-2 border-transparent hover:border-black"
+          class="flex size-16 flex-col items-center border-2 border-transparent hover:border-black"
         >
           <img :src="avatar" :alt="name" />
         </a>
