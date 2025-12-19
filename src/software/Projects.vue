@@ -9,17 +9,18 @@ import {
   orderBy,
   toPairs,
 } from "lodash-es";
-import { ChevronDown } from "lucide-vue-next";
+import {
+  Bug,
+  ChevronDown,
+  Eye,
+  GitCommit,
+  GitPullRequest,
+} from "lucide-vue-next";
 import contributions from "./contributions.json";
 import orgs from "./orgs.json";
 
-/** how much to value commits vs prs vs etc when calculating score */
-const commitWeight = 1 / 10;
-const issueWeight = 1 / 20;
-const prWeight = 1 / 5;
-const reviewWeight = 1 / 10;
-
-const includeIssues = ref(false);
+/** fall-off function */
+const value = (x: number, w: number, v: number) => (1 - 2 ** (-x / w)) * v;
 
 const repos = fromPairs(
   orderBy(
@@ -28,10 +29,10 @@ const repos = fromPairs(
         ...repo,
         /** loose importance of repo */
         score:
-          repo.commits * commitWeight +
-          repo.issues * issueWeight +
-          repo.prs * prWeight +
-          repo.reviews * reviewWeight,
+          value(repo.commits, 50, 5) +
+          value(repo.issues, 10, 1) +
+          value(repo.prs, 100, 10) +
+          value(repo.reviews, 100, 5),
       })),
     ),
     ([, repo]) => repo.score,
@@ -40,6 +41,8 @@ const repos = fromPairs(
 );
 
 delete repos.total;
+
+const repoExtras = ref(false);
 
 /** normalize scores */
 const minScore = min(map(repos, "score"));
@@ -66,37 +69,62 @@ for (const repo of Object.values(repos))
           v-for="({ name, avatar }, index) in orgs"
           :key="index"
           :href="`https://github.com/${name}`"
-          class="flex size-10 flex-col items-center border-2 border-transparent hover:border-black"
+          :title="name"
+          class="flex flex-col items-center border-2 border-transparent hover:border-black"
         >
           <img :src="avatar" :alt="name" />
         </a>
       </div>
 
       <h3>Repos</h3>
-      <div class="grid grid-cols-3 gap-2 max-md:grid-cols-2 max-sm:grid-cols-1">
+      <label>
+        <input type="checkbox" v-model="repoExtras" />
+        Extras
+      </label>
+
+      <div
+        class="grid place-items-center gap-x-4 gap-y-2"
+        :class="
+          repoExtras
+            ? 'grid-cols-[1fr_auto_auto_auto_auto]'
+            : 'grid-cols-[1fr_auto_auto]'
+        "
+      >
+        <b class="justify-self-start">Repo</b>
+        <div title="Commits"><GitCommit /></div>
+        <div title="Pull Requests"><GitPullRequest /></div>
+        <template v-if="repoExtras">
+          <div title="Issues"><Bug /></div>
+          <div title="Reviews"><Eye /></div>
+        </template>
         <template
           v-for="({ commits, issues, prs, reviews }, name) in repos"
           :key="name"
         >
-          <a
-            v-if="includeIssues || commits || prs || reviews"
-            :href="`https://github.com/${name}/graphs/contributors#:~:text=vincerubinetti`"
-            :title="
-              toPairs({ commits, issues, prs, reviews })
-                .map(([k, v]) => `${k}: ${v}`)
-                .join(', ')
-            "
-            class="truncate"
-          >
-            {{ name }}
-          </a>
+          <template v-if="repoExtras || commits || prs || reviews">
+            <a
+              :href="`https://github.com/${name}/graphs/contributors#:~:text=vincerubinetti`"
+              class="grow justify-self-start truncate"
+            >
+              {{ name }}
+            </a>
+            <span class="text-center">
+              {{ commits }}
+            </span>
+            <span class="text-center">
+              {{ prs }}
+            </span>
+            <template v-if="repoExtras">
+              <span class="text-center">
+                {{ issues }}
+              </span>
+              <span class="text-center">
+                {{ reviews }}
+              </span>
+            </template>
+          </template>
         </template>
       </div>
-
-      <label>
-        <input type="checkbox" v-model="includeIssues" />
-        Include issues
-      </label>
     </details>
   </section>
 </template>
