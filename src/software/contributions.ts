@@ -1,6 +1,6 @@
 import { writeFileSync } from "fs";
-import { Octokit } from "@octokit/core";
 import { throttling } from "@octokit/plugin-throttling";
+import { Octokit } from "octokit";
 
 /** params */
 const login = "vincerubinetti";
@@ -8,10 +8,8 @@ const start = 2008;
 const end = new Date().getFullYear();
 const output = "src/software/contributions.json";
 
-const OctokitWithPlugins = Octokit.plugin(throttling);
-
 /** github api client */
-const octokit = new OctokitWithPlugins({
+const octokit = new (Octokit.plugin(throttling))({
   auth: process.env.GITHUB_TOKEN,
   throttle: {
     onRateLimit: (retryAfter, { method, url }) => {
@@ -49,7 +47,7 @@ type ContributionsByRepository = {
 };
 
 /** get counts of different contributions for user in year */
-const getContributionsForYear = async (login: string, year: number) => {
+const getContributions = async (login: string, year: number) => {
   /** date range */
   const from = `${year}-01-01T00:00:00Z`;
   const to = `${year}-12-31T23:59:59Z`;
@@ -142,7 +140,7 @@ const keys: [keyof ContributionsCollection, keyof ContributionCounts][] = [
 /** one year at a time */
 for (let year = start; year < end; year++) {
   console.info(year);
-  const data = await getContributionsForYear(login, year);
+  const data = await getContributions(login, year);
 
   /** add this year's data to totals */
   for (const [source, target] of keys) {

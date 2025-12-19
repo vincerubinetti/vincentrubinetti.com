@@ -1,0 +1,92 @@
+[
+  {
+    "name": "greenelab",
+    "avatar": "https://avatars.githubusercontent.com/u/9607754?v=4",
+    "state": "active",
+    "role": "admin"
+  },
+  {
+    "name": "krishnanlab",
+    "avatar": "https://avatars.githubusercontent.com/u/20442816?v=4",
+    "state": "active",
+    "role": "member"
+  },
+  {
+    "name": "tis-lab",
+    "avatar": "https://avatars.githubusercontent.com/u/37163112?v=4",
+    "state": "active",
+    "role": "member"
+  },
+  {
+    "name": "asapbio",
+    "avatar": "https://avatars.githubusercontent.com/u/37251277?v=4",
+    "state": "active",
+    "role": "member"
+  },
+  {
+    "name": "manubot",
+    "avatar": "https://avatars.githubusercontent.com/u/47162643?v=4",
+    "state": "active",
+    "role": "member"
+  },
+  {
+    "name": "JRaviLab",
+    "avatar": "https://avatars.githubusercontent.com/u/47785056?v=4",
+    "state": "active",
+    "role": "member"
+  },
+  {
+    "name": "nih-cfde",
+    "avatar": "https://avatars.githubusercontent.com/u/50423532?v=4",
+    "state": "active",
+    "role": "admin"
+  },
+  {
+    "name": "University-of-Colorado-Anschutz-Denver",
+    "avatar": "https://avatars.githubusercontent.com/u/82063509?v=4",
+    "state": "active",
+    "role": "member"
+  },
+  {
+    "name": "CU-DBMI",
+    "avatar": "https://avatars.githubusercontent.com/u/85517829?v=4",
+    "state": "active",
+    "role": "admin"
+  },
+  {
+    "name": "colorado-cancer-center",
+    "avatar": "https://avatars.githubusercontent.com/u/90764067?v=4",
+    "state": "inactive",
+    "role": "unaffiliated"
+  },
+  {
+    "name": "bridge2ai",
+    "avatar": "https://avatars.githubusercontent.com/u/103535911?v=4",
+    "state": "active",
+    "role": "member"
+  },
+  {
+    "name": "pivlab",
+    "avatar": "https://avatars.githubusercontent.com/u/134349084?v=4",
+    "state": "active",
+    "role": "admin"
+  },
+  {
+    "name": "dashnowlab",
+    "avatar": "https://avatars.githubusercontent.com/u/142536594?v=4",
+    "state": "active",
+    "role": "member"
+  },
+  {
+    "name": "cladteam",
+    "avatar": "https://avatars.githubusercontent.com/u/144303401?v=4",
+    "state": "active",
+    "role": "admin"
+  },
+  {
+    "name": "software-gardening",
+    "avatar": "https://avatars.githubusercontent.com/u/162224895?v=4",
+    "state": "active",
+    "role": "admin"
+  }
+]

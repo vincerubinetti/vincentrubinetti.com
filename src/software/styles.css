@@ -5,7 +5,7 @@
   --width: --spacing(250);
 
   --color-light: hsl(10, 100%, 98%);
-  --color-mid: hsl(10, 80%, 90%);
+  --color-mid: hsl(280, 50%, 85%);
   --color-dark: hsl(200, 40%, 50%);
 
   --tl-corner: radial-gradient(black 0, black 100%, transparent) top left
@@ -37,7 +37,7 @@
   @apply relative z-0;
 
   &::after {
-    @apply absolute inset-0 -z-10 opacity-5 content-[''];
+    @apply absolute inset-0 -z-10 opacity-10 content-[''];
     background-image: url("../assets/images/paper.svg");
   }
 }
@@ -79,10 +79,10 @@
 }
 
 @utility corners-1 {
-  @apply relative;
+  @apply relative z-0;
 
   &::after {
-    @apply absolute inset-0 border-2 border-current mask-size-[8px_8px]! transition-all content-[''] [mask:var(--tl-corner)];
+    @apply absolute inset-0 -z-10 border-2 border-current mask-size-[8px_8px]! transition-all content-[''] [mask:var(--tl-corner)];
   }
 
   &:hover::after {

@@ -11,6 +11,7 @@ import {
 } from "lodash-es";
 import { ChevronDown } from "lucide-vue-next";
 import contributions from "./contributions.json";
+import orgs from "./orgs.json";
 
 /** how much to value commits vs prs vs etc when calculating score */
 const commitWeight = 1 / 10;
@@ -53,10 +54,25 @@ for (const repo of Object.values(repos))
 
     <details>
       <summary class="highlight corners-4">
-        All GitHub contributions
+        All GitHub work
         <ChevronDown />
       </summary>
 
+      <h3>Orgs</h3>
+      <div
+        class="grid w-full grid-cols-[repeat(auto-fit,minmax(calc(var(--spacing)*10),auto))] place-content-center gap-2"
+      >
+        <a
+          v-for="({ name, avatar }, index) in orgs"
+          :key="index"
+          :href="`https://github.com/${name}`"
+          class="flex size-10 flex-col items-center border-2 border-transparent hover:border-black"
+        >
+          <img :src="avatar" :alt="name" />
+        </a>
+      </div>
+
+      <h3>Repos</h3>
       <div class="grid grid-cols-3 gap-2 max-md:grid-cols-2 max-sm:grid-cols-1">
         <template
           v-for="({ commits, issues, prs, reviews }, name) in repos"
@@ -75,11 +91,12 @@ for (const repo of Object.values(repos))
             {{ name }}
           </a>
         </template>
-        <label class="col-start-1 col-end-4 p-2">
-          <input type="checkbox" v-model="includeIssues" />
-          Include issues
-        </label>
       </div>
+
+      <label>
+        <input type="checkbox" v-model="includeIssues" />
+        Include issues
+      </label>
     </details>
   </section>
 </template>

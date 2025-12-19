@@ -29,19 +29,19 @@
   h1,
   h2,
   h3 {
-    @apply flex items-center gap-2 font-sans tracking-wider;
+    @apply flex items-center gap-2 font-sans tracking-wider uppercase;
   }
 
   h1 {
-    @apply text-2xl uppercase;
+    @apply text-2xl;
   }
 
   h2 {
-    @apply text-2xl font-medium uppercase;
+    @apply text-2xl font-medium;
   }
 
   h3 {
-    @apply text-xl font-medium;
+    @apply justify-center text-xl font-normal;
   }
 
   p {
@@ -70,7 +70,7 @@
   }
 
   label {
-    @apply inline-flex cursor-pointer items-center justify-center gap-2 transition-colors hover:bg-zinc-100;
+    @apply inline-flex cursor-pointer items-center justify-center gap-2 p-2 transition-colors hover:bg-zinc-100;
   }
 
   input,
@@ -83,8 +83,10 @@
   }
 
   details {
+    @apply flex flex-col items-center gap-8;
+
     &::details-content {
-      @apply mt-8 h-0 overflow-hidden transition-[height,content-visibility] transition-discrete duration-500;
+      @apply flex h-0 flex-col gap-8 overflow-hidden transition-[height,content-visibility] transition-discrete duration-500;
       interpolate-size: allow-keywords;
     }
 
@@ -94,7 +96,7 @@
   }
 
   summary {
-    @apply mx-auto mb-4 flex max-w-max cursor-pointer list-none items-center justify-center gap-2 p-4 transition-colors hover:bg-zinc-100;
+    @apply flex max-w-max cursor-pointer list-none items-center justify-center gap-2 p-4 transition-colors hover:bg-zinc-100;
   }
 
   details[open] summary svg {

@@ -23,10 +23,10 @@ import profile from "@/assets/images/vince.png?url";
       </p>
     </div>
 
-    <p class="highlight">
+    <p>
       But really, the best way to understand what I do is to
-      <i>see it yourself</i>.
-      <CornerRightDown />
+      <i>see it yourself</i>...
+      <CornerRightDown class="ml-2 animate-bounce" />
     </p>
   </section>
 </template>

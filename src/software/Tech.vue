@@ -53,7 +53,7 @@ const tech = [
 
 <template>
   <section class="bg-light paper">
-    <h2>Tech</h2>
+    <h2 class="flex-row-reverse">Tech</h2>
 
     <div class="grid grid-cols-3 gap-8 max-lg:grid-cols-2 max-md:grid-cols-1">
       <div
