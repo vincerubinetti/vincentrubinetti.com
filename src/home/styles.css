@@ -4,8 +4,8 @@
 @theme {
   --width: --spacing(200);
 
-  --color-cream: hsl(30, 100%, 98%);
-  --color-navy: hsl(200, 100%, 40%);
+  --color-light: hsl(30, 100%, 98%);
+  --color-mid: hsl(200, 100%, 40%);
 
   --radius: 7.5px;
 }

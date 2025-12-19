@@ -8,7 +8,7 @@ import profile from "@/assets/images/vince.png?url";
     <h2 class="sr-only">About</h2>
 
     <div class="flex max-w-full items-center gap-8 max-lg:flex-col">
-      <div class="highlight w-50 shrink-0">
+      <div class="w-50 shrink-0">
         <img :src="profile" alt="" />
       </div>
       <p>

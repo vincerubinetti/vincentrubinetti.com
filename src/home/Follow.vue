@@ -9,7 +9,7 @@ import { getColor } from "./colors";
 </script>
 
 <template>
-  <section class="bg-cream">
+  <section class="bg-light">
     <h2 class="sr-only">Follow</h2>
 
     <div class="grid grid-cols-[1fr_1fr] items-center gap-12 max-lg:contents">

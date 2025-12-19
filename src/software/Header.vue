@@ -58,7 +58,7 @@ const hatch = 10;
 </script>
 
 <template>
-  <header class="bg-navy/25">
+  <header class="bg-mid/50">
     <hgroup class="flex flex-col items-center gap-2 py-8 text-center">
       <h1 class="sr-only">Vincent Rubinetti</h1>
       <div class="corners-2 w-full">
@@ -99,7 +99,7 @@ const hatch = 10;
             :height="hatch"
           >
             <path
-              class="stroke-navy stroke-3"
+              class="stroke-dark stroke-3"
               :d="['M', 0, hatch / 2, 'h', hatch].flat().join(' ')"
             />
           </pattern>
@@ -135,7 +135,7 @@ const hatch = 10;
 
           <g>
             <rect
-              class="stroke-navy stroke-3"
+              class="stroke-dark stroke-3"
               transform="skewX(-45)"
               :x="-p"
               :y="-p"
@@ -167,7 +167,7 @@ const hatch = 10;
               v-html="svgContent"
             />
             <g
-              class="stroke-navy stroke-3"
+              class="stroke-dark stroke-3"
               fill="url(#hatch)"
               clip-path="url(#clip-2)"
               filter="url(#filter)"

@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { ref } from "vue";
 import {
   fromPairs,
   map,
@@ -16,6 +17,8 @@ const commitWeight = 1 / 10;
 const issueWeight = 1 / 20;
 const prWeight = 1 / 5;
 const reviewWeight = 1 / 10;
+
+const includeIssues = ref(false);
 
 const repos = fromPairs(
   orderBy(
@@ -54,20 +57,28 @@ for (const repo of Object.values(repos))
         <ChevronDown />
       </summary>
 
-      <div class="grid grid-cols-3">
-        <a
+      <div class="grid grid-cols-3 gap-2 max-md:grid-cols-2 max-sm:grid-cols-1">
+        <template
           v-for="({ commits, issues, prs, reviews }, name) in repos"
           :key="name"
-          :href="`https://github.com/${name}/graphs/contributors#:~:text=vincerubinetti`"
-          :title="
-            toPairs({ commits, issues, prs, reviews })
-              .map(([k, v]) => `${k}: ${v}`)
-              .join(', ')
-          "
-          class="truncate px-1 py-2"
         >
-          {{ name }}
-        </a>
+          <a
+            v-if="includeIssues || commits || prs || reviews"
+            :href="`https://github.com/${name}/graphs/contributors#:~:text=vincerubinetti`"
+            :title="
+              toPairs({ commits, issues, prs, reviews })
+                .map(([k, v]) => `${k}: ${v}`)
+                .join(', ')
+            "
+            class="truncate"
+          >
+            {{ name }}
+          </a>
+        </template>
+        <label class="col-start-1 col-end-4 p-2">
+          <input type="checkbox" v-model="includeIssues" />
+          Include issues
+        </label>
       </div>
     </details>
   </section>

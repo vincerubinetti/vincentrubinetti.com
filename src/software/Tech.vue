@@ -52,7 +52,7 @@ const tech = [
 </script>
 
 <template>
-  <section class="bg-terracotta/25 paper">
+  <section class="bg-light paper">
     <h2>Tech</h2>
 
     <div class="grid grid-cols-3 gap-8 max-lg:grid-cols-2 max-md:grid-cols-1">

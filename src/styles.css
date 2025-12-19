@@ -62,11 +62,15 @@
   }
 
   a {
-    @apply text-navy underline underline-offset-2 transition-colors hover:text-current;
+    @apply underline underline-offset-2 transition-colors hover:text-current;
   }
 
   button {
     @apply cursor-pointer;
+  }
+
+  label {
+    @apply inline-flex cursor-pointer items-center justify-center gap-2 transition-colors hover:bg-zinc-100;
   }
 
   input,
@@ -74,9 +78,13 @@
     @apply rounded border border-current/25 bg-white p-3 placeholder:text-current/50;
   }
 
+  input[type="checkbox"] {
+    @apply size-4;
+  }
+
   details {
     &::details-content {
-      @apply h-0 overflow-hidden transition-[height,content-visibility] transition-discrete duration-500;
+      @apply mt-8 h-0 overflow-hidden transition-[height,content-visibility] transition-discrete duration-500;
       interpolate-size: allow-keywords;
     }
 
