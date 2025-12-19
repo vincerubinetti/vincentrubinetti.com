@@ -50,7 +50,11 @@
 
   ul,
   ol {
-    @apply flex flex-col gap-2 leading-relaxed;
+    @apply flex list-['-'] flex-col pl-2 leading-relaxed;
+  }
+
+  li {
+    @apply pl-2 marker:text-current/50;
   }
 
   hr {
@@ -62,11 +66,11 @@
   }
 
   a {
-    @apply underline underline-offset-2 transition-colors hover:text-current;
+    @apply underline underline-offset-2 transition-all hover:text-current;
   }
 
   button {
-    @apply cursor-pointer;
+    @apply cursor-pointer transition-all;
   }
 
   label {
@@ -96,7 +100,7 @@
   }
 
   summary {
-    @apply flex max-w-max cursor-pointer list-none items-center justify-center gap-2 p-4 transition-colors hover:bg-zinc-100;
+    @apply flex max-w-max cursor-pointer list-none items-center justify-center gap-2 p-4 transition-colors;
   }
 
   details[open] summary svg {

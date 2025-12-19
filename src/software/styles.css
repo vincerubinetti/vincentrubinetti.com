@@ -33,17 +33,17 @@
   }
 }
 
+@utility button {
+  @apply inline-flex items-center justify-center gap-2 p-4 font-sans text-current no-underline transition-all;
+}
+
 @utility paper {
   @apply relative z-0;
 
-  &::after {
+  &::before {
     @apply absolute inset-0 -z-10 opacity-10 content-[''];
     background-image: url("../assets/images/paper.svg");
   }
-}
-
-@utility button {
-  @apply inline-flex items-center justify-center gap-2 p-4 font-sans text-current no-underline transition-all;
 }
 
 @utility highlight {
@@ -59,10 +59,10 @@
 }
 
 @utility corners-4 {
-  @apply relative;
+  @apply relative z-0;
 
   &::after {
-    @apply absolute inset-0 border-2 border-current mask-size-[8px_8px]! transition-all content-[''] [mask:var(--tl-corner),var(--tr-corner),var(--br-corner),var(--bl-corner)];
+    @apply absolute inset-0 -z-10 border-2 border-current mask-size-[8px_8px]! transition-all content-[''] [mask:var(--tl-corner),var(--tr-corner),var(--br-corner),var(--bl-corner)];
   }
 
   &:hover::after {
@@ -71,10 +71,10 @@
 }
 
 @utility corners-2 {
-  @apply relative;
+  @apply relative z-0;
 
   &::after {
-    @apply absolute inset-0 border-2 border-current mask-size-[8px_8px]! transition-all content-[''] [mask:var(--tl-corner),var(--br-corner)];
+    @apply absolute inset-0 -z-10 border-2 border-current mask-size-[8px_8px]! transition-all content-[''] [mask:var(--tl-corner),var(--br-corner)];
   }
 }
 

@@ -16,12 +16,45 @@ import {
   GitCommit,
   GitPullRequest,
 } from "lucide-vue-next";
+import Carousel from "@/components/Carousel.vue";
 import contributions from "./contributions.json";
 import orgs from "./orgs.json";
+
+/** import images */
+const imports = toPairs(
+  import.meta.glob<{ default: string }>("./projects/*.png", {
+    eager: true,
+    query: "url",
+  }),
+);
+
+/** group images by name */
+const images: Record<string, string[]> = {};
+
+for (const [path, { default: _default }] of imports) {
+  const name = path.match(/.*\/(.*)-\d+\.png/)?.[1];
+  if (!name) continue;
+  images[name] ??= [];
+  images[name].push(_default);
+}
+
+/** projects data */
+const projects = [
+  {
+    name: "Manubot",
+    points: [
+      "lorem ipsum dolor sit amet",
+      "consectetur adipiscing elit",
+      "sed do eiusmod",
+    ],
+    tags: ["vanilla", "logo", "branding", "docs"],
+  },
+];
 
 /** fall-off function */
 const value = (x: number, w: number, v: number) => (1 - 2 ** (-x / w)) * v;
 
+/** sort repos */
 const repos = fromPairs(
   orderBy(
     toPairs(
@@ -40,20 +73,50 @@ const repos = fromPairs(
   ),
 );
 
-delete repos.total;
-
-const repoExtras = ref(false);
-
 /** normalize scores */
 const minScore = min(map(repos, "score"));
 const maxScore = max(map(repos, "score"));
 for (const repo of Object.values(repos))
   repo.score = ((repo.score - minScore!) / (maxScore! - minScore!)) ** 0.5;
+
+delete repos.total;
+
+/** show extra repo info */
+const repoExtras = ref(false);
 </script>
 
 <template>
   <section>
     <h2>Projects</h2>
+
+    <div class="grid grid-cols-3 gap-4 max-md:grid-cols-2 max-sm:grid-cols-1">
+      <!-- project card -->
+      <div
+        v-for="({ name, points, tags }, index) in projects"
+        :key="index"
+        class="corners-2 bg-light paper flex flex-col gap-2 p-4"
+      >
+        <Carousel
+          :slides="
+            (images[name.toLowerCase()] ?? []).map((image) => ({ image }))
+          "
+        />
+
+        <h3>{{ name }}</h3>
+        <ul>
+          <li v-for="(point, index) in points" :key="index">{{ point }}</li>
+        </ul>
+        <div class="flex flex-wrap justify-center gap-2">
+          <button
+            v-for="(tag, index) in tags"
+            :key="index"
+            class="bg-mid p-2 hover:bg-gray-200"
+          >
+            {{ tag }}
+          </button>
+        </div>
+      </div>
+    </div>
 
     <details>
       <summary class="highlight corners-4">
