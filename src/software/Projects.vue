@@ -24,7 +24,7 @@ import orgs from "./orgs.json";
 const imports = toPairs(
   import.meta.glob<{ default: string }>("./projects/*.png", {
     eager: true,
-    query: "url",
+    query: "url&w=800&format=jpeg",
   }),
 );
 

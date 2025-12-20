@@ -4,12 +4,14 @@ import tailwindcss from "@tailwindcss/vite";
 import { templateCompilerOptions } from "@tresjs/core";
 import { defineConfig } from "astro/config";
 import { loadEnv } from "vite";
+import { imagetools } from "vite-imagetools";
 import transformPlugin from "vite-plugin-transform";
 import svgLoader from "vite-svg-loader";
 
 export default defineConfig({
   vite: {
     plugins: [
+      imagetools(),
       svgLoader({
         svgoConfig: {
           plugins: [

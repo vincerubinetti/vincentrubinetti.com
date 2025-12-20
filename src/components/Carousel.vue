@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { ref, useTemplateRef } from "vue";
 import { useFullscreen } from "@vueuse/core";
-import { range } from "lodash-es";
+import { clamp, range } from "lodash-es";
 import { ChevronLeft, ChevronRight } from "lucide-vue-next";
 import { Autoplay, Navigation, Pagination } from "swiper/modules";
-import type { Swiper as SwiperType } from "swiper/types";
+import type { SwiperEvents, Swiper as SwiperType } from "swiper/types";
 import { Swiper, SwiperSlide } from "swiper/vue";
 import "swiper/css";
 
@@ -18,9 +18,34 @@ const rootEl = useTemplateRef("rootEl");
 
 const { toggle } = useFullscreen(rootEl as unknown as HTMLElement);
 
+/** swiper instance (non-reactive) */
 const swiper = ref<SwiperType>();
 
+/** reactive slide index */
 const slide = ref(0);
+
+/** custom transition */
+const onProgress: SwiperEvents["progress"] = (swiper) => {
+  for (let index = 0; index < swiper.slides.length; index++) {
+    const slide = swiper.slides[index] as HTMLElement & { progress: number };
+    const { progress } = slide;
+    slide.style.translate = [progress * swiper.width * 0.75, 0]
+      .map((value) => `${value}px`)
+      .join(" ");
+    slide.style.opacity = String(clamp(1 - Math.abs(progress), 0, 1));
+  }
+};
+
+/** custom transition */
+const onSetTransition: (swiper: SwiperType, duration: number) => void = (
+  swiper,
+  duration,
+) => {
+  for (const slide of swiper.slides) {
+    slide.style.transitionProperty = "all";
+    slide.style.transitionDuration = `${duration}ms`;
+  }
+};
 </script>
 
 <template>
@@ -28,20 +53,22 @@ const slide = ref(0);
     ref="rootEl"
     class="group aspect-square w-full cursor-pointer shadow"
     :loop="true"
-    :speed="300"
-    :autoplay="{ delay: 2000 }"
+    :loop-prevents-sliding="false"
+    :autoplay="true"
     :navigation="true"
     :pagination="true"
     :watch-slides-progress="true"
     :modules="[Autoplay, Navigation, Pagination]"
     @swiper="(value) => (swiper = value)"
-    @slide-change="(s) => (slide = s.realIndex)"
+    @slide-change="({ realIndex }) => (slide = realIndex)"
+    @set-translate="onProgress"
+    @set-transition="onSetTransition"
   >
     <SwiperSlide
       v-for="({ image }, index) in slides"
       :key="index"
-      class="size-full select-none"
-      @click="toggle"
+      class="top-0 left-0 size-full select-none"
+      @click="toggle()"
     >
       <img
         :src="image"
