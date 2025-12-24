@@ -131,7 +131,7 @@ const { SSR } = import.meta.env;
       >
         <div
           v-if="status === 'loading'"
-          class="grid h-100 w-full animate-pulse place-content-center bg-current/10"
+          class="grid h-100 w-full animate-pulse place-content-center rounded bg-white/10"
         >
           Loading
         </div>
@@ -144,17 +144,20 @@ const { SSR } = import.meta.env;
           <div class="flex w-full flex-col">
             <template v-for="(_track, index) in tracks" :key="index">
               <button
-                class="button-dark group h-14 gap-4! p-0! pr-4! leading-snug aria-pressed:rounded-br-none aria-pressed:bg-white/10"
+                class="button-dark group h-14 gap-4! p-0! pr-4! leading-snug aria-pressed:rounded-br-none aria-pressed:bg-black/25"
                 :title="`Play ${_track.title}`"
                 :aria-pressed="track.id === _track.id"
                 @click="
                   async (event) => {
-                    setTrack(index);
-                    seek(0);
-                    play();
-                    const target = event.currentTarget as HTMLElement;
-                    await sleep(100);
-                    target.scrollIntoView({ block: 'nearest' });
+                    if (track.id === _track.id) setTrack(-1);
+                    else {
+                      setTrack(index);
+                      seek(0);
+                      play();
+                      const target = event.currentTarget as HTMLElement;
+                      await sleep(100);
+                      target.scrollIntoView({ block: 'nearest' });
+                    }
                   }
                 "
               >
@@ -179,7 +182,7 @@ const { SSR } = import.meta.env;
 
               <div
                 v-if="track.id === _track.id"
-                class="flex flex-col rounded-br bg-white/10 p-2"
+                class="flex flex-col rounded-br bg-black/25 p-2"
               >
                 <div
                   class="gap flex items-center justify-center max-md:flex-wrap"
@@ -269,7 +272,7 @@ const { SSR } = import.meta.env;
                       <polygon
                         id="waveform"
                         filter="url(#waveform-filter)"
-                        class="fill-white"
+                        class="fill-current"
                         :points="
                           track?.waveform?.smoothed
                             ?.map(({ x, y }) => `${x},${1 - y * 0.8}`)
@@ -361,7 +364,7 @@ const { SSR } = import.meta.env;
 
                   <!-- track description -->
                   <div
-                    class="leading-relaxed wrap-break-word"
+                    class="description leading-relaxed wrap-break-word"
                     v-html="getDescription(track)"
                   />
                 </div>
@@ -371,6 +374,15 @@ const { SSR } = import.meta.env;
         </div>
       </template>
     </SoundCloud>
-    <div v-else class="h-100 w-full bg-current/10"></div>
+    <div v-else class="h-100 w-full bg-black/25"></div>
   </section>
 </template>
+
+<style scoped>
+@reference "tailwindcss";
+@import "./styles.css";
+
+.description :deep(a) {
+  @apply text-mid-dark hover:text-current;
+}
+</style>

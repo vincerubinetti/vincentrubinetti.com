@@ -267,7 +267,15 @@ const seek = (ms: number) => {
 };
 
 /** set track by index */
-const setTrack = (index: number) => widget.skip(index);
+const setTrack = (index: number) => {
+  if (index === -1) {
+    widget.pause();
+    playing.value = false;
+    time.value = 0;
+    level.value = 0;
+    track.value = {};
+  } else widget.skip(index);
+};
 
 /** set volume */
 const setVolume = (value: number) => {

@@ -3,6 +3,7 @@ import { computed, useTemplateRef, watchEffect } from "vue";
 import { useIntervalFn } from "@vueuse/core";
 import { Canvas } from "glsl-canvas-js";
 import type { Canvas as CanvasType } from "glsl-canvas-js/dist/esm/glsl";
+import { range } from "lodash-es";
 import shader from "./background.frag?raw";
 import { playing, smoothedLevel, track } from "./state";
 
@@ -14,32 +15,27 @@ const glsl = computed(() => {
   return new Canvas(canvas.value, { fragmentString: shader }) as CanvasType;
 });
 
-/** play/pause */
-watchEffect(() => {
-  if (!glsl.value) return;
-  if (playing.value) glsl.value.play();
-  else glsl.value.pause();
-});
-
 /** set shader "level" uniform */
 watchEffect(() => {
-  if (!glsl.value) return;
-  glsl.value.setUniform("u_level", smoothedLevel.value);
+  glsl.value?.setUniform("u_level", smoothedLevel.value);
 });
 
 /** set shader "play" uniform */
 let play = 0;
 useIntervalFn(() => {
-  if (!glsl.value) return;
   /** create "roving" value, fast when level high, slow when low */
   play += 0.01 + 0.15 * smoothedLevel.value ** 4;
-  glsl.value.setUniform("u_play", play);
+  glsl.value?.setUniform("u_play", play);
 }, 20);
+
+/** fallback colors */
+const colors = range(1, 7)
+  .map((v) => 0.1 * v)
+  .map((v) => [v, v, v]);
 
 /** set shader "colors" uniforms */
 watchEffect(() => {
-  if (!glsl.value) return;
-  track.value?.colors?.map((color, index) =>
+  (track.value?.colors || colors).map((color, index) =>
     glsl.value?.setUniform(`u_colors[${index}]`, color),
   );
 });
@@ -50,7 +46,7 @@ watchEffect(() => {
     <canvas
       ref="canvas"
       class="size-full transition-opacity duration-1000"
-      :class="playing ? 'opacity-75' : 'opacity-0'"
+      :class="playing ? 'opacity-75' : 'opacity-25'"
     />
   </div>
 </template>

@@ -1,13 +1,25 @@
 @import "tailwindcss";
-@import "@/styles.css";
+@import "../styles.css";
 
 @theme {
   --width: --spacing(200);
 
-  --color-light: hsl(30, 100%, 98%);
+  --color-light: hsl(30, 100%, 97%);
   --color-mid: hsl(200, 100%, 40%);
+  --color-mid-dark: hsl(200, 100%, 60%);
 
   --radius: 7.5px;
+}
+
+@layer components {
+  a {
+    @apply text-mid;
+  }
+
+  .lucide-play,
+  .lucide-pause {
+    @apply fill-current stroke-0!;
+  }
 }
 
 @utility button-dark {
@@ -16,9 +28,4 @@
 
 @utility button {
   @apply relative inline-flex items-center justify-center gap-2 rounded bg-current/5 p-4 font-sans text-current no-underline hover:bg-current/10;
-}
-
-.lucide-play,
-.lucide-pause {
-  @apply fill-current stroke-0!;
 }

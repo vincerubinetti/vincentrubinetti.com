@@ -17,6 +17,7 @@ import {
   GitPullRequest,
 } from "lucide-vue-next";
 import Carousel from "@/components/Carousel.vue";
+import { formatValue } from "@/util/string";
 import contributions from "./contributions.json";
 import orgs from "./orgs.json";
 
@@ -110,7 +111,7 @@ const repoExtras = ref(false);
           <button
             v-for="(tag, index) in tags"
             :key="index"
-            class="bg-mid p-2 hover:bg-gray-200"
+            class="bg-mid p-2 text-white hover:bg-zinc-500"
           >
             {{ tag }}
           </button>
@@ -146,7 +147,7 @@ const repoExtras = ref(false);
       </label>
 
       <div
-        class="grid place-items-center gap-x-4 gap-y-2"
+        class="grid place-items-center"
         :class="
           repoExtras
             ? 'grid-cols-[1fr_auto_auto_auto_auto]'
@@ -167,22 +168,22 @@ const repoExtras = ref(false);
           <template v-if="repoExtras || commits || prs || reviews">
             <a
               :href="`https://github.com/${name}/graphs/contributors#:~:text=vincerubinetti`"
-              class="grow justify-self-start truncate"
+              class="grow justify-self-start truncate py-2"
             >
               {{ name }}
             </a>
             <span class="text-center">
-              {{ commits }}
+              {{ formatValue(commits) }}
             </span>
             <span class="text-center">
-              {{ prs }}
+              {{ formatValue(prs) }}
             </span>
             <template v-if="repoExtras">
               <span class="text-center">
-                {{ issues }}
+                {{ formatValue(issues) }}
               </span>
               <span class="text-center">
-                {{ reviews }}
+                {{ formatValue(reviews) }}
               </span>
             </template>
           </template>

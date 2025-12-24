@@ -70,7 +70,7 @@
   }
 
   button {
-    @apply cursor-pointer transition-all;
+    @apply cursor-pointer font-sans transition-all;
   }
 
   label {
@@ -87,7 +87,7 @@
   }
 
   details {
-    @apply flex flex-col items-center gap-8;
+    @apply flex flex-col items-center gap-8 font-sans;
 
     &::details-content {
       @apply flex h-0 flex-col gap-8 overflow-hidden transition-[height,content-visibility] transition-discrete duration-500;

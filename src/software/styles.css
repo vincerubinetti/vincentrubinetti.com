@@ -1,12 +1,11 @@
 @import "tailwindcss";
-@import "@/styles.css";
+@import "../styles.css";
 
 @theme {
   --width: --spacing(250);
 
-  --color-light: hsl(10, 100%, 98%);
-  --color-mid: hsl(280, 50%, 85%);
-  --color-dark: hsl(200, 40%, 50%);
+  --color-light: hsl(10, 100%, 96%);
+  --color-mid: hsl(330, 50%, 35%);
 
   --tl-corner: radial-gradient(black 0, black 100%, transparent) top left
     no-repeat;
@@ -29,7 +28,7 @@
   }
 
   a {
-    @apply text-dark;
+    @apply text-mid;
   }
 }
 
@@ -50,7 +49,7 @@
   @apply relative z-0;
 
   &::before {
-    @apply bg-mid absolute inset-0 -z-10 scale-x-0 -skew-x-90 transition-all content-[''];
+    @apply bg-mid/25 absolute inset-0 -z-10 scale-x-0 -skew-x-90 transition-all content-[''];
   }
 
   &:hover::before {

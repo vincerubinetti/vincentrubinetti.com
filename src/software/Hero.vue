@@ -35,7 +35,7 @@ const shape = ref<string>();
         <button
           v-for="({ model, label }, index) in features"
           :key="index"
-          class="border-b-2 p-2 font-sans transition-[border]"
+          class="border-b-2 p-2 transition-[border]"
           :class="model === shape ? 'border-current' : 'border-transparent'"
           @mouseenter="shape = model"
           @click="shape = shape ? undefined : model"

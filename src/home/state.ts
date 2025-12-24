@@ -3,15 +3,7 @@ import { useIntervalFn } from "@vueuse/core";
 import type { Track } from "@/components/SoundCloud";
 
 /** currently selected track */
-export const track = ref<Track>({
-  colors: [
-    [0, 0, 0],
-    [16, 16, 16],
-    [32, 32, 32],
-    [48, 48, 48],
-    [64, 64, 64],
-  ],
-});
+export const track = ref<Track>();
 
 /** play state */
 export const playing = ref(false);
