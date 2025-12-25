@@ -95,7 +95,7 @@ const repoExtras = ref(false);
       <div
         v-for="({ name, points, tags }, index) in projects"
         :key="index"
-        class="corners-2 bg-light paper flex flex-col gap-2 p-4"
+        class="corners-2 bg-light paper flex flex-col gap-4 p-6"
       >
         <Carousel
           :slides="
@@ -103,7 +103,7 @@ const repoExtras = ref(false);
           "
         />
 
-        <h3>{{ name }}</h3>
+        <h3 class="mt-2">{{ name }}</h3>
         <ul>
           <li v-for="(point, index) in points" :key="index">{{ point }}</li>
         </ul>
@@ -111,7 +111,7 @@ const repoExtras = ref(false);
           <button
             v-for="(tag, index) in tags"
             :key="index"
-            class="bg-mid p-2 text-white hover:bg-zinc-500"
+            class="bg-dark p-2 text-white hover:bg-zinc-500"
           >
             {{ tag }}
           </button>

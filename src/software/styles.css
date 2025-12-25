@@ -4,8 +4,11 @@
 @theme {
   --width: --spacing(250);
 
-  --color-light: hsl(10, 100%, 96%);
-  --color-mid: hsl(330, 50%, 35%);
+  --color-light: oklch(97% 0.01 50);
+  --color-mid: oklch(85% 0.075 350);
+  --color-dark: oklch(50% 0.15 350);
+
+  --shadow: 0 0 10px #0002, 0 0 2px #0002;
 
   --tl-corner: radial-gradient(black 0, black 100%, transparent) top left
     no-repeat;
@@ -22,13 +25,13 @@
     @apply w-full;
 
     &::after {
-      @apply ml-4 h-0.5 grow opacity-10 content-[''];
+      @apply ml-4 h-0.5 grow opacity-25 content-[''];
       background-image: url("../assets/images/dash.svg");
     }
   }
 
   a {
-    @apply text-mid;
+    @apply text-dark;
   }
 }
 
@@ -40,7 +43,7 @@
   @apply relative z-0;
 
   &::before {
-    @apply absolute inset-0 -z-10 opacity-10 content-[''];
+    @apply absolute inset-0 -z-10 opacity-15 mix-blend-darken content-[''];
     background-image: url("../assets/images/paper.svg");
   }
 }
@@ -49,7 +52,7 @@
   @apply relative z-0;
 
   &::before {
-    @apply bg-mid/25 absolute inset-0 -z-10 scale-x-0 -skew-x-90 transition-all content-[''];
+    @apply bg-mid absolute inset-0 -z-10 scale-x-0 -skew-x-90 transition-all content-[''];
   }
 
   &:hover::before {

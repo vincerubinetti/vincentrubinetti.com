@@ -58,10 +58,10 @@ const hatch = 10;
 </script>
 
 <template>
-  <header class="bg-mid text-white">
-    <hgroup class="flex flex-col items-center gap-2 py-8 text-center">
+  <header class="bg-dark text-white">
+    <hgroup class="flex flex-col items-center gap-4 py-8 text-center">
       <h1 class="sr-only">Vincent Rubinetti</h1>
-      <div class="corners-2 w-full">
+      <div class="corners-2 w-86 max-w-full">
         <svg
           ref="svg"
           xmlns="http://www.w3.org/2000/svg"

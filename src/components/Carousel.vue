@@ -54,7 +54,7 @@ const onSetTransition: (swiper: SwiperType, duration: number) => void = (
     class="group aspect-square w-full cursor-pointer shadow"
     :loop="true"
     :loop-prevents-sliding="false"
-    :autoplay="true"
+    :autoplay="{ disableOnInteraction: true }"
     :navigation="true"
     :pagination="true"
     :watch-slides-progress="true"
@@ -91,7 +91,9 @@ const onSetTransition: (swiper: SwiperType, duration: number) => void = (
           :class="slide === index ? '' : 'text-zinc-200'"
           @click="swiper?.slideToLoop(index)"
         >
-          &bull;
+          <svg viewBox="-1 -1 2 2" class="size-2">
+            <circle r="1" fill="currentColor" />
+          </svg>
         </button>
       </div>
       <button class="nav" @click="swiper?.slideNext()">

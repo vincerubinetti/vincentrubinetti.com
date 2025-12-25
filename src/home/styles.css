@@ -4,16 +4,16 @@
 @theme {
   --width: --spacing(200);
 
-  --color-light: hsl(30, 100%, 97%);
-  --color-mid: hsl(200, 100%, 40%);
-  --color-mid-dark: hsl(200, 100%, 60%);
+  --color-light: oklch(97% 0.01 50);
+  --color-mid: oklch(75% 0.15 235);
+  --color-mid-dark: oklch(60% 0.15 240);
 
   --radius: 7.5px;
 }
 
 @layer components {
   a {
-    @apply text-mid;
+    @apply text-mid-dark;
   }
 
   .lucide-play,

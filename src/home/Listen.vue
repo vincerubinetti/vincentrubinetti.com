@@ -144,7 +144,7 @@ const { SSR } = import.meta.env;
           <div class="flex w-full flex-col">
             <template v-for="(_track, index) in tracks" :key="index">
               <button
-                class="button-dark group h-14 gap-4! p-0! pr-4! leading-snug aria-pressed:rounded-br-none aria-pressed:bg-black/25"
+                class="button-dark group h-14 gap-4! p-0! pr-4! aria-pressed:rounded-br-none aria-pressed:bg-black/25"
                 :title="`Play ${_track.title}`"
                 :aria-pressed="track.id === _track.id"
                 @click="
@@ -345,11 +345,11 @@ const { SSR } = import.meta.env;
                 <div
                   v-if="showInfo"
                   id="track-info"
-                  class="flex flex-col gap-4 p-4"
+                  class="flex flex-col gap-6 p-4"
                 >
                   <!-- track details -->
                   <div
-                    class="flex w-full flex-wrap items-center justify-center gap-4"
+                    class="flex w-full flex-wrap items-center justify-start gap-6"
                   >
                     <div
                       v-for="({ icon, text, title }, index) of getStats(track)"
@@ -383,6 +383,6 @@ const { SSR } = import.meta.env;
 @import "./styles.css";
 
 .description :deep(a) {
-  @apply text-mid-dark hover:text-current;
+  @apply text-mid hover:text-current;
 }
 </style>

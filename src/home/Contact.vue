@@ -100,7 +100,7 @@ useScriptTag("https://www.google.com/recaptcha/api.js");
     <div class="grid grid-cols-2 gap-12 max-lg:grid-cols-1">
       <div class="flex flex-col gap-4">
         <p>
-          To use the <b>3Blue1Brown music</b> in videos/projects,
+          To use the <b>3Blue1Brown music</b> in videos or projects,
           <a
             href="https://vincerubinetti.github.io/using-the-music-of-3blue1brown/"
             >go here</a
