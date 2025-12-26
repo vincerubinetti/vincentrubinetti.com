@@ -17,6 +17,7 @@ import {
   GitPullRequest,
 } from "lucide-vue-next";
 import Carousel from "@/components/Carousel.vue";
+import Scroll from "@/software/Scroll.vue";
 import { formatValue } from "@/util/string";
 import contributions from "./contributions.json";
 import orgs from "./orgs.json";
@@ -48,7 +49,7 @@ const projects = [
       "consectetur adipiscing elit",
       "sed do eiusmod",
     ],
-    tags: ["vanilla", "logo", "branding", "docs"],
+    tags: ["vanilla", "logo", "brand", "docs"],
   },
 ];
 
@@ -87,8 +88,8 @@ const repoExtras = ref(false);
 </script>
 
 <template>
-  <section>
-    <h2>Projects</h2>
+  <section class="items-stretch">
+    <h2>Projects<Scroll /></h2>
 
     <div class="grid grid-cols-3 gap-4 max-md:grid-cols-2 max-sm:grid-cols-1">
       <!-- project card -->
@@ -108,11 +109,7 @@ const repoExtras = ref(false);
           <li v-for="(point, index) in points" :key="index">{{ point }}</li>
         </ul>
         <div class="flex flex-wrap justify-center gap-2">
-          <button
-            v-for="(tag, index) in tags"
-            :key="index"
-            class="bg-dark p-2 text-white hover:bg-zinc-500"
-          >
+          <button v-for="(tag, index) in tags" :key="index" class="button">
             {{ tag }}
           </button>
         </div>
@@ -125,69 +122,72 @@ const repoExtras = ref(false);
         <ChevronDown />
       </summary>
 
-      <h3>Orgs</h3>
-      <div
-        class="max-xs:[--cols:1] grid w-full grid-cols-[repeat(var(--cols),auto)] place-content-center place-items-center gap-2 [--cols:5] max-sm:[--cols:3]"
-      >
-        <a
-          v-for="({ name, avatar }, index) in orgs"
-          :key="index"
-          :href="`https://github.com/${name}`"
-          :title="name"
-          class="flex size-16 flex-col items-center border-2 border-transparent hover:border-black"
+      <div class="flex flex-col gap-4">
+        <h3>Orgs</h3>
+        <div
+          class="max-xs:[--cols:1] grid w-full grid-cols-[repeat(var(--cols),auto)] place-content-center place-items-center gap-2 [--cols:5] max-sm:[--cols:3]"
         >
-          <img :src="avatar" :alt="name" />
-        </a>
+          <a
+            v-for="({ name, avatar }, index) in orgs"
+            :key="index"
+            :href="`https://github.com/${name}`"
+            :title="name"
+            class="flex size-16 flex-col items-center hover:opacity-50"
+          >
+            <img :src="avatar" :alt="name" />
+          </a>
+        </div>
       </div>
 
-      <h3>Repos</h3>
-      <label>
-        <input type="checkbox" v-model="repoExtras" />
-        Extras
-      </label>
-
-      <div
-        class="grid place-items-center"
-        :class="
-          repoExtras
-            ? 'grid-cols-[1fr_auto_auto_auto_auto]'
-            : 'grid-cols-[1fr_auto_auto]'
-        "
-      >
-        <b class="justify-self-start">Repo</b>
-        <div title="Commits"><GitCommit /></div>
-        <div title="Pull Requests"><GitPullRequest /></div>
-        <template v-if="repoExtras">
-          <div title="Issues"><Bug /></div>
-          <div title="Reviews"><Eye /></div>
-        </template>
-        <template
-          v-for="({ commits, issues, prs, reviews }, name) in repos"
-          :key="name"
+      <div class="mt-4 flex flex-col gap-4">
+        <h3>Repos</h3>
+        <label>
+          <input type="checkbox" v-model="repoExtras" />
+          Extras
+        </label>
+        <div
+          class="grid place-items-center gap-x-4"
+          :class="
+            repoExtras
+              ? 'grid-cols-[1fr_auto_auto_auto_auto]'
+              : 'grid-cols-[1fr_auto_auto]'
+          "
         >
-          <template v-if="repoExtras || commits || prs || reviews">
-            <a
-              :href="`https://github.com/${name}/graphs/contributors#:~:text=vincerubinetti`"
-              class="grow justify-self-start truncate py-2"
-            >
-              {{ name }}
-            </a>
-            <span class="text-center">
-              {{ formatValue(commits) }}
-            </span>
-            <span class="text-center">
-              {{ formatValue(prs) }}
-            </span>
-            <template v-if="repoExtras">
+          <b class="justify-self-start">Repo</b>
+          <div title="Commits"><GitCommit /></div>
+          <div title="Pull Requests"><GitPullRequest /></div>
+          <template v-if="repoExtras">
+            <div title="Issues"><Bug /></div>
+            <div title="Reviews"><Eye /></div>
+          </template>
+          <template
+            v-for="({ commits, issues, prs, reviews }, name) in repos"
+            :key="name"
+          >
+            <template v-if="repoExtras || commits || prs || reviews">
+              <a
+                :href="`https://github.com/${name}/graphs/contributors#:~:text=vincerubinetti`"
+                class="grow justify-self-start truncate py-2"
+              >
+                {{ name }}
+              </a>
               <span class="text-center">
-                {{ formatValue(issues) }}
+                {{ formatValue(commits) }}
               </span>
               <span class="text-center">
-                {{ formatValue(reviews) }}
+                {{ formatValue(prs) }}
               </span>
+              <template v-if="repoExtras">
+                <span class="text-center">
+                  {{ formatValue(issues) }}
+                </span>
+                <span class="text-center">
+                  {{ formatValue(reviews) }}
+                </span>
+              </template>
             </template>
           </template>
-        </template>
+        </div>
       </div>
     </details>
   </section>

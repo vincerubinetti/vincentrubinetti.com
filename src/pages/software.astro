@@ -1,7 +1,7 @@
 ---
-import Footer from "@/home/Footer.vue";
 import Layout from "@/layouts/Layout.astro";
 import About from "@/software/About.vue";
+import Footer from "@/software/Footer.vue";
 import Header from "@/software/Header.vue";
 import Projects from "@/software/Projects.vue";
 import SubHeader from "@/software/SubHeader.vue";
@@ -17,8 +17,8 @@ import "@/software/styles.css";
   <main>
     <SubHeader />
     <About />
-    <Tech />
+    <Tech client:load />
     <Projects client:load />
   </main>
-  <Footer class="bg-black text-white" />
+  <Footer />
 </Layout>

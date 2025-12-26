@@ -4,11 +4,9 @@
 @theme {
   --width: --spacing(250);
 
-  --color-light: oklch(97% 0.01 50);
-  --color-mid: oklch(85% 0.075 350);
+  --color-light: oklch(97% 0.01 40);
+  --color-mid: oklch(90% 0.05 220);
   --color-dark: oklch(50% 0.15 350);
-
-  --shadow: 0 0 10px #0002, 0 0 2px #0002;
 
   --tl-corner: radial-gradient(black 0, black 100%, transparent) top left
     no-repeat;
@@ -21,22 +19,17 @@
 }
 
 @layer components {
-  h2 {
-    @apply w-full;
-
-    &::after {
-      @apply ml-4 h-0.5 grow opacity-25 content-[''];
-      background-image: url("../assets/images/dash.svg");
-    }
-  }
-
   a {
     @apply text-dark;
   }
 }
 
-@utility button {
+@utility button-big {
   @apply inline-flex items-center justify-center gap-2 p-4 font-sans text-current no-underline transition-all;
+}
+
+@utility button {
+  @apply hover:bg-mid inline-flex items-center justify-center gap-2 bg-current/5 p-2 font-sans no-underline transition-all;
 }
 
 @utility paper {
@@ -49,7 +42,7 @@
 }
 
 @utility highlight {
-  @apply relative z-0;
+  @apply relative z-0 transition-all;
 
   &::before {
     @apply bg-mid absolute inset-0 -z-10 scale-x-0 -skew-x-90 transition-all content-[''];
@@ -78,6 +71,10 @@
   &::after {
     @apply absolute inset-0 -z-10 border-2 border-current mask-size-[8px_8px]! transition-all content-[''] [mask:var(--tl-corner),var(--br-corner)];
   }
+
+  &:hover::after {
+    @apply mask-size-[32px_32px]!;
+  }
 }
 
 @utility corners-1 {
@@ -88,7 +85,7 @@
   }
 
   &:hover::after {
-    @apply mask-size-[16px_16px]!;
+    @apply mask-size-[32px_32px]!;
   }
 }
 
@@ -96,6 +93,6 @@
   @apply relative z-0;
 
   &::before {
-    @apply bg-light absolute inset-0 -z-10 -skew-y-2 content-[''];
+    @apply bg-mid absolute inset-0 -z-10 -skew-2 content-[''];
   }
 }

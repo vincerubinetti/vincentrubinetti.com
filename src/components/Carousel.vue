@@ -51,7 +51,7 @@ const onSetTransition: (swiper: SwiperType, duration: number) => void = (
 <template>
   <Swiper
     ref="rootEl"
-    class="group aspect-square w-full cursor-pointer shadow"
+    class="group aspect-square w-full cursor-pointer"
     :loop="true"
     :loop-prevents-sliding="false"
     :autoplay="{ disableOnInteraction: true }"
