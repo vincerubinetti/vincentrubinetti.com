@@ -15,7 +15,9 @@ import GitHub from "@/assets/logos/github.svg?component";
         GitHub
       </a>
 
-      <p>Follow my professional collaborations and personal work</p>
+      <p class="text-lg">
+        Follow my professional collaborations and personal work
+      </p>
     </div>
   </section>
 </template>

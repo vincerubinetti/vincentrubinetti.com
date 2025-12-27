@@ -67,7 +67,7 @@ const hatch = 10;
           xmlns="http://www.w3.org/2000/svg"
           :viewBox="[x, y, w, h].join(' ')"
         >
-          <filter id="filter">
+          <filter id="chalk-filter">
             <feTurbulence
               type="turbulence"
               baseFrequency="0.25"
@@ -163,14 +163,14 @@ const hatch = 10;
             <g
               clip-path="url(#clip-1)"
               fill="url(#hatch)"
-              filter="url(#filter)"
+              filter="url(#chalk-filter)"
               v-html="svgContent"
             />
             <g
               class="stroke-current stroke-3"
               fill="url(#hatch)"
               clip-path="url(#clip-2)"
-              filter="url(#filter)"
+              filter="url(#chalk-filter)"
               v-html="svgContent"
             />
             <g

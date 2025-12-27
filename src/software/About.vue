@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { CornerRightDown } from "lucide-vue-next";
 import profile from "@/assets/images/vince.png?url";
+import Burn from "@/components/Burn.vue";
 </script>
 
 <template>
@@ -8,8 +9,8 @@ import profile from "@/assets/images/vince.png?url";
     <h2 class="sr-only">About</h2>
 
     <div class="flex max-w-full items-center gap-8 max-lg:flex-col">
-      <div class="w-50 shrink-0">
-        <img :src="profile" alt="" />
+      <div class="size-50 shrink-0">
+        <Burn :src="profile" />
       </div>
       <p>
         I started writing software over 20 years ago, making humble games,
@@ -23,7 +24,7 @@ import profile from "@/assets/images/vince.png?url";
       </p>
     </div>
 
-    <p>
+    <p class="text-lg">
       But really, the best way to understand what I do is to
       <i>see it yourself</i>...
       <CornerRightDown class="ml-2 animate-bounce" />

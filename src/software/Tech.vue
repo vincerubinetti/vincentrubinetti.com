@@ -17,7 +17,7 @@ import Svg from "@/assets/logos/svg.svg?component";
 import Tailwind from "@/assets/logos/tailwind.svg?component";
 import TypeScript from "@/assets/logos/typescript.svg?component";
 import Vue from "@/assets/logos/vue.svg?component";
-import Scroll from "@/software/Scroll.vue";
+import Dash from "@/components/Dash.vue";
 
 const tech = [
   {
@@ -54,7 +54,7 @@ const tech = [
 
 <template>
   <section class="bg-light paper">
-    <h2 class="w-full"><Scroll class="-scale-x-100" />Tech</h2>
+    <h2 class="w-full"><Dash class="-scale-x-100" />Tech</h2>
 
     <div class="grid grid-cols-3 gap-8 max-lg:grid-cols-2 max-md:grid-cols-1">
       <div

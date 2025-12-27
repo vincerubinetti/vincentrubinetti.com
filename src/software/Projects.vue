@@ -8,6 +8,7 @@ import {
   min,
   orderBy,
   toPairs,
+  uniq,
 } from "lodash-es";
 import {
   Bug,
@@ -17,7 +18,7 @@ import {
   GitPullRequest,
 } from "lucide-vue-next";
 import Carousel from "@/components/Carousel.vue";
-import Scroll from "@/software/Scroll.vue";
+import Dash from "@/components/Dash.vue";
 import { formatValue } from "@/util/string";
 import contributions from "./contributions.json";
 import orgs from "./orgs.json";
@@ -85,11 +86,20 @@ delete repos.total;
 
 /** show extra repo info */
 const repoExtras = ref(false);
+
+/** all unique tags */
+const tags = uniq(map(projects, (project) => project.tags).flat());
 </script>
 
 <template>
   <section class="items-stretch">
-    <h2>Projects<Scroll /></h2>
+    <h2>Projects<Dash /></h2>
+
+    <div class="mb-4 flex flex-wrap gap-2">
+      <button v-for="(tag, index) in tags" :key="index" class="button">
+        {{ tag }}
+      </button>
+    </div>
 
     <div class="grid grid-cols-3 gap-4 max-md:grid-cols-2 max-sm:grid-cols-1">
       <!-- project card -->
