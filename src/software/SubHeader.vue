@@ -6,7 +6,7 @@ import GitHub from "@/assets/logos/github.svg?component";
   <section class="bg-light paper">
     <h2 class="sr-only">Intro</h2>
 
-    <div class="flex flex-wrap items-center justify-center gap-4">
+    <div class="flex flex-wrap items-center justify-center gap-8">
       <a
         href="https://github.com/vincerubinetti"
         class="button-big highlight corners-4"

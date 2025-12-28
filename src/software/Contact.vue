@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { useLocalStorage } from "@vueuse/core";
 import { Send } from "lucide-vue-next";
-import Outline from "@/components/Outline.vue";
-import { onSubmit, useAddress, useCaptcha } from "./contact";
+import Dash from "@/components/Dash.vue";
+import { onSubmit, useAddress, useCaptcha } from "@/home/contact";
 
 /** form state */
 const name = useLocalStorage("name", "");
@@ -14,8 +14,8 @@ useCaptcha();
 </script>
 
 <template>
-  <section class="bg-light">
-    <h2 class="sr-only">Contact</h2>
+  <section class="paper bg-light">
+    <h2>Contact<Dash /></h2>
 
     <div class="grid grid-cols-2 gap-12 max-lg:grid-cols-1">
       <div class="flex flex-col gap-4">
@@ -53,7 +53,7 @@ useCaptcha();
           placeholder="Message"
           rows="5"
         />
-        <button type="submit" class="button"><Outline /><Send />Send</button>
+        <button type="submit" class="button"><Send />Send</button>
       </form>
     </div>
   </section>

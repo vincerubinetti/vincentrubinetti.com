@@ -3,6 +3,12 @@ import { useTemplateRef, watchEffect } from "vue";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
+type Props = {
+  flip?: boolean;
+};
+
+defineProps<Props>();
+
 gsap.registerPlugin(ScrollTrigger);
 
 const line = useTemplateRef("line");
@@ -28,24 +34,18 @@ watchEffect(() => {
 </script>
 
 <template>
-  <svg ref="line" class="h-2 grow opacity-25">
-    <defs>
-      <pattern
-        id="dash-pattern"
-        width="8"
-        height="8"
-        patternUnits="userSpaceOnUse"
-        viewBox="0 -4 8 8"
-      >
-        <path
-          d="M 0 0 L 2 2 L 6 -2 L 8 0"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="1"
-          stroke-linecap="square"
-        />
-      </pattern>
-    </defs>
-    <rect width="100%" height="100%" fill="url(#dash-pattern)" />
+  <svg
+    ref="line"
+    class="h-2 min-w-0 grow basis-0 opacity-25"
+    :class="flip ? '-scale-x-100' : ''"
+  >
+    <line
+      x1="0%"
+      y1="50%"
+      x2="100%"
+      y2="50%"
+      class="stroke-current stroke-2"
+      stroke-dasharray="4 4"
+    />
   </svg>
 </template>

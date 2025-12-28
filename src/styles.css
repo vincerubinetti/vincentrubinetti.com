@@ -23,13 +23,13 @@
   header,
   section,
   footer {
-    @apply relative z-0 flex w-full flex-col items-center gap-12 px-[max(--spacing(14),(100%-var(--width))/2)] py-14 max-xl:gap-12 max-xl:p-12 max-lg:gap-10 max-lg:p-10 max-md:gap-8 max-md:p-8 max-sm:gap-6 max-sm:p-6;
+    @apply relative z-0 flex w-full flex-col gap-12 px-[max(--spacing(14),(100%-var(--width))/2)] py-14 max-xl:gap-12 max-xl:p-12 max-lg:gap-10 max-lg:p-10 max-md:gap-8 max-md:p-8 max-sm:gap-6 max-sm:p-6;
   }
 
   h1,
   h2,
   h3 {
-    @apply flex items-center gap-4 font-sans leading-none tracking-widest uppercase;
+    @apply flex items-center gap-2 font-sans leading-none tracking-widest uppercase;
   }
 
   h1 {
@@ -41,7 +41,7 @@
   }
 
   h3 {
-    @apply justify-center text-xl font-normal;
+    @apply text-xl font-normal;
   }
 
   p {

@@ -16,7 +16,9 @@ defineProps<Props>();
 
 const rootEl = useTemplateRef("rootEl");
 
-const { toggle } = useFullscreen(rootEl as unknown as HTMLElement);
+const { toggle, isFullscreen } = useFullscreen(
+  rootEl as unknown as HTMLElement,
+);
 
 /** swiper instance (non-reactive) */
 const swiper = ref<SwiperType>();
@@ -51,7 +53,8 @@ const onSetTransition: (swiper: SwiperType, duration: number) => void = (
 <template>
   <Swiper
     ref="rootEl"
-    class="group aspect-square w-full cursor-pointer"
+    class="group aspect-square w-full"
+    :class="isFullscreen ? 'cursor-zoom-out' : 'cursor-zoom-in'"
     :loop="true"
     :loop-prevents-sliding="false"
     :autoplay="{ disableOnInteraction: true }"
@@ -78,7 +81,7 @@ const onSetTransition: (swiper: SwiperType, duration: number) => void = (
     </SwiperSlide>
 
     <div
-      class="absolute bottom-0 z-10 flex w-full bg-white opacity-0 transition-opacity group-hover:opacity-100 focus-within:opacity-100"
+      class="absolute bottom-0 z-10 flex w-full bg-zinc-800 text-white opacity-0 transition-opacity group-hover:opacity-100 focus-within:opacity-100"
     >
       <button class="nav" @click="swiper?.slidePrev()">
         <ChevronLeft />
@@ -88,7 +91,7 @@ const onSetTransition: (swiper: SwiperType, duration: number) => void = (
           v-for="index in range(slides.length)"
           :key="index"
           class="nav"
-          :class="slide === index ? '' : 'text-zinc-200'"
+          :class="slide === index ? '' : 'text-current/25'"
           @click="swiper?.slideToLoop(index)"
         >
           <svg viewBox="-1 -1 2 2" class="size-2">
@@ -107,6 +110,6 @@ const onSetTransition: (swiper: SwiperType, duration: number) => void = (
 @reference "tailwindcss";
 
 .nav {
-  @apply size-8 hover:text-zinc-500;
+  @apply size-8 hover:text-current/75;
 }
 </style>

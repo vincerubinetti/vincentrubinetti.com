@@ -4,6 +4,8 @@
 @theme {
   --width: --spacing(250);
 
+  --radius: 0;
+
   --color-light: oklch(97% 0.01 40);
   --color-mid: oklch(90% 0.05 220);
   --color-dark: oklch(50% 0.15 350);

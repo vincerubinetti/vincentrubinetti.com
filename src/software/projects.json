@@ -1,0 +1,15 @@
+[
+  {
+    "name": "Manubot",
+    "links": {
+      "site": "https://manubot.org",
+      "repo": "https://github.com/manubot"
+    },
+    "points": [
+      "lorem ipsum dolor sit amet",
+      "consectetur adipiscing elit",
+      "sed do eiusmod"
+    ],
+    "tags": ["vanilla", "logo", "brand", "docs"]
+  }
+]

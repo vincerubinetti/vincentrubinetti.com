@@ -59,7 +59,7 @@ const hatch = 10;
 
 <template>
   <header class="bg-dark text-white">
-    <hgroup class="flex flex-col items-center gap-4 py-8 text-center">
+    <hgroup class="flex flex-col items-center gap-2 py-8 text-center">
       <h1 class="sr-only">Vincent Rubinetti</h1>
       <div class="corners-2 w-86 max-w-full">
         <svg

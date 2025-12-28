@@ -21,12 +21,12 @@ import Splash from "@/home/Splash.vue";
   <Splash client:load />
   <Header />
   <main>
-    <Listen client:load />
+    <Listen client:only="vue" />
     <Follow />
     <Highlights client:load />
     <About />
     <Extras />
-    <Contact />
+    <Contact client:load />
   </main>
   <Footer />
 </Layout>

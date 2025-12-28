@@ -21,7 +21,7 @@ useEventListener("scroll", hideOverlay);
     ref="overlay"
     class="overlay pointer-events-none fixed inset-0 z-100 grid place-content-center bg-black"
   >
-    <Logo class="logo size-20 text-white" />
+    <Logo class="logo size-16 text-white" />
   </div>
 </template>
 
