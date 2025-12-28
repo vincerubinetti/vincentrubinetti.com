@@ -87,13 +87,13 @@ const { SSR } = import.meta.env;
 
     <!-- playlists -->
     <div
-      class="max-xs:grid-cols-1 -mb-4 grid w-full grid-cols-6 gap-4 max-lg:grid-cols-3 max-md:grid-cols-2"
+      class="max-xs:grid-cols-1 -mb-4 grid w-full grid-cols-6 max-lg:grid-cols-3 max-md:grid-cols-2"
     >
       <button
         v-for="({ title, id }, index) of playlists"
         :key="index"
-        class="button-dark relative before:absolute before:bottom-0 before:h-0.5 before:bg-current before:transition-[width]"
-        :class="[selectedPlaylist.id === id ? 'before:w-full' : 'before:w-0']"
+        class="button-dark rounded-b-none! border-b-2"
+        :class="[selectedPlaylist.id === id ? '' : 'border-white/10']"
         :aria-current="selectedPlaylist.id === id"
         :title="`Load ${title} playlist`"
         aria-controls="listen-player"

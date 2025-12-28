@@ -28,3 +28,13 @@ export const pointerCoords = ({
     y,
   };
 };
+
+/** finish animations on a given dom element */
+export const finishAnimations = (element: Element): void => {
+  for (const animation of document.getAnimations())
+    if (
+      animation.effect instanceof KeyframeEffect &&
+      element.contains(animation.effect.target)
+    )
+      animation.finish();
+};

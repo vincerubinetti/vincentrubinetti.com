@@ -71,8 +71,8 @@ const map = computed(() =>
   <div
     class="flex h-[180px] w-[975px] flex-col items-center bg-black text-white"
   >
-    <h1 ref="ref" class="my-auto flex items-center gap-8">
-      <Logo class="size-10!" />Vincent Rubinetti
+    <h1 ref="ref" class="my-auto flex items-center gap-4">
+      <Logo class="relative top-0.5 size-8!" />Vincent Rubinetti
     </h1>
 
     <div class="mb-5 flex items-center gap-5 font-sans">

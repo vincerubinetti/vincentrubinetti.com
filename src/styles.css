@@ -33,11 +33,11 @@
   }
 
   h1 {
-    @apply text-2xl;
+    @apply text-2xl font-light;
   }
 
   h2 {
-    @apply text-2xl font-medium;
+    @apply text-2xl font-normal;
   }
 
   h3 {
