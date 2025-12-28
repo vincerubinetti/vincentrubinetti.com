@@ -1,10 +1,11 @@
 <script setup lang="ts">
-import { map, startCase, toPairs, uniq } from "lodash-es";
+import { orderBy, random, startCase, toPairs } from "lodash-es";
 import { ExternalLink, Globe } from "lucide-vue-next";
 import GitHub from "@/assets/logos/github.svg?component";
 import Carousel from "@/components/Carousel.vue";
 import Dash from "@/components/Dash.vue";
 import List from "@/software/List.vue";
+import { renderMarkdown } from "@/util/string";
 import projects from "./projects.json";
 
 /** import images */
@@ -25,45 +26,99 @@ for (const [path, { default: _default }] of imports) {
   images[name].push(_default);
 }
 
-/** all unique tags */
-const tags = uniq(map(projects, (project) => project.tags).flat());
-
 /** get link icon */
 const getIcon = (key: string) => {
   if (key.match(/site/i)) return Globe;
   if (key.match(/repo/i)) return GitHub;
   return ExternalLink;
 };
+
+/** project order */
+const order = [
+  "Lab Website Template",
+  "SVG to PNG",
+  "Human Microbiome Compendium",
+  "Exploring Cancer in Colorado",
+  "NIH Reporting",
+  "3Blue1Brown.com",
+  "3Blue1Brown Dubbing",
+  "3Blue1Brown Captions",
+  "Simplex",
+  "GenePlexus",
+  "Manubot",
+  "Adage",
+  "Connectivity Search",
+  "Het.io",
+  "mygeneset.info",
+  "Misc Logos",
+  "Word Spot",
+  "STRchive",
+  "Word Lapse",
+  "Preprint Similarity Search",
+  "SET",
+  "Wall of Software",
+  "DBMI Screensaver",
+  "MIDI Humanizer",
+  "Using the Music of 3Blue1Brown",
+  "Lab Website Template Poster",
+  "Redirects",
+  "Intro to SVGs",
+  "Preprint Bot",
+  "hclust",
+  "TisLab.org",
+  "Monarch",
+  "Mute Tabs By URL",
+];
+
+/** displayed projects */
+const _projects = orderBy(
+  Object.entries(projects).map(([name, project]) => ({
+    name,
+    ...project,
+    images: images[name.toLowerCase()] ?? [],
+  })),
+  (project) => {
+    const index = order.indexOf(project.name);
+    return index === -1 ? 999 : index;
+  },
+);
 </script>
 
 <template>
   <section>
     <h2>Projects<Dash /></h2>
 
-    <div class="mb-4 flex flex-wrap gap-2">
-      <button v-for="(tag, index) in tags" :key="index" class="button">
-        {{ tag }}
-      </button>
-    </div>
-
     <div class="grid grid-cols-3 gap-4 max-md:grid-cols-2 max-sm:grid-cols-1">
       <!-- project card -->
       <div
-        v-for="({ name, links, points, tags }, index) in projects"
+        v-for="(
+          { name, group, description, links, images }, index
+        ) in _projects"
         :key="index"
         class="corners-2 bg-light paper flex flex-col gap-4 p-6"
       >
         <Carousel
-          :slides="
-            (images[name.toLowerCase()] ?? []).map((image) => ({ image }))
-          "
+          v-if="images.length"
+          :slides="images.map((image) => ({ image }))"
         />
+        <div
+          v-else
+          class="grid aspect-square place-items-center font-sans text-4xl text-current/50"
+          :style="{ background: `oklch(90% 0.025 ${random(0, 360)})` }"
+        >
+          {{
+            name
+              .split(" ")
+              .map((word) => word[0])
+              .join("")
+              .toUpperCase()
+          }}
+        </div>
 
-        <h3 class="mt-2 self-center text-center">{{ name }}</h3>
+        <h3 class="mt-2 self-center text-center">
+          {{ name }}
+        </h3>
 
-        <ul>
-          <li v-for="(point, index) in points" :key="index">{{ point }}</li>
-        </ul>
         <div class="flex flex-wrap justify-center gap-2">
           <a
             v-for="(link, key, index) in links"
@@ -74,13 +129,13 @@ const getIcon = (key: string) => {
           >
             <component :is="getIcon(key)" />
           </a>
-          <button v-for="(tag, index) in tags" :key="index" class="button">
-            {{ tag }}
-          </button>
         </div>
+
+        <p v-html="renderMarkdown(description)"></p>
+
+        <div class="absolute right-2 bottom-2 opacity-50">{{ group }}</div>
       </div>
     </div>
-
     <List />
   </section>
 </template>

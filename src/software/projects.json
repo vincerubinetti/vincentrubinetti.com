@@ -1,15 +1,408 @@
-[
-  {
-    "name": "Manubot",
+{
+  "3Blue1Brown Captions": {
+    "description": "",
+    "group": "3Blue1Brown",
     "links": {
-      "site": "https://manubot.org",
-      "repo": "https://github.com/manubot"
+      "repo": "https://github.com/3b1b/captions/tree/main/app"
     },
-    "points": [
-      "lorem ipsum dolor sit amet",
-      "consectetur adipiscing elit",
-      "sed do eiusmod"
+    "tech": ["TypeScript", "React"],
+    "work": ["Design", "Architecture", "Implementation"],
+    "tags": ["Deprecated"]
+  },
+  "3Blue1Brown Dubbing": {
+    "description": "",
+    "group": "3Blue1Brown",
+    "links": {
+      "repo": "https://github.com/3Blue1Brown/dubbing",
+      "site": "https://3b1b-dubbing.netlify.app/"
+    },
+    "tech": [
+      "TypeScript",
+      "React",
+      "Web Audio",
+      "Web Workers",
+      "Audio Worklet"
     ],
-    "tags": ["vanilla", "logo", "brand", "docs"]
+    "libraries": ["workerpool", "virtual-audio-graph"],
+    "work": ["Design", "Architecture", "Implementation", "Audio Processing"]
+  },
+  "3Blue1Brown.com": {
+    "description": "",
+    "group": "3Blue1Brown",
+    "links": {
+      "repo": "",
+      "site": ""
+    },
+    "tech": ["", "", ""],
+    "features": ["", "", ""],
+    "libraries": ["", "", ""],
+    "work": ["", "", ""]
+  },
+  "Adage": {
+    "description": "",
+    "group": "Greene Lab",
+    "links": {
+      "repo": "https://github.com/greenelab/adage-frontend",
+      "site": "https://adage.greenelab.com/"
+    },
+    "features": ["Network UI", "Heatmaps", "Charts & plots"],
+    "tech": ["React", "SVG", "Canvas", "Web Workers"],
+    "libraries": ["D3", "Redux", "Sentry"],
+    "work": [
+      "Research",
+      "Design",
+      "Implementation",
+      "Unit Testing",
+      "Math & Stats",
+      "Visualization"
+    ]
+  },
+  "Connectivity Search": {
+    "description": "",
+    "group": "Greene Lab",
+    "links": {
+      "repo": "https://github.com/greenelab/connectivity-search-frontend",
+      "site": "https://het.io/search/"
+    },
+    "features": [
+      "Unique network UI",
+      "Unique table UI",
+      "Unique deployment",
+      "Branded library of components"
+    ],
+    "tech": ["React", "SVG"],
+    "libraries": ["D3", "Redux"],
+    "work": ["Design", "Visualization", "Implementation"]
+  },
+  "DBMI Screensaver": {
+    "description": "",
+    "group": "CU DBMI",
+    "links": {
+      "repo": "",
+      "site": ""
+    },
+    "tech": ["", "", ""],
+    "features": ["", "", ""],
+    "libraries": ["", "", ""],
+    "work": ["", "", ""]
+  },
+  "Exploring Cancer in Colorado": {
+    "description": "",
+    "group": "CU Cancer Center",
+    "links": {
+      "repo": "",
+      "site": ""
+    },
+    "tech": ["", "", ""],
+    "features": ["", "", ""],
+    "libraries": ["", "", ""],
+    "work": ["", "", ""]
+  },
+  "GenePlexus": {
+    "description": "",
+    "group": "Krishnan Lab",
+    "links": {
+      "repo": "",
+      "site": ""
+    },
+    "tech": ["", "", ""],
+    "features": ["", "", ""],
+    "libraries": ["", "", ""],
+    "work": ["", "", ""]
+  },
+  "hclust": {
+    "description": "",
+    "group": "Greene Lab",
+    "links": {
+      "repo": "",
+      "site": ""
+    },
+    "tech": ["", "", ""],
+    "features": ["", "", ""],
+    "libraries": ["", "", ""],
+    "work": ["", "", ""]
+  },
+  "Het.io": {
+    "description": "",
+    "group": "Greene Lab",
+    "links": {
+      "repo": "https://github.com/hetio/het.io",
+      "site": "https://het.io/"
+    },
+    "tech": ["", "", ""],
+    "features": ["", "", ""],
+    "libraries": ["", "", ""],
+    "work": ["", "", ""]
+  },
+  "Human Microbiome Compendium": {
+    "description": "",
+    "group": "Blekhman Lab",
+    "links": {
+      "repo": "https://github.com/blekhmanlab/compendium_website",
+      "site": "https://microbiomap.org/"
+    },
+    "tech": ["Pipeline", "Map", "TypeScript", "React", "Web Workers", "D3"]
+  },
+  "Intro to SVGs": {
+    "description": "",
+    "group": "Greene Lab",
+    "links": {
+      "repo": "",
+      "site": ""
+    },
+    "tech": ["", "", ""],
+    "features": ["", "", ""],
+    "libraries": ["", "", ""],
+    "work": ["", "", ""]
+  },
+  "Lab Website Template": {
+    "description": "",
+    "group": "Greene Lab",
+    "links": {
+      "repo": "https://github.com/greenelab/lab-website-template",
+      "site": "https://greene-lab.gitbook.io/lab-website-template-docs"
+    },
+    "tech": ["Jekyll", "Docs", "GitBook"]
+  },
+  "Lab Website Template Poster": {
+    "description": "",
+    "group": "Greene Lab",
+    "links": {
+      "repo": "",
+      "site": ""
+    },
+    "tech": ["", "", ""],
+    "features": ["", "", ""],
+    "libraries": ["", "", ""],
+    "work": ["", "", ""]
+  },
+  "Manubot": {
+    "description": "",
+    "group": "Greene Lab",
+    "links": {
+      "repo": "https://github.com/manubot",
+      "site": "https://manubot.org"
+    },
+    "tech": ["Vanilla", "Logo", "Brand", "Docs"]
+  },
+  "MIDI Humanizer": {
+    "description": "",
+    "group": "Personal",
+    "links": {
+      "repo": "",
+      "site": ""
+    },
+    "tech": ["", "", ""],
+    "features": ["", "", ""],
+    "libraries": ["", "", ""],
+    "work": ["", "", ""]
+  },
+  "Misc Logos": {
+    "description": "",
+    "group": "Various",
+    "links": {
+      "repo": "",
+      "site": ""
+    },
+    "tech": ["", "", ""],
+    "features": ["", "", ""],
+    "libraries": ["", "", ""],
+    "work": ["", "", ""]
+  },
+  "Monarch": {
+    "description": "",
+    "group": "Monarch Initiative",
+    "links": {
+      "repo": "https://github.com/monarch-initiative/monarch-app",
+      "site": "https://monarchinitiative.org/"
+    },
+    "tech": ["", "", ""],
+    "features": ["", "", ""],
+    "libraries": ["", "", ""],
+    "work": ["", "", ""],
+    "tags": ["Divested"]
+  },
+  "Mute Tabs By URL": {
+    "description": "",
+    "group": "Personal",
+    "links": {
+      "repo": "",
+      "site": ""
+    },
+    "tech": ["", "", ""],
+    "features": ["", "", ""],
+    "libraries": ["", "", ""],
+    "work": ["", "", ""],
+    "tags": ["Deprecated"]
+  },
+  "mygeneset.info": {
+    "description": "",
+    "group": "BioThings",
+    "links": {
+      "repo": "https://github.com/biothings/mygeneset.info-website",
+      "site": "https://mygeneset.info/"
+    },
+    "tech": ["", "", ""],
+    "features": ["", "", ""],
+    "libraries": ["", "", ""],
+    "work": ["", "", ""]
+  },
+  "NIH Reporting": {
+    "description": "",
+    "group": "NIH",
+    "links": {
+      "repo": "",
+      "site": ""
+    },
+    "tech": ["", "", ""],
+    "features": ["", "", ""],
+    "libraries": ["", "", ""],
+    "work": ["", "", ""]
+  },
+  "Preprint Bot": {
+    "description": "",
+    "group": "Greene Lab",
+    "links": {
+      "repo": "",
+      "site": ""
+    },
+    "tech": ["", "", ""],
+    "features": ["", "", ""],
+    "libraries": ["", "", ""],
+    "work": ["", "", ""]
+  },
+  "Preprint Similarity Search": {
+    "description": "",
+    "group": "Greene Lab",
+    "links": {
+      "repo": "",
+      "site": ""
+    },
+    "tech": ["", "", ""],
+    "features": ["", "", ""],
+    "libraries": ["", "", ""],
+    "work": ["", "", ""]
+  },
+  "Redirects": {
+    "description": "",
+    "group": "CU DBMI",
+    "links": {
+      "repo": "",
+      "site": ""
+    },
+    "tech": ["", "", ""],
+    "features": ["", "", ""],
+    "libraries": ["", "", ""],
+    "work": ["", "", ""]
+  },
+  "SET": {
+    "description": "",
+    "group": "Personal",
+    "links": {
+      "repo": "",
+      "site": ""
+    },
+    "tech": [
+      "Personal",
+      "TypeScript",
+      "React",
+      "Tailwind",
+      "Framer Motion",
+      "SVG"
+    ]
+  },
+  "Simplex": {
+    "description": "",
+    "group": "Krishnan Lab",
+    "links": {
+      "repo": "",
+      "site": ""
+    },
+    "tech": ["", "", ""],
+    "features": ["", "", ""],
+    "libraries": ["", "", ""],
+    "work": ["", "", ""]
+  },
+  "STRchive": {
+    "description": "",
+    "group": "Dashnow Lab",
+    "links": {
+      "repo": "",
+      "site": ""
+    },
+    "tech": ["", "", ""],
+    "features": ["", "", ""],
+    "libraries": ["", "", ""],
+    "work": ["", "", ""]
+  },
+  "SVG to PNG": {
+    "description": "",
+    "group": "Personal",
+    "links": {
+      "repo": "",
+      "site": ""
+    },
+    "tech": ["", "", ""],
+    "features": ["", "", ""],
+    "libraries": ["", "", ""],
+    "work": ["", "", ""]
+  },
+  "tislab.org": {
+    "description": "",
+    "group": "TISLab",
+    "links": {
+      "repo": "",
+      "site": ""
+    },
+    "tech": ["", "", ""],
+    "features": ["", "", ""],
+    "libraries": ["", "", ""],
+    "work": ["", "", ""],
+    "tags": ["Divested"]
+  },
+  "Using the Music of 3Blue1Brown": {
+    "description": "",
+    "group": "Personal",
+    "links": {
+      "repo": "",
+      "site": ""
+    },
+    "tech": ["React", "Form"]
+  },
+  "Wall of Software": {
+    "description": "",
+    "group": "CU DBMI",
+    "links": {
+      "repo": "https://github.com/CU-DBMI/wall-of-software",
+      "site": "https://cu-dbmi.github.io/wall-of-software/"
+    },
+    "tech": ["", "", ""],
+    "features": ["", "", ""],
+    "libraries": ["", "", ""],
+    "work": ["", "", ""]
+  },
+  "Word Lapse": {
+    "description": "",
+    "group": "Greene Lab",
+    "links": {
+      "repo": "",
+      "site": ""
+    },
+    "tech": ["", "", ""],
+    "features": ["", "", ""],
+    "libraries": ["", "", ""],
+    "work": ["", "", ""]
+  },
+  "Word Spot": {
+    "description": "",
+    "group": "CU DBMI",
+    "links": {
+      "repo": "https://github.com/CU-DBMI/word-spot",
+      "site": "https://word-spot.netlify.app/"
+    },
+    "tech": ["", "", ""],
+    "features": ["", "", ""],
+    "libraries": ["", "", ""],
+    "work": ["", "", ""]
   }
-]
+}

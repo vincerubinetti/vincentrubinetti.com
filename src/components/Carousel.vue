@@ -1,6 +1,10 @@
 <script setup lang="ts">
-import { ref, useTemplateRef } from "vue";
-import { useFullscreen } from "@vueuse/core";
+import { ref, useTemplateRef, watchEffect } from "vue";
+import {
+  useElementVisibility,
+  useFullscreen,
+  useIntersectionObserver,
+} from "@vueuse/core";
 import { clamp, range } from "lodash-es";
 import { ChevronLeft, ChevronRight } from "lucide-vue-next";
 import { Autoplay, Navigation, Pagination } from "swiper/modules";
@@ -16,6 +20,7 @@ defineProps<Props>();
 
 const rootEl = useTemplateRef("rootEl");
 
+/** fullscreen controls */
 const { toggle, isFullscreen } = useFullscreen(
   rootEl as unknown as HTMLElement,
 );
@@ -25,6 +30,14 @@ const swiper = ref<SwiperType>();
 
 /** reactive slide index */
 const slide = ref(0);
+
+/** wait until element in viewport to start autoplay */
+// @ts-expect-error https://github.com/vueuse/vueuse/issues/4712
+const visible = useElementVisibility(rootEl);
+watchEffect(() => {
+  if (visible.value) swiper.value?.autoplay.start();
+  else swiper.value?.autoplay.stop();
+});
 
 /** custom transition */
 const onProgress: SwiperEvents["progress"] = (swiper) => {
