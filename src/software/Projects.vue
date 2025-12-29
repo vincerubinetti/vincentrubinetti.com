@@ -11,32 +11,32 @@ import List from "./List.vue";
 
 /** project order */
 const order = [
-  "Lab Website Template",
   "SVG to PNG",
-  "Human Microbiome Compendium",
+  "Set",
+  "Word4Word",
+  "Lab Website Template",
+  "Manubot",
   "Exploring Cancer in Colorado",
+  "Simplex",
+  "Word Lapse",
+  "Preprint Similarity Search",
+  "Word Spot",
+  "STRchive",
+  "Human Microbiome Compendium",
+  "GenePlexus",
+  "Connectivity Search",
+  "Het.io",
+  "Adage",
+  "mygeneset.info",
+  "Wall of Software",
+  "DBMI Screensaver",
   "NIH Reporting",
   "3Blue1Brown.com",
   "3Blue1Brown Dubbing",
-  "Simplex",
-  "GenePlexus",
-  "Manubot",
-  "Adage",
-  "Connectivity Search",
-  "Het.io",
-  "mygeneset.info",
-  "Misc. Logos",
-  "Word Spot",
-  "STRchive",
-  "Word Lapse",
-  "Preprint Similarity Search",
-  "Set",
-  "Word4Word",
-  "Wall of Software",
-  "DBMI Screensaver",
-  "MIDI Humanizer",
   "Using the Music of 3Blue1Brown",
+  "MIDI Humanizer",
   "Lab Website Template Poster",
+  "Misc. Logos",
   "Redirects",
   "Intro to SVGs",
   "hclust",
@@ -64,7 +64,9 @@ const _projects = orderBy(
   <section>
     <h2><Dash flip />Projects</h2>
 
-    <div class="grid grid-cols-3 gap-8 max-md:grid-cols-2 max-sm:grid-cols-1">
+    <div
+      class="grid grid-cols-3 items-start gap-8 max-md:grid-cols-2 max-sm:grid-cols-1"
+    >
       <!-- project card -->
       <div
         v-for="(

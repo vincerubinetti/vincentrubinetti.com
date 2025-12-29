@@ -19,7 +19,10 @@ useCaptcha();
 
     <div class="grid grid-cols-2 gap-12 max-lg:grid-cols-1">
       <div class="flex flex-col gap-4">
-        <p>Please write me a message!</p>
+        <p>
+          I'm passionate about software and always happy to chat about it.
+          Please write me a message!
+        </p>
         <p v-html="address" />
       </div>
 

@@ -514,8 +514,8 @@
   {
     "name": "STRchive",
     "group": "Dashnow Lab",
-    "type": "Web App",
-    "description": "",
+    "type": "Site",
+    "description": "Explore an archive of Short Tandem Repeats (STRs) associated with human diseases",
     "site": "https://strchive.org/",
     "repo": "https://github.com/dashnowlab/STRchive",
     "feat": [
@@ -572,7 +572,7 @@
     "name": "Wall of Software",
     "group": "CU DBMI",
     "type": "Site",
-    "description": "",
+    "description": "On-going catalog and showcase of software products made in the University of Colorado Department of Biomedical Informatics",
     "site": "https://cu-dbmi.github.io/wall-of-software/",
     "repo": "https://github.com/CU-DBMI/wall-of-software",
     "feat": [
