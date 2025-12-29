@@ -1,37 +1,38 @@
 <script setup lang="ts">
 import { pick } from "lodash-es";
-import * as logos from "@/images/logos";
+import logos from "@/images/logos";
+import { renderMarkdown } from "@/util/string";
 import Dash from "./components/Dash.vue";
 
 const tech = [
   {
     icons: pick(logos, ["TypeScript", "React", "Vue"]),
     description:
-      "<i>Extensive</i> experience building large-scale apps w/ modern <b>TypeScript</b>, <b>React</b> & <b>Vue</b>",
+      "_Extensive_ experience building large-scale apps w/ modern **TypeScript**, **React** & **Vue**",
   },
   {
     icons: pick(logos, ["Html", "Css", "JavaScript"]),
     description:
-      "<i>Extensive</i> <i>historical</i> & <i>modern</i> experience w/ <i>vanilla</i> <b>HTML</b>, <b>CSS</b>, & <b>JavaScript</b>",
+      "_Extensive_ _historical_ & _modern_ experience w/ _vanilla_ **HTML**, **CSS**, & **JavaScript**",
   },
   {
     icons: pick(logos, ["Svg", "Canvas", "D3"]),
     description:
-      "<i>Extensive</i> experience designing custom, interactive, animated graphics w/ <b>SVG</b>, <b>Canvas</b>, & <b>D3</b>",
+      "_Extensive_ experience designing custom, interactive, animated graphics w/ **SVG**, **Canvas**, & **D3**",
   },
   {
     icons: pick(logos, ["Node", "Bun", "Actions"]),
     description:
-      "Experience building pipelines, automation, bots, & CLIs w/ <b>Node</b>, <b>Bun</b>, & <b>GitHub Actions</b>",
+      "Experience building pipelines, automation, bots, & CLIs w/ **Node**, **Bun**, & **GitHub Actions**",
   },
   {
     icons: pick(logos, ["Jekyll", "Astro", "Next"]),
     description:
-      "Experience building static & server-rendered sites w/ <b>Jekyll</b>, <b>Astro</b>, & <b>Next</b>",
+      "Experience building static & server-rendered sites w/ **Jekyll**, **Astro**, & **Next**",
   },
   {
     icons: pick(logos, ["Playwright", "Tailwind", "Figma"]),
-    description: "...and<br/>&nbsp;&nbsp;much<br/>&nbsp;&nbsp;&nbsp;&nbsp;more",
+    description: `...and  \n&nbsp;&nbsp;much  \n&nbsp;&nbsp;&nbsp;&nbsp;more`,
   },
 ];
 </script>
@@ -58,7 +59,7 @@ const tech = [
           />
         </div>
 
-        <p v-html="description" class="text-balance" />
+        <p v-html="renderMarkdown(description)" class="text-balance" />
       </div>
     </div>
   </section>

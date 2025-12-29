@@ -12,20 +12,15 @@ export const pointerCoords = ({
   const paddingRight = parseFloat(style.paddingRight || "0");
   const paddingBottom = parseFloat(style.paddingBottom || "0");
 
-  /* x in % */
-  const x =
-    (clientX - bbox.left - paddingLeft) /
-    (bbox.width - paddingLeft - paddingRight);
-  /* y in % */
-  const y =
-    (clientY - bbox.top - paddingTop) /
-    (bbox.height - paddingTop - paddingBottom);
-
   return {
     /** x in % of width */
-    x,
+    x:
+      (clientX - bbox.left - paddingLeft) /
+      (bbox.width - paddingLeft - paddingRight),
     /** y in % of height */
-    y,
+    y:
+      (clientY - bbox.top - paddingTop) /
+      (bbox.height - paddingTop - paddingBottom),
   };
 };
 

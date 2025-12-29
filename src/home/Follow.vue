@@ -16,7 +16,7 @@ import { getColor } from "./util/colors";
       <a
         href="https://vincerubinetti.bandcamp.com/"
         class="button"
-        :class="getColor(Bandcamp)"
+        :class="getColor('Bandcamp')"
       >
         <Outline />
         <Bandcamp />
@@ -34,7 +34,7 @@ import { getColor } from "./util/colors";
         <a
           href="https://music.apple.com/us/artist/vincent-rubinetti/274886492"
           class="button"
-          :class="getColor(Apple)"
+          :class="getColor('Apple')"
         >
           <Outline />
           <Apple />
@@ -43,7 +43,7 @@ import { getColor } from "./util/colors";
         <a
           href="https://open.spotify.com/artist/2SRhEEt2tlDQWxzwfUo9Dl"
           class="button"
-          :class="getColor(Spotify)"
+          :class="getColor('Spotify')"
         >
           <Outline />
           <Spotify />
@@ -52,7 +52,7 @@ import { getColor } from "./util/colors";
         <a
           href="https://soundcloud.com/vincerubinetti"
           class="button"
-          :class="getColor(SoundCloud)"
+          :class="getColor('SoundCloud')"
         >
           <Outline />
           <SoundCloud />
@@ -61,7 +61,7 @@ import { getColor } from "./util/colors";
         <a
           href="https://www.youtube.com/c/VincentRubinetti"
           class="button"
-          :class="getColor(YouTube)"
+          :class="getColor('YouTube')"
         >
           <Outline />
           <YouTube />

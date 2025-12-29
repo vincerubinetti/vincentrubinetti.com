@@ -14,7 +14,7 @@
     "work": ["Design", "Implementation", "Cloud Functions"],
     "base": ["TypeScript", "React"],
     "tech": [],
-    "libs": [],
+    "lib": [],
     "warning": "Prototype, replaced by a fuller version developed by someone else"
   },
   {
@@ -38,7 +38,7 @@
     ],
     "base": ["TypeScript", "React"],
     "tech": ["Web Audio", "Web Workers", "Audio Worklets"],
-    "libs": ["workerpool", "virtual-audio-graph"],
+    "lib": ["Workerpool", "Virtual Audio Graph"],
     "warning": ""
   },
   {
@@ -55,9 +55,9 @@
       "Various scripts for data aggregation and site maintenance"
     ],
     "work": ["Design", "Implementation"],
-    "base": ["Next"],
-    "tech": ["React", "SVG", "Canvas", "MDX", "LaTeX"],
-    "libs": ["rehype", "remark"],
+    "base": ["Next", "React"],
+    "tech": ["SVG", "Canvas", "MDX", "LaTeX"],
+    "lib": ["Rehype", "Remark"],
     "warning": "Left my hands a while ago, not an accurate reflection of my work"
   },
   {
@@ -74,6 +74,7 @@
     "work": [
       "Research",
       "Design",
+      "Mockup",
       "Implementation",
       "Testing",
       "Math & Stats",
@@ -81,8 +82,8 @@
       "Logo"
     ],
     "base": ["React"],
-    "tech": ["SVG", "Canvas", "Web Workers"],
-    "libs": ["D3", "Redux", "Sentry"],
+    "tech": ["SVG", "Canvas", "Web Workers", "Figma"],
+    "lib": ["D3", "Redux", "Sentry"],
     "warning": ""
   },
   {
@@ -101,7 +102,7 @@
     "work": ["Design", "Data Visualization", "Implementation"],
     "base": ["React"],
     "tech": ["SVG"],
-    "libs": ["D3", "Redux"],
+    "lib": ["D3", "Redux"],
     "warning": ""
   },
   {
@@ -119,7 +120,7 @@
     "work": ["Design", "Implementation", "Math"],
     "base": ["JavaScript"],
     "tech": ["Canvas", "SVG"],
-    "libs": ["Three JS", "GSAP", "Opentype JS"],
+    "lib": ["Three JS", "GSAP", "Opentype JS"],
     "warning": ""
   },
   {
@@ -137,7 +138,7 @@
     "work": ["Research", "Design", "Implementation", "Data Visualization"],
     "base": ["TypeScript", "Vue"],
     "tech": [],
-    "libs": ["OpenLayers", "D3"],
+    "lib": ["OpenLayers", "D3"],
     "warning": ""
   },
   {
@@ -151,10 +152,16 @@
       "Friendly UI for creating and managing analyses",
       "Interactive network UI"
     ],
-    "work": ["Design", "Implementation", "Data Visualization", "Logo"],
+    "work": [
+      "Design",
+      "Mockup",
+      "Implementation",
+      "Data Visualization",
+      "Logo"
+    ],
     "base": ["TypeScript", "React"],
-    "tech": [],
-    "libs": ["D3", "Mock Service Worker"],
+    "tech": ["Figma"],
+    "lib": ["D3", "Mock Service Worker"],
     "warning": ""
   },
   {
@@ -172,7 +179,7 @@
     "work": ["Implementation", "Optimization", "Math"],
     "base": ["JavaScript"],
     "tech": [],
-    "libs": [],
+    "lib": [],
     "warning": ""
   },
   {
@@ -190,7 +197,7 @@
     "work": ["Design", "Implementation", "Copywriting", "Logo"],
     "base": ["Jekyll"],
     "tech": ["Canvas"],
-    "libs": [],
+    "lib": [],
     "warning": ""
   },
   {
@@ -213,9 +220,9 @@
       "Data Visualization",
       "Logo"
     ],
-    "base": ["TypeScript", "React"],
+    "base": ["TypeScript", "React", "Node"],
     "tech": ["SVG", "Web Workers"],
-    "libs": ["D3", "GSAP", "Comlink"],
+    "lib": ["D3", "GSAP", "Comlink"],
     "warning": ""
   },
   {
@@ -233,7 +240,7 @@
     "work": ["Design", "Implementation", "Writing"],
     "base": ["Jekyll", "JavaScript"],
     "tech": [],
-    "libs": [],
+    "lib": [],
     "warning": ""
   },
   {
@@ -260,7 +267,7 @@
     ],
     "base": ["Jekyll", "JavaScript"],
     "tech": ["SVG", "Python", "Ruby"],
-    "libs": [],
+    "lib": [],
     "warning": ""
   },
   {
@@ -278,7 +285,7 @@
     "work": ["Design", "Writing", "Implementation"],
     "base": ["JavaScript"],
     "tech": ["SVG"],
-    "libs": ["D3"],
+    "lib": ["D3"],
     "warning": ""
   },
   {
@@ -296,7 +303,7 @@
     "work": ["Design", "Implementation", "Documentation", "Logo", "Branding"],
     "base": ["JavaScript"],
     "tech": [],
-    "libs": [],
+    "lib": [],
     "warning": ""
   },
   {
@@ -314,7 +321,7 @@
     "work": ["Design", "Implementation", "MIDI Processing"],
     "base": ["TypeScript", "React"],
     "tech": ["SVG"],
-    "libs": ["D3", "Tone JS"],
+    "lib": ["D3", "Tone JS"],
     "warning": ""
   },
   {
@@ -332,7 +339,7 @@
     "work": ["Design", "Logo", "Branding"],
     "base": [],
     "tech": ["SVG", "Adobe Illustrator"],
-    "libs": [],
+    "lib": [],
     "warning": ""
   },
   {
@@ -354,6 +361,7 @@
       "Research",
       "Interviews",
       "Design Docs",
+      "Mockup",
       "Design",
       "Implementation",
       "Testing",
@@ -361,15 +369,15 @@
       "CI/CD"
     ],
     "base": ["TypeScript", "Vue"],
-    "tech": [],
-    "libs": ["Playwright", "Mock Service Worker", "Sentry", "Hotjar"],
-    "warning": "Left my hands a long ago and diverged significantly, not an accurate reflection of my work"
+    "tech": ["Figma"],
+    "lib": ["Playwright", "Mock Service Worker", "Sentry", "Hotjar"],
+    "warning": "Left my hands a long ago and diverged significantly from my intentions, not an accurate reflection of my work"
   },
   {
     "name": "Mute Tabs By URL",
     "group": "Personal",
     "type": "Extension",
-    "description": "(Now unnecessary) Chrome extension to auto-mute/unmute tabs based on their URL",
+    "description": "Chrome extension to auto-mute/unmute tabs based on their URL",
     "site": "https://chromewebstore.google.com/detail/mute-tabs-by-url/bpokcenamldgbghabnklpmbkkcgcgdld",
     "repo": "https://github.com/vincerubinetti/mute-tabs-by-url",
     "feat": [
@@ -382,7 +390,7 @@
     "work": ["Design", "Implementation"],
     "base": ["JavaScript"],
     "tech": ["Chrome Extension API"],
-    "libs": [],
+    "lib": [],
     "warning": "Made mostly irrelevant by browsers' changes to autoplay policies, made inoperative by Manifest V3"
   },
   {
@@ -399,10 +407,10 @@
       "API explorer interface",
       "User accounts"
     ],
-    "work": ["Design", "Implementation", "Testing", "Logo"],
+    "work": ["Design", "Mockup", "Implementation", "Testing", "Logo"],
     "base": ["TypeScript", "Vue"],
-    "tech": [],
-    "libs": [],
+    "tech": ["Figma"],
+    "lib": ["Mock Service Worker"],
     "warning": ""
   },
   {
@@ -429,7 +437,7 @@
     ],
     "base": ["TypeScript", "Node", "Vue"],
     "tech": [],
-    "libs": ["Playwright"],
+    "lib": ["Playwright"],
     "warning": ""
   },
   {
@@ -445,7 +453,7 @@
     "work": ["Implementation", "CI/CD"],
     "base": ["Node"],
     "tech": [],
-    "libs": [],
+    "lib": [],
     "warning": "Deprecated when Elon Musk killed Twitter API access"
   },
   {
@@ -459,7 +467,7 @@
     "work": ["Design", "Implementation", "Data Visualization", "Logo"],
     "base": ["React"],
     "tech": [],
-    "libs": ["Sentry"],
+    "lib": ["Sentry"],
     "warning": ""
   },
   {
@@ -475,9 +483,9 @@
       "Comprehensive and honest comparison with alternatives"
     ],
     "work": ["Implementation", "Documentation", "CI/CD"],
-    "base": ["JavaScript"],
+    "base": ["JavaScript", "Node"],
     "tech": [],
-    "libs": [],
+    "lib": [],
     "warning": ""
   },
   {
@@ -491,7 +499,7 @@
     "work": [],
     "base": ["TypeScript", "React"],
     "tech": ["SVG"],
-    "libs": ["Framer Motion"],
+    "lib": ["Framer Motion"],
     "warning": ""
   },
   {
@@ -505,10 +513,10 @@
       "System for saving and sharing revisions of your text",
       "User accounts with robust login system"
     ],
-    "work": ["Design", "Implementation", "Logo"],
+    "work": ["Design", "Mockup", "Implementation", "Logo"],
     "base": ["TypeScript", "React"],
-    "tech": [],
-    "libs": ["zxcvbn"],
+    "tech": ["Figma"],
+    "lib": ["ZXCVBN", "Mock Service Worker"],
     "warning": ""
   },
   {
@@ -533,7 +541,7 @@
     ],
     "base": ["Astro", "React", "JavaScript"],
     "tech": ["SVG"],
-    "libs": ["Plotly"],
+    "lib": ["Plotly"],
     "warning": ""
   },
   {
@@ -551,7 +559,7 @@
     "work": ["Design", "Implementation", "Logo"],
     "base": ["TypeScript", "React"],
     "tech": ["SVG", "Canvas"],
-    "libs": [],
+    "lib": [],
     "warning": ""
   },
   {
@@ -565,7 +573,7 @@
     "work": ["Design", "Implementation"],
     "base": ["React"],
     "tech": [],
-    "libs": ["Formik ", "Yup"],
+    "lib": ["Formik", "Yup"],
     "warning": ""
   },
   {
@@ -583,7 +591,7 @@
     "work": ["Design", "Implementation", "Documentation", "CI/CD"],
     "base": ["JavaScript"],
     "tech": [],
-    "libs": ["Three JS", "Alpine JS"],
+    "lib": ["Three JS", "Alpine JS"],
     "warning": ""
   },
   {
@@ -601,7 +609,7 @@
     "work": ["Design", "Implementation", "Documentation", "CI/CD"],
     "base": ["TypeScript", "Vue"],
     "tech": ["C++"],
-    "libs": [],
+    "lib": [],
     "warning": ""
   },
   {
@@ -618,7 +626,7 @@
     "work": ["Design", "Implementation", "Data Visualization", "Logo"],
     "base": ["React"],
     "tech": [],
-    "libs": ["D3"],
+    "lib": ["D3"],
     "warning": ""
   },
   {
@@ -636,7 +644,7 @@
     "work": ["Design", "Implementation", "Optimization", "Logo"],
     "base": ["TypeScript", "Vue"],
     "tech": ["Web Workers"],
-    "libs": ["Lexical", "Comlink"],
+    "lib": ["Lexical", "Comlink"],
     "warning": ""
   }
 ]

@@ -1,5 +1,7 @@
 import Actions from "./actions.svg?component";
+import Apple from "./apple.svg?component";
 import Astro from "./astro.svg?component";
+import Bandcamp from "./bandcamp.svg?component";
 import Bun from "./bun.svg?component";
 import Canvas from "./canvas.svg?component";
 import Css from "./css.svg?component";
@@ -12,14 +14,20 @@ import Next from "./next.svg?component";
 import Node from "./node.svg?component";
 import Playwright from "./playwright.svg?component";
 import React from "./react.svg?component";
+import SoundCloud from "./soundcloud.svg?component";
+import Spotify from "./spotify.svg?component";
+import Steam from "./steam.svg?component";
 import Svg from "./svg.svg?component";
 import Tailwind from "./tailwind.svg?component";
 import TypeScript from "./typescript.svg?component";
 import Vue from "./vue.svg?component";
+import YouTube from "./youtube.svg?component";
 
-export {
+export default {
   Actions,
+  Apple,
   Astro,
+  Bandcamp,
   Bun,
   Canvas,
   Css,
@@ -32,8 +40,12 @@ export {
   Node,
   Playwright,
   React,
+  SoundCloud,
+  Spotify,
+  Steam,
   Svg,
   Tailwind,
   TypeScript,
   Vue,
+  YouTube,
 };

@@ -79,7 +79,7 @@
   }
 
   &:hover::after {
-    @apply mask-size-[32px_32px]!;
+    @apply mask-size-[16px_16px]!;
   }
 }
 
@@ -91,7 +91,7 @@
   }
 
   &:hover::after {
-    @apply mask-size-[32px_32px]!;
+    @apply mask-size-[16px_16px]!;
   }
 }
 

@@ -29,7 +29,7 @@
   h1,
   h2,
   h3 {
-    @apply flex items-center gap-2 font-sans leading-none;
+    @apply flex items-center gap-[0.75em] font-sans leading-none;
   }
 
   h1 {
@@ -41,16 +41,16 @@
   }
 
   h3 {
-    @apply text-lg font-normal tracking-wide;
+    @apply text-xl font-normal tracking-wide;
   }
 
   p {
-    @apply leading-relaxed;
+    @apply leading-loose;
   }
 
   ul,
   ol {
-    @apply flex list-['-'] flex-col pl-2 leading-relaxed;
+    @apply flex list-['-'] flex-col pl-2 leading-loose;
   }
 
   li {
@@ -75,12 +75,16 @@
   }
 
   label {
-    @apply flex cursor-pointer items-center justify-center gap-2 p-2 font-sans transition-all hover:bg-zinc-100;
+    @apply flex items-center justify-center gap-2 font-sans transition-all;
   }
 
   input,
   textarea {
-    @apply rounded border border-current/25 bg-white p-3 placeholder:text-current/50;
+    @apply rounded border border-current/25 bg-white p-4 placeholder:text-current/50;
+  }
+
+  label:has(input[type="checkbox"]) {
+    @apply cursor-pointer p-2 hover:bg-zinc-100;
   }
 
   input[type="checkbox"] {
@@ -88,20 +92,24 @@
   }
 
   details {
-    @apply flex flex-col items-center;
+    @apply flex flex-col justify-items-center-safe;
 
     &::details-content {
-      @apply flex h-0 flex-col gap-2 overflow-hidden transition-all transition-discrete duration-500;
+      @apply flex h-0 w-full flex-col gap-4 overflow-hidden transition-all transition-discrete duration-500;
       interpolate-size: allow-keywords;
     }
 
     &[open]::details-content {
-      @apply h-auto;
+      @apply mt-4 h-auto;
     }
   }
 
   details[open] summary svg {
     @apply -scale-y-100;
+  }
+
+  select {
+    @apply min-w-0 cursor-pointer p-2;
   }
 
   .icon,

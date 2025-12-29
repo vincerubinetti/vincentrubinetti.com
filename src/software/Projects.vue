@@ -1,7 +1,9 @@
 <script setup lang="ts">
-import { orderBy, pick } from "lodash-es";
+import { computed, ref } from "vue";
+import { countBy, flatMap, orderBy, pick, toPairs } from "lodash-es";
 import { ChevronDown, ExternalLink, TriangleAlert } from "lucide-vue-next";
-import * as logos from "@/images/logos";
+import logos from "@/images/logos";
+import Select from "@/software/components/Select.vue";
 import { renderMarkdown } from "@/util/string";
 import Carousel from "./components/Carousel.vue";
 import Dash from "./components/Dash.vue";
@@ -46,23 +48,96 @@ const order = [
   "Mute Tabs By URL",
 ];
 
+/** generate filter options */
+const toOptions = (key: keyof (typeof projects)[number]) =>
+  orderBy(toPairs(countBy(flatMap(projects, key))), "[1]")
+    .map(([value, count]) => ({ label: `${value} (${count})`, value }))
+    .concat([{ label: "All", value: "" }])
+    .reverse();
+
+/** generate filter options */
+const byGroup = toOptions("group");
+const byWork = toOptions("work");
+const byBase = toOptions("base");
+const byTech = toOptions("tech");
+const byLib = toOptions("lib");
+
+/** filter state */
+const group = ref("");
+const work = ref("");
+const base = ref("");
+const tech = ref("");
+const lib = ref("");
+const search = ref("");
+
 /** displayed projects */
-const _projects = orderBy(
-  projects.map(({ name, ...project }) => ({
-    name,
-    ...project,
-    images: images[name.toLowerCase()] ?? [],
-  })),
-  (project) => {
-    const index = order.indexOf(project.name);
-    return index === -1 ? 999 : index;
-  },
+const _projects = computed(() =>
+  orderBy(
+    projects.map(({ name, ...project }) => ({
+      name,
+      ...project,
+      images: images[name.toLowerCase()] ?? [],
+    })),
+    (project) => {
+      const index = order.indexOf(project.name);
+      return index === -1 ? 999 : index;
+    },
+  ).filter(
+    (project) =>
+      (group.value ? project.group.includes(group.value) : true) &&
+      (work.value ? project.work.includes(work.value) : true) &&
+      (base.value ? project.base.includes(base.value) : true) &&
+      (tech.value ? project.tech.includes(tech.value) : true) &&
+      (lib.value ? project.lib.includes(lib.value) : true) &&
+      JSON.stringify(project)
+        .toLowerCase()
+        .includes(search.value.toLowerCase()),
+  ),
 );
 </script>
 
 <template>
   <section>
     <h2><Dash flip />Projects</h2>
+
+    <details class="w-full">
+      <summary class="button">Filters<ChevronDown /></summary>
+
+      <div
+        class="grid w-full grid-cols-3 gap-x-8 gap-y-4 *:grid *:grid-cols-[--spacing(10)_1fr] max-md:grid-cols-2 max-sm:grid-cols-1"
+      >
+        <label>
+          For
+          <Select v-model="group" :options="byGroup" />
+        </label>
+
+        <label>
+          Base
+          <Select v-model="base" :options="byBase" />
+        </label>
+
+        <label>
+          Tech
+          <Select v-model="tech" :options="byTech" />
+        </label>
+
+        <label>
+          Lib
+          <Select v-model="lib" :options="byLib" />
+        </label>
+
+        <label>
+          Work
+          <Select v-model="work" :options="byWork" />
+        </label>
+
+        <input v-model="search" placeholder="Search" class="p-2" />
+      </div>
+
+      <div class="self-center">
+        {{ _projects.length.toLocaleString() }} projects
+      </div>
+    </details>
 
     <div
       class="grid grid-cols-3 items-start gap-8 max-md:grid-cols-2 max-sm:grid-cols-1"
@@ -80,7 +155,7 @@ const _projects = orderBy(
             work,
             base,
             tech,
-            libs,
+            lib,
             warning,
           },
           index
@@ -134,17 +209,18 @@ const _projects = orderBy(
         </a>
 
         <details name="project">
-          <summary class="button-sm w-full" aria-label="Details">
+          <summary class="button-sm">
+            Details
             <ChevronDown />
           </summary>
 
-          <div class="flex flex-col items-center gap-2 p-4">
+          <div class="flex flex-col gap-2 p-4 pt-0">
             <a :href="repo" class="button-sm">
               Repo
               <ExternalLink />
             </a>
 
-            <p v-html="renderMarkdown(description)" class="leading-relaxed" />
+            <p v-html="renderMarkdown(description)" class="leading-loose" />
 
             <ul>
               <li v-for="(feature, index) in feat" :key="index">
@@ -155,7 +231,7 @@ const _projects = orderBy(
             <div class="flex flex-wrap gap-4">
               <div class="flex flex-wrap gap-2">
                 <div
-                  v-for="(item, index) in [work, base, tech, libs].flat()"
+                  v-for="(item, index) in [work, base, tech, lib].flat()"
                   :key="index"
                   class="flex items-center gap-1 rounded-full bg-zinc-200 px-2 py-1"
                 >

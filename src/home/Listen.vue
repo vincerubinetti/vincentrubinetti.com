@@ -32,6 +32,7 @@ const playlists = [
 
 const selectedPlaylist = ref(playlists[0]);
 
+/** show full track info */
 const showInfo = ref(false);
 
 /** track stats */

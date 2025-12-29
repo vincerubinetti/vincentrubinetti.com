@@ -13,12 +13,12 @@ type Props = {
 
 const { min = 0, max = 100, step = 1 } = defineProps<Props>();
 
-const value = defineModel<number[]>();
+const model = defineModel<number[]>();
 </script>
 
 <template>
   <SliderRoot
-    v-model="value"
+    v-model="model"
     :min="min"
     :max="max"
     :step="step"

@@ -53,8 +53,8 @@ const repoExtras = ref(false);
 </script>
 
 <template>
-  <details>
-    <summary class="button-big highlight corners-4 mb-4">
+  <details class="w-max self-center">
+    <summary class="button-big highlight corners-4">
       All public GitHub work
       <ChevronDown />
     </summary>

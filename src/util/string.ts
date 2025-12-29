@@ -29,6 +29,10 @@ const shortenUrl = (url: string) => {
   }
 };
 
+/** make path safe name */
+export const slugify = (text: string) =>
+  text.toLowerCase().replace(/\W+/g, " ").trim().replace(/\s+/g, "-");
+
 /** replace links in plain text with anchors */
 export const linkify = (content = "") =>
   linkifyStr(content, { format: shortenUrl, nl2br: true, target: "_blank" });

@@ -5,235 +5,18 @@ import {
   shallowRef,
   useTemplateRef,
   watchEffect,
-  type FunctionalComponent,
 } from "vue";
 import { useEventListener } from "@vueuse/core";
-import Apple from "@/images/logos/apple.svg?component";
-import Bandcamp from "@/images/logos/bandcamp.svg?component";
-import Spotify from "@/images/logos/spotify.svg?component";
-import Steam from "@/images/logos/steam.svg?component";
-import YouTube from "@/images/logos/youtube.svg?component";
+import logos from "@/images/logos";
 import { waitFor } from "@/util/misc";
-import { renderMarkdown } from "@/util/string";
+import { renderMarkdown, slugify } from "@/util/string";
 import Outline from "./components/Outline.vue";
-import blue from "./images/albums/3blue1brown.jpg?url";
-import emerald from "./images/albums/emerald-cloud-lab.jpg?url";
-import hacky from "./images/albums/hacky-zack.jpg?url";
-import harmony from "./images/albums/harmony-of-a-hunter-returns.jpg?url";
-import high from "./images/albums/high-noon-revolver.jpg?url";
-import ink from "./images/albums/ink.jpg?url";
-import minute from "./images/albums/minute-physics.jpg?url";
-import remixes from "./images/albums/remixes-and-remakes.jpg?url";
+import highlights from "./data/highlights.json";
+import albums from "./images/albums";
 import { getColor } from "./util/colors";
 import "youtube-video-element";
 
-type Highlight = {
-  title: string;
-  image: string;
-  video?: string;
-  playlist?: string;
-  credits?: string;
-  genre?: string;
-  description?: string;
-  links?: { url: string; icon: FunctionalComponent; text?: string }[];
-};
-
-const highlights: Highlight[] = [
-  {
-    title: "Harmony of a Hunter Returns",
-    image: harmony,
-    playlist: "PL8CeOEg8N98-PWtlQ9-7jayyDpxa3dmJM",
-    credits: "Music, orchestration 2022",
-    genre: "Orchestral, electronic",
-    description:
-      "Arrangements of three beloved tracks from the Metroid series, featured on the acclaimed fan album [Harmony of a Hunter Returns](https://harmony.shinesparkers.net) celebrating the 35th anniversary of Metroid.",
-    links: [
-      {
-        url: "https://vincerubinetti.bandcamp.com/album/metroid",
-        icon: Bandcamp,
-        text: "Vince's tracks on Bandcamp",
-      },
-    ],
-  },
-  {
-    title: "Emerald Cloud Lab",
-    image: emerald,
-    video: "DK2uhXYizEg",
-    credits: "Music, sound-mixing, 2019",
-    genre: "Classical, hybrid electronic",
-    description:
-      "[Emerald Cloud Lab](https://www.emeraldcloudlab.com/) is an advanced remote laboratory that allows scientists to automate their experiments. Narration by Grant Sanderson.",
-    links: [
-      {
-        url: "https://vincerubinetti.bandcamp.com/album/emerald-cloud-lab",
-        icon: Bandcamp,
-        text: "Download on Bandcamp",
-      },
-    ],
-  },
-  {
-    title: "3Blue1Brown",
-    image: blue,
-    playlist: "PL8CeOEg8N98-Zp5htiWQEsjNySnR-WE2A",
-    credits: "Music, 2016 - present",
-    genre: "Classical, hybrid electronic",
-    description:
-      "[3Blue1Brown](https://www.3blue1brown.com/) is a [Youtube channel](https://www.youtube.com/channel/UCYO_jab_esuFRV4b17AJtAw) that produces elucidating and captivating videos about mathematical concepts, with exquisite animations and a focus on intuitive understanding.",
-    links: [
-      {
-        url: "https://vincerubinetti.bandcamp.com/album/the-music-of-3blue1brown",
-        icon: Bandcamp,
-        text: "Download on Bandcamp",
-      },
-      {
-        url: "https://open.spotify.com/album/1dVyjwS8FBqXhRunaG5W5u",
-        icon: Spotify,
-        text: "Stream on Spotify",
-      },
-      {
-        url: "https://itunes.apple.com/us/album/the-music-of-3blue1brown/1448166136",
-        icon: Apple,
-        text: "Stream on Apple Music",
-      },
-    ],
-  },
-  {
-    title: "Minute Physics",
-    image: minute,
-    video: "zcqZHYo7ONs",
-    credits:
-      "Music, w/ [Nathaniel Schroeder](https://soundcloud.com/drschroeder), 2017",
-    genre: "Classical, soft-rock",
-    description:
-      "A collaboration video project between [Minute Physics](https://www.youtube.com/user/minutephysics) and [3Blue1Brown](https://www.youtube.com/channel/UCYO_jab_esuFRV4b17AJtAw) on Bell's Theorem.",
-    links: [
-      {
-        url: "https://www.youtube.com/watch?v=zcqZHYo7ONs",
-        icon: YouTube,
-        text: "Watch the Minute Physics video",
-      },
-      {
-        url: "https://www.youtube.com/watch?v=MzRCDLre1b4",
-        icon: YouTube,
-        text: "Watch the 3Blue1Brown video",
-      },
-      {
-        url: "https://vincerubinetti.bandcamp.com/album/the-music-of-3blue1brown",
-        icon: Bandcamp,
-        text: "Download on Bandcamp",
-      },
-    ],
-  },
-  {
-    title: "Hacky Zack",
-    image: hacky,
-    video: "ivl5NlHd21Y",
-    credits: "Music, 2017",
-    genre: "Nu-jazz, down-tempo",
-    description:
-      "A game by Spaceboy Games. Juggle balls with special properties through a gauntlet of unique precision-platforming puzzles.",
-    links: [
-      {
-        url: "https://store.steampowered.com/app/508530/HackyZack/",
-        icon: Steam,
-        text: "Get the game on Steam",
-      },
-      {
-        url: "https://vincerubinetti.bandcamp.com/album/hackyzack",
-        icon: Bandcamp,
-        text: "Download on Bandcamp",
-      },
-      {
-        url: "https://open.spotify.com/album/7w6ae71QrsvVmh2Ej6BPub",
-        icon: Spotify,
-        text: "Stream on Spotify",
-      },
-      {
-        url: "https://music.apple.com/us/album/hackyzack-original-soundtrack/1434944909",
-        icon: Apple,
-        text: "Stream on Apple Music",
-      },
-    ],
-  },
-  {
-    title: "High Noon Revolver",
-    image: high,
-    video: "4CgeVDJU7kc",
-    credits: "Music, 2017",
-    genre: "Hard-rock, western",
-    description:
-      "A game by Mike Studios and Spaceboy Games. Blast your way across 3 layers of platforming, collecting gold and obtaining upgrades helping you go from puny to powerhouse.",
-    links: [
-      {
-        url: "https://store.steampowered.com/app/560510/High_Noon_Revolver/",
-        icon: Steam,
-        text: "Get the game on Steam",
-      },
-      {
-        url: "https://vincerubinetti.bandcamp.com/album/high-noon-revolver",
-        icon: Bandcamp,
-        text: "Download on Bandcamp",
-      },
-      {
-        url: "https://open.spotify.com/album/6FMgkXnTURg0DS5eh17nOR",
-        icon: Spotify,
-        text: "Stream on Spotify",
-      },
-      {
-        url: "https://itunes.apple.com/us/album/high-noon-revolver-original-soundtrack/1434772948/",
-        icon: Apple,
-        text: "Stream on Apple Music",
-      },
-    ],
-  },
-  {
-    title: "Ink",
-    image: ink,
-    playlist: "PL8CeOEg8N989YRe-jmlM5ebWQs5oNWcH9",
-    credits: "Music, sound design, 2015",
-    genre: "Ambient electronic",
-    description:
-      "A game by Zack Bell. Reveal your surroundings by splashing colorful ink in this hardcore platformer reminiscent of Super Meat Boy.",
-    links: [
-      {
-        url: "https://store.steampowered.com/app/385710/INK/",
-        icon: Steam,
-        text: "Get the game on Steam",
-      },
-      {
-        url: "https://vincerubinetti.bandcamp.com/album/ink",
-        icon: Bandcamp,
-        text: "Download on Bandcamp",
-      },
-      {
-        url: "https://open.spotify.com/album/1F7HW6WwIUE29TleDXX4uh",
-        icon: Spotify,
-        text: "Stream on Spotify",
-      },
-      {
-        url: "https://itunes.apple.com/us/album/ink-original-soundtrack/1434752108",
-        icon: Apple,
-        text: "Stream on Apple Music",
-      },
-    ],
-  },
-  {
-    title: "Remixes and Remakes",
-    image: remixes,
-    playlist: "PL8CeOEg8N989RH9FV5kWUSTSfGnWXayRO",
-    credits: "Music, 2009 – present",
-    genre: "Various",
-    description:
-      "Over the years, Vince has authored a large collection of arrangements/remixes/remakes have gained popularity and [recognition](https://www.youtube.com/watch?v=ogX8Ygecxuc&feature=youtu.be&t=121) on YouTube.",
-    links: [
-      {
-        url: "https://vincerubinetti.bandcamp.com/album/remixes-and-remakes",
-        icon: Bandcamp,
-        text: "Download on Bandcamp",
-      },
-    ],
-  },
-];
+type Highlight = (typeof highlights)[number];
 
 /** player element */
 const player = useTemplateRef<HTMLVideoElement>("player");
@@ -292,7 +75,7 @@ onMounted(() =>
         >
           {{ highlight.title }}
         </div>
-        <img :src="highlight.image" alt="" loading="lazy" />
+        <img :src="albums[slugify(highlight.title)]" alt="" loading="lazy" />
       </button>
     </div>
 
@@ -310,7 +93,7 @@ onMounted(() =>
       <div class="flex flex-col gap-4">
         <h3>{{ selected.title }}</h3>
 
-        <div class="grid grid-cols-[auto_1fr] gap-x-4 leading-relaxed">
+        <div class="grid grid-cols-[auto_1fr] gap-x-4 leading-loose">
           <span class="opacity-50">Credits</span>
           <span v-html="renderMarkdown(selected.credits)" />
           <span class="opacity-50">Genre</span>
@@ -329,7 +112,7 @@ onMounted(() =>
             :title="link.text"
           >
             <Outline />
-            <component :is="link.icon" />
+            <component :is="logos[link.icon as keyof typeof logos]" />
           </a>
         </div>
       </div>
