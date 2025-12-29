@@ -9,6 +9,8 @@
 
   --font-serif: "Aleo Variable", serif;
   --font-sans: "Outfit Variable", sans-serif;
+
+  --shadow: 0 0 2px #0002, 0 1px 4px #0002;
 }
 
 @layer components {
@@ -50,11 +52,11 @@
 
   ul,
   ol {
-    @apply flex list-['-'] flex-col pl-2 leading-loose;
+    @apply flex list-['▪'] flex-col pl-2 leading-loose;
   }
 
   li {
-    @apply pl-2 marker:text-current/50;
+    @apply pl-2 marker:text-current;
   }
 
   hr {
@@ -80,7 +82,12 @@
 
   input,
   textarea {
-    @apply rounded border border-current/25 bg-white p-4 placeholder:text-current/50;
+    @apply rounded border border-current/10 bg-white p-4 font-sans placeholder:text-current/50;
+  }
+
+  input::-webkit-calendar-picker-indicator,
+  input::-webkit-list-button {
+    @apply opacity-0;
   }
 
   label:has(input[type="checkbox"]) {
@@ -95,12 +102,12 @@
     @apply flex flex-col justify-items-center-safe;
 
     &::details-content {
-      @apply flex h-0 w-full flex-col gap-4 overflow-hidden transition-all transition-discrete duration-500;
+      @apply flex h-0 w-full flex-col overflow-hidden transition-discrete duration-500;
       interpolate-size: allow-keywords;
     }
 
     &[open]::details-content {
-      @apply mt-4 h-auto;
+      @apply h-auto;
     }
   }
 
@@ -109,7 +116,7 @@
   }
 
   select {
-    @apply min-w-0 cursor-pointer p-2;
+    @apply min-w-0 grow cursor-pointer appearance-none border-none bg-current/5 p-4 pr-8 transition-all hover:bg-current/10;
   }
 
   .icon,

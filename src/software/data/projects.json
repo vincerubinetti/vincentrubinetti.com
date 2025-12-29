@@ -77,7 +77,8 @@
       "Mockup",
       "Implementation",
       "Testing",
-      "Math & Stats",
+      "Math",
+      "Stats",
       "Data Visualization",
       "Logo"
     ],
@@ -214,8 +215,8 @@
       "Fun header visualization"
     ],
     "work": [
-      "TypeScript",
-      "React",
+      "Design",
+      "Implementation",
       "Data Processing",
       "Data Visualization",
       "Logo"
@@ -499,7 +500,7 @@
     "work": [],
     "base": ["TypeScript", "React"],
     "tech": ["SVG"],
-    "lib": ["Framer Motion"],
+    "lib": ["Tailwind", "Framer Motion"],
     "warning": ""
   },
   {
@@ -609,7 +610,7 @@
     "work": ["Design", "Implementation", "Documentation", "CI/CD"],
     "base": ["TypeScript", "Vue"],
     "tech": ["C++"],
-    "lib": [],
+    "lib": ["Tailwind"],
     "warning": ""
   },
   {

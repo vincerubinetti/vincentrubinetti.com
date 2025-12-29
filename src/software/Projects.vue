@@ -1,9 +1,8 @@
 <script setup lang="ts">
 import { computed, ref } from "vue";
-import { countBy, flatMap, orderBy, pick, toPairs } from "lodash-es";
+import { pick, uniq } from "lodash-es";
 import { ChevronDown, ExternalLink, TriangleAlert } from "lucide-vue-next";
 import logos from "@/images/logos";
-import Select from "@/software/components/Select.vue";
 import { renderMarkdown } from "@/util/string";
 import Carousel from "./components/Carousel.vue";
 import Dash from "./components/Dash.vue";
@@ -11,8 +10,14 @@ import projects from "./data/projects.json";
 import images from "./images/projects";
 import List from "./List.vue";
 
+/** indexOf with fallback */
+const index = (array: unknown[], value: unknown, fallback: number) => {
+  const index = array.indexOf(value);
+  return index === -1 ? fallback : index;
+};
+
 /** project order */
-const order = [
+const projectOrder = [
   "SVG to PNG",
   "Set",
   "Word4Word",
@@ -48,51 +53,69 @@ const order = [
   "Mute Tabs By URL",
 ];
 
-/** generate filter options */
-const toOptions = (key: keyof (typeof projects)[number]) =>
-  orderBy(toPairs(countBy(flatMap(projects, key))), "[1]")
-    .map(([value, count]) => ({ label: `${value} (${count})`, value }))
-    .concat([{ label: "All", value: "" }])
-    .reverse();
+/** sort projects */
+projects.sort(
+  (a, b) =>
+    index(projectOrder, a.name, Infinity) -
+    index(projectOrder, b.name, Infinity),
+);
 
-/** generate filter options */
-const byGroup = toOptions("group");
-const byWork = toOptions("work");
-const byBase = toOptions("base");
-const byTech = toOptions("tech");
-const byLib = toOptions("lib");
+/** search suggestion options */
+const options = uniq(
+  ["work", "base", "tech", "lib"].flatMap((key) =>
+    projects.flatMap((project) => project[key as keyof typeof project]),
+  ),
+);
 
-/** filter state */
-const group = ref("");
-const work = ref("");
-const base = ref("");
-const tech = ref("");
-const lib = ref("");
+/** search option order */
+const optionOrder = [
+  "TypeScript",
+  "JavaScript",
+  "React",
+  "Vue",
+  "Node",
+  "Next",
+  "Jekyll",
+  "Astro",
+  "SVG",
+  "Canvas",
+  "D3",
+  "Three JS",
+  "GSAP",
+  "Tailwind",
+  "Playwright",
+  "Figma",
+  "Data Visualization",
+  "Design",
+  "Implementation",
+  "CI/CD",
+  "Logo",
+  "Web Workers",
+];
+
+/** sort options */
+options.sort(
+  (a, b) => index(optionOrder, a, Infinity) - index(optionOrder, b, Infinity),
+);
+
+console.log(options);
+
+/** search query */
 const search = ref("");
 
-/** displayed projects */
-const _projects = computed(() =>
-  orderBy(
-    projects.map(({ name, ...project }) => ({
+/** filtered projects to display */
+const filteredProjects = computed(() =>
+  projects
+    .map(({ name, ...project }) => ({
       name,
       ...project,
       images: images[name.toLowerCase()] ?? [],
-    })),
-    (project) => {
-      const index = order.indexOf(project.name);
-      return index === -1 ? 999 : index;
-    },
-  ).filter(
-    (project) =>
-      (group.value ? project.group.includes(group.value) : true) &&
-      (work.value ? project.work.includes(work.value) : true) &&
-      (base.value ? project.base.includes(base.value) : true) &&
-      (tech.value ? project.tech.includes(tech.value) : true) &&
-      (lib.value ? project.lib.includes(lib.value) : true) &&
+    }))
+    .filter((project) =>
       JSON.stringify(project)
         .toLowerCase()
         .includes(search.value.toLowerCase()),
-  ),
+    ),
 );
 </script>
 
@@ -100,44 +123,24 @@ const _projects = computed(() =>
   <section>
     <h2><Dash flip />Projects</h2>
 
-    <details class="w-full">
-      <summary class="button">Filters<ChevronDown /></summary>
+    <div class="flex items-center gap-4">
+      <input
+        v-model="search"
+        placeholder="Search"
+        list="projects"
+        class="grow"
+      />
 
-      <div
-        class="grid w-full grid-cols-3 gap-x-8 gap-y-4 *:grid *:grid-cols-[--spacing(10)_1fr] max-md:grid-cols-2 max-sm:grid-cols-1"
-      >
-        <label>
-          For
-          <Select v-model="group" :options="byGroup" />
-        </label>
+      <datalist id="projects">
+        <option
+          v-for="(option, index) in options"
+          :key="index"
+          :value="option"
+        />
+      </datalist>
 
-        <label>
-          Base
-          <Select v-model="base" :options="byBase" />
-        </label>
-
-        <label>
-          Tech
-          <Select v-model="tech" :options="byTech" />
-        </label>
-
-        <label>
-          Lib
-          <Select v-model="lib" :options="byLib" />
-        </label>
-
-        <label>
-          Work
-          <Select v-model="work" :options="byWork" />
-        </label>
-
-        <input v-model="search" placeholder="Search" class="p-2" />
-      </div>
-
-      <div class="self-center">
-        {{ _projects.length.toLocaleString() }} projects
-      </div>
-    </details>
+      {{ filteredProjects.length }} projects
+    </div>
 
     <div
       class="grid grid-cols-3 items-start gap-8 max-md:grid-cols-2 max-sm:grid-cols-1"
@@ -159,7 +162,7 @@ const _projects = computed(() =>
             warning,
           },
           index
-        ) in _projects"
+        ) in filteredProjects"
         :key="index"
         class="bg-light paper flex flex-col"
       >
@@ -204,18 +207,26 @@ const _projects = computed(() =>
           />
         </div>
 
-        <a :href="site || repo" class="button-sm" :title="name">
+        <a
+          :href="site || repo"
+          class="button group bg-transparent p-2 text-lg"
+          :title="name"
+        >
           {{ name }}
+          <div
+            class="flex w-0 opacity-0 transition-opacity group-hover:opacity-100"
+          >
+            <ExternalLink />
+          </div>
         </a>
 
         <details name="project">
-          <summary class="button-sm">
-            Details
+          <summary class="button bg-transparent p-2" aria-label="Details">
             <ChevronDown />
           </summary>
 
-          <div class="flex flex-col gap-2 p-4 pt-0">
-            <a :href="repo" class="button-sm">
+          <div class="flex flex-col gap-2 p-4">
+            <a :href="repo" class="button bg-transparent p-2">
               Repo
               <ExternalLink />
             </a>
@@ -233,7 +244,7 @@ const _projects = computed(() =>
                 <div
                   v-for="(item, index) in [work, base, tech, lib].flat()"
                   :key="index"
-                  class="flex items-center gap-1 rounded-full bg-zinc-200 px-2 py-1"
+                  class="flex items-center gap-1 bg-zinc-200 p-1"
                 >
                   {{ item }}
                 </div>

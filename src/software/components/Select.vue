@@ -19,10 +19,7 @@ watchEffect(() => {
 
 <template>
   <div class="relative flex min-w-0 grow">
-    <select
-      v-model="model"
-      class="min-w-0! grow appearance-none border-none bg-current/5 pr-8"
-    >
+    <select v-model="model">
       <option
         v-for="option in options"
         :key="option.value"
