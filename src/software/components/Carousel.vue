@@ -14,12 +14,10 @@ type Props = {
 
 defineProps<Props>();
 
-const rootEl = useTemplateRef("rootEl");
+const root = useTemplateRef("root");
 
 /** fullscreen controls */
-const { toggle, isFullscreen } = useFullscreen(
-  rootEl as unknown as HTMLElement,
-);
+const { toggle, isFullscreen } = useFullscreen(root as unknown as HTMLElement);
 
 /** swiper instance (non-reactive) */
 const swiper = ref<SwiperType>();
@@ -29,7 +27,7 @@ const slide = ref(0);
 
 /** wait until element in viewport to start autoplay */
 // @ts-expect-error https://github.com/vueuse/vueuse/issues/4712
-const visible = useElementVisibility(rootEl);
+const visible = useElementVisibility(root);
 watchEffect(() => {
   if (visible.value) swiper.value?.autoplay.start();
   else swiper.value?.autoplay.stop();
@@ -61,7 +59,7 @@ const onSetTransition: (swiper: SwiperType, duration: number) => void = (
 
 <template>
   <Swiper
-    ref="rootEl"
+    ref="root"
     class="group aspect-square w-full"
     :class="isFullscreen ? 'cursor-zoom-out' : 'cursor-zoom-in'"
     :loop="true"

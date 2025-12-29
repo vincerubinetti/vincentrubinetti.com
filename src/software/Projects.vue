@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { computed, ref } from "vue";
+import { computed, ref, useTemplateRef } from "vue";
 import { pick, uniq } from "lodash-es";
-import { ChevronDown, ExternalLink, TriangleAlert } from "lucide-vue-next";
+import { ChevronDown, ExternalLink, TriangleAlert, X } from "lucide-vue-next";
 import logos from "@/images/logos";
 import { renderMarkdown } from "@/util/string";
 import Carousel from "./components/Carousel.vue";
@@ -98,7 +98,7 @@ options.sort(
   (a, b) => index(optionOrder, a, Infinity) - index(optionOrder, b, Infinity),
 );
 
-console.log(options);
+const input = useTemplateRef("input");
 
 /** search query */
 const search = ref("");
@@ -123,24 +123,31 @@ const filteredProjects = computed(() =>
   <section>
     <h2><Dash flip />Projects</h2>
 
-    <div class="flex items-center gap-4">
+    <div class="relative flex grow items-center">
       <input
+        ref="input"
         v-model="search"
         placeholder="Search"
         list="projects"
         class="grow"
       />
 
-      <datalist id="projects">
-        <option
-          v-for="(option, index) in options"
-          :key="index"
-          :value="option"
-        />
-      </datalist>
-
-      {{ filteredProjects.length }} projects
+      <button
+        class="absolute right-4"
+        @click="search = ''"
+        aria-label="Clear search"
+      >
+        <X />
+      </button>
     </div>
+
+    <datalist id="projects">
+      <option v-for="(option, index) in options" :key="index" :value="option" />
+    </datalist>
+
+    <b v-if="filteredProjects.length !== projects.length" class="text-center">
+      {{ filteredProjects.length.toLocaleString() }} results
+    </b>
 
     <div
       class="grid grid-cols-3 items-start gap-8 max-md:grid-cols-2 max-sm:grid-cols-1"
@@ -241,13 +248,20 @@ const filteredProjects = computed(() =>
 
             <div class="flex flex-wrap gap-4">
               <div class="flex flex-wrap gap-2">
-                <div
+                <button
                   v-for="(item, index) in [work, base, tech, lib].flat()"
                   :key="index"
-                  class="flex items-center gap-1 bg-zinc-200 p-1"
+                  class="flex items-center gap-1 bg-zinc-200 p-1 font-sans"
+                  @click="
+                    search = item;
+                    input?.scrollIntoView({
+                      behavior: 'smooth',
+                      block: 'nearest',
+                    });
+                  "
                 >
                   {{ item }}
-                </div>
+                </button>
               </div>
             </div>
           </div>
