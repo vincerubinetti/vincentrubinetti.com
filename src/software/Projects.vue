@@ -50,7 +50,7 @@ const order = [
   "Connectivity Search",
   "Het.io",
   "mygeneset.info",
-  "Misc Logos",
+  "Misc. Logos",
   "Word Spot",
   "STRchive",
   "Word Lapse",
@@ -65,14 +65,14 @@ const order = [
   "Intro to SVGs",
   "Preprint Bot",
   "hclust",
-  "TisLab.org",
+  "tislab.org",
   "Monarch",
   "Mute Tabs By URL",
 ];
 
 /** displayed projects */
 const _projects = orderBy(
-  Object.entries(projects).map(([name, project]) => ({
+  projects.map(({ name, ...project }) => ({
     name,
     ...project,
     images: images[name.toLowerCase()] ?? [],
@@ -92,7 +92,20 @@ const _projects = orderBy(
       <!-- project card -->
       <div
         v-for="(
-          { name, group, description, links, images }, index
+          {
+            images,
+            name,
+            group,
+            site,
+            repo,
+            type,
+            description,
+            foundation,
+            features,
+            work,
+            tags,
+          },
+          index
         ) in _projects"
         :key="index"
         class="corners-2 bg-light paper flex flex-col gap-4 p-6"
@@ -121,19 +134,23 @@ const _projects = orderBy(
 
         <div class="flex flex-wrap justify-center gap-2">
           <a
-            v-for="(link, key, index) in links"
+            v-for="(link, key, index) in { repo, site }"
             :key="index"
             :href="link"
-            :title="startCase(key)"
             class="button"
           >
             <component :is="getIcon(key)" />
+            {{ startCase(key) }}
           </a>
         </div>
 
-        <p v-html="renderMarkdown(description)"></p>
-
-        <div class="absolute right-2 bottom-2 opacity-50">{{ group }}</div>
+        <div>{{ group }}</div>
+        <div>{{ type }}</div>
+        <div v-html="renderMarkdown(description)" />
+        <div>{{ foundation.join(", ") }}</div>
+        <div>{{ features.join(", ") }}</div>
+        <div>{{ work.join(", ") }}</div>
+        <div>{{ tags.join(", ") }}</div>
       </div>
     </div>
     <List />

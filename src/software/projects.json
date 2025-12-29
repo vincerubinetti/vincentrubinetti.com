@@ -1,408 +1,569 @@
-{
-  "3Blue1Brown Captions": {
-    "description": "",
+[
+  {
+    "name": "3Blue1Brown Captions",
     "group": "3Blue1Brown",
-    "links": {
-      "repo": "https://github.com/3b1b/captions/tree/main/app"
-    },
-    "tech": ["TypeScript", "React"],
-    "work": ["Design", "Architecture", "Implementation"],
-    "tags": ["Deprecated"]
-  },
-  "3Blue1Brown Dubbing": {
-    "description": "",
-    "group": "3Blue1Brown",
-    "links": {
-      "repo": "https://github.com/3Blue1Brown/dubbing",
-      "site": "https://3b1b-dubbing.netlify.app/"
-    },
-    "tech": [
-      "TypeScript",
-      "React",
-      "Web Audio",
-      "Web Workers",
-      "Audio Worklet"
+    "type": "Web App",
+    "description": "Crowd-submit non-English captions for [3Blue1Brown](https://www.3blue1brown.com) videos",
+    "site": "",
+    "repo": "https://github.com/3b1b/captions/tree/main/app",
+    "features": [
+      "Caption editing UI, time-synced with video preview",
+      "Rating system of other users' captions",
+      "Automatic pull request submission via cloud functions"
     ],
-    "libraries": ["workerpool", "virtual-audio-graph"],
-    "work": ["Design", "Architecture", "Implementation", "Audio Processing"]
+    "work": ["Design", "Implementation", "Cloud Functions"],
+    "foundation": ["TypeScript", "React"],
+    "tech": [],
+    "libraries": [],
+    "tags": ["Prototype", "Deprecated"]
   },
-  "3Blue1Brown.com": {
-    "description": "",
+  {
+    "name": "3Blue1Brown Dubbing",
     "group": "3Blue1Brown",
-    "links": {
-      "repo": "",
-      "site": ""
-    },
-    "tech": ["", "", ""],
-    "features": ["", "", ""],
-    "libraries": ["", "", ""],
-    "work": ["", "", ""]
+    "type": "Web App",
+    "description": "Self-record non-English dubs of [3Blue1Brown](https://www.3blue1brown.com) videos",
+    "site": "https://3b1b-dubbing.netlify.app/",
+    "repo": "https://github.com/3Blue1Brown/dubbing",
+    "features": [
+      "Mic selection and preview",
+      "Audio recording, processing, layering, and export",
+      "Waveform and spectrogram visualizations",
+      "Non-trivial audio node graph"
+    ],
+    "work": [
+      "Design",
+      "Implementation",
+      "Audio Processing",
+      "Audio Visualization"
+    ],
+    "foundation": ["TypeScript", "React"],
+    "tech": ["Web Audio", "Web Workers", "Audio Worklets"],
+    "libraries": ["workerpool", "virtual-audio-graph"],
+    "tags": []
   },
-  "Adage": {
-    "description": "",
+  {
+    "name": "3Blue1Brown.com",
+    "group": "3Blue1Brown",
+    "type": "Site",
+    "description": "Site for the educational math YouTube channel [3Blue1Brown](https://www.3blue1brown.com)",
+    "site": "https://www.3blue1brown.com/",
+    "repo": "https://github.com/3b1b/3Blue1Brown.com",
+    "features": [
+      "Large body of various static and dynamic content",
+      "Complex lesson pages with rich and interactive content and media",
+      "Large suite of easy-to-use components for authors",
+      "Various scripts for data aggregation and site maintenance"
+    ],
+    "work": ["Design", "Implementation"],
+    "foundation": ["Next"],
+    "tech": ["React", "SVG", "Canvas", "MDX", "LaTeX"],
+    "libraries": ["rehype", "remark"],
+    "tags": ["Divested"]
+  },
+  {
+    "name": "Adage",
     "group": "Greene Lab",
-    "links": {
-      "repo": "https://github.com/greenelab/adage-frontend",
-      "site": "https://adage.greenelab.com/"
-    },
-    "features": ["Network UI", "Heatmaps", "Charts & plots"],
-    "tech": ["React", "SVG", "Canvas", "Web Workers"],
-    "libraries": ["D3", "Redux", "Sentry"],
+    "type": "Web App",
+    "description": "Explore gene expression data and discover new insights from machine learning models",
+    "site": "https://adage.greenelab.com/",
+    "repo": "https://github.com/greenelab/adage-frontend",
+    "features": [
+      "Collection of networks, heatmaps, and other charts/plots",
+      "Advanced statistical analysis done in-browser with Web Workers with comprehensive unit tests"
+    ],
     "work": [
       "Research",
       "Design",
       "Implementation",
-      "Unit Testing",
+      "Testing",
       "Math & Stats",
-      "Visualization"
-    ]
-  },
-  "Connectivity Search": {
-    "description": "",
-    "group": "Greene Lab",
-    "links": {
-      "repo": "https://github.com/greenelab/connectivity-search-frontend",
-      "site": "https://het.io/search/"
-    },
-    "features": [
-      "Unique network UI",
-      "Unique table UI",
-      "Unique deployment",
-      "Branded library of components"
+      "Data Visualization",
+      "Logo"
     ],
-    "tech": ["React", "SVG"],
+    "foundation": ["React"],
+    "tech": ["SVG", "Canvas", "Web Workers"],
+    "libraries": ["D3", "Redux", "Sentry"],
+    "tags": []
+  },
+  {
+    "name": "Connectivity Search",
+    "group": "Greene Lab",
+    "type": "Web App",
+    "description": "Find important and novel paths between nodes in a network of genes, compounds, diseases, and more",
+    "site": "https://het.io/search/",
+    "repo": "https://github.com/greenelab/connectivity-search-frontend",
+    "features": [
+      "Unique interactive network UI",
+      "Unique table UI",
+      "Unique deployment of SPA within static site",
+      "Branded library of components for sister apps"
+    ],
+    "work": ["Design", "Data Visualization", "Implementation"],
+    "foundation": ["React"],
+    "tech": ["SVG"],
     "libraries": ["D3", "Redux"],
-    "work": ["Design", "Visualization", "Implementation"]
+    "tags": []
   },
-  "DBMI Screensaver": {
-    "description": "",
+  {
+    "name": "DBMI Screensaver",
     "group": "CU DBMI",
-    "links": {
-      "repo": "",
-      "site": ""
-    },
-    "tech": ["", "", ""],
-    "features": ["", "", ""],
-    "libraries": ["", "", ""],
-    "work": ["", "", ""]
+    "type": "Web App",
+    "description": "Fun screensaver-like visualization",
+    "site": "https://cu-dbmi.github.io/screensaver/",
+    "repo": "https://github.com/CU-DBMI/screensaver",
+    "features": [
+      "3D figures generated from models",
+      "Morphing animations",
+      "Mouse interaction"
+    ],
+    "work": ["Design", "Implementation", "Math"],
+    "foundation": ["Vanilla"],
+    "tech": ["Canvas", "SVG"],
+    "libraries": ["Three JS", "GSAP", "Opentype JS"],
+    "tags": []
   },
-  "Exploring Cancer in Colorado": {
-    "description": "",
+  {
+    "name": "Exploring Cancer in Colorado",
     "group": "CU Cancer Center",
-    "links": {
-      "repo": "",
-      "site": ""
-    },
-    "tech": ["", "", ""],
-    "features": ["", "", ""],
-    "libraries": ["", "", ""],
-    "work": ["", "", ""]
+    "type": "Web App",
+    "description": "View demographics, cancer disparities, risk factors, health behaviors, and environmental exposures in Colorado",
+    "site": "https://coe-ecco.org/",
+    "repo": "https://github.com/colorado-cancer-center/ecco/tree/main/frontend",
+    "features": [
+      "Geographic maps",
+      "Map data visualization",
+      "Advanced map customization",
+      "Charts & plots"
+    ],
+    "work": ["Research", "Design", "Implementation", "Data Visualization"],
+    "foundation": ["TypeScript", "Vue"],
+    "tech": [],
+    "libraries": ["OpenLayers", "D3"],
+    "tags": []
   },
-  "GenePlexus": {
-    "description": "",
+  {
+    "name": "GenePlexus",
     "group": "Krishnan Lab",
-    "links": {
-      "repo": "",
-      "site": ""
-    },
-    "tech": ["", "", ""],
-    "features": ["", "", ""],
-    "libraries": ["", "", ""],
-    "work": ["", "", ""]
+    "type": "Web App",
+    "description": "Predict similar genes with machine learning models trained on genome-scale molecular interaction networks",
+    "site": "https://gene-plexus.netlify.app/",
+    "repo": "https://github.com/krishnanlab/geneplexus-app/tree/main/frontend",
+    "features": [
+      "Friendly UI for creating and managing analyses",
+      "Interactive network UI"
+    ],
+    "work": ["Design", "Implementation", "Data Visualization", "Logo"],
+    "foundation": ["TypeScript", "React"],
+    "tech": [],
+    "libraries": ["D3", "Mock Service Worker"],
+    "tags": []
   },
-  "hclust": {
-    "description": "",
+  {
+    "name": "hclust",
     "group": "Greene Lab",
-    "links": {
-      "repo": "",
-      "site": ""
-    },
-    "tech": ["", "", ""],
-    "features": ["", "", ""],
-    "libraries": ["", "", ""],
-    "work": ["", "", ""]
+    "type": "Package",
+    "description": "Efficient and flexible hierarchical clustering",
+    "site": "https://www.npmjs.com/package/@greenelab/hclust",
+    "repo": "https://github.com/greenelab/hclust",
+    "features": [
+      "Well-documented",
+      "In-depth comparison with alternatives",
+      "Support for Web Workers"
+    ],
+    "work": ["Implementation", "Optimization", "Math"],
+    "foundation": ["Vanilla"],
+    "tech": [],
+    "libraries": [],
+    "tags": []
   },
-  "Het.io": {
-    "description": "",
+  {
+    "name": "Het.io",
     "group": "Greene Lab",
-    "links": {
-      "repo": "https://github.com/hetio/het.io",
-      "site": "https://het.io/"
-    },
-    "tech": ["", "", ""],
-    "features": ["", "", ""],
-    "libraries": ["", "", ""],
-    "work": ["", "", ""]
+    "type": "Site",
+    "description": "Website for the [het.io](https://het.io) group and its projects",
+    "site": "https://het.io/",
+    "repo": "https://github.com/hetio/het.io",
+    "features": [
+      "Collection of consistently branded embedded dynamic apps",
+      "Collection of rich content and media"
+    ],
+    "work": ["Design", "Implementation", "Logo", "Copywriting"],
+    "foundation": ["Jekyll"],
+    "tech": ["Canvas"],
+    "libraries": [],
+    "tags": []
   },
-  "Human Microbiome Compendium": {
-    "description": "",
+  {
+    "name": "Human Microbiome Compendium",
     "group": "Blekhman Lab",
-    "links": {
-      "repo": "https://github.com/blekhmanlab/compendium_website",
-      "site": "https://microbiomap.org/"
-    },
-    "tech": ["Pipeline", "Map", "TypeScript", "React", "Web Workers", "D3"]
-  },
-  "Intro to SVGs": {
+    "type": "Web App",
     "description": "",
+    "site": "https://microbiomap.org/",
+    "repo": "https://github.com/blekhmanlab/compendium_website",
+    "features": [],
+    "work": [],
+    "foundation": [],
+    "tech": [],
+    "libraries": [],
+    "tags": []
+  },
+  {
+    "name": "Intro to SVGs",
     "group": "Greene Lab",
-    "links": {
-      "repo": "",
-      "site": ""
-    },
-    "tech": ["", "", ""],
-    "features": ["", "", ""],
-    "libraries": ["", "", ""],
-    "work": ["", "", ""]
-  },
-  "Lab Website Template": {
+    "type": "Tutorial",
     "description": "",
+    "site": "",
+    "repo": "",
+    "features": [],
+    "work": [],
+    "foundation": [],
+    "tech": [],
+    "libraries": [],
+    "tags": []
+  },
+  {
+    "name": "Lab Website Template",
     "group": "Greene Lab",
-    "links": {
-      "repo": "https://github.com/greenelab/lab-website-template",
-      "site": "https://greene-lab.gitbook.io/lab-website-template-docs"
-    },
-    "tech": ["Jekyll", "Docs", "GitBook"]
-  },
-  "Lab Website Template Poster": {
+    "type": "Site Template",
     "description": "",
+    "site": "https://greene-lab.gitbook.io/lab-website-template-docs",
+    "repo": "https://github.com/greenelab/lab-website-template",
+    "features": [],
+    "work": [],
+    "foundation": [],
+    "tech": [],
+    "libraries": [],
+    "tags": []
+  },
+  {
+    "name": "Lab Website Template Poster",
     "group": "Greene Lab",
-    "links": {
-      "repo": "",
-      "site": ""
-    },
-    "tech": ["", "", ""],
-    "features": ["", "", ""],
-    "libraries": ["", "", ""],
-    "work": ["", "", ""]
-  },
-  "Manubot": {
+    "type": "Poster",
     "description": "",
+    "site": "",
+    "repo": "",
+    "features": [],
+    "work": [],
+    "foundation": [],
+    "tech": [],
+    "libraries": [],
+    "tags": []
+  },
+  {
+    "name": "Manubot",
     "group": "Greene Lab",
-    "links": {
-      "repo": "https://github.com/manubot",
-      "site": "https://manubot.org"
-    },
-    "tech": ["Vanilla", "Logo", "Brand", "Docs"]
-  },
-  "MIDI Humanizer": {
+    "type": "",
     "description": "",
+    "site": "https://manubot.org",
+    "repo": "https://github.com/manubot",
+    "features": [],
+    "work": [],
+    "foundation": [],
+    "tech": [],
+    "libraries": [],
+    "tags": []
+  },
+  {
+    "name": "MIDI Humanizer",
     "group": "Personal",
-    "links": {
-      "repo": "",
-      "site": ""
-    },
-    "tech": ["", "", ""],
-    "features": ["", "", ""],
-    "libraries": ["", "", ""],
-    "work": ["", "", ""]
+    "type": "Web App",
+    "description": "Randomize note starts, durations, tempo drift, and velocities in MIDIs to make them sound more human",
+    "site": "https://vincerubinetti.github.io/midi-humanizer/",
+    "repo": "https://github.com/vincerubinetti/midi-humanizer",
+    "features": [
+      "Note visualizer",
+      "File import/export",
+      "Detailed and advanced controls"
+    ],
+    "work": ["Design", "Implementation", "MIDI Processing"],
+    "foundation": ["TypeScript", "React"],
+    "tech": ["SVG"],
+    "libraries": ["D3", "Tone JS"],
+    "tags": []
   },
-  "Misc Logos": {
-    "description": "",
+  {
+    "name": "Misc. Logos",
     "group": "Various",
-    "links": {
-      "repo": "",
-      "site": ""
-    },
-    "tech": ["", "", ""],
-    "features": ["", "", ""],
-    "libraries": ["", "", ""],
-    "work": ["", "", ""]
+    "type": "Design",
+    "description": "Misc. logos for different orgs and projects",
+    "site": "https://github.com/orgs/cytomining/discussions/3",
+    "repo": "https://github.com/orgs/cytomining",
+    "features": [
+      "Unique designs informed by functionality",
+      "Consistent branding",
+      "Hand-coded SVGs with occasional animations"
+    ],
+    "work": ["Design"],
+    "foundation": [],
+    "tech": ["SVG", "Adobe Illustrator"],
+    "libraries": [],
+    "tags": []
   },
-  "Monarch": {
-    "description": "",
+  {
+    "name": "Monarch",
     "group": "Monarch Initiative",
-    "links": {
-      "repo": "https://github.com/monarch-initiative/monarch-app",
-      "site": "https://monarchinitiative.org/"
-    },
-    "tech": ["", "", ""],
-    "features": ["", "", ""],
-    "libraries": ["", "", ""],
-    "work": ["", "", ""],
+    "type": "Web App",
+    "description": "Complex tools for exploring a multi-omic knowledge graph of phenotypes, genes, diseases, and more",
+    "site": "https://monarchinitiative.org/",
+    "repo": "https://github.com/monarch-initiative/monarch-app/tree/main/frontend",
+    "features": [
+      "Automated unit, integration, and accessibility testing",
+      "Early Vue 3 and Composition API adoption",
+      "Custom suite of components thoroughly tested for accessibility",
+      "Complex charts, plots, plots, & tables",
+      "Unique graph-based UI",
+      "Large sitemap of rich, dynamic content"
+    ],
+    "work": [
+      "Research",
+      "Interviews",
+      "Design Docs",
+      "Design",
+      "Implementation",
+      "Testing",
+      "Data Visualization",
+      "CI/CD"
+    ],
+    "foundation": ["TypeScript", "Vue"],
+    "tech": [],
+    "libraries": ["Playwright", "Mock Service Worker", "Sentry", "Hotjar"],
     "tags": ["Divested"]
   },
-  "Mute Tabs By URL": {
-    "description": "",
+  {
+    "name": "Mute Tabs By URL",
     "group": "Personal",
-    "links": {
-      "repo": "",
-      "site": ""
-    },
-    "tech": ["", "", ""],
-    "features": ["", "", ""],
-    "libraries": ["", "", ""],
-    "work": ["", "", ""],
+    "type": "Extension",
+    "description": "(Now unnecessary) Chrome extension to auto-mute/unmute tabs based on their URL",
+    "site": "https://chromewebstore.google.com/detail/mute-tabs-by-url/bpokcenamldgbghabnklpmbkkcgcgdld",
+    "repo": "https://github.com/vincerubinetti/mute-tabs-by-url",
+    "features": [
+      "(Previously) rated 4.5 stars with 4k+ users on Chrome Web Store",
+      "Friendly UI for adding/removing domains/pages",
+      "Advanced allow/block lists",
+      "Fully customizable keyboard shortcuts",
+      "Well documented and handles user permissions gracefully"
+    ],
+    "work": ["Design", "Implementation"],
+    "foundation": ["Vanilla"],
+    "tech": ["Chrome Extension API"],
+    "libraries": [],
     "tags": ["Deprecated"]
   },
-  "mygeneset.info": {
-    "description": "",
+  {
+    "name": "mygeneset.info",
     "group": "BioThings",
-    "links": {
-      "repo": "https://github.com/biothings/mygeneset.info-website",
-      "site": "https://mygeneset.info/"
-    },
-    "tech": ["", "", ""],
-    "features": ["", "", ""],
-    "libraries": ["", "", ""],
-    "work": ["", "", ""]
+    "type": "Web App",
+    "description": "Collect, save, and share sets of genes",
+    "site": "https://mygeneset.info/",
+    "repo": "https://github.com/biothings/mygeneset.info-website",
+    "features": [
+      "Search thousands of pre-made gene sets or create your own",
+      "Share privately or publicly",
+      "Export gene sets in any format",
+      "API explorer interface",
+      "User accounts"
+    ],
+    "work": ["Design", "Implementation", "Testing"],
+    "foundation": ["TypeScript", "Vue"],
+    "tech": [],
+    "libraries": [],
+    "tags": []
   },
-  "NIH Reporting": {
-    "description": "",
+  {
+    "name": "NIH Reporting",
     "group": "NIH",
-    "links": {
-      "repo": "",
-      "site": ""
-    },
-    "tech": ["", "", ""],
-    "features": ["", "", ""],
-    "libraries": ["", "", ""],
-    "work": ["", "", ""]
+    "type": "Pipeline & Web App",
+    "description": "Data gathering and reporting for [Common Fund Data Ecosystem](https://commonfund.nih.gov/dataecosystem) projects",
+    "site": "",
+    "repo": "https://github.com/nih-cfde/icc-eval-core",
+    "features": [
+      "Advanced data gathering pipeline, with multiple API/scraping sources, memoization, concurrency, logging, etc.",
+      "Advanced CI/CD with split between public and private data",
+      "End-to-end TypeScript to ensure data accuracy",
+      "Dashboard with charts & plots",
+      "Auto-printed reports from dashboard",
+      "In-depth use of GitHub and Google Analytics APIs"
+    ],
+    "work": [
+      "Design",
+      "Implementation",
+      "Data Processing",
+      "Data Visualization",
+      "CI/CD"
+    ],
+    "foundation": ["TypeScript", "Node", "Vue"],
+    "tech": [],
+    "libraries": ["Playwright"],
+    "tags": []
   },
-  "Preprint Bot": {
-    "description": "",
+  {
+    "name": "Preprint Bot",
     "group": "Greene Lab",
-    "links": {
-      "repo": "",
-      "site": ""
-    },
-    "tech": ["", "", ""],
-    "features": ["", "", ""],
-    "libraries": ["", "", ""],
-    "work": ["", "", ""]
+    "type": "Bot",
+    "description": "(Now archived) Twitter bot that regularly tweets out the hottest biomedical preprints",
+    "site": "https://twitter.com/PreprintBot",
+    "repo": "https://github.com/greenelab/preprint-bot",
+    "features": [
+      "Used BioRxiv, MedRxiv, and Twitter APIs to tweet about new and popular preprints"
+    ],
+    "work": ["Implementation", "CI/CD"],
+    "foundation": ["Node"],
+    "tech": [],
+    "libraries": [],
+    "tags": ["Deprecated"]
   },
-  "Preprint Similarity Search": {
-    "description": "",
+  {
+    "name": "Preprint Similarity Search",
     "group": "Greene Lab",
-    "links": {
-      "repo": "",
-      "site": ""
-    },
-    "tech": ["", "", ""],
-    "features": ["", "", ""],
-    "libraries": ["", "", ""],
-    "work": ["", "", ""]
-  },
-  "Redirects": {
+    "type": "Web App",
     "description": "",
+    "site": "",
+    "repo": "",
+    "features": [],
+    "work": [],
+    "foundation": [],
+    "tech": [],
+    "libraries": [],
+    "tags": []
+  },
+  {
+    "name": "Redirects",
     "group": "CU DBMI",
-    "links": {
-      "repo": "",
-      "site": ""
-    },
-    "tech": ["", "", ""],
-    "features": ["", "", ""],
-    "libraries": ["", "", ""],
-    "work": ["", "", ""]
-  },
-  "SET": {
+    "type": "Web App",
     "description": "",
+    "site": "",
+    "repo": "",
+    "features": [],
+    "work": [],
+    "foundation": [],
+    "tech": [],
+    "libraries": [],
+    "tags": []
+  },
+  {
+    "name": "SET",
     "group": "Personal",
-    "links": {
-      "repo": "",
-      "site": ""
-    },
-    "tech": [
-      "Personal",
-      "TypeScript",
-      "React",
-      "Tailwind",
-      "Framer Motion",
-      "SVG"
-    ]
-  },
-  "Simplex": {
+    "type": "Web Game",
     "description": "",
+    "site": "",
+    "repo": "",
+    "features": [],
+    "work": [],
+    "foundation": [],
+    "tech": [],
+    "libraries": [],
+    "tags": []
+  },
+  {
+    "name": "Simplex",
     "group": "Krishnan Lab",
-    "links": {
-      "repo": "",
-      "site": ""
-    },
-    "tech": ["", "", ""],
-    "features": ["", "", ""],
-    "libraries": ["", "", ""],
-    "work": ["", "", ""]
-  },
-  "STRchive": {
+    "type": "Web App",
     "description": "",
+    "site": "",
+    "repo": "",
+    "features": [],
+    "work": [],
+    "foundation": [],
+    "tech": [],
+    "libraries": [],
+    "tags": []
+  },
+  {
+    "name": "STRchive",
     "group": "Dashnow Lab",
-    "links": {
-      "repo": "",
-      "site": ""
-    },
-    "tech": ["", "", ""],
-    "features": ["", "", ""],
-    "libraries": ["", "", ""],
-    "work": ["", "", ""]
-  },
-  "SVG to PNG": {
+    "type": "Web App",
     "description": "",
+    "site": "",
+    "repo": "",
+    "features": [],
+    "work": [],
+    "foundation": [],
+    "tech": [],
+    "libraries": [],
+    "tags": []
+  },
+  {
+    "name": "SVG to PNG",
     "group": "Personal",
-    "links": {
-      "repo": "",
-      "site": ""
-    },
-    "tech": ["", "", ""],
-    "features": ["", "", ""],
-    "libraries": ["", "", ""],
-    "work": ["", "", ""]
-  },
-  "tislab.org": {
+    "type": "Web App",
     "description": "",
+    "site": "",
+    "repo": "",
+    "features": [],
+    "work": [],
+    "foundation": [],
+    "tech": [],
+    "libraries": [],
+    "tags": []
+  },
+  {
+    "name": "tislab.org",
     "group": "TISLab",
-    "links": {
-      "repo": "",
-      "site": ""
-    },
-    "tech": ["", "", ""],
-    "features": ["", "", ""],
-    "libraries": ["", "", ""],
-    "work": ["", "", ""],
-    "tags": ["Divested"]
-  },
-  "Using the Music of 3Blue1Brown": {
+    "type": "Site",
     "description": "",
+    "site": "",
+    "repo": "",
+    "features": [],
+    "work": [],
+    "foundation": [],
+    "tech": [],
+    "libraries": [],
+    "tags": []
+  },
+  {
+    "name": "Using the Music of 3Blue1Brown",
     "group": "Personal",
-    "links": {
-      "repo": "",
-      "site": ""
-    },
-    "tech": ["React", "Form"]
-  },
-  "Wall of Software": {
+    "type": "Web App",
     "description": "",
+    "site": "",
+    "repo": "",
+    "features": [],
+    "work": [],
+    "foundation": [],
+    "tech": [],
+    "libraries": [],
+    "tags": []
+  },
+  {
+    "name": "Wall of Software",
     "group": "CU DBMI",
-    "links": {
-      "repo": "https://github.com/CU-DBMI/wall-of-software",
-      "site": "https://cu-dbmi.github.io/wall-of-software/"
-    },
-    "tech": ["", "", ""],
-    "features": ["", "", ""],
-    "libraries": ["", "", ""],
-    "work": ["", "", ""]
-  },
-  "Word Lapse": {
+    "type": "Site",
     "description": "",
+    "site": "https://cu-dbmi.github.io/wall-of-software/",
+    "repo": "https://github.com/CU-DBMI/wall-of-software",
+    "features": [],
+    "work": [],
+    "foundation": [],
+    "tech": [],
+    "libraries": [],
+    "tags": []
+  },
+  {
+    "name": "Word Lapse",
     "group": "Greene Lab",
-    "links": {
-      "repo": "",
-      "site": ""
-    },
-    "tech": ["", "", ""],
-    "features": ["", "", ""],
-    "libraries": ["", "", ""],
-    "work": ["", "", ""]
-  },
-  "Word Spot": {
+    "type": "Web App",
     "description": "",
+    "site": "",
+    "repo": "",
+    "features": [],
+    "work": [],
+    "foundation": [],
+    "tech": [],
+    "libraries": [],
+    "tags": []
+  },
+  {
+    "name": "Word Spot",
     "group": "CU DBMI",
-    "links": {
-      "repo": "https://github.com/CU-DBMI/word-spot",
-      "site": "https://word-spot.netlify.app/"
-    },
-    "tech": ["", "", ""],
-    "features": ["", "", ""],
-    "libraries": ["", "", ""],
-    "work": ["", "", ""]
+    "type": "Web App",
+    "description": "",
+    "site": "https://word-spot.netlify.app/",
+    "repo": "https://github.com/CU-DBMI/word-spot",
+    "features": [],
+    "work": [],
+    "foundation": [],
+    "tech": [],
+    "libraries": [],
+    "tags": []
   }
-}
+]
