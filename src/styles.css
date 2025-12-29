@@ -71,11 +71,11 @@
 
   button,
   summary {
-    @apply inline-flex cursor-pointer items-center justify-center font-sans transition-all;
+    @apply flex cursor-pointer items-center justify-center font-sans transition-all;
   }
 
   label {
-    @apply inline-flex cursor-pointer items-center justify-center gap-2 p-2 font-sans transition-all hover:bg-zinc-100;
+    @apply flex cursor-pointer items-center justify-center gap-2 p-2 font-sans transition-all hover:bg-zinc-100;
   }
 
   input,
@@ -88,7 +88,7 @@
   }
 
   details {
-    @apply inline-flex flex-col items-center;
+    @apply flex flex-col items-center;
 
     &::details-content {
       @apply flex h-0 flex-col gap-2 overflow-hidden transition-all transition-discrete duration-500;

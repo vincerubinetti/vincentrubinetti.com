@@ -136,7 +136,7 @@ const _projects = orderBy(
             <ChevronDown />
           </summary>
 
-          <div class="inline-flex flex-col items-center gap-2 p-4">
+          <div class="flex flex-col items-center gap-2 p-4">
             <a :href="repo" class="button-sm">
               Repo
               <ExternalLink />
@@ -151,11 +151,11 @@ const _projects = orderBy(
             </ul>
 
             <div class="flex flex-wrap gap-4">
-              <div class="inline-flex flex-wrap gap-2">
+              <div class="flex flex-wrap gap-2">
                 <div
                   v-for="(item, index) in [work, base, tech, libs].flat()"
                   :key="index"
-                  class="inline-flex items-center gap-1 rounded-full bg-zinc-200 px-2 py-1"
+                  class="flex items-center gap-1 rounded-full bg-zinc-200 px-2 py-1"
                 >
                   {{ item }}
                 </div>
@@ -169,7 +169,7 @@ const _projects = orderBy(
     <List />
 
     <p class="text-center">
-      Plus many in-progress, private, and legacy projects not listed here
+      Plus many in-progress, private, and legacy projects not listed here!
     </p>
   </section>
 </template>

@@ -23,9 +23,9 @@
 }
 
 @utility button-dark {
-  @apply relative inline-flex items-center justify-center gap-2 rounded p-4 font-sans text-current no-underline hover:bg-current/10;
+  @apply relative flex items-center justify-center gap-2 rounded p-4 font-sans text-current no-underline hover:bg-current/10;
 }
 
 @utility button {
-  @apply relative inline-flex items-center justify-center gap-2 rounded bg-current/5 p-4 font-sans text-current no-underline hover:bg-current/10;
+  @apply relative flex items-center justify-center gap-2 rounded bg-current/5 p-4 font-sans text-current no-underline hover:bg-current/10;
 }
