@@ -46,7 +46,9 @@ const tech = [
         :key="index"
         class="corners-1 relative flex gap-6 pt-6 pl-6"
       >
-        <div class="flex w-6 shrink-0 flex-col items-center gap-3">
+        <div
+          class="flex h-full w-6 shrink-0 flex-col items-center justify-between"
+        >
           <component
             v-for="(icon, name, index) in icons"
             :key="index"
