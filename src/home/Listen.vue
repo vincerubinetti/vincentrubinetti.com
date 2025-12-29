@@ -12,14 +12,14 @@ import {
   Play,
   RefreshCcw,
 } from "lucide-vue-next";
-import Slider from "@/components/Slider.vue";
-import type { Track } from "@/components/SoundCloud";
-import SoundCloud from "@/components/SoundCloud.vue";
 import { pointerCoords } from "@/util/dom";
 import { sleep } from "@/util/misc";
 import { formatTime, formatValue, linkify } from "@/util/string";
-import bandcamp from "./bandcamp.json";
-import { level, playing, track } from "./state";
+import Slider from "./components/Slider.vue";
+import type { Track } from "./components/SoundCloud";
+import SoundCloud from "./components/SoundCloud.vue";
+import bandcamp from "./data/bandcamp.json";
+import { level, playing, track } from "./util/state";
 
 const playlists = [
   { title: "Best Of", id: "652705266" },
@@ -348,9 +348,7 @@ const { SSR } = import.meta.env;
                   class="flex flex-col gap-6 p-4"
                 >
                   <!-- track details -->
-                  <div
-                    class="flex w-full flex-wrap items-center justify-start gap-6"
-                  >
+                  <div class="flex w-full flex-wrap items-center gap-6">
                     <div
                       v-for="({ icon, text, title }, index) of getStats(track)"
                       :key="index"
@@ -363,8 +361,8 @@ const { SSR } = import.meta.env;
                   </div>
 
                   <!-- track description -->
-                  <div
-                    class="description leading-relaxed wrap-break-word"
+                  <p
+                    class="description wrap-break-word"
                     v-html="getDescription(track)"
                   />
                 </div>

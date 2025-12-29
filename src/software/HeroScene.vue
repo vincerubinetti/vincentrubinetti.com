@@ -19,12 +19,12 @@ import { LineSegments2 } from "three/addons/lines/LineSegments2.js";
 import { LineSegmentsGeometry } from "three/addons/lines/LineSegmentsGeometry.js";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 import type { GLTF } from "three/addons/loaders/GLTFLoader.js";
-import arrow from "@/assets/models/arrow.glb?url";
-import check from "@/assets/models/check.glb?url";
-import flask from "@/assets/models/flask.glb?url";
-import star from "@/assets/models/star.glb?url";
 import type { pointerCoords } from "@/util/dom";
 import { cos, mod, sin } from "@/util/math";
+import arrow from "./images/models/arrow.glb?url";
+import check from "./images/models/check.glb?url";
+import flask from "./images/models/flask.glb?url";
+import star from "./images/models/star.glb?url";
 
 /** scene parameters */
 const bounds = 10;

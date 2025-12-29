@@ -6,16 +6,16 @@
     "description": "Crowd-submit non-English captions for [3Blue1Brown](https://www.3blue1brown.com) videos",
     "site": "",
     "repo": "https://github.com/3b1b/captions/tree/main/app",
-    "features": [
+    "feat": [
       "Caption editing UI, time-synced with video preview",
       "Rating system of other users' captions",
       "Automatic pull request submission via cloud functions"
     ],
     "work": ["Design", "Implementation", "Cloud Functions"],
-    "foundation": ["TypeScript", "React"],
+    "base": ["TypeScript", "React"],
     "tech": [],
-    "libraries": [],
-    "tags": ["Prototype", "Deprecated"]
+    "libs": [],
+    "warning": "Prototype, replaced by a fuller version developed by someone else"
   },
   {
     "name": "3Blue1Brown Dubbing",
@@ -24,7 +24,7 @@
     "description": "Self-record non-English dubs of [3Blue1Brown](https://www.3blue1brown.com) videos",
     "site": "https://3b1b-dubbing.netlify.app/",
     "repo": "https://github.com/3Blue1Brown/dubbing",
-    "features": [
+    "feat": [
       "Mic selection and preview",
       "Audio recording, processing, layering, and export",
       "Waveform and spectrogram visualizations",
@@ -36,10 +36,10 @@
       "Audio Processing",
       "Audio Visualization"
     ],
-    "foundation": ["TypeScript", "React"],
+    "base": ["TypeScript", "React"],
     "tech": ["Web Audio", "Web Workers", "Audio Worklets"],
-    "libraries": ["workerpool", "virtual-audio-graph"],
-    "tags": []
+    "libs": ["workerpool", "virtual-audio-graph"],
+    "warning": ""
   },
   {
     "name": "3Blue1Brown.com",
@@ -48,17 +48,17 @@
     "description": "Site for the educational math YouTube channel [3Blue1Brown](https://www.3blue1brown.com)",
     "site": "https://www.3blue1brown.com/",
     "repo": "https://github.com/3b1b/3Blue1Brown.com",
-    "features": [
+    "feat": [
       "Large body of various static and dynamic content",
       "Complex lesson pages with rich and interactive content and media",
       "Large suite of easy-to-use components for authors",
       "Various scripts for data aggregation and site maintenance"
     ],
     "work": ["Design", "Implementation"],
-    "foundation": ["Next"],
+    "base": ["Next"],
     "tech": ["React", "SVG", "Canvas", "MDX", "LaTeX"],
-    "libraries": ["rehype", "remark"],
-    "tags": ["Divested"]
+    "libs": ["rehype", "remark"],
+    "warning": "Left my hands a while ago, not an accurate reflection of my work"
   },
   {
     "name": "Adage",
@@ -67,7 +67,7 @@
     "description": "Explore gene expression data and discover new insights from machine learning models",
     "site": "https://adage.greenelab.com/",
     "repo": "https://github.com/greenelab/adage-frontend",
-    "features": [
+    "feat": [
       "Collection of networks, heatmaps, and other charts/plots",
       "Advanced statistical analysis done in-browser with Web Workers with comprehensive unit tests"
     ],
@@ -80,10 +80,10 @@
       "Data Visualization",
       "Logo"
     ],
-    "foundation": ["React"],
+    "base": ["React"],
     "tech": ["SVG", "Canvas", "Web Workers"],
-    "libraries": ["D3", "Redux", "Sentry"],
-    "tags": []
+    "libs": ["D3", "Redux", "Sentry"],
+    "warning": ""
   },
   {
     "name": "Connectivity Search",
@@ -92,17 +92,17 @@
     "description": "Find important and novel paths between nodes in a network of genes, compounds, diseases, and more",
     "site": "https://het.io/search/",
     "repo": "https://github.com/greenelab/connectivity-search-frontend",
-    "features": [
+    "feat": [
       "Unique interactive network UI",
       "Unique table UI",
       "Unique deployment of SPA within static site",
       "Branded library of components for sister apps"
     ],
     "work": ["Design", "Data Visualization", "Implementation"],
-    "foundation": ["React"],
+    "base": ["React"],
     "tech": ["SVG"],
-    "libraries": ["D3", "Redux"],
-    "tags": []
+    "libs": ["D3", "Redux"],
+    "warning": ""
   },
   {
     "name": "DBMI Screensaver",
@@ -111,16 +111,16 @@
     "description": "Fun screensaver-like visualization",
     "site": "https://cu-dbmi.github.io/screensaver/",
     "repo": "https://github.com/CU-DBMI/screensaver",
-    "features": [
+    "feat": [
       "3D figures generated from models",
       "Morphing animations",
       "Mouse interaction"
     ],
     "work": ["Design", "Implementation", "Math"],
-    "foundation": ["Vanilla"],
+    "base": ["JavaScript"],
     "tech": ["Canvas", "SVG"],
-    "libraries": ["Three JS", "GSAP", "Opentype JS"],
-    "tags": []
+    "libs": ["Three JS", "GSAP", "Opentype JS"],
+    "warning": ""
   },
   {
     "name": "Exploring Cancer in Colorado",
@@ -129,16 +129,16 @@
     "description": "View demographics, cancer disparities, risk factors, health behaviors, and environmental exposures in Colorado",
     "site": "https://coe-ecco.org/",
     "repo": "https://github.com/colorado-cancer-center/ecco/tree/main/frontend",
-    "features": [
+    "feat": [
       "Geographic map with data visualization overlays",
       "Advanced map style and data customization",
       "Various charts & plots"
     ],
     "work": ["Research", "Design", "Implementation", "Data Visualization"],
-    "foundation": ["TypeScript", "Vue"],
+    "base": ["TypeScript", "Vue"],
     "tech": [],
-    "libraries": ["OpenLayers", "D3"],
-    "tags": []
+    "libs": ["OpenLayers", "D3"],
+    "warning": ""
   },
   {
     "name": "GenePlexus",
@@ -147,15 +147,15 @@
     "description": "Predict similar genes with machine learning models trained on genome-scale molecular interaction networks",
     "site": "https://gene-plexus.netlify.app/",
     "repo": "https://github.com/krishnanlab/geneplexus-app/tree/main/frontend",
-    "features": [
+    "feat": [
       "Friendly UI for creating and managing analyses",
       "Interactive network UI"
     ],
     "work": ["Design", "Implementation", "Data Visualization", "Logo"],
-    "foundation": ["TypeScript", "React"],
+    "base": ["TypeScript", "React"],
     "tech": [],
-    "libraries": ["D3", "Mock Service Worker"],
-    "tags": []
+    "libs": ["D3", "Mock Service Worker"],
+    "warning": ""
   },
   {
     "name": "hclust",
@@ -164,16 +164,16 @@
     "description": "Efficient and flexible hierarchical clustering",
     "site": "https://www.npmjs.com/package/@greenelab/hclust",
     "repo": "https://github.com/greenelab/hclust",
-    "features": [
+    "feat": [
       "Well-documented",
       "In-depth comparison with alternatives",
       "Support for Web Workers"
     ],
     "work": ["Implementation", "Optimization", "Math"],
-    "foundation": ["Vanilla"],
+    "base": ["JavaScript"],
     "tech": [],
-    "libraries": [],
-    "tags": []
+    "libs": [],
+    "warning": ""
   },
   {
     "name": "Het.io",
@@ -182,25 +182,25 @@
     "description": "Website for the [het.io](https://het.io) group and its projects",
     "site": "https://het.io/",
     "repo": "https://github.com/hetio/het.io",
-    "features": [
+    "feat": [
       "Collection of consistently branded embedded dynamic apps",
       "Collection of rich content and media",
       "Fun home page visualization"
     ],
     "work": ["Design", "Implementation", "Copywriting", "Logo"],
-    "foundation": ["Jekyll"],
+    "base": ["Jekyll"],
     "tech": ["Canvas"],
-    "libraries": [],
-    "tags": []
+    "libs": [],
+    "warning": ""
   },
   {
     "name": "Human Microbiome Compendium",
     "group": "Blekhman Lab",
     "type": "Web App",
-    "description": "",
+    "description": "Explore a large dataset of the human microbiome",
     "site": "https://microbiomap.org/",
     "repo": "https://github.com/blekhmanlab/compendium_website",
-    "features": [
+    "feat": [
       "Sophisticated categorization of data and search functionality",
       "Complex data pre-processing pipeline",
       "World map data visualization",
@@ -213,10 +213,10 @@
       "Data Visualization",
       "Logo"
     ],
-    "foundation": ["TypeScript", "React"],
+    "base": ["TypeScript", "React"],
     "tech": ["SVG", "Web Workers"],
-    "libraries": ["D3", "GSAP", "Comlink"],
-    "tags": []
+    "libs": ["D3", "GSAP", "Comlink"],
+    "warning": ""
   },
   {
     "name": "Intro to SVGs",
@@ -225,16 +225,16 @@
     "description": "Introduction to SVGs for academics",
     "site": "https://vincerubinetti.github.io/intro-to-svgs/",
     "repo": "https://github.com/vincerubinetti/intro-to-svgs",
-    "features": [
+    "feat": [
       "Thorough and intuitive explanations, with elucidating diagrams",
       "Elegantly organized content",
       "Reader exercises to reinforce understanding"
     ],
     "work": ["Design", "Implementation", "Writing"],
-    "foundation": ["Jekyll", "Vanilla"],
+    "base": ["Jekyll", "JavaScript"],
     "tech": [],
-    "libraries": [],
-    "tags": []
+    "libs": [],
+    "warning": ""
   },
   {
     "name": "Lab Website Template",
@@ -243,7 +243,7 @@
     "description": "Open source, code-based website template aimed at academic labs",
     "site": "https://greene-lab.gitbook.io/lab-website-template-docs",
     "repo": "https://github.com/greenelab/lab-website-template",
-    "features": [
+    "feat": [
       "One of the most popular lab website templates on GitHub, with 500+ stars",
       "Advanced automation that generates citations, configures the repo, and more",
       "Suite of easy-to-use, well-documented components",
@@ -258,10 +258,10 @@
       "User Support",
       "Logo"
     ],
-    "foundation": ["Jekyll", "Vanilla"],
+    "base": ["Jekyll", "JavaScript"],
     "tech": ["SVG", "Python", "Ruby"],
-    "libraries": [],
-    "tags": []
+    "libs": [],
+    "warning": ""
   },
   {
     "name": "Lab Website Template Poster",
@@ -270,16 +270,16 @@
     "description": "Discussion of [Lab Website Template](https://greene-lab.gitbook.io/lab-website-template-docs), presented at USRSE 2025",
     "site": "https://greenelab.github.io/lwt-poster/poster/",
     "repo": "https://github.com/greenelab/lwt-poster",
-    "features": [
+    "feat": [
       "Unique website implementation that doubles as printable poster",
       "Extensive use of GitHub API to gather stats about template usage",
       "Animated and interactive poster elements"
     ],
     "work": ["Design", "Writing", "Implementation"],
-    "foundation": ["Vanilla"],
+    "base": ["JavaScript"],
     "tech": ["SVG"],
-    "libraries": ["D3"],
-    "tags": []
+    "libs": ["D3"],
+    "warning": ""
   },
   {
     "name": "Manubot",
@@ -288,16 +288,16 @@
     "description": "Ecosystem of tools for open, collaborative manuscript writing",
     "site": "https://manubot.org",
     "repo": "https://github.com/manubot",
-    "features": [
+    "feat": [
       "Comprehensive styles for static manuscript content",
       "Suite of dynamic plugins like table of contents, citation links, figure preview, and more",
       "Design of landing and catalog pages"
     ],
     "work": ["Design", "Implementation", "Documentation", "Logo", "Branding"],
-    "foundation": ["Vanilla"],
+    "base": ["JavaScript"],
     "tech": [],
-    "libraries": [],
-    "tags": []
+    "libs": [],
+    "warning": ""
   },
   {
     "name": "MIDI Humanizer",
@@ -306,16 +306,16 @@
     "description": "Randomize note starts, durations, tempo drift, and velocities in MIDIs to make them sound more human",
     "site": "https://vincerubinetti.github.io/midi-humanizer/",
     "repo": "https://github.com/vincerubinetti/midi-humanizer",
-    "features": [
+    "feat": [
       "Note visualizer",
       "File import/export",
       "Detailed and advanced controls"
     ],
     "work": ["Design", "Implementation", "MIDI Processing"],
-    "foundation": ["TypeScript", "React"],
+    "base": ["TypeScript", "React"],
     "tech": ["SVG"],
-    "libraries": ["D3", "Tone JS"],
-    "tags": []
+    "libs": ["D3", "Tone JS"],
+    "warning": ""
   },
   {
     "name": "Misc. Logos",
@@ -324,16 +324,16 @@
     "description": "Misc. logos for different orgs and projects",
     "site": "https://github.com/orgs/cytomining/discussions/3",
     "repo": "https://github.com/orgs/cytomining",
-    "features": [
+    "feat": [
       "Unique designs informed by functionality",
       "Consistent branding",
       "Hand-coded SVGs with occasional animations"
     ],
     "work": ["Design", "Logo", "Branding"],
-    "foundation": [],
+    "base": [],
     "tech": ["SVG", "Adobe Illustrator"],
-    "libraries": [],
-    "tags": []
+    "libs": [],
+    "warning": ""
   },
   {
     "name": "Monarch",
@@ -342,7 +342,7 @@
     "description": "Complex ecosystem of tools for exploring a multi-omic knowledge graph of phenotypes, genes, diseases, and more",
     "site": "https://monarchinitiative.org/",
     "repo": "https://github.com/monarch-initiative/monarch-app/tree/main/frontend",
-    "features": [
+    "feat": [
       "Automated unit, integration, and accessibility testing",
       "Early Vue 3 and Composition API adoption",
       "Custom suite of components thoroughly tested for accessibility",
@@ -360,10 +360,10 @@
       "Data Visualization",
       "CI/CD"
     ],
-    "foundation": ["TypeScript", "Vue"],
+    "base": ["TypeScript", "Vue"],
     "tech": [],
-    "libraries": ["Playwright", "Mock Service Worker", "Sentry", "Hotjar"],
-    "tags": ["Divested"]
+    "libs": ["Playwright", "Mock Service Worker", "Sentry", "Hotjar"],
+    "warning": "Left my hands a long ago and diverged significantly, not an accurate reflection of my work"
   },
   {
     "name": "Mute Tabs By URL",
@@ -372,7 +372,7 @@
     "description": "(Now unnecessary) Chrome extension to auto-mute/unmute tabs based on their URL",
     "site": "https://chromewebstore.google.com/detail/mute-tabs-by-url/bpokcenamldgbghabnklpmbkkcgcgdld",
     "repo": "https://github.com/vincerubinetti/mute-tabs-by-url",
-    "features": [
+    "feat": [
       "(Previously) rated 4.5 stars with 4k+ users on Chrome Web Store",
       "Friendly UI for adding/removing domains/pages",
       "Advanced allow/block lists",
@@ -380,10 +380,10 @@
       "Well documented and handles user permissions gracefully"
     ],
     "work": ["Design", "Implementation"],
-    "foundation": ["Vanilla"],
+    "base": ["JavaScript"],
     "tech": ["Chrome Extension API"],
-    "libraries": [],
-    "tags": ["Deprecated"]
+    "libs": [],
+    "warning": "Made mostly irrelevant by browsers' changes to autoplay policies, made inoperative by Manifest V3"
   },
   {
     "name": "mygeneset.info",
@@ -392,7 +392,7 @@
     "description": "Collect, save, and share sets of genes",
     "site": "https://mygeneset.info/",
     "repo": "https://github.com/biothings/mygeneset.info-website",
-    "features": [
+    "feat": [
       "Search thousands of pre-made gene sets or create your own",
       "Share privately or publicly",
       "Export gene sets in any format",
@@ -400,10 +400,10 @@
       "User accounts"
     ],
     "work": ["Design", "Implementation", "Testing", "Logo"],
-    "foundation": ["TypeScript", "Vue"],
+    "base": ["TypeScript", "Vue"],
     "tech": [],
-    "libraries": [],
-    "tags": []
+    "libs": [],
+    "warning": ""
   },
   {
     "name": "NIH Reporting",
@@ -412,7 +412,7 @@
     "description": "Data gathering and reporting for [Common Fund Data Ecosystem](https://commonfund.nih.gov/dataecosystem) projects",
     "site": "",
     "repo": "https://github.com/nih-cfde/icc-eval-core",
-    "features": [
+    "feat": [
       "Advanced data gathering pipeline, with multiple API/scraping sources, memoization, concurrency, logging, etc.",
       "Advanced CI/CD with split between public and private data",
       "End-to-end TypeScript to ensure data accuracy",
@@ -427,26 +427,26 @@
       "Data Visualization",
       "CI/CD"
     ],
-    "foundation": ["TypeScript", "Node", "Vue"],
+    "base": ["TypeScript", "Node", "Vue"],
     "tech": [],
-    "libraries": ["Playwright"],
-    "tags": []
+    "libs": ["Playwright"],
+    "warning": ""
   },
   {
     "name": "Preprint Bot",
     "group": "Greene Lab",
     "type": "Bot",
-    "description": "(Now archived) Twitter bot that regularly tweets out the hottest biomedical preprints",
+    "description": "Twitter bot that regularly tweeted about the hottest biomedical preprints",
     "site": "https://twitter.com/PreprintBot",
     "repo": "https://github.com/greenelab/preprint-bot",
-    "features": [
+    "feat": [
       "Used BioRxiv, MedRxiv, and Twitter APIs to tweet about new and popular preprints"
     ],
     "work": ["Implementation", "CI/CD"],
-    "foundation": ["Node"],
+    "base": ["Node"],
     "tech": [],
-    "libraries": [],
-    "tags": ["Deprecated"]
+    "libs": [],
+    "warning": "Deprecated when Elon Musk killed Twitter API access"
   },
   {
     "name": "Preprint Similarity Search",
@@ -455,12 +455,12 @@
     "description": "Find suitable journals based on the text content of your preprint using machine learning",
     "site": "https://greenelab.github.io/preprint-similarity-search/",
     "repo": "https://github.com/greenelab/preprint-similarity-search/tree/master/frontend",
-    "features": ["Unique word cloud and color map of ML space"],
+    "feat": ["Unique word cloud and color map of ML space"],
     "work": ["Design", "Implementation", "Data Visualization", "Logo"],
-    "foundation": ["React"],
+    "base": ["React"],
     "tech": [],
-    "libraries": ["Sentry"],
-    "tags": []
+    "libs": ["Sentry"],
+    "warning": ""
   },
   {
     "name": "Redirects",
@@ -469,16 +469,16 @@
     "description": "Free alternative to link shortening services using GitHub",
     "site": "",
     "repo": "https://github.com/CU-DBMI/redirects",
-    "features": [
+    "feat": [
       "Creative use of GitHub Pages and Actions to create redirect system",
       "Specify redirect URLs with easy-to-edit YAML",
       "Comprehensive and honest comparison with alternatives"
     ],
     "work": ["Implementation", "Documentation", "CI/CD"],
-    "foundation": ["Vanilla"],
+    "base": ["JavaScript"],
     "tech": [],
-    "libraries": [],
-    "tags": []
+    "libs": [],
+    "warning": ""
   },
   {
     "name": "Set",
@@ -487,12 +487,12 @@
     "description": "The classic game of Set, right in your browser",
     "site": "https://vincerubinetti.github.io/set/",
     "repo": "https://github.com/vincerubinetti/set",
-    "features": ["Clean and fun implementation of a classic card game"],
+    "feat": ["Clean and fun implementation of a classic card game"],
     "work": [],
-    "foundation": ["TypeScript", "React"],
+    "base": ["TypeScript", "React"],
     "tech": ["SVG"],
-    "libraries": ["Framer Motion"],
-    "tags": []
+    "libs": ["Framer Motion"],
+    "warning": ""
   },
   {
     "name": "Simplex",
@@ -501,15 +501,15 @@
     "description": "Identify and replace complex words in your writing using audience-specific machine learning models",
     "site": "https://gosimplex.app/",
     "repo": "https://github.com/krishnanlab/simplex/tree/main/app",
-    "features": [
+    "feat": [
       "System for saving and sharing revisions of your text",
       "User accounts with robust login system"
     ],
     "work": ["Design", "Implementation", "Logo"],
-    "foundation": ["TypeScript", "React"],
+    "base": ["TypeScript", "React"],
     "tech": [],
-    "libraries": ["zxcvbn"],
-    "tags": []
+    "libs": ["zxcvbn"],
+    "warning": ""
   },
   {
     "name": "STRchive",
@@ -518,7 +518,7 @@
     "description": "",
     "site": "https://strchive.org/",
     "repo": "https://github.com/dashnowlab/STRchive",
-    "features": [
+    "feat": [
       "Diverse data presented aesthetically with tables, charts, and creative layout",
       "Automatic and custom generation of forms based on JSON schema",
       "Automatic pull request and issue submission via cloud functions"
@@ -531,10 +531,10 @@
       "Cloud Functions",
       "Logo"
     ],
-    "foundation": ["Astro", "React", "Vanilla"],
+    "base": ["Astro", "React", "JavaScript"],
     "tech": ["SVG"],
-    "libraries": ["Plotly"],
-    "tags": []
+    "libs": ["Plotly"],
+    "warning": ""
   },
   {
     "name": "SVG to PNG",
@@ -543,30 +543,30 @@
     "description": "Convert SVGs to PNGs right in your browser, reliably and correctly",
     "site": "https://vincerubinetti.github.io/svg-to-png/",
     "repo": "https://github.com/vincerubinetti/svg-to-png",
-    "features": [
+    "feat": [
       "Popular conversion tool, with 300+ stars",
       "Clean, intuitive, and easy-to-use UI, including batch editing and downloading",
       "Conveniently adjust size, coloring, margin, etc."
     ],
     "work": ["Design", "Implementation", "Logo"],
-    "foundation": ["TypeScript", "React"],
+    "base": ["TypeScript", "React"],
     "tech": ["SVG", "Canvas"],
-    "libraries": [],
-    "tags": []
+    "libs": [],
+    "warning": ""
   },
   {
     "name": "Using the Music of 3Blue1Brown",
     "group": "Personal",
     "type": "Web App",
-    "description": "Online form to request using the music of 3Blue1Brown in personal/educational/professional projects",
+    "description": "Online form to request using the music of 3Blue1Brown in projects",
     "site": "https://vincerubinetti.github.io/using-the-music-of-3blue1brown",
     "repo": "https://github.com/vincerubinetti/using-the-music-of-3blue1brown",
-    "features": ["Clean and quick form"],
+    "feat": ["Clean and quick form"],
     "work": ["Design", "Implementation"],
-    "foundation": ["React"],
+    "base": ["React"],
     "tech": [],
-    "libraries": ["Formik ", "Yup"],
-    "tags": []
+    "libs": ["Formik ", "Yup"],
+    "warning": ""
   },
   {
     "name": "Wall of Software",
@@ -575,16 +575,16 @@
     "description": "",
     "site": "https://cu-dbmi.github.io/wall-of-software/",
     "repo": "https://github.com/CU-DBMI/wall-of-software",
-    "features": [
+    "feat": [
       "Fun 3D animated header visualization, with shaders",
       "Responsive hex grid layout",
       "CI checks to ensure that user-submitted images and content are properly formatted"
     ],
     "work": ["Design", "Implementation", "Documentation", "CI/CD"],
-    "foundation": ["Vanilla"],
+    "base": ["JavaScript"],
     "tech": [],
-    "libraries": ["Three JS", "Alpine JS"],
-    "tags": []
+    "libs": ["Three JS", "Alpine JS"],
+    "warning": ""
   },
   {
     "name": "Word4Word",
@@ -593,16 +593,16 @@
     "description": "Get from one 4-letter word to another, changing one letter at a time",
     "site": "https://word4word.app/",
     "repo": "https://github.com/vincerubinetti/word4word",
-    "features": [
+    "feat": [
       "Auto-selected daily game",
       "Clean, fun, and colorful UI",
       "C++ implementation of Floyd-Warshall algorithm to pre-compute all word pairs"
     ],
     "work": ["Design", "Implementation", "Documentation", "CI/CD"],
-    "foundation": ["TypeScript", "Vue"],
+    "base": ["TypeScript", "Vue"],
     "tech": ["C++"],
-    "libraries": [],
-    "tags": []
+    "libs": [],
+    "warning": ""
   },
   {
     "name": "Word Lapse",
@@ -611,15 +611,15 @@
     "description": "Explore how a word changes in meaning over time based on natural language processing machine learning",
     "site": "https://greenelab.github.io/word-lapse/",
     "repo": "https://github.com/greenelab/word-lapse/tree/main/app",
-    "features": [
+    "feat": [
       "Fun and functional use of theming",
       "Unique 'trajectory' and 'overlap' visualizations of word meaning"
     ],
     "work": ["Design", "Implementation", "Data Visualization", "Logo"],
-    "foundation": ["React"],
+    "base": ["React"],
     "tech": [],
-    "libraries": ["D3"],
-    "tags": []
+    "libs": ["D3"],
+    "warning": ""
   },
   {
     "name": "Word Spot",
@@ -628,15 +628,15 @@
     "description": "Search for words or phrases in text, with exact or loose matching",
     "site": "https://word-spot.netlify.app/",
     "repo": "https://github.com/CU-DBMI/word-spot",
-    "features": [
+    "feat": [
       "Special, efficient by-word n-gram search algorithm for fuzzy searching for phrases",
       "Clean and intuitive UI",
       "Special free-text highlighting component"
     ],
     "work": ["Design", "Implementation", "Optimization", "Logo"],
-    "foundation": ["TypeScript", "Vue"],
+    "base": ["TypeScript", "Vue"],
     "tech": ["Web Workers"],
-    "libraries": ["Lexical", "Comlink"],
-    "tags": []
+    "libs": ["Lexical", "Comlink"],
+    "warning": ""
   }
 ]

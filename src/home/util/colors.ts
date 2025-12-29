@@ -1,10 +1,10 @@
 import type { FunctionalComponent } from "vue";
-import Apple from "@/assets/icons/apple.svg?component";
-import Bandcamp from "@/assets/icons/bandcamp.svg?component";
-import SoundCloud from "@/assets/icons/soundcloud.svg?component";
-import Spotify from "@/assets/icons/spotify.svg?component";
-import Steam from "@/assets/icons/steam.svg?component";
-import YouTube from "@/assets/icons/youtube.svg?component";
+import Apple from "@/images/logos/apple.svg?component";
+import Bandcamp from "@/images/logos/bandcamp.svg?component";
+import SoundCloud from "@/images/logos/soundcloud.svg?component";
+import Spotify from "@/images/logos/spotify.svg?component";
+import Steam from "@/images/logos/steam.svg?component";
+import YouTube from "@/images/logos/youtube.svg?component";
 
 /** get color based on icon */
 export const getColor = (icon: FunctionalComponent) => {

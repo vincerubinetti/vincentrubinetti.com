@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import { computed, useTemplateRef } from "vue";
-import Logo from "@/assets/brand/vr.svg?component";
-import Apple from "@/assets/icons/apple.svg?component";
-import Bandcamp from "@/assets/icons/bandcamp.svg?component";
-import SoundCloud from "@/assets/icons/soundcloud.svg?component";
-import Spotify from "@/assets/icons/spotify.svg?component";
-import YouTube from "@/assets/icons/youtube.svg?component";
+import Logo from "@/images/brand/vr.svg?component";
+import Apple from "@/images/logos/apple.svg?component";
+import Bandcamp from "@/images/logos/bandcamp.svg?component";
+import SoundCloud from "@/images/logos/soundcloud.svg?component";
+import Spotify from "@/images/logos/spotify.svg?component";
+import YouTube from "@/images/logos/youtube.svg?component";
 
 const links = [
   {

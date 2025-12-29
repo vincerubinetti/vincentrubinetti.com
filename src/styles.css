@@ -29,23 +29,23 @@
   h1,
   h2,
   h3 {
-    @apply flex items-center gap-2 font-sans leading-none tracking-widest uppercase;
+    @apply flex items-center gap-2 font-sans leading-none;
   }
 
   h1 {
-    @apply text-2xl font-light;
+    @apply text-2xl font-light tracking-widest uppercase;
   }
 
   h2 {
-    @apply text-2xl font-normal;
+    @apply text-2xl font-normal tracking-wider uppercase;
   }
 
   h3 {
-    @apply text-xl font-normal;
+    @apply text-lg font-normal tracking-wide;
   }
 
   p {
-    @apply leading-loose;
+    @apply leading-relaxed;
   }
 
   ul,
@@ -69,12 +69,13 @@
     @apply underline underline-offset-2 transition-all hover:text-current;
   }
 
-  button {
+  button,
+  summary {
     @apply inline-flex cursor-pointer items-center justify-center font-sans transition-all;
   }
 
   label {
-    @apply inline-flex cursor-pointer items-center justify-center gap-2 p-2 transition-colors hover:bg-zinc-100;
+    @apply inline-flex cursor-pointer items-center justify-center gap-2 p-2 font-sans transition-all hover:bg-zinc-100;
   }
 
   input,
@@ -87,10 +88,10 @@
   }
 
   details {
-    @apply flex flex-col items-center gap-4 font-sans;
+    @apply inline-flex flex-col items-center;
 
     &::details-content {
-      @apply flex h-0 flex-col gap-8 overflow-hidden transition-[height,content-visibility] transition-discrete duration-500;
+      @apply flex h-0 flex-col gap-2 overflow-hidden transition-all transition-discrete duration-500;
       interpolate-size: allow-keywords;
     }
 
@@ -99,16 +100,12 @@
     }
   }
 
-  summary {
-    @apply flex max-w-max cursor-pointer list-none items-center justify-center gap-2 p-4 transition-colors;
-  }
-
   details[open] summary svg {
     @apply -scale-y-100;
   }
 
   .icon,
   .lucide {
-    @apply inline-block h-[1.15em] w-[unset];
+    @apply inline-block h-[1em] w-[unset];
   }
 }

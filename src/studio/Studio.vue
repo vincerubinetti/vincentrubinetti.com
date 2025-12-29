@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Bot, Cpu, Drum, Library, MicVocal, Plug } from "lucide-vue-next";
-import picture from "@/assets/images/studio.jpg?url";
+import picture from "./images/studio.jpg?url";
 
 const setup = [
   {

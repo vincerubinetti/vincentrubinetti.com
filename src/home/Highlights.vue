@@ -8,23 +8,23 @@ import {
   type FunctionalComponent,
 } from "vue";
 import { useEventListener } from "@vueuse/core";
-import blue from "@/assets/albums/3blue1brown.jpg?url";
-import emerald from "@/assets/albums/emerald-cloud-lab.jpg?url";
-import hacky from "@/assets/albums/hacky-zack.jpg?url";
-import harmony from "@/assets/albums/harmony-of-a-hunter-returns.jpg?url";
-import high from "@/assets/albums/high-noon-revolver.jpg?url";
-import ink from "@/assets/albums/ink.jpg?url";
-import minute from "@/assets/albums/minute-physics.jpg?url";
-import remixes from "@/assets/albums/remixes-and-remakes.jpg?url";
-import Apple from "@/assets/icons/apple.svg?component";
-import Bandcamp from "@/assets/icons/bandcamp.svg?component";
-import Spotify from "@/assets/icons/spotify.svg?component";
-import Steam from "@/assets/icons/steam.svg?component";
-import YouTube from "@/assets/icons/youtube.svg?component";
-import Outline from "@/components/Outline.vue";
+import Apple from "@/images/logos/apple.svg?component";
+import Bandcamp from "@/images/logos/bandcamp.svg?component";
+import Spotify from "@/images/logos/spotify.svg?component";
+import Steam from "@/images/logos/steam.svg?component";
+import YouTube from "@/images/logos/youtube.svg?component";
 import { waitFor } from "@/util/misc";
 import { renderMarkdown } from "@/util/string";
-import { getColor } from "./colors";
+import Outline from "./components/Outline.vue";
+import blue from "./images/albums/3blue1brown.jpg?url";
+import emerald from "./images/albums/emerald-cloud-lab.jpg?url";
+import hacky from "./images/albums/hacky-zack.jpg?url";
+import harmony from "./images/albums/harmony-of-a-hunter-returns.jpg?url";
+import high from "./images/albums/high-noon-revolver.jpg?url";
+import ink from "./images/albums/ink.jpg?url";
+import minute from "./images/albums/minute-physics.jpg?url";
+import remixes from "./images/albums/remixes-and-remakes.jpg?url";
+import { getColor } from "./util/colors";
 import "youtube-video-element";
 
 type Highlight = {
@@ -310,7 +310,7 @@ onMounted(() =>
       <div class="flex flex-col gap-4">
         <h3>{{ selected.title }}</h3>
 
-        <div class="grid grid-cols-[auto_1fr] gap-x-4 leading-loose">
+        <div class="grid grid-cols-[auto_1fr] gap-x-4 leading-relaxed">
           <span class="opacity-50">Credits</span>
           <span v-html="renderMarkdown(selected.credits)" />
           <span class="opacity-50">Genre</span>

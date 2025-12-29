@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Code, Headphones, Leaf, Music } from "lucide-vue-next";
-import Outline from "@/components/Outline.vue";
+import Outline from "./components/Outline.vue";
 </script>
 
 <template>

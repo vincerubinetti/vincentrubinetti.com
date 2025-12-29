@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { useLocalStorage } from "@vueuse/core";
 import { Send } from "lucide-vue-next";
-import Outline from "@/components/Outline.vue";
-import { onSubmit, useAddress, useCaptcha } from "./contact";
+import { onSubmit, useAddress, useCaptcha } from "@/util/contact";
+import Outline from "./components/Outline.vue";
 
 /** form state */
 const name = useLocalStorage("name", "");

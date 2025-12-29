@@ -1,15 +1,16 @@
 <script setup lang="ts">
 import { CornerRightDown } from "lucide-vue-next";
-import profile from "@/assets/images/vince.png?url";
+import profile from "@/images/vince.png?url";
+import Dash from "./components/Dash.vue";
 </script>
 
 <template>
   <section>
-    <h2 class="sr-only">About</h2>
+    <h2><Dash flip />About</h2>
 
     <div class="flex max-w-full items-center gap-8 max-lg:flex-col">
       <div class="size-50 shrink-0">
-        <img :src="profile" />
+        <img :src="profile" alt="A handsome man" />
       </div>
       <p>
         I started writing software over 20 years ago, making humble games,

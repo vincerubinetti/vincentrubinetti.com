@@ -5,8 +5,8 @@
   --width: --spacing(200);
 
   --color-light: oklch(97% 0.01 50);
-  --color-mid: oklch(75% 0.15 235);
-  --color-mid-dark: oklch(60% 0.15 240);
+  --color-mid: oklch(80% 0.15 240);
+  --color-mid-dark: oklch(50% 0.15 240);
 
   --radius: 7.5px;
 }

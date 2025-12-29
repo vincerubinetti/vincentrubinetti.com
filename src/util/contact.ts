@@ -15,7 +15,6 @@ export const useAddress = () => {
     const mailto = encode("mailto:vince@vincentrubinetti.com");
     const text = encode("vince@vincentrubinetti.com");
     address.value = `<a href="${mailto}" target="_blank">${text}</a>`;
-    console.log("hi");
   });
 
   return address;

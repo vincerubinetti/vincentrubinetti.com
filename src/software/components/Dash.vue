@@ -36,7 +36,7 @@ watchEffect(() => {
 <template>
   <svg
     ref="line"
-    class="h-2 min-w-0 grow basis-0 opacity-25"
+    class="h-2 min-w-0 flex-1 opacity-25"
     :class="flip ? '-scale-x-100' : ''"
   >
     <line

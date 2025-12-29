@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useTemplateRef } from "vue";
 import { useEventListener } from "@vueuse/core";
-import Logo from "@/assets/brand/vr.svg?component";
+import Logo from "@/images/brand/vr.svg?component";
 import { finishAnimations } from "@/util/dom";
 
 const overlay = useTemplateRef("overlay");

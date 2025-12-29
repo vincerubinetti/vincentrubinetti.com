@@ -27,11 +27,15 @@
 }
 
 @utility button-big {
-  @apply inline-flex items-center justify-center gap-2 p-4 font-sans text-current no-underline transition-all;
+  @apply inline-flex items-center justify-center gap-2 p-4 font-sans text-black no-underline transition-all;
 }
 
 @utility button {
-  @apply hover:bg-mid inline-flex items-center justify-center gap-2 bg-current/5 p-2 font-sans no-underline transition-all;
+  @apply hover:bg-mid bg-dark/5 inline-flex items-center justify-center gap-2 p-4 font-sans no-underline transition-all;
+}
+
+@utility button-sm {
+  @apply hover:bg-mid/50 inline-flex items-center justify-center gap-2 p-2 font-sans no-underline transition-all;
 }
 
 @utility paper {
@@ -39,7 +43,7 @@
 
   &::before {
     @apply absolute inset-0 -z-10 opacity-15 mix-blend-darken content-[''];
-    background-image: url("../assets/images/paper.svg");
+    background-image: url("./images/paper.svg");
   }
 }
 

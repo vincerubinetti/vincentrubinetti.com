@@ -1,37 +1,13 @@
 <script setup lang="ts">
-import { orderBy, random, startCase, toPairs } from "lodash-es";
-import { ExternalLink, Globe } from "lucide-vue-next";
-import GitHub from "@/assets/logos/github.svg?component";
-import Carousel from "@/components/Carousel.vue";
-import Dash from "@/components/Dash.vue";
-import List from "@/software/List.vue";
+import { orderBy, pick } from "lodash-es";
+import { ChevronDown, ExternalLink, TriangleAlert } from "lucide-vue-next";
+import * as logos from "@/images/logos";
 import { renderMarkdown } from "@/util/string";
-import projects from "./projects.json";
-
-/** import images */
-const imports = toPairs(
-  import.meta.glob<{ default: string }>("./projects/*.png", {
-    eager: true,
-    query: "url&w=800&format=jpeg",
-  }),
-);
-
-/** group images by name */
-const images: Record<string, string[]> = {};
-
-for (const [path, { default: _default }] of imports) {
-  const name = path.match(/.*\/(.*)-\d+\.png/)?.[1];
-  if (!name) continue;
-  images[name] ??= [];
-  images[name].push(_default);
-}
-
-/** get link icon */
-const getIcon = (key: string) => {
-  if (key.match(/site/i)) return Globe;
-  if (key.match(/repo/i)) return GitHub;
-  return ExternalLink;
-};
+import Carousel from "./components/Carousel.vue";
+import Dash from "./components/Dash.vue";
+import projects from "./data/projects.json";
+import images from "./images/projects";
+import List from "./List.vue";
 
 /** project order */
 const order = [
@@ -42,7 +18,6 @@ const order = [
   "NIH Reporting",
   "3Blue1Brown.com",
   "3Blue1Brown Dubbing",
-  "3Blue1Brown Captions",
   "Simplex",
   "GenePlexus",
   "Manubot",
@@ -64,10 +39,10 @@ const order = [
   "Lab Website Template Poster",
   "Redirects",
   "Intro to SVGs",
-  "Preprint Bot",
   "hclust",
-  "tislab.org",
+  "3Blue1Brown Captions",
   "Monarch",
+  "Preprint Bot",
   "Mute Tabs By URL",
 ];
 
@@ -87,29 +62,29 @@ const _projects = orderBy(
 
 <template>
   <section>
-    <h2>Projects<Dash /></h2>
+    <h2><Dash flip />Projects</h2>
 
-    <div class="grid grid-cols-3 gap-4 max-md:grid-cols-2 max-sm:grid-cols-1">
+    <div class="grid grid-cols-3 gap-8 max-md:grid-cols-2 max-sm:grid-cols-1">
       <!-- project card -->
       <div
         v-for="(
           {
             images,
             name,
-            group,
+            description,
             site,
             repo,
-            type,
-            description,
-            foundation,
-            features,
+            feat,
             work,
-            tags,
+            base,
+            tech,
+            libs,
+            warning,
           },
           index
         ) in _projects"
         :key="index"
-        class="corners-2 bg-light paper flex flex-col gap-4 p-6"
+        class="bg-light paper flex flex-col"
       >
         <Carousel
           v-if="images.length"
@@ -118,7 +93,7 @@ const _projects = orderBy(
         <div
           v-else
           class="grid aspect-square place-items-center font-sans text-4xl text-current/50"
-          :style="{ background: `oklch(90% 0.025 ${random(0, 360)})` }"
+          :style="{ background: `oklch(90% 0.025 ${index * 30})` }"
         >
           {{
             name
@@ -129,31 +104,72 @@ const _projects = orderBy(
           }}
         </div>
 
-        <h3 class="mt-2 self-center text-center">
-          {{ name }}
-        </h3>
-
-        <div class="flex flex-wrap justify-center gap-2">
-          <a
-            v-for="(link, key, index) in { repo, site }"
-            :key="index"
-            :href="link"
-            class="button"
+        <div
+          class="absolute top-0 right-0 left-0 z-10 flex gap-2 bg-linear-to-b from-black/25 from-0% to-transparent to-100% p-2"
+        >
+          <span
+            v-if="warning"
+            :title="warning"
+            class="size-[1em] cursor-help"
+            tabindex="0"
           >
-            <component :is="getIcon(key)" />
-            {{ startCase(key) }}
-          </a>
+            <TriangleAlert class="fill-orange-300" />
+          </span>
+
+          <div class="grow" />
+
+          <component
+            v-for="(logo, name, index) in pick(logos, base)"
+            :key="index"
+            :is="logo"
+            :title="name"
+            class="size-[1em]"
+          />
         </div>
 
-        <div>{{ group }}</div>
-        <div>{{ type }}</div>
-        <div v-html="renderMarkdown(description)" />
-        <div>{{ foundation.join(", ") }}</div>
-        <div>{{ features.join(", ") }}</div>
-        <div>{{ work.join(", ") }}</div>
-        <div>{{ tags.join(", ") }}</div>
+        <a :href="site || repo" class="button-sm" :title="name">
+          {{ name }}
+        </a>
+
+        <details name="project">
+          <summary class="button-sm w-full" aria-label="Details">
+            <ChevronDown />
+          </summary>
+
+          <div class="inline-flex flex-col items-center gap-2 p-4">
+            <a :href="repo" class="button-sm">
+              Repo
+              <ExternalLink />
+            </a>
+
+            <p v-html="renderMarkdown(description)" class="leading-relaxed" />
+
+            <ul>
+              <li v-for="(feature, index) in feat" :key="index">
+                {{ feature }}
+              </li>
+            </ul>
+
+            <div class="flex flex-wrap gap-4">
+              <div class="inline-flex flex-wrap gap-2">
+                <div
+                  v-for="(item, index) in [work, base, tech, libs].flat()"
+                  :key="index"
+                  class="inline-flex items-center gap-1 rounded-full bg-zinc-200 px-2 py-1"
+                >
+                  {{ item }}
+                </div>
+              </div>
+            </div>
+          </div>
+        </details>
       </div>
     </div>
+
     <List />
+
+    <p class="text-center">
+      Plus many in-progress, private, and legacy projects not listed here
+    </p>
   </section>
 </template>

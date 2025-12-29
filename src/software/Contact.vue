@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { useLocalStorage } from "@vueuse/core";
 import { Send } from "lucide-vue-next";
-import Dash from "@/components/Dash.vue";
-import { onSubmit, useAddress, useCaptcha } from "@/home/contact";
+import { onSubmit, useAddress, useCaptcha } from "@/util/contact";
+import Dash from "./components/Dash.vue";
 
 /** form state */
 const name = useLocalStorage("name", "");
@@ -19,17 +19,7 @@ useCaptcha();
 
     <div class="grid grid-cols-2 gap-12 max-lg:grid-cols-1">
       <div class="flex flex-col gap-4">
-        <p>
-          To use the <b>3Blue1Brown music</b> in videos or projects,
-          <a
-            href="https://vincerubinetti.github.io/using-the-music-of-3blue1brown/"
-            >go here</a
-          >.
-        </p>
-        <p>
-          If you want to use my other music, commission custom music or other
-          services, or just chat about anything, please write me a message.
-        </p>
+        <p>Please write me a message!</p>
         <p v-html="address" />
       </div>
 

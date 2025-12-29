@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import GitHub from "@/assets/logos/github.svg?component";
+import GitHub from "@/images/logos/github.svg?component";
 </script>
 
 <template>

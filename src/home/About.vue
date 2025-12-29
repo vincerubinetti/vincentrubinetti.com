@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import profile from "@/assets/images/vince.png?url";
+import profile from "@/images/vince.png?url";
 </script>
 
 <template>
   <section class="text-white">
     <div class="flex items-center gap-8 max-lg:flex-col">
-      <img :src="profile" alt="" class="size-50 rounded-full" />
+      <img :src="profile" class="size-50 rounded-full" alt="A handsome man" />
       <p>
         I started writing music over 20 years ago, with a humble notation
         program and an obsession with video game music. Throughout my academic

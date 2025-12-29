@@ -1,10 +1,6 @@
 <script setup lang="ts">
 import { ref, useTemplateRef, watchEffect } from "vue";
-import {
-  useElementVisibility,
-  useFullscreen,
-  useIntersectionObserver,
-} from "@vueuse/core";
+import { useElementVisibility, useFullscreen } from "@vueuse/core";
 import { clamp, range } from "lodash-es";
 import { ChevronLeft, ChevronRight } from "lucide-vue-next";
 import { Autoplay, Navigation, Pagination } from "swiper/modules";
@@ -88,15 +84,20 @@ const onSetTransition: (swiper: SwiperType, duration: number) => void = (
     >
       <img
         :src="image"
+        alt=""
         loading="lazy"
         class="size-full object-cover object-top"
       />
     </SwiperSlide>
 
     <div
-      class="absolute bottom-0 z-10 flex w-full bg-zinc-800 text-white opacity-0 transition-opacity group-hover:opacity-100 focus-within:opacity-100"
+      class="absolute bottom-0 z-10 flex w-full bg-black/75 text-white opacity-0 transition-opacity group-hover:opacity-100 focus-within:opacity-100"
     >
-      <button class="nav" @click="swiper?.slidePrev()">
+      <button
+        class="nav"
+        @click="swiper?.slidePrev()"
+        aria-label="Previous image"
+      >
         <ChevronLeft />
       </button>
       <div class="flex grow justify-center">
@@ -105,6 +106,7 @@ const onSetTransition: (swiper: SwiperType, duration: number) => void = (
           :key="index"
           class="nav"
           :class="slide === index ? '' : 'text-current/25'"
+          aria-label="Go to image {{ index + 1 }}"
           @click="swiper?.slideToLoop(index)"
         >
           <svg viewBox="-1 -1 2 2" class="size-2">
@@ -112,7 +114,7 @@ const onSetTransition: (swiper: SwiperType, duration: number) => void = (
           </svg>
         </button>
       </div>
-      <button class="nav" @click="swiper?.slideNext()">
+      <button class="nav" @click="swiper?.slideNext()" aria-label="Next image">
         <ChevronRight />
       </button>
     </div>

@@ -4,8 +4,8 @@ import { useIntervalFn } from "@vueuse/core";
 import { Canvas } from "glsl-canvas-js";
 import type { Canvas as CanvasType } from "glsl-canvas-js/dist/esm/glsl";
 import { range } from "lodash-es";
-import shader from "./background.frag?raw";
-import { playing, smoothedLevel, track } from "./state";
+import shader from "./components/background.frag?raw";
+import { playing, smoothedLevel, track } from "./util/state";
 
 const canvas = useTemplateRef("canvas");
 
