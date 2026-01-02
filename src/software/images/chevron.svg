@@ -1,0 +1,9 @@
+<svg viewBox="-10 -10 20 20">
+  <path
+    d="M 5 0 m -6 -6 l 6 6 l -6 6"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="3"
+    stroke-linecap="square"
+  />
+</svg>

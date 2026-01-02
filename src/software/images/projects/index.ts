@@ -4,7 +4,7 @@ import { toPairs } from "lodash-es";
 const imports = toPairs(
   import.meta.glob<{ default: string }>("./*.png", {
     eager: true,
-    query: "url&w=800&format=jpeg",
+    query: "url&w=1200&format=webp&quality=100",
   }),
 );
 

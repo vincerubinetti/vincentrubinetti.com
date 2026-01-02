@@ -1,18 +1,20 @@
 <script setup lang="ts">
 import { ref, useTemplateRef, watchEffect } from "vue";
-import { useElementVisibility, useFullscreen } from "@vueuse/core";
+import { useFullscreen } from "@vueuse/core";
 import { clamp, range } from "lodash-es";
-import { ChevronLeft, ChevronRight } from "lucide-vue-next";
 import { Autoplay, Navigation, Pagination } from "swiper/modules";
 import type { SwiperEvents, Swiper as SwiperType } from "swiper/types";
 import { Swiper, SwiperSlide } from "swiper/vue";
+import { mod } from "@/util/math";
+import Chevron from "../images/chevron.svg?component";
+import Circle from "../images/circle.svg?component";
 import "swiper/css";
 
 type Props = {
   slides: { image: string }[];
 };
 
-defineProps<Props>();
+const { slides } = defineProps<Props>();
 
 const root = useTemplateRef("root");
 
@@ -25,12 +27,39 @@ const swiper = ref<SwiperType>();
 /** reactive slide index */
 const slide = ref(0);
 
-/** wait until element in viewport to start autoplay */
-// @ts-expect-error https://github.com/vueuse/vueuse/issues/4712
-const visible = useElementVisibility(root);
+/** handle slide change */
+const onSlideChange: SwiperEvents["slideChange"] = ({
+  realIndex,
+  progress,
+  swipeDirection,
+}) => {
+  /** update slide number */
+  slide.value = realIndex;
+
+  /** if directly on current slide, load */
+  loaded.value[realIndex] = true;
+
+  /** if swiping/transitioning between slides, load destination slide */
+  if (progress % 1) {
+    if (swipeDirection === "next")
+      loaded.value[mod(realIndex + 1, slides.length)] = true;
+    if (swipeDirection === "prev")
+      loaded.value[mod(realIndex - 1, slides.length)] = true;
+  }
+};
+
+/** which slides should be loaded */
+const loaded = ref<boolean[]>([]);
+
+/** reset loaded when slides change */
 watchEffect(() => {
-  if (visible.value) swiper.value?.autoplay.start();
-  else swiper.value?.autoplay.stop();
+  for (let index = 0; index < slides.length; index++)
+    loaded.value[index] ??= false;
+});
+
+/** stop autoplay on load */
+watchEffect(() => {
+  swiper.value?.autoplay.stop();
 });
 
 /** custom transition */
@@ -60,8 +89,7 @@ const onSetTransition: (swiper: SwiperType, duration: number) => void = (
 <template>
   <Swiper
     ref="root"
-    class="group aspect-square w-full"
-    :class="isFullscreen ? 'cursor-zoom-out' : 'cursor-zoom-in'"
+    class="group w-full"
     :loop="true"
     :loop-prevents-sliding="false"
     :autoplay="{ disableOnInteraction: true }"
@@ -70,50 +98,53 @@ const onSetTransition: (swiper: SwiperType, duration: number) => void = (
     :watch-slides-progress="true"
     :modules="[Autoplay, Navigation, Pagination]"
     @swiper="(value) => (swiper = value)"
-    @slide-change="({ realIndex }) => (slide = realIndex)"
+    @slide-change="onSlideChange"
     @set-translate="onProgress"
     @set-transition="onSetTransition"
+    @pointerenter="swiper?.autoplay.start()"
   >
     <SwiperSlide
       v-for="({ image }, index) in slides"
       :key="index"
-      class="top-0 left-0 size-full select-none"
+      :class="isFullscreen ? 'cursor-zoom-out' : 'cursor-zoom-in'"
       @click="toggle()"
     >
       <img
-        :src="image"
+        :src="loaded[index] ? image : ''"
         alt=""
         loading="lazy"
-        class="size-full object-cover object-top"
+        class="size-full object-contain"
       />
     </SwiperSlide>
 
     <div
-      class="absolute bottom-0 z-10 flex w-full bg-black/75 text-white opacity-0 transition-opacity group-hover:opacity-100 focus-within:opacity-100"
+      class="absolute bottom-0 z-10 flex w-full items-center justify-center bg-black text-white opacity-0 transition-opacity group-hover:opacity-100 focus-within:opacity-100"
     >
       <button
-        class="nav"
+        class="nav-button"
         @click="swiper?.slidePrev()"
         aria-label="Previous image"
       >
-        <ChevronLeft />
+        <Chevron class="-scale-x-100" />
       </button>
-      <div class="flex grow justify-center">
-        <button
-          v-for="index in range(slides.length)"
-          :key="index"
-          class="nav"
-          :class="slide === index ? '' : 'text-current/25'"
-          aria-label="Go to image {{ index + 1 }}"
-          @click="swiper?.slideToLoop(index)"
-        >
-          <svg viewBox="-1 -1 2 2" class="size-2">
-            <circle r="1" fill="currentColor" />
-          </svg>
-        </button>
-      </div>
-      <button class="nav" @click="swiper?.slideNext()" aria-label="Next image">
-        <ChevronRight />
+      <div class="grow" />
+      <button
+        v-for="index in range(slides.length)"
+        :key="index"
+        class="nav-button"
+        :class="slide === index ? 'opacity-100!' : ''"
+        aria-label="Go to image {{ index + 1 }}"
+        @click="swiper?.slideToLoop(index)"
+      >
+        <Circle />
+      </button>
+      <div class="grow" />
+      <button
+        class="nav-button"
+        @click="swiper?.slideNext()"
+        aria-label="Next image"
+      >
+        <Chevron />
       </button>
     </div>
   </Swiper>
@@ -122,7 +153,7 @@ const onSetTransition: (swiper: SwiperType, duration: number) => void = (
 <style scoped>
 @reference "tailwindcss";
 
-.nav {
-  @apply size-8 hover:text-current/75;
+.nav-button {
+  @apply size-8 opacity-50 hover:opacity-100;
 }
 </style>

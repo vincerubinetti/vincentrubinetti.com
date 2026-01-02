@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { computed, ref, useTemplateRef } from "vue";
-import { pick, uniq } from "lodash-es";
+import { countBy, pick, uniq } from "lodash-es";
 import { ChevronDown, ExternalLink, TriangleAlert, X } from "lucide-vue-next";
 import logos from "@/images/logos";
-import { renderMarkdown } from "@/util/string";
+import { renderMarkdown, slugify } from "@/util/string";
 import Carousel from "./components/Carousel.vue";
 import Dash from "./components/Dash.vue";
 import projects from "./data/projects.json";
@@ -19,17 +19,17 @@ const index = (array: unknown[], value: unknown, fallback: number) => {
 /** project order */
 const projectOrder = [
   "SVG to PNG",
-  "Set",
-  "Word4Word",
   "Lab Website Template",
   "Manubot",
   "Exploring Cancer in Colorado",
+  "Set",
+  "Word4Word",
   "Simplex",
   "Word Lapse",
   "Preprint Similarity Search",
   "Word Spot",
-  "STRchive",
   "Human Microbiome Compendium",
+  "STRchive",
   "GenePlexus",
   "Connectivity Search",
   "Het.io",
@@ -60,12 +60,16 @@ projects.sort(
     index(projectOrder, b.name, Infinity),
 );
 
-/** search suggestion options */
-const options = uniq(
-  ["work", "base", "tech", "lib"].flatMap((key) =>
-    projects.flatMap((project) => project[key as keyof typeof project]),
-  ),
+/** project "keywords" */
+const keywords = projects.flatMap((project) =>
+  [project.type, project.work, project.base, project.tech, project.lib].flat(),
 );
+
+/** how often keyword occurs */
+const counts = countBy(keywords);
+
+/** search suggestion options */
+const options = uniq(keywords);
 
 /** search option order */
 const optionOrder = [
@@ -95,7 +99,9 @@ const optionOrder = [
 
 /** sort options */
 options.sort(
-  (a, b) => index(optionOrder, a, Infinity) - index(optionOrder, b, Infinity),
+  (a, b) =>
+    index(optionOrder, a, Infinity) - index(optionOrder, b, Infinity) ||
+    counts[b] - counts[a],
 );
 
 const input = useTemplateRef("input");
@@ -109,7 +115,7 @@ const filteredProjects = computed(() =>
     .map(({ name, ...project }) => ({
       name,
       ...project,
-      images: images[name.toLowerCase()] ?? [],
+      images: images[slugify(name)] ?? [],
     }))
     .filter((project) =>
       JSON.stringify(project)
@@ -158,6 +164,7 @@ const filteredProjects = computed(() =>
           {
             images,
             name,
+            type,
             description,
             site,
             repo,
@@ -176,10 +183,11 @@ const filteredProjects = computed(() =>
         <Carousel
           v-if="images.length"
           :slides="images.map((image) => ({ image }))"
+          class="aspect-4/3 bg-zinc-800"
         />
         <div
           v-else
-          class="grid aspect-square place-items-center font-sans text-4xl text-current/50"
+          class="grid aspect-4/3 place-items-center font-sans text-4xl text-current/50"
           :style="{ background: `oklch(90% 0.025 ${index * 30})` }"
         >
           {{
@@ -191,9 +199,7 @@ const filteredProjects = computed(() =>
           }}
         </div>
 
-        <div
-          class="absolute top-0 right-0 left-0 z-10 flex gap-2 bg-linear-to-b from-black/25 from-0% to-transparent to-100% p-2"
-        >
+        <div class="absolute top-0 right-0 left-0 z-10 flex gap-2 p-2">
           <span
             v-if="warning"
             :title="warning"
@@ -216,12 +222,12 @@ const filteredProjects = computed(() =>
 
         <a
           :href="site || repo"
-          class="button group bg-transparent p-2 text-lg"
+          class="button group gap-0 bg-transparent p-2 text-lg"
           :title="name"
         >
           {{ name }}
           <div
-            class="flex w-0 opacity-0 transition-opacity group-hover:opacity-100"
+            class="flex w-0 translate-x-2 opacity-0 transition-opacity group-hover:opacity-100"
           >
             <ExternalLink />
           </div>
@@ -249,9 +255,9 @@ const filteredProjects = computed(() =>
             <div class="flex flex-wrap gap-4">
               <div class="flex flex-wrap gap-2">
                 <button
-                  v-for="(item, index) in [work, base, tech, lib].flat()"
+                  v-for="(item, index) in [type, work, base, tech, lib].flat()"
                   :key="index"
-                  class="flex items-center gap-1 bg-zinc-200 p-1 font-sans"
+                  class="flex items-center gap-1 bg-black p-1 font-sans"
                   @click="
                     search = item;
                     input?.scrollIntoView({

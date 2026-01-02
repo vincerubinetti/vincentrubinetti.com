@@ -38,12 +38,19 @@ useCaptcha();
         @submit="onSubmit($event, name, email, message)"
         aria-label="Contact form"
       >
-        <input v-model="name" required name="name" placeholder="Full Name" />
+        <input
+          v-model="name"
+          required
+          name="name"
+          autocomplete="name"
+          placeholder="Full Name"
+        />
         <input
           v-model="email"
           required
           type="email"
           name="email"
+          autocomplete="email"
           placeholder="Email"
         />
         <textarea
