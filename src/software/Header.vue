@@ -61,7 +61,7 @@ const hatch = 10;
   <header class="bg-dark text-white">
     <hgroup class="flex flex-col items-center gap-2 py-8 text-center">
       <h1 class="sr-only">Vincent Rubinetti</h1>
-      <div class="corners-2 w-86 max-w-full">
+      <a href="/software" class="corners-2 w-86 max-w-full text-white">
         <svg
           ref="svg"
           xmlns="http://www.w3.org/2000/svg"
@@ -180,7 +180,7 @@ const hatch = 10;
             />
           </g>
         </svg>
-      </div>
+      </a>
 
       <div class="font-light tracking-wider">
         Frontend developer · UX/UI designer

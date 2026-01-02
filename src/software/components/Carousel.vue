@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, useTemplateRef, watchEffect } from "vue";
-import { useFullscreen } from "@vueuse/core";
+import { useElementVisibility, useFullscreen } from "@vueuse/core";
 import { clamp, range } from "lodash-es";
 import { Autoplay, Navigation, Pagination } from "swiper/modules";
 import type { SwiperEvents, Swiper as SwiperType } from "swiper/types";
@@ -23,6 +23,16 @@ const { toggle, isFullscreen } = useFullscreen(root as unknown as HTMLElement);
 
 /** swiper instance (non-reactive) */
 const swiper = ref<SwiperType>();
+
+const isVisible = useElementVisibility(() => swiper.value?.el, {
+  threshold: 1,
+});
+
+/** autoplay control based on visibility */
+watchEffect(() => {
+  if (isVisible.value) swiper.value?.autoplay.start();
+  else swiper.value?.autoplay.stop();
+});
 
 /** reactive slide index */
 const slide = ref(0);
@@ -55,11 +65,6 @@ const loaded = ref<boolean[]>([]);
 watchEffect(() => {
   for (let index = 0; index < slides.length; index++)
     loaded.value[index] ??= false;
-});
-
-/** stop autoplay on load */
-watchEffect(() => {
-  swiper.value?.autoplay.stop();
 });
 
 /** custom transition */
@@ -101,7 +106,6 @@ const onSetTransition: (swiper: SwiperType, duration: number) => void = (
     @slide-change="onSlideChange"
     @set-translate="onProgress"
     @set-transition="onSetTransition"
-    @pointerenter="swiper?.autoplay.start()"
   >
     <SwiperSlide
       v-for="({ image }, index) in slides"

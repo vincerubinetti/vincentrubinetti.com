@@ -3,12 +3,12 @@ import { computed, ref, useTemplateRef } from "vue";
 import { countBy, pick, uniq } from "lodash-es";
 import { ChevronDown, ExternalLink, TriangleAlert, X } from "lucide-vue-next";
 import logos from "@/images/logos";
-import { renderMarkdown, slugify } from "@/util/string";
+import GitHub from "@/images/logos/github.svg?component";
+import { formatValue, renderMarkdown, slugify } from "@/util/string";
 import Carousel from "./components/Carousel.vue";
 import Dash from "./components/Dash.vue";
 import projects from "./data/projects.json";
 import images from "./images/projects";
-import List from "./List.vue";
 
 /** indexOf with fallback */
 const index = (array: unknown[], value: unknown, fallback: number) => {
@@ -21,20 +21,20 @@ const projectOrder = [
   "SVG to PNG",
   "Lab Website Template",
   "Manubot",
-  "Exploring Cancer in Colorado",
   "Set",
   "Word4Word",
   "Simplex",
   "Word Lapse",
+  "Human Microbiome Compendium",
   "Preprint Similarity Search",
   "Word Spot",
-  "Human Microbiome Compendium",
-  "STRchive",
-  "GenePlexus",
+  "Exploring Cancer in Colorado",
   "Connectivity Search",
   "Het.io",
   "Adage",
   "mygeneset.info",
+  "STRchive",
+  "GenePlexus",
   "Wall of Software",
   "DBMI Screensaver",
   "NIH Reporting",
@@ -109,19 +109,20 @@ const input = useTemplateRef("input");
 /** search query */
 const search = ref("");
 
+/** projects with computed props */
+const derivedProjects = projects.map((project) => ({
+  ...project,
+  /** associated images */
+  images: images[slugify(project.name)] ?? [],
+  /** concat-ed string values */
+  search: Object.values(project).flat().join(" ").toLowerCase(),
+}));
+
 /** filtered projects to display */
 const filteredProjects = computed(() =>
-  projects
-    .map(({ name, ...project }) => ({
-      name,
-      ...project,
-      images: images[slugify(name)] ?? [],
-    }))
-    .filter((project) =>
-      JSON.stringify(project)
-        .toLowerCase()
-        .includes(search.value.toLowerCase()),
-    ),
+  derivedProjects.filter((project) =>
+    project.search.includes(search.value.toLowerCase()),
+  ),
 );
 </script>
 
@@ -152,11 +153,11 @@ const filteredProjects = computed(() =>
     </datalist>
 
     <b v-if="filteredProjects.length !== projects.length" class="text-center">
-      {{ filteredProjects.length.toLocaleString() }} results
+      {{ formatValue(filteredProjects.length) }} results
     </b>
 
     <div
-      class="grid grid-cols-3 items-start gap-8 max-md:grid-cols-2 max-sm:grid-cols-1"
+      class="gallery grid grid-cols-3 items-start gap-8 max-md:grid-cols-2 max-sm:grid-cols-1"
     >
       <!-- project card -->
       <div
@@ -164,6 +165,7 @@ const filteredProjects = computed(() =>
           {
             images,
             name,
+            group,
             type,
             description,
             site,
@@ -178,7 +180,7 @@ const filteredProjects = computed(() =>
           index
         ) in filteredProjects"
         :key="index"
-        class="bg-light paper flex flex-col"
+        class="card bg-light relative flex flex-col border border-current/10 transition-[opacity,filter]"
       >
         <Carousel
           v-if="images.length"
@@ -244,6 +246,10 @@ const filteredProjects = computed(() =>
               <ExternalLink />
             </a>
 
+            <p>
+              For: <b>{{ group }}</b>
+            </p>
+
             <p v-html="renderMarkdown(description)" class="leading-loose" />
 
             <ul>
@@ -257,7 +263,7 @@ const filteredProjects = computed(() =>
                 <button
                   v-for="(item, index) in [type, work, base, tech, lib].flat()"
                   :key="index"
-                  class="flex items-center gap-1 bg-black p-1 font-sans"
+                  class="flex items-center gap-1 bg-zinc-200 p-1 hover:bg-zinc-300"
                   @click="
                     search = item;
                     input?.scrollIntoView({
@@ -275,10 +281,18 @@ const filteredProjects = computed(() =>
       </div>
     </div>
 
-    <List />
+    <a href="/github" class="button">
+      <GitHub />All public GitHub contributions
+    </a>
 
     <p class="text-center">
       Plus many in-progress, private, and legacy projects not listed here!
     </p>
   </section>
 </template>
+
+<style scoped>
+.gallery:has(.card:hover) .card:not(:hover) {
+  @apply grayscale;
+}
+</style>

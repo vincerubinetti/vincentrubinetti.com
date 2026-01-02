@@ -68,7 +68,11 @@
   }
 
   a {
-    @apply underline underline-offset-2 transition-all hover:text-current;
+    @apply inline-flex items-center justify-center gap-2 transition-all;
+  }
+
+  p a {
+    @apply underline underline-offset-2 hover:text-current;
   }
 
   button,
@@ -116,7 +120,23 @@
   }
 
   select {
-    @apply min-w-0 grow cursor-pointer appearance-none border-none bg-current/5 p-4 pr-8 transition-all hover:bg-current/10;
+    @apply min-w-0 cursor-pointer appearance-none transition-all;
+  }
+
+  table {
+    @apply border-collapse bg-white wrap-break-word;
+  }
+
+  tr:nth-child(even) {
+    @apply bg-zinc-100;
+  }
+
+  th {
+    @apply bg-zinc-100;
+  }
+
+  [disabled] {
+    @apply cursor-not-allowed opacity-50 grayscale;
   }
 
   .icon,

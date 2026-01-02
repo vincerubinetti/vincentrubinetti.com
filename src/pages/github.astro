@@ -1,0 +1,18 @@
+---
+import List from "@/github/List.vue";
+import Layout from "@/layouts/Layout.astro";
+import Footer from "@/software/Footer.vue";
+import Header from "@/software/Header.vue";
+import "@/software/styles.css";
+---
+
+<Layout
+  title="GitHub | Vincent Rubinetti"
+  description="All public GitHub contributions"
+>
+  <Header client:load />
+  <main>
+    <List client:load />
+  </main>
+  <Footer />
+</Layout>

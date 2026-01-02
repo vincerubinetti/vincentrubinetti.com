@@ -1,0 +1,651 @@
+[
+  {
+    "name": "3Blue1Brown Captions",
+    "group": "3Blue1Brown",
+    "type": "Web App",
+    "description": "Crowd-submit non-English captions for [3Blue1Brown](https://www.3blue1brown.com) videos",
+    "site": "",
+    "repo": "https://github.com/3b1b/captions/tree/main/app",
+    "feat": [
+      "Caption editing UI, time-synced with video preview",
+      "Rating system of other users' captions",
+      "Automatic pull request submission via cloud functions"
+    ],
+    "work": ["Design", "Implementation", "Cloud Functions"],
+    "base": ["TypeScript", "React"],
+    "tech": [],
+    "lib": [],
+    "warning": "Prototype, replaced by a fuller version developed by someone else"
+  },
+  {
+    "name": "3Blue1Brown Dubbing",
+    "group": "3Blue1Brown",
+    "type": "Web App",
+    "description": "Self-record non-English dubs of [3Blue1Brown](https://www.3blue1brown.com) videos",
+    "site": "https://3b1b-dubbing.netlify.app/",
+    "repo": "https://github.com/3Blue1Brown/dubbing",
+    "feat": [
+      "Mic selection and preview",
+      "Audio recording, processing, layering, and export",
+      "Waveform and spectrogram visualizations",
+      "Audio node graph"
+    ],
+    "work": [
+      "Design",
+      "Implementation",
+      "Audio Processing",
+      "Audio Visualization"
+    ],
+    "base": ["TypeScript", "React"],
+    "tech": ["Web Audio", "Web Workers", "Audio Worklets"],
+    "lib": ["Workerpool", "Virtual Audio Graph"],
+    "warning": ""
+  },
+  {
+    "name": "3Blue1Brown.com",
+    "group": "3Blue1Brown",
+    "type": "Site",
+    "description": "Site for the educational math YouTube channel [3Blue1Brown](https://www.3blue1brown.com)",
+    "site": "https://www.3blue1brown.com/",
+    "repo": "https://github.com/3b1b/3Blue1Brown.com",
+    "feat": [
+      "Large body of various static and dynamic content",
+      "Complex lesson pages with rich and interactive content and media",
+      "Large suite of easy-to-use components for authors",
+      "Various scripts for data aggregation and site maintenance"
+    ],
+    "work": ["Design", "Implementation"],
+    "base": ["Next", "React"],
+    "tech": ["SVG", "Canvas", "MDX", "LaTeX"],
+    "lib": ["Rehype", "Remark"],
+    "warning": "Left my hands a while ago, not an accurate reflection of my work"
+  },
+  {
+    "name": "Adage",
+    "group": "Greene Lab",
+    "type": "Web App",
+    "description": "Explore gene expression data and discover new insights from machine learning models",
+    "site": "https://adage.greenelab.com/",
+    "repo": "https://github.com/greenelab/adage-frontend",
+    "feat": [
+      "Collection of networks, heatmaps, and other charts/plots",
+      "Advanced statistical analysis done in-browser with Web Workers with comprehensive unit tests"
+    ],
+    "work": [
+      "Research",
+      "Design",
+      "Mockup",
+      "Implementation",
+      "Testing",
+      "Math",
+      "Stats",
+      "Data Visualization",
+      "Logo"
+    ],
+    "base": ["React"],
+    "tech": ["SVG", "Canvas", "Web Workers", "Figma"],
+    "lib": ["D3", "Redux", "Sentry"],
+    "warning": ""
+  },
+  {
+    "name": "Connectivity Search",
+    "group": "Greene Lab",
+    "type": "Web App",
+    "description": "Find important and novel paths between nodes in a network of genes, compounds, diseases, and more",
+    "site": "https://het.io/search/",
+    "repo": "https://github.com/greenelab/connectivity-search-frontend",
+    "feat": [
+      "Unique interactive network UI",
+      "Unique table UI",
+      "Unique deployment of SPA within static site",
+      "Branded library of components for sister apps"
+    ],
+    "work": ["Design", "Data Visualization", "Implementation"],
+    "base": ["React"],
+    "tech": ["SVG"],
+    "lib": ["D3", "Redux"],
+    "warning": ""
+  },
+  {
+    "name": "DBMI Screensaver",
+    "group": "CU DBMI",
+    "type": "Web App",
+    "description": "Fun screensaver-like visualization",
+    "site": "https://cu-dbmi.github.io/screensaver/",
+    "repo": "https://github.com/CU-DBMI/screensaver",
+    "feat": [
+      "3D figures generated from models",
+      "Morphing animations",
+      "Mouse interaction"
+    ],
+    "work": ["Design", "Implementation", "Math"],
+    "base": ["JavaScript"],
+    "tech": ["Canvas", "SVG"],
+    "lib": ["Three JS", "GSAP", "Opentype JS"],
+    "warning": ""
+  },
+  {
+    "name": "Exploring Cancer in Colorado",
+    "group": "CU Cancer Center",
+    "type": "Web App",
+    "description": "View demographics, cancer disparities, risk factors, health behaviors, and environmental exposures in Colorado",
+    "site": "https://coe-ecco.org/",
+    "repo": "https://github.com/colorado-cancer-center/ecco/tree/main/frontend",
+    "feat": [
+      "Geographic map with data visualization overlays",
+      "Advanced map style and data customization",
+      "Various charts & plots"
+    ],
+    "work": ["Research", "Design", "Implementation", "Data Visualization"],
+    "base": ["TypeScript", "Vue"],
+    "tech": [],
+    "lib": ["OpenLayers", "D3"],
+    "warning": ""
+  },
+  {
+    "name": "GenePlexus",
+    "group": "Krishnan Lab",
+    "type": "Web App",
+    "description": "Predict similar genes with machine learning models trained on genome-scale molecular interaction networks",
+    "site": "https://gene-plexus.netlify.app/",
+    "repo": "https://github.com/krishnanlab/geneplexus-app/tree/main/frontend",
+    "feat": [
+      "Friendly UI for creating and managing analyses",
+      "Interactive network UI"
+    ],
+    "work": [
+      "Design",
+      "Mockup",
+      "Implementation",
+      "Data Visualization",
+      "Logo"
+    ],
+    "base": ["TypeScript", "React"],
+    "tech": ["Figma"],
+    "lib": ["D3", "Mock Service Worker"],
+    "warning": ""
+  },
+  {
+    "name": "hclust",
+    "group": "Greene Lab",
+    "type": "Package",
+    "description": "Efficient and flexible hierarchical clustering",
+    "site": "https://www.npmjs.com/package/@greenelab/hclust",
+    "repo": "https://github.com/greenelab/hclust",
+    "feat": [
+      "Well-documented",
+      "In-depth comparison with alternatives",
+      "Support for Web Workers"
+    ],
+    "work": ["Implementation", "Optimization", "Math"],
+    "base": ["JavaScript"],
+    "tech": [],
+    "lib": [],
+    "warning": ""
+  },
+  {
+    "name": "Het.io",
+    "group": "Greene Lab",
+    "type": "Site",
+    "description": "Website for the [het.io](https://het.io) group and its projects",
+    "site": "https://het.io/",
+    "repo": "https://github.com/hetio/het.io",
+    "feat": [
+      "Collection of consistently branded embedded dynamic apps",
+      "Collection of rich content and media",
+      "Fun home page visualization"
+    ],
+    "work": ["Design", "Implementation", "Copywriting", "Logo"],
+    "base": ["Jekyll"],
+    "tech": ["Canvas"],
+    "lib": [],
+    "warning": ""
+  },
+  {
+    "name": "Human Microbiome Compendium",
+    "group": "Blekhman Lab",
+    "type": "Web App",
+    "description": "Explore a large dataset of the human microbiome",
+    "site": "https://microbiomap.org/",
+    "repo": "https://github.com/blekhmanlab/compendium_website",
+    "feat": [
+      "Sophisticated categorization of data and search functionality",
+      "Complex data pre-processing pipeline",
+      "World map data visualization",
+      "Fun header visualization"
+    ],
+    "work": [
+      "Design",
+      "Implementation",
+      "Data Processing",
+      "Data Visualization",
+      "Logo"
+    ],
+    "base": ["TypeScript", "React", "Node"],
+    "tech": ["SVG", "Web Workers"],
+    "lib": ["D3", "GSAP", "Comlink"],
+    "warning": ""
+  },
+  {
+    "name": "Intro to SVGs",
+    "group": "Greene Lab",
+    "type": "Tutorial",
+    "description": "Introduction to SVGs for academics",
+    "site": "https://vincerubinetti.github.io/intro-to-svgs/",
+    "repo": "https://github.com/vincerubinetti/intro-to-svgs",
+    "feat": [
+      "Thorough and intuitive explanations, with elucidating diagrams",
+      "Elegantly organized content",
+      "Reader exercises to reinforce understanding"
+    ],
+    "work": ["Design", "Implementation", "Writing"],
+    "base": ["Jekyll", "JavaScript"],
+    "tech": [],
+    "lib": [],
+    "warning": ""
+  },
+  {
+    "name": "Lab Website Template",
+    "group": "Greene Lab",
+    "type": "Site Template",
+    "description": "Open source, code-based website template aimed at academic labs",
+    "site": "https://greene-lab.gitbook.io/lab-website-template-docs",
+    "repo": "https://github.com/greenelab/lab-website-template",
+    "feat": [
+      "One of the most popular lab website templates on GitHub, with 500+ stars",
+      "Advanced automation that generates citations, configures the repo, and more",
+      "Suite of easy-to-use, well-documented components",
+      "Dedicated docs suite with GitBook",
+      "Extensive user support"
+    ],
+    "work": [
+      "Design",
+      "Documentation",
+      "Implementation",
+      "CI/CD",
+      "User Support",
+      "Logo"
+    ],
+    "base": ["Jekyll", "JavaScript"],
+    "tech": ["SVG", "Python", "Ruby"],
+    "lib": [],
+    "warning": ""
+  },
+  {
+    "name": "Lab Website Template Poster",
+    "group": "Greene Lab",
+    "type": "Poster",
+    "description": "Discussion of [Lab Website Template](https://greene-lab.gitbook.io/lab-website-template-docs), presented at USRSE 2025",
+    "site": "https://greenelab.github.io/lwt-poster/poster/",
+    "repo": "https://github.com/greenelab/lwt-poster",
+    "feat": [
+      "Unique website implementation that doubles as printable poster",
+      "Extensive use of GitHub API to gather stats about template usage",
+      "Animated and interactive poster elements"
+    ],
+    "work": ["Design", "Writing", "Implementation"],
+    "base": ["JavaScript"],
+    "tech": ["SVG"],
+    "lib": ["D3"],
+    "warning": ""
+  },
+  {
+    "name": "Manubot",
+    "group": "Greene Lab",
+    "type": "Ecosystem",
+    "description": "Ecosystem of tools for open, collaborative manuscript writing",
+    "site": "https://manubot.org",
+    "repo": "https://github.com/manubot",
+    "feat": [
+      "Comprehensive styles for static manuscript content",
+      "Suite of dynamic plugins like table of contents, citation links, figure preview, and more",
+      "Design of landing and catalog pages"
+    ],
+    "work": ["Design", "Implementation", "Documentation", "Logo", "Branding"],
+    "base": ["JavaScript"],
+    "tech": [],
+    "lib": [],
+    "warning": ""
+  },
+  {
+    "name": "MIDI Humanizer",
+    "group": "Personal",
+    "type": "Web App",
+    "description": "Randomize note starts, durations, tempo drift, and velocities in MIDIs to make them sound more human",
+    "site": "https://vincerubinetti.github.io/midi-humanizer/",
+    "repo": "https://github.com/vincerubinetti/midi-humanizer",
+    "feat": [
+      "Note visualizer",
+      "File import/export",
+      "Detailed and advanced controls"
+    ],
+    "work": ["Design", "Implementation", "MIDI Processing"],
+    "base": ["TypeScript", "React"],
+    "tech": ["SVG"],
+    "lib": ["D3", "Tone JS"],
+    "warning": ""
+  },
+  {
+    "name": "Misc. Logos",
+    "group": "Various",
+    "type": "Design",
+    "description": "Misc. logos for different orgs and projects",
+    "site": "https://github.com/orgs/cytomining/discussions/3",
+    "repo": "https://github.com/orgs/cytomining",
+    "feat": [
+      "Unique designs informed by functionality",
+      "Consistent branding",
+      "Hand-coded SVGs with occasional animations"
+    ],
+    "work": ["Design", "Logo", "Branding"],
+    "base": [],
+    "tech": ["SVG", "Adobe Illustrator"],
+    "lib": [],
+    "warning": ""
+  },
+  {
+    "name": "Monarch",
+    "group": "Monarch Initiative",
+    "type": "Web App",
+    "description": "Complex ecosystem of tools for exploring a multi-omic knowledge graph of phenotypes, genes, diseases, and more",
+    "site": "https://monarchinitiative.org/",
+    "repo": "https://github.com/monarch-initiative/monarch-app/tree/main/frontend",
+    "feat": [
+      "Automated unit, integration, and accessibility testing",
+      "Early Vue 3 and Composition API adoption",
+      "Custom suite of components thoroughly tested for accessibility",
+      "Complex charts, plots, plots, & tables",
+      "Unique graph-based UI",
+      "Large sitemap of rich, dynamic content"
+    ],
+    "work": [
+      "Research",
+      "Interviews",
+      "Design Docs",
+      "Mockup",
+      "Design",
+      "Implementation",
+      "Testing",
+      "Data Visualization",
+      "CI/CD"
+    ],
+    "base": ["TypeScript", "Vue"],
+    "tech": ["Figma"],
+    "lib": ["Playwright", "Mock Service Worker", "Sentry", "Hotjar"],
+    "warning": "Left my hands a long ago and diverged significantly from my intentions, not an accurate reflection of my work"
+  },
+  {
+    "name": "Mute Tabs By URL",
+    "group": "Personal",
+    "type": "Extension",
+    "description": "Chrome extension to auto-mute/unmute tabs based on their URL",
+    "site": "https://chromewebstore.google.com/detail/mute-tabs-by-url/bpokcenamldgbghabnklpmbkkcgcgdld",
+    "repo": "https://github.com/vincerubinetti/mute-tabs-by-url",
+    "feat": [
+      "(Previously) rated 4.5 stars with 4k+ users on Chrome Web Store",
+      "Friendly UI for adding/removing domains/pages",
+      "Advanced allow/block lists",
+      "Fully customizable keyboard shortcuts",
+      "Well documented and handles user permissions gracefully"
+    ],
+    "work": ["Design", "Implementation"],
+    "base": ["JavaScript"],
+    "tech": ["Chrome Extension API"],
+    "lib": [],
+    "warning": "Made mostly irrelevant by browsers' changes to autoplay policies, made inoperative by Manifest V3"
+  },
+  {
+    "name": "mygeneset.info",
+    "group": "BioThings",
+    "type": "Web App",
+    "description": "Collect, save, and share sets of genes",
+    "site": "https://mygeneset.info/",
+    "repo": "https://github.com/biothings/mygeneset.info-website",
+    "feat": [
+      "Search thousands of pre-made gene sets or create your own",
+      "Share privately or publicly",
+      "Export gene sets in any format",
+      "API explorer interface",
+      "User accounts"
+    ],
+    "work": ["Design", "Mockup", "Implementation", "Testing", "Logo"],
+    "base": ["TypeScript", "Vue"],
+    "tech": ["Figma"],
+    "lib": ["Mock Service Worker"],
+    "warning": ""
+  },
+  {
+    "name": "NIH Reporting",
+    "group": "NIH",
+    "type": "Pipeline & Web App",
+    "description": "Data gathering and reporting for [Common Fund Data Ecosystem](https://commonfund.nih.gov/dataecosystem) projects",
+    "site": "",
+    "repo": "https://github.com/nih-cfde/icc-eval-core",
+    "feat": [
+      "Advanced data gathering pipeline, with multiple API/scraping sources, memoization, concurrency, logging, etc.",
+      "Advanced CI/CD with split between public and private data",
+      "End-to-end TypeScript to ensure data accuracy",
+      "Dashboard with charts & plots",
+      "Auto-printed reports from dashboard",
+      "In-depth use of GitHub and Google Analytics APIs"
+    ],
+    "work": [
+      "Design",
+      "Implementation",
+      "Data Processing",
+      "Data Visualization",
+      "CI/CD"
+    ],
+    "base": ["TypeScript", "Node", "Vue"],
+    "tech": [],
+    "lib": ["Playwright"],
+    "warning": ""
+  },
+  {
+    "name": "Preprint Bot",
+    "group": "Greene Lab",
+    "type": "Bot",
+    "description": "Twitter bot that regularly tweeted about the hottest biomedical preprints",
+    "site": "https://twitter.com/PreprintBot",
+    "repo": "https://github.com/greenelab/preprint-bot",
+    "feat": [
+      "Used BioRxiv, MedRxiv, and Twitter APIs to tweet about new and popular preprints"
+    ],
+    "work": ["Implementation", "CI/CD"],
+    "base": ["Node"],
+    "tech": [],
+    "lib": [],
+    "warning": "Deprecated when Elon Musk killed Twitter API access"
+  },
+  {
+    "name": "Preprint Similarity Search",
+    "group": "Greene Lab",
+    "type": "Web App",
+    "description": "Find suitable journals based on the text content of your preprint using machine learning",
+    "site": "https://greenelab.github.io/preprint-similarity-search/",
+    "repo": "https://github.com/greenelab/preprint-similarity-search/tree/master/frontend",
+    "feat": ["Unique word cloud and color map of ML space"],
+    "work": ["Design", "Implementation", "Data Visualization", "Logo"],
+    "base": ["React"],
+    "tech": [],
+    "lib": ["Sentry"],
+    "warning": ""
+  },
+  {
+    "name": "Redirects",
+    "group": "CU DBMI",
+    "type": "Repo Template",
+    "description": "Free alternative to link shortening services using GitHub",
+    "site": "",
+    "repo": "https://github.com/CU-DBMI/redirects",
+    "feat": [
+      "Creative use of GitHub Pages and Actions to create redirect system",
+      "Specify redirect URLs with easy-to-edit YAML",
+      "Comprehensive and honest comparison with alternatives"
+    ],
+    "work": ["Implementation", "Documentation", "CI/CD"],
+    "base": ["JavaScript", "Node"],
+    "tech": [],
+    "lib": [],
+    "warning": ""
+  },
+  {
+    "name": "Set",
+    "group": "Personal",
+    "type": "Web Game",
+    "description": "The classic game of Set, right in your browser",
+    "site": "https://vincerubinetti.github.io/set/",
+    "repo": "https://github.com/vincerubinetti/set",
+    "feat": ["Clean and fun implementation of a classic card game"],
+    "work": [],
+    "base": ["TypeScript", "React"],
+    "tech": ["SVG"],
+    "lib": ["Tailwind", "Framer Motion"],
+    "warning": ""
+  },
+  {
+    "name": "Simplex",
+    "group": "Krishnan Lab",
+    "type": "Web App",
+    "description": "Identify and replace complex words in your writing using audience-specific machine learning models",
+    "site": "https://gosimplex.app/",
+    "repo": "https://github.com/krishnanlab/simplex/tree/main/app",
+    "feat": [
+      "System for saving and sharing revisions of your text",
+      "User accounts with robust login system"
+    ],
+    "work": ["Design", "Mockup", "Implementation", "Logo"],
+    "base": ["TypeScript", "React"],
+    "tech": ["Figma"],
+    "lib": ["ZXCVBN", "Mock Service Worker"],
+    "warning": ""
+  },
+  {
+    "name": "STRchive",
+    "group": "Dashnow Lab",
+    "type": "Site",
+    "description": "Explore an archive of Short Tandem Repeats (STRs) associated with human diseases",
+    "site": "https://strchive.org/",
+    "repo": "https://github.com/dashnowlab/STRchive",
+    "feat": [
+      "Diverse data presented aesthetically with tables, charts, and creative layout",
+      "Automatic and custom generation of forms based on JSON schema",
+      "Automatic pull request and issue submission via cloud functions"
+    ],
+    "work": [
+      "Design",
+      "Implementation",
+      "Data Visualization",
+      "CI/CD",
+      "Cloud Functions",
+      "Logo"
+    ],
+    "base": ["Astro", "React", "JavaScript"],
+    "tech": ["SVG"],
+    "lib": ["Plotly"],
+    "warning": ""
+  },
+  {
+    "name": "SVG to PNG",
+    "group": "Personal",
+    "type": "Web App",
+    "description": "Convert SVGs to PNGs right in your browser, reliably and correctly",
+    "site": "https://vincerubinetti.github.io/svg-to-png/",
+    "repo": "https://github.com/vincerubinetti/svg-to-png",
+    "feat": [
+      "Popular conversion tool, with 300+ stars",
+      "Clean, intuitive, and easy-to-use UI, including batch editing and downloading",
+      "Conveniently adjust size, coloring, margin, etc."
+    ],
+    "work": ["Design", "Implementation", "Logo"],
+    "base": ["TypeScript", "React"],
+    "tech": ["SVG", "Canvas"],
+    "lib": [],
+    "warning": ""
+  },
+  {
+    "name": "Using the Music of 3Blue1Brown",
+    "group": "Personal",
+    "type": "Web App",
+    "description": "Online form to request using the music of 3Blue1Brown in projects",
+    "site": "https://vincerubinetti.github.io/using-the-music-of-3blue1brown",
+    "repo": "https://github.com/vincerubinetti/using-the-music-of-3blue1brown",
+    "feat": ["Clean and quick form"],
+    "work": ["Design", "Implementation"],
+    "base": ["React"],
+    "tech": [],
+    "lib": ["Formik", "Yup"],
+    "warning": ""
+  },
+  {
+    "name": "Wall of Software",
+    "group": "CU DBMI",
+    "type": "Site",
+    "description": "On-going catalog and showcase of software products made in the University of Colorado Department of Biomedical Informatics",
+    "site": "https://cu-dbmi.github.io/wall-of-software/",
+    "repo": "https://github.com/CU-DBMI/wall-of-software",
+    "feat": [
+      "Fun 3D animated header visualization, with shaders",
+      "Responsive hex grid layout",
+      "CI checks to ensure that user-submitted images and content are properly formatted"
+    ],
+    "work": ["Design", "Implementation", "Documentation", "CI/CD"],
+    "base": ["JavaScript"],
+    "tech": [],
+    "lib": ["Three JS", "Alpine JS"],
+    "warning": ""
+  },
+  {
+    "name": "Word4Word",
+    "group": "Personal",
+    "type": "Web Game",
+    "description": "Get from one 4-letter word to another, changing one letter at a time",
+    "site": "https://word4word.app/",
+    "repo": "https://github.com/vincerubinetti/word4word",
+    "feat": [
+      "Auto-selected daily game",
+      "Clean, fun, and colorful UI",
+      "C++ implementation of Floyd-Warshall algorithm to pre-compute all word pairs"
+    ],
+    "work": ["Design", "Implementation", "Documentation", "CI/CD"],
+    "base": ["TypeScript", "Vue"],
+    "tech": ["C++"],
+    "lib": ["Tailwind"],
+    "warning": ""
+  },
+  {
+    "name": "Word Lapse",
+    "group": "Greene Lab",
+    "type": "Web App",
+    "description": "Explore how a word changes in meaning over time based on natural language processing machine learning",
+    "site": "https://greenelab.github.io/word-lapse/",
+    "repo": "https://github.com/greenelab/word-lapse/tree/main/app",
+    "feat": [
+      "Fun and functional use of theming",
+      "Unique 'trajectory' and 'overlap' visualizations of word meaning"
+    ],
+    "work": ["Design", "Implementation", "Data Visualization", "Logo"],
+    "base": ["React"],
+    "tech": [],
+    "lib": ["D3"],
+    "warning": ""
+  },
+  {
+    "name": "Word Spot",
+    "group": "CU DBMI",
+    "type": "Web App",
+    "description": "Search for words or phrases in text, with exact or loose matching",
+    "site": "https://word-spot.netlify.app/",
+    "repo": "https://github.com/CU-DBMI/word-spot",
+    "feat": [
+      "Special, efficient by-word n-gram search algorithm for fuzzy searching for phrases",
+      "Clean and intuitive UI",
+      "Special free-text highlighting component"
+    ],
+    "work": ["Design", "Implementation", "Optimization", "Logo"],
+    "base": ["TypeScript", "Vue"],
+    "tech": ["Web Workers"],
+    "lib": ["Lexical", "Comlink"],
+    "warning": ""
+  }
+]

@@ -1,0 +1,62 @@
+<script setup lang="ts">
+import { map, max, min, orderBy, startCase } from "lodash-es";
+import { Bug, Eye, GitCommit, GitPullRequest } from "lucide-vue-next";
+import Table, { type Cols } from "./components/Table.vue";
+import contributions from "./data/contributions.json";
+
+/** fall-off function */
+const value = (x: number, w: number, v: number) => (1 - 2 ** (-x / w)) * v;
+
+/** sort repos */
+const repos = orderBy(
+  Object.entries(contributions).map(([fullName, repo]) => ({
+    fullName,
+    owner: fullName.includes("/") ? fullName.split("/")[0] : "",
+    name: fullName.includes("/") ? fullName.split("/")[1] : "",
+    ...repo,
+    /** loose importance of repo */
+    score:
+      value(repo.commits, 50, 5) +
+      value(repo.issues, 10, 1) +
+      value(repo.prs, 100, 10) +
+      value(repo.reviews, 100, 5),
+  })),
+  (repo) => repo.score,
+  "desc",
+);
+
+/** normalize scores */
+const minScore = min(map(repos, "score"));
+const maxScore = max(map(repos, "score"));
+for (const repo of Object.values(repos))
+  repo.score = ((repo.score - minScore!) / (maxScore! - minScore!)) ** 0.5;
+
+const cols: Cols<typeof repos> = [
+  { name: "", key: "fullName", slot: "link", align: "left", sortable: false },
+  { name: "Owner", key: "owner", align: "left" },
+  { name: "Name", key: "name", align: "left" },
+  { name: "Commits", icon: GitCommit, key: "commits", slot: "commits" },
+  { name: "Issues", icon: Bug, key: "issues", slot: "issues" },
+  { name: "PRs", icon: GitPullRequest, key: "prs", slot: "prs" },
+  { name: "Reviews", icon: Eye, key: "reviews", slot: "reviews" },
+];
+</script>
+
+<template>
+  <section>
+    <h2 class="self-center">All public GitHub contributions</h2>
+
+    <Table :rows="repos" :cols="cols">
+      <template #link="{ row }">
+        <a
+          v-if="row.fullName.includes('/')"
+          :href="`https://github.com/${row.fullName}`"
+          class="button -m-2 justify-start p-2"
+        >
+          Repo
+        </a>
+        <b v-else>{{ startCase(row.fullName) }}</b>
+      </template>
+    </Table>
+  </section>
+</template>

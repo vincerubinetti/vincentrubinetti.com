@@ -21,17 +21,17 @@
 }
 
 @layer components {
-  a {
+  p a {
     @apply text-dark;
   }
 }
 
 @utility button-big {
-  @apply flex items-center justify-center gap-2 p-4 font-sans text-current no-underline transition-all;
+  @apply flex items-center justify-center gap-2 p-4 font-sans transition-all;
 }
 
 @utility button {
-  @apply flex items-center justify-center gap-2 bg-current/5 p-4 font-sans no-underline transition-all hover:bg-current/10;
+  @apply text-dark flex items-center justify-center gap-2 p-4 font-sans transition-all hover:bg-current/10;
 }
 
 @utility paper {
