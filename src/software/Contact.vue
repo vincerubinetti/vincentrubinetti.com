@@ -53,7 +53,9 @@ useCaptcha();
           placeholder="Message"
           rows="5"
         />
-        <button type="submit" class="button text-dark"><Send />Send</button>
+        <button type="submit" class="button-big highlight corners-4">
+          <Send />Send
+        </button>
       </form>
     </div>
   </section>

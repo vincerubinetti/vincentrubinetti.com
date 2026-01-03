@@ -78,8 +78,6 @@ const getDescription = (track: Track) =>
 /** get associated bandcamp album */
 const getBandcamp = (track: Track) =>
   bandcamp.find((t) => t.track === track.title)?.album_link ?? "";
-
-const { SSR } = import.meta.env;
 </script>
 
 <template>
@@ -105,7 +103,6 @@ const { SSR } = import.meta.env;
     </div>
 
     <SoundCloud
-      v-if="!SSR"
       id="listen-player"
       class="aspect-video w-full"
       :playlist="selectedPlaylist.id"
@@ -373,7 +370,6 @@ const { SSR } = import.meta.env;
         </div>
       </template>
     </SoundCloud>
-    <div v-else class="h-100 w-full bg-black/25"></div>
   </section>
 </template>
 

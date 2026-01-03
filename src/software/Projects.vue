@@ -180,7 +180,7 @@ const filteredProjects = computed(() =>
           index
         ) in filteredProjects"
         :key="index"
-        class="card bg-light relative flex flex-col border border-current/10 transition-[opacity,filter]"
+        class="bg-light relative flex flex-col border border-current/10"
       >
         <Carousel
           v-if="images.length"
@@ -281,7 +281,7 @@ const filteredProjects = computed(() =>
       </div>
     </div>
 
-    <a href="/github" class="button">
+    <a href="/github" class="button-big highlight corners-4 self-center">
       <GitHub />All public GitHub contributions
     </a>
 
@@ -290,9 +290,3 @@ const filteredProjects = computed(() =>
     </p>
   </section>
 </template>
-
-<style scoped>
-.gallery:has(.card:hover) .card:not(:hover) {
-  @apply grayscale;
-}
-</style>

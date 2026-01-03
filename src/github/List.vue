@@ -32,7 +32,8 @@ for (const repo of Object.values(repos))
   repo.score = ((repo.score - minScore!) / (maxScore! - minScore!)) ** 0.5;
 
 const cols: Cols<typeof repos> = [
-  { name: "", key: "fullName", slot: "link", align: "left", sortable: false },
+  /** https://github.com/tanstack/table/issues/6077 */
+  { name: " ", key: "fullName", slot: "link", align: "left", sortable: false },
   { name: "Owner", key: "owner", align: "left" },
   { name: "Name", key: "name", align: "left" },
   { name: "Commits", icon: GitCommit, key: "commits", slot: "commits" },

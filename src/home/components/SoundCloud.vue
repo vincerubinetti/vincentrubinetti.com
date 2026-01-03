@@ -91,7 +91,7 @@ const src = computed(() => {
   apiUrl.searchParams.set("show_comments", "true");
   apiUrl.searchParams.set("show_user", "true");
   apiUrl.searchParams.set("show_reposts", "false");
-  baseUrl.searchParams.set("url", window.encodeURI(apiUrl.toString()));
+  baseUrl.searchParams.set("url", globalThis.encodeURI(apiUrl.toString()));
   return baseUrl.toString();
 });
 
