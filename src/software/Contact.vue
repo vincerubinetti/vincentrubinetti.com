@@ -14,7 +14,7 @@ useCaptcha();
 </script>
 
 <template>
-  <section class="paper bg-light">
+  <section class="paper bg-light [--width:--spacing(200)]">
     <h2>Contact<Dash /></h2>
 
     <div class="grid grid-cols-2 gap-12 max-lg:grid-cols-1">
