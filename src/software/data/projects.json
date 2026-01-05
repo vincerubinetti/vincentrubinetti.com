@@ -230,7 +230,7 @@
     "name": "Intro to SVGs",
     "group": "Greene Lab",
     "type": "Tutorial",
-    "description": "Introduction to SVGs for academics",
+    "description": "Introduction to SVGs specifically aimed at most common academic usage",
     "site": "https://vincerubinetti.github.io/intro-to-svgs/",
     "repo": "https://github.com/vincerubinetti/intro-to-svgs",
     "feat": [
