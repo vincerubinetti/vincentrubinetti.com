@@ -224,7 +224,7 @@ const filteredProjects = computed(() =>
           />
         </div>
 
-        <hr />
+        <hr class="h-1" />
 
         <a
           :href="site || repo"
@@ -243,8 +243,6 @@ const filteredProjects = computed(() =>
           <summary class="button bg-transparent p-2" aria-label="Details">
             <ChevronDown />
           </summary>
-
-          <hr />
 
           <div class="flex flex-col gap-2 p-4">
             <a :href="repo" class="button bg-transparent p-2">
@@ -275,6 +273,7 @@ const filteredProjects = computed(() =>
                   v-for="(item, index) in [type, work, base, tech, lib].flat()"
                   :key="index"
                   class="flex items-center gap-1 bg-zinc-200 p-1 hover:bg-zinc-300"
+                  :aria-label="`Search '${item}'`"
                   @click="
                     search = item;
                     input?.scrollIntoView({

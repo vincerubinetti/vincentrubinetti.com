@@ -355,7 +355,6 @@
       "Early Vue 3 and Composition API adoption",
       "Custom suite of components thoroughly tested for accessibility",
       "Complex charts, plots, plots, & tables",
-      "Unique graph-based UI",
       "Large sitemap of rich, dynamic content"
     ],
     "work": [
@@ -371,8 +370,8 @@
     ],
     "base": ["TypeScript", "Vue"],
     "tech": ["Figma"],
-    "lib": ["Playwright", "Mock Service Worker", "Sentry", "Hotjar"],
-    "warning": "Left my hands years ago and diverged significantly from what I consider to be good design, but the original foundation was my work. Screenshots are from mockups and early implementation."
+    "lib": ["Playwright", "Mock Service Worker", "Axe", "Sentry", "Hotjar"],
+    "warning": "Left my hands years ago and diverged significantly, but original foundation was my work. Screenshots are from mockups and early implementation."
   },
   {
     "name": "Mute Tabs By URL",
