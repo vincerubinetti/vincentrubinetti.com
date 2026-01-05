@@ -224,8 +224,6 @@ const filteredProjects = computed(() =>
           />
         </div>
 
-        <hr class="h-1" />
-
         <a
           :href="site || repo"
           class="button group gap-0 bg-transparent p-2 text-lg"

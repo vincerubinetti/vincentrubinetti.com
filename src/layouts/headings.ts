@@ -1,21 +1,25 @@
 import { slugify } from "@/util/string";
 
-const processHeadings = () => {
-  const headings = document.querySelectorAll<HTMLAnchorElement>("h2,h3,h4");
+const processHeadings = async () => {
+  const headings = document.querySelectorAll<HTMLAnchorElement>("h2, h3, h4");
   for (const heading of headings) {
     /** make headings into links */
-    if (heading.parentElement?.tagName === "A") continue;
+    let link: HTMLAnchorElement;
+    const parent = heading.parentElement;
+    if (parent instanceof HTMLAnchorElement) link = parent;
+    else {
+      link = document.createElement("a");
+      link.style.display = "contents";
+      heading.replaceWith(link);
+      link.append(heading);
+    }
     const id = slugify(heading.textContent || "");
     heading.id = id;
-    const link = document.createElement("a");
     link.href = `#${id}`;
-    link.style.display = "contents";
-    heading.replaceWith(link);
-    link.append(heading);
   }
 };
 
-window.addEventListener("load", () => {
+window.addEventListener("astro:page-load", () => {
   processHeadings();
   new MutationObserver(processHeadings).observe(document.body, {
     childList: true,

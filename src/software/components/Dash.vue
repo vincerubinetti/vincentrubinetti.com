@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useTemplateRef, watchEffect } from "vue";
+import { onMounted, useTemplateRef, watchEffect } from "vue";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
@@ -9,7 +9,7 @@ type Props = {
 
 defineProps<Props>();
 
-gsap.registerPlugin(ScrollTrigger);
+onMounted(() => gsap.registerPlugin(ScrollTrigger));
 
 const line = useTemplateRef("line");
 
