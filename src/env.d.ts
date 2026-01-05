@@ -8,3 +8,9 @@ declare interface Window {
   // eslint-disable-next-line
   grecaptcha: any;
 }
+
+/** https://github.com/JonasKruckenberg/imagetools/issues/160 */
+declare module "*url&format=webp" {
+  const value: string;
+  export default value;
+}

@@ -1,6 +1,9 @@
+import { sleep } from "@/util/misc";
 import { slugify } from "@/util/string";
 
 const processHeadings = async () => {
+  /** wait for hydration */
+  await sleep(10);
   const headings = document.querySelectorAll<HTMLAnchorElement>("h2, h3, h4");
   for (const heading of headings) {
     /** make headings into links */

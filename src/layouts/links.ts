@@ -1,4 +1,8 @@
+import { sleep } from "@/util/misc";
+
 const processLinks = async () => {
+  /** wait for hydration */
+  await sleep(10);
   const links = document.querySelectorAll<HTMLAnchorElement>(
     "a[href]:not([target])",
   );
@@ -16,7 +20,7 @@ const processLinks = async () => {
   }
 };
 
-window.addEventListener("astro:page-load", () => {
+window.addEventListener("load", () => {
   processLinks();
   new MutationObserver(processLinks).observe(document.body, {
     childList: true,

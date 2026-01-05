@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import profile from "@/images/vince.png?url";
+import profile from "@/images/vince.png?url&format=webp";
 </script>
 
 <template>

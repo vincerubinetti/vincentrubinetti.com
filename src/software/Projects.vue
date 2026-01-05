@@ -16,7 +16,7 @@ const index = (array: unknown[], value: unknown, fallback: number) => {
   return index === -1 ? fallback : index;
 };
 
-/** project order */
+/** hand-selected project order */
 const projectOrder = [
   "SVG to PNG",
   "Lab Website Template",
@@ -71,7 +71,7 @@ const counts = countBy(keywords);
 /** search suggestion options */
 const options = uniq(keywords);
 
-/** search option order */
+/** hand-selected search option order */
 const optionOrder = [
   "TypeScript",
   "JavaScript",

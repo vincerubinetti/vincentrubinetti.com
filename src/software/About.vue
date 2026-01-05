@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { CornerRightDown } from "lucide-vue-next";
-import profile from "@/images/vince.png?url";
+import profile from "@/images/vince.png?url&format=webp";
 import Dash from "./components/Dash.vue";
 </script>
 
