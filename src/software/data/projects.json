@@ -329,7 +329,7 @@
     "name": "Misc. Logos",
     "group": "Various",
     "type": "Design",
-    "description": "Misc. logos for different orgs and projects",
+    "description": "Misc. logos for different orgs and projects (in addition to all those for projects tagged with 'Logo')",
     "site": "https://github.com/orgs/cytomining/discussions/3",
     "repo": "https://github.com/orgs/cytomining",
     "feat": [
