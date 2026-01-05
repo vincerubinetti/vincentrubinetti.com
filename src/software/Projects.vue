@@ -43,7 +43,7 @@ const projectOrder = [
   "Using the Music of 3Blue1Brown",
   "MIDI Humanizer",
   "Lab Website Template Poster",
-  "Misc. Logos",
+  "Other Logos",
   "Intro to SVGs",
   "Redirects",
   "hclust",
@@ -180,11 +180,13 @@ const filteredProjects = computed(() =>
           index
         ) in filteredProjects"
         :key="index"
-        class="bg-light relative flex flex-col border border-current/10"
+        class="bg-light relative flex flex-col"
       >
         <Carousel
           v-if="images.length"
-          :slides="images.map((image) => ({ image }))"
+          :slides="
+            images.map((image, index) => ({ image, debug: name + index }))
+          "
           class="aspect-4/3 bg-zinc-800"
         />
         <div
@@ -222,6 +224,8 @@ const filteredProjects = computed(() =>
           />
         </div>
 
+        <hr />
+
         <a
           :href="site || repo"
           class="button group gap-0 bg-transparent p-2 text-lg"
@@ -240,6 +244,8 @@ const filteredProjects = computed(() =>
             <ChevronDown />
           </summary>
 
+          <hr />
+
           <div class="flex flex-col gap-2 p-4">
             <a :href="repo" class="button bg-transparent p-2">
               Repo
@@ -248,6 +254,11 @@ const filteredProjects = computed(() =>
 
             <p>
               For: <b>{{ group }}</b>
+            </p>
+
+            <p v-if="warning">
+              <TriangleAlert class="fill-orange-300" />
+              {{ warning }}
             </p>
 
             <p v-html="renderMarkdown(description)" class="leading-loose" />

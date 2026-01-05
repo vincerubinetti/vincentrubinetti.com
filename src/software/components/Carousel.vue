@@ -37,6 +37,18 @@ watchEffect(() => {
 /** reactive slide index */
 const slide = ref(0);
 
+/** which slides should be loaded */
+const loaded = ref<boolean[]>([]);
+
+/** reset loaded when slides change */
+watchEffect(() => {
+  for (let index = 0; index < slides.length; index++)
+    loaded.value[index] ??= false;
+});
+
+/** load current slide */
+watchEffect(() => (loaded.value[slide.value] = true));
+
 /** handle slide change */
 const onSlideChange: SwiperEvents["slideChange"] = ({
   realIndex,
@@ -57,15 +69,6 @@ const onSlideChange: SwiperEvents["slideChange"] = ({
       loaded.value[mod(realIndex - 1, slides.length)] = true;
   }
 };
-
-/** which slides should be loaded */
-const loaded = ref<boolean[]>([]);
-
-/** reset loaded when slides change */
-watchEffect(() => {
-  for (let index = 0; index < slides.length; index++)
-    loaded.value[index] ??= false;
-});
 
 /** custom transition */
 const onProgress: SwiperEvents["progress"] = (swiper) => {
@@ -95,7 +98,7 @@ const onSetTransition: (swiper: SwiperType, duration: number) => void = (
   <Swiper
     ref="root"
     class="group w-full"
-    :loop="true"
+    :loop="slides.length > 1"
     :loop-prevents-sliding="false"
     :autoplay="{ disableOnInteraction: true }"
     :navigation="true"
@@ -111,6 +114,7 @@ const onSetTransition: (swiper: SwiperType, duration: number) => void = (
       v-for="({ image }, index) in slides"
       :key="index"
       :class="isFullscreen ? 'cursor-zoom-out' : 'cursor-zoom-in'"
+      class=""
       @click="toggle()"
     >
       <img

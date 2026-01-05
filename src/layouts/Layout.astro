@@ -17,22 +17,8 @@ const { title, description } = Astro.props;
       src="https://cloud.umami.is/script.js"
       data-website-id="0ff809f6-188d-4d44-8e7d-681e16ecb620"></script>
 
-    <script>
-      /** make all external links open in a new tab */
-      const makeExternal = () => {
-        const links = document.querySelectorAll<HTMLAnchorElement>(
-          "a[href]:not([target])",
-        );
-        for (const link of links)
-          if (link.getAttribute("href")?.match(/^https?/))
-            link.setAttribute("target", "_blank");
-      };
-      window.addEventListener("load", makeExternal);
-      new MutationObserver(makeExternal).observe(document.body, {
-        childList: true,
-        subtree: true,
-      });
-    </script>
+    <script src="./links.ts"></script>
+    <script src="./headings.ts"></script>
 
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />

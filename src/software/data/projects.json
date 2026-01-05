@@ -15,7 +15,7 @@
     "base": ["TypeScript", "React"],
     "tech": [],
     "lib": [],
-    "warning": "Prototype, replaced by a fuller version developed by someone else"
+    "warning": "Prototype for a fuller version developed by someone else"
   },
   {
     "name": "3Blue1Brown Dubbing",
@@ -58,7 +58,7 @@
     "base": ["Next", "React"],
     "tech": ["SVG", "Canvas", "MDX", "LaTeX"],
     "lib": ["Rehype", "Remark"],
-    "warning": "Left my hands a while ago, not an accurate reflection of my work"
+    "warning": "Left my hands a while ago, and maintained/tweaked by others."
   },
   {
     "name": "Adage",
@@ -326,10 +326,10 @@
     "warning": ""
   },
   {
-    "name": "Misc. Logos",
+    "name": "Other Logos",
     "group": "Various",
     "type": "Design",
-    "description": "Misc. logos for different orgs and projects (in addition to all those for projects tagged with 'Logo')",
+    "description": "Other logos for various orgs and projects",
     "site": "https://github.com/orgs/cytomining/discussions/3",
     "repo": "https://github.com/orgs/cytomining",
     "feat": [
@@ -372,7 +372,7 @@
     "base": ["TypeScript", "Vue"],
     "tech": ["Figma"],
     "lib": ["Playwright", "Mock Service Worker", "Sentry", "Hotjar"],
-    "warning": "Left my hands a long ago and diverged significantly from my intentions, not an accurate reflection of my work"
+    "warning": "Left my hands years ago and diverged significantly from what I consider to be good design, but the original foundation was my work. Screenshots are from mockups and early implementation."
   },
   {
     "name": "Mute Tabs By URL",
@@ -392,7 +392,7 @@
     "base": ["JavaScript"],
     "tech": ["Chrome Extension API"],
     "lib": [],
-    "warning": "Made mostly irrelevant by browsers' changes to autoplay policies, made inoperative by Manifest V3"
+    "warning": "Made mostly irrelevant by browsers' changes to autoplay policies. Made inoperative by Manifest V3."
   },
   {
     "name": "mygeneset.info",

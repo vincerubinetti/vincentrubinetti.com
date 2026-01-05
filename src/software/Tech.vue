@@ -13,7 +13,7 @@ const tech = [
   {
     icons: pick(logos, ["Html", "Css", "JavaScript"]),
     description:
-      "_Extensive_ _historical_ & _modern_ experience w/ _vanilla_ **HTML**, **CSS**, & **JavaScript**",
+      "_Extensive_ experience w/ _historical_ & _modern_ vanilla **HTML**, **CSS**, & **JavaScript**",
   },
   {
     icons: pick(logos, ["Svg", "Canvas", "D3"]),
