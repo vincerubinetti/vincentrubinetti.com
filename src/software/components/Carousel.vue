@@ -2,7 +2,7 @@
 import { ref, useTemplateRef, watchEffect } from "vue";
 import { useElementVisibility, useFullscreen } from "@vueuse/core";
 import { clamp, range } from "lodash-es";
-import { Autoplay, Navigation, Pagination } from "swiper/modules";
+import { Autoplay, Keyboard, Navigation, Pagination } from "swiper/modules";
 import type { SwiperEvents, Swiper as SwiperType } from "swiper/types";
 import { Swiper, SwiperSlide } from "swiper/vue";
 import { mod } from "@/util/math";
@@ -101,10 +101,11 @@ const onSetTransition: (swiper: SwiperType, duration: number) => void = (
     :loop="slides.length > 1"
     :loop-prevents-sliding="false"
     :autoplay="{ disableOnInteraction: true }"
+    :keyboard="{ enabled: true, onlyInViewport: false, pageUpDown: false }"
     :navigation="true"
     :pagination="true"
     :watch-slides-progress="true"
-    :modules="[Autoplay, Navigation, Pagination]"
+    :modules="[Autoplay, Keyboard, Navigation, Pagination]"
     @swiper="(value) => (swiper = value)"
     @slide-change="onSlideChange"
     @set-translate="onProgress"
@@ -113,8 +114,7 @@ const onSetTransition: (swiper: SwiperType, duration: number) => void = (
     <SwiperSlide
       v-for="({ image }, index) in slides"
       :key="index"
-      :class="isFullscreen ? 'cursor-zoom-out' : 'cursor-zoom-in'"
-      class=""
+      class="cursor-pointer"
       @click="toggle()"
     >
       <img
@@ -127,6 +127,7 @@ const onSetTransition: (swiper: SwiperType, duration: number) => void = (
 
     <div
       class="absolute bottom-0 z-10 flex w-full items-center justify-center bg-black text-white opacity-0 transition-opacity group-hover:opacity-100 focus-within:opacity-100"
+      :class="slides.length < 2 || isFullscreen ? 'hidden' : ''"
     >
       <button
         class="nav-button"

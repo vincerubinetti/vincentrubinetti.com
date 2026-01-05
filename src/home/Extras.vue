@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Code, Headphones, Leaf, Music } from "lucide-vue-next";
+import { ArrowDown } from "lucide-vue-next";
 import Outline from "./components/Outline.vue";
 </script>
 
@@ -7,27 +7,14 @@ import Outline from "./components/Outline.vue";
   <section class="bg-white">
     <h2 class="sr-only">Extras</h2>
 
-    <div class="grid grid-cols-4 gap-4 max-md:grid-cols-2 max-sm:grid-cols-1">
-      <a href="software" class="button hover:text-indigo-500">
-        <Outline />
-        <Code />
-        Software
-      </a>
-      <a href="studio" class="button hover:text-rose-500">
-        <Outline />
-        <Headphones />
-        Studio
-      </a>
-      <a href="stems" class="button hover:text-emerald-500">
-        <Outline />
-        <Leaf />
-        Stems
-      </a>
-      <a href="sheets" class="button hover:text-cyan-500">
-        <Outline />
-        <Music />
-        Sheets
-      </a>
-    </div>
+    <a
+      href="software"
+      class="button col-span-full self-center hover:text-indigo-500"
+    >
+      <Outline />
+
+      I also write software
+      <ArrowDown class="-rotate-90 animate-bounce" />
+    </a>
   </section>
 </template>
