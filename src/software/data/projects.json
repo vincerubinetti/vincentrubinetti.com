@@ -275,7 +275,7 @@
     "name": "Lab Website Template Poster",
     "group": "Greene Lab",
     "type": "Poster",
-    "description": "Discussion of [Lab Website Template](https://greene-lab.gitbook.io/lab-website-template-docs), presented at USRSE 2025",
+    "description": "Discussion of [Lab Website Template](https://greene-lab.gitbook.io/lab-website-template-docs), presented at [USRSE 2025](https://us-rse.org/usrse25/)",
     "site": "https://greenelab.github.io/lwt-poster/poster/",
     "repo": "https://github.com/greenelab/lwt-poster",
     "feat": [
@@ -328,7 +328,7 @@
   {
     "name": "Other Logos",
     "group": "Various",
-    "type": "Design",
+    "type": "",
     "description": "Other logos for various orgs and projects",
     "site": "https://github.com/orgs/cytomining/discussions/3",
     "repo": "https://github.com/orgs/cytomining",

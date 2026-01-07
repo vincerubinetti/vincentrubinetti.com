@@ -1,9 +1,11 @@
 <script setup lang="ts">
 import { computed, ref, useTemplateRef } from "vue";
-import { countBy, pick, uniq } from "lodash-es";
-import { ChevronDown, ExternalLink, TriangleAlert, X } from "lucide-vue-next";
+import { useEventListener } from "@vueuse/core";
+import { countBy, uniq } from "lodash-es";
+import { ExternalLink, TriangleAlert, X } from "lucide-vue-next";
 import logos from "@/images/logos";
 import GitHub from "@/images/logos/github.svg?component";
+import { sleep } from "@/util/misc";
 import { formatValue, renderMarkdown, slugify } from "@/util/string";
 import Carousel from "./components/Carousel.vue";
 import Dash from "./components/Dash.vue";
@@ -62,7 +64,14 @@ projects.sort(
 
 /** project "keywords" */
 const keywords = projects.flatMap((project) =>
-  [project.type, project.work, project.base, project.tech, project.lib].flat(),
+  [
+    project.group,
+    project.type,
+    project.work,
+    project.base,
+    project.tech,
+    project.lib,
+  ].flat(),
 );
 
 /** how often keyword occurs */
@@ -71,38 +80,8 @@ const counts = countBy(keywords);
 /** search suggestion options */
 const options = uniq(keywords);
 
-/** hand-selected search option order */
-const optionOrder = [
-  "TypeScript",
-  "JavaScript",
-  "React",
-  "Vue",
-  "Node",
-  "Next",
-  "Jekyll",
-  "Astro",
-  "SVG",
-  "Canvas",
-  "D3",
-  "Three JS",
-  "GSAP",
-  "Tailwind",
-  "Playwright",
-  "Figma",
-  "Data Visualization",
-  "Design",
-  "Implementation",
-  "CI/CD",
-  "Logo",
-  "Web Workers",
-];
-
-/** sort options */
-options.sort(
-  (a, b) =>
-    index(optionOrder, a, Infinity) - index(optionOrder, b, Infinity) ||
-    counts[b] - counts[a],
-);
+/** sort options by frequency */
+options.sort((a, b) => counts[b] - counts[a]);
 
 const input = useTemplateRef("input");
 
@@ -124,6 +103,37 @@ const filteredProjects = computed(() =>
     project.search.includes(search.value.toLowerCase()),
   ),
 );
+
+/** opened project details */
+const opened = ref(-1);
+
+const button = useTemplateRef("button");
+const details = useTemplateRef("details");
+
+/** open project details */
+const open = async (index: number) => {
+  opened.value = index;
+  await sleep();
+  const el = details.value?.[0];
+  if (!el) return;
+  el.scrollIntoView({ behavior: "smooth", block: "center" });
+  el.querySelector("button")?.focus();
+};
+
+/** close project details */
+const close = async (index: number) => {
+  opened.value = -1;
+  await sleep();
+  const el = button.value?.[index];
+  if (!el) return;
+  el.focus();
+  el.scrollIntoView({ behavior: "smooth", block: "center" });
+};
+
+/** close project details */
+useEventListener("keydown", (event: KeyboardEvent) => {
+  if (event.key === "Escape") close(opened.value);
+});
 </script>
 
 <template>
@@ -140,7 +150,7 @@ const filteredProjects = computed(() =>
       />
 
       <button
-        class="absolute right-4"
+        class="hover:text-dark absolute right-0 aspect-square h-full"
         @click="search = ''"
         aria-label="Clear search"
       >
@@ -149,7 +159,9 @@ const filteredProjects = computed(() =>
     </div>
 
     <datalist id="projects">
-      <option v-for="(option, index) in options" :key="index" :value="option" />
+      <option v-for="(option, index) in options" :key="index" :value="option">
+        {{ counts[option] }}
+      </option>
     </datalist>
 
     <b v-if="filteredProjects.length !== projects.length" class="text-center">
@@ -157,10 +169,10 @@ const filteredProjects = computed(() =>
     </b>
 
     <div
-      class="gallery grid grid-cols-3 items-start gap-8 max-md:grid-cols-2 max-sm:grid-cols-1"
+      class="gallery grid grid-flow-dense grid-cols-3 items-start gap-8 max-md:grid-cols-2 max-sm:grid-cols-1"
     >
       <!-- project card -->
-      <div
+      <template
         v-for="(
           {
             images,
@@ -180,113 +192,106 @@ const filteredProjects = computed(() =>
           index
         ) in filteredProjects"
         :key="index"
-        class="bg-light relative flex flex-col"
       >
-        <Carousel
-          v-if="images.length"
-          :slides="
-            images.map((image, index) => ({ image, debug: name + index }))
-          "
-          class="aspect-4/3 bg-zinc-800"
-        />
-        <div
-          v-else
-          class="grid aspect-4/3 place-items-center font-sans text-4xl text-current/50"
-          :style="{ background: `oklch(90% 0.025 ${index * 30})` }"
+        <!-- open/close button -->
+        <button
+          ref="button"
+          class="relative flex flex-col hover:scale-105 hover:ring-2"
+          aria-label="Toggle details for {{ name }}"
+          :aria-expanded="opened === index"
+          :aria-controls="`details-${index}`"
+          @click="opened === index ? close(index) : open(index)"
         >
-          {{
-            name
-              .split(" ")
-              .map((word) => word[0])
-              .join("")
-              .toUpperCase()
-          }}
-        </div>
-
-        <div class="absolute top-0 right-0 left-0 z-10 flex gap-2 p-2">
-          <span
-            v-if="warning"
-            :title="warning"
-            class="size-[1em] cursor-help"
-            tabindex="0"
-          >
-            <TriangleAlert class="fill-orange-300" />
-          </span>
-
-          <div class="grow" />
-
-          <component
-            v-for="(logo, name, index) in pick(logos, base)"
-            :key="index"
-            :is="logo"
-            :title="name"
-            class="size-[1em]"
+          <Carousel
+            :slides="images.map((image) => ({ image }))"
+            class="pointer-events-none aspect-4/3 transition-all"
+            :class="opened === index ? 'brightness-200 contrast-0' : ''"
           />
-        </div>
 
-        <a
-          :href="site || repo"
-          class="button group gap-0 bg-transparent p-2 text-lg"
-          :title="name"
-        >
-          {{ name }}
+          <div class="p-2 text-lg">{{ name }}</div>
+
           <div
-            class="flex w-0 translate-x-2 opacity-0 transition-opacity group-hover:opacity-100"
+            class="absolute top-full size-8"
+            :class="opened === index ? '' : 'opacity-0'"
           >
-            <ExternalLink />
+            <svg viewBox="-50 -50 100 100">
+              <polygon points="-50 50 0 0 50 50" class="fill-light" />
+            </svg>
           </div>
-        </a>
+        </button>
 
-        <details name="project">
-          <summary class="button bg-transparent p-2" aria-label="Details">
-            <ChevronDown />
-          </summary>
+        <!-- details -->
+        <div
+          ref="details"
+          v-if="opened === index"
+          class="bg-light paper max relative z-10 col-start-1 -col-end-1 flex flex-col items-center gap-4 p-4"
+        >
+          <button
+            class="hover:text-dark absolute top-4 right-4 size-8 transition-opacity"
+            aria-label="Close details"
+            @click="close(index)"
+          >
+            <X />
+          </button>
 
-          <div class="flex flex-col gap-2 p-4">
-            <a :href="repo" class="button bg-transparent p-2">
-              Repo
-              <ExternalLink />
-            </a>
+          <p class="font-sans text-xl font-medium">{{ name }}</p>
 
-            <p>
-              For: <b>{{ group }}</b>
-            </p>
+          <!-- images -->
+          <Carousel
+            :controls="true"
+            :slides="
+              images.map((image, index) => ({ image, debug: name + index }))
+            "
+            :name="name"
+            class="aspect-4/3 w-full max-w-100"
+          />
+
+          <p class="flex gap-4">
+            <a v-if="site" :href="site">Site<ExternalLink /></a>
+            <a v-if="repo" :href="repo">Repo<ExternalLink /></a>
+          </p>
+
+          <div class="flex flex-col gap-4">
+            <div class="flex flex-wrap gap-2">
+              <button
+                v-for="(item, index) in [group, type, work, base, tech, lib]
+                  .flat()
+                  .filter(Boolean)"
+                :key="index"
+                class="flex items-center gap-1 bg-zinc-200 p-1 hover:bg-zinc-300"
+                :aria-label="`Search '${item}'`"
+                @click="
+                  search = item;
+                  input?.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'nearest',
+                  });
+                "
+              >
+                <component
+                  :is="logos[item as keyof typeof logos] ?? 'template'"
+                  :title="item"
+                  class="size-[1em]"
+                />
+                {{ item }}
+              </button>
+            </div>
 
             <p v-if="warning">
               <TriangleAlert class="fill-orange-300" />
               {{ warning }}
             </p>
 
-            <p v-html="renderMarkdown(description)" class="leading-loose" />
+            <p v-html="renderMarkdown(description)" />
 
             <ul>
               <li v-for="(feature, index) in feat" :key="index">
                 {{ feature }}
               </li>
             </ul>
-
-            <div class="flex flex-wrap gap-4">
-              <div class="flex flex-wrap gap-2">
-                <button
-                  v-for="(item, index) in [type, work, base, tech, lib].flat()"
-                  :key="index"
-                  class="flex items-center gap-1 bg-zinc-200 p-1 hover:bg-zinc-300"
-                  :aria-label="`Search '${item}'`"
-                  @click="
-                    search = item;
-                    input?.scrollIntoView({
-                      behavior: 'smooth',
-                      block: 'nearest',
-                    });
-                  "
-                >
-                  {{ item }}
-                </button>
-              </div>
-            </div>
           </div>
-        </details>
-      </div>
+        </div>
+      </template>
     </div>
 
     <a href="/github" class="button-big highlight corners-4 self-center">

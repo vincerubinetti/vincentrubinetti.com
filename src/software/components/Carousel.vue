@@ -1,8 +1,13 @@
 <script setup lang="ts">
 import { ref, useTemplateRef, watchEffect } from "vue";
-import { useElementVisibility, useFullscreen } from "@vueuse/core";
+import {
+  useElementVisibility,
+  useEventListener,
+  useFullscreen,
+} from "@vueuse/core";
 import { clamp, range } from "lodash-es";
-import { Autoplay, Keyboard, Navigation, Pagination } from "swiper/modules";
+import { Maximize, Minimize } from "lucide-vue-next";
+import { Autoplay } from "swiper/modules";
 import type { SwiperEvents, Swiper as SwiperType } from "swiper/types";
 import { Swiper, SwiperSlide } from "swiper/vue";
 import { mod } from "@/util/math";
@@ -12,9 +17,10 @@ import "swiper/css";
 
 type Props = {
   slides: { image: string }[];
+  controls?: boolean;
 };
 
-const { slides } = defineProps<Props>();
+const { slides, controls } = defineProps<Props>();
 
 const root = useTemplateRef("root");
 
@@ -92,20 +98,28 @@ const onSetTransition: (swiper: SwiperType, duration: number) => void = (
     slide.style.transitionDuration = `${duration}ms`;
   }
 };
+
+defineOptions({ inheritAttrs: false });
+
+/** keyboard control */
+useEventListener("keydown", (event: KeyboardEvent) => {
+  if (controls) {
+    if (event.key === "ArrowLeft") swiper.value?.slidePrev();
+    if (event.key === "ArrowRight") swiper.value?.slideNext();
+  }
+});
 </script>
 
 <template>
   <Swiper
     ref="root"
-    class="group w-full"
+    :v-bind="$attrs"
+    :class="['group w-full bg-black shadow', $attrs.class]"
     :loop="slides.length > 1"
     :loop-prevents-sliding="false"
     :autoplay="{ disableOnInteraction: true }"
-    :keyboard="{ enabled: true, onlyInViewport: false, pageUpDown: false }"
-    :navigation="true"
-    :pagination="true"
     :watch-slides-progress="true"
-    :modules="[Autoplay, Keyboard, Navigation, Pagination]"
+    :modules="[Autoplay]"
     @swiper="(value) => (swiper = value)"
     @slide-change="onSlideChange"
     @set-translate="onProgress"
@@ -114,8 +128,7 @@ const onSetTransition: (swiper: SwiperType, duration: number) => void = (
     <SwiperSlide
       v-for="({ image }, index) in slides"
       :key="index"
-      class="cursor-pointer"
-      @click="toggle()"
+      class="cursor-grab"
     >
       <img
         :src="loaded[index] ? image : ''"
@@ -125,44 +138,44 @@ const onSetTransition: (swiper: SwiperType, duration: number) => void = (
       />
     </SwiperSlide>
 
-    <div
-      class="absolute bottom-0 z-10 flex w-full items-center justify-center bg-black text-white opacity-0 transition-opacity group-hover:opacity-100 focus-within:opacity-100"
-      :class="slides.length < 2 || isFullscreen ? 'hidden' : ''"
+    <button
+      v-if="isFullscreen"
+      class="fixed top-0 right-0 z-100 size-8 bg-black text-white"
+      aria-label="Exit fullscreen"
+      @click="toggle()"
     >
-      <button
-        class="nav-button"
-        @click="swiper?.slidePrev()"
-        aria-label="Previous image"
-      >
+      <Minimize />
+    </button>
+  </Swiper>
+
+  <div v-if="controls" class="[&>*:hover]:text-dark flex items-center *:size-8">
+    <template v-if="slides.length > 1">
+      <button aria-label="Previous image" @click="swiper?.slidePrev()">
         <Chevron class="-scale-x-100" />
       </button>
-      <div class="grow" />
       <button
         v-for="index in range(slides.length)"
         :key="index"
-        class="nav-button"
-        :class="slide === index ? 'opacity-100!' : ''"
+        :class="slide === index ? '' : 'opacity-25'"
         aria-label="Go to image {{ index + 1 }}"
         @click="swiper?.slideToLoop(index)"
       >
         <Circle />
       </button>
-      <div class="grow" />
-      <button
-        class="nav-button"
-        @click="swiper?.slideNext()"
-        aria-label="Next image"
-      >
+      <button aria-label="Next image" @click="swiper?.slideNext()">
         <Chevron />
       </button>
-    </div>
-  </Swiper>
+    </template>
+    <button
+      v-if="!isFullscreen"
+      aria-label="Enter fullscreen"
+      @click="toggle()"
+    >
+      <Maximize />
+    </button>
+  </div>
 </template>
 
 <style scoped>
 @reference "tailwindcss";
-
-.nav-button {
-  @apply size-8 opacity-50 hover:opacity-100;
-}
 </style>
