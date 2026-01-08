@@ -6,6 +6,7 @@ const processHeadings = async () => {
   await sleep(100);
   const headings = document.querySelectorAll<HTMLAnchorElement>("h2, h3, h4");
   for (const heading of headings) {
+    if (heading.id) continue;
     heading.id = slugify(heading.textContent || "");
     heading.role = "link";
     heading.tabIndex = 0;

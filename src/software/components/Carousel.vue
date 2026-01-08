@@ -150,7 +150,7 @@ useEventListener("keydown", (event: KeyboardEvent) => {
 
   <div
     v-if="controls"
-    class="[&>*:hover]:text-dark flex max-w-full flex-wrap items-center *:size-8"
+    class="[&>*:hover]:text-dark flex max-w-full flex-wrap items-center justify-center *:size-8"
   >
     <template v-if="slides.length > 1">
       <button aria-label="Previous image" @click="swiper?.slidePrev()">
