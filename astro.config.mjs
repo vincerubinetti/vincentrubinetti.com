@@ -1,7 +1,6 @@
 // @ts-check
 import vue from "@astrojs/vue";
 import tailwindcss from "@tailwindcss/vite";
-import { templateCompilerOptions } from "@tresjs/core";
 import { defineConfig } from "astro/config";
 import { loadEnv } from "vite";
 import { imagetools } from "vite-imagetools";
@@ -39,11 +38,7 @@ export default defineConfig({
     vue({
       template: {
         compilerOptions: {
-          isCustomElement: (tag) =>
-            tag.startsWith("youtube-video") ||
-            templateCompilerOptions.template.compilerOptions.isCustomElement(
-              tag,
-            ),
+          isCustomElement: (tag) => tag.startsWith("youtube-video"),
         },
       },
     }),
