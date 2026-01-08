@@ -2,7 +2,7 @@ import { sleep } from "@/util/misc";
 
 const processLinks = async () => {
   /** wait for hydration */
-  await sleep(10);
+  await sleep(100);
   const links = document.querySelectorAll<HTMLAnchorElement>(
     "a[href]:not([target])",
   );

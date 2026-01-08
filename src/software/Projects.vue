@@ -118,7 +118,7 @@ const open = async (index: number) => {
   await sleep();
   const el = details.value?.[0];
   if (!el) return;
-  el.scrollIntoView({ behavior: "smooth", block: "center" });
+  el.scrollIntoView({ behavior: "smooth", block: "start" });
   el.querySelector("button")?.focus();
 };
 
@@ -151,7 +151,7 @@ const xOffset = computed(
   <section class="bg-light paper">
     <h2>Projects<Dash /></h2>
 
-    <div class="flex justify-center gap-8">
+    <div class="flex justify-center-safe gap-8 overflow-auto">
       <div
         v-for="({ name }, index) in collaborators"
         :key="index"
@@ -164,12 +164,12 @@ const xOffset = computed(
       </div>
     </div>
 
-    <div class="relative flex grow items-center">
+    <div class="relative flex items-center">
       <input
         ref="input"
         v-model="search"
         placeholder="Search"
-        list="projects"
+        list="search-suggestions"
         class="grow"
       />
 
@@ -182,14 +182,14 @@ const xOffset = computed(
       </button>
     </div>
 
-    <datalist id="projects">
+    <datalist id="search-suggestions">
       <option v-for="(option, index) in options" :key="index" :value="option">
         {{ counts[option] }}
       </option>
     </datalist>
 
-    <b v-if="filteredProjects.length !== projects.length" class="text-center">
-      {{ formatValue(filteredProjects.length) }} results
+    <b class="text-center">
+      {{ formatValue(filteredProjects.length) }} projects
     </b>
 
     <div
@@ -272,12 +272,12 @@ const xOffset = computed(
           />
 
           <!-- links -->
-          <div class="flex gap-4">
+          <div class="flex flex-wrap justify-center gap-x-4 gap-y-2">
             <a
               v-for="(url, label) in links"
               :key="label"
               :href="files[url as keyof typeof files] ?? url"
-              class="button"
+              class="button p-2"
             >
               {{ label }}
               <ExternalLink />

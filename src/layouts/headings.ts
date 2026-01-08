@@ -3,22 +3,22 @@ import { slugify } from "@/util/string";
 
 const processHeadings = async () => {
   /** wait for hydration */
-  await sleep(10);
+  await sleep(100);
   const headings = document.querySelectorAll<HTMLAnchorElement>("h2, h3, h4");
   for (const heading of headings) {
-    /** make headings into links */
-    let link: HTMLAnchorElement;
-    const parent = heading.parentElement;
-    if (parent instanceof HTMLAnchorElement) link = parent;
-    else {
-      link = document.createElement("a");
-      link.style.display = "contents";
-      heading.replaceWith(link);
-      link.append(heading);
-    }
-    const id = slugify(heading.textContent || "");
-    heading.id = id;
-    link.href = `#${id}`;
+    heading.id = slugify(heading.textContent || "");
+    heading.role = "link";
+    heading.tabIndex = 0;
+    heading.style.cursor = "pointer";
+    const nav = (event: Event) => {
+      if (
+        event.type === "click" ||
+        (event instanceof KeyboardEvent && event.key === "Enter")
+      )
+        window.location.hash = `#${heading.id}`;
+    };
+    heading.addEventListener("click", nav);
+    heading.addEventListener("keydown", nav);
   }
 };
 
