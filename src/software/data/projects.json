@@ -415,7 +415,7 @@
   },
   {
     "name": "NIH Reporting",
-    "group": "National Institutes of Health (NIH), Common Fund Data Ecosystem (CFDE)",
+    "group": "National Institutes of Health",
     "type": "Pipeline & Web App",
     "description": "Data gathering and reporting for [Common Fund Data Ecosystem](https://commonfund.nih.gov/dataecosystem) projects",
     "site": "",

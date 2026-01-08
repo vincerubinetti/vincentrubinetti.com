@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, ref, useTemplateRef } from "vue";
-import { useEventListener } from "@vueuse/core";
+import { useElementBounding, useEventListener } from "@vueuse/core";
 import { countBy, uniq } from "lodash-es";
 import { ExternalLink, TriangleAlert, X } from "lucide-vue-next";
 import logos from "@/images/logos";
@@ -23,7 +23,6 @@ const projectOrder = [
   "SVG to PNG",
   "Lab Website Template",
   "Manubot",
-  "Set",
   "Word4Word",
   "Simplex",
   "Word Lapse",
@@ -43,6 +42,7 @@ const projectOrder = [
   "3Blue1Brown.com",
   "3Blue1Brown Dubbing",
   "Using the Music of 3Blue1Brown",
+  "Set",
   "MIDI Humanizer",
   "Lab Website Template Poster",
   "Other Logos",
@@ -134,6 +134,15 @@ const close = async (index: number) => {
 useEventListener("keydown", (event: KeyboardEvent) => {
   if (event.key === "Escape") close(opened.value);
 });
+
+const buttonBbox = useElementBounding(() => button.value?.[opened.value]);
+const detailsBbox = useElementBounding(() => details.value?.[0]);
+
+/** x coord offset of opened button */
+const xOffset = computed(
+  () =>
+    buttonBbox.left.value - detailsBbox.left.value + buttonBbox.width.value / 2,
+);
 </script>
 
 <template>
@@ -196,7 +205,7 @@ useEventListener("keydown", (event: KeyboardEvent) => {
         <!-- open/close button -->
         <button
           ref="button"
-          class="relative flex flex-col hover:scale-105 hover:ring-2"
+          class="flex flex-col hover:scale-105 hover:ring-2"
           aria-label="Toggle details for {{ name }}"
           :aria-expanded="opened === index"
           :aria-controls="`details-${index}`"
@@ -209,15 +218,6 @@ useEventListener("keydown", (event: KeyboardEvent) => {
           />
 
           <div class="p-2 text-lg">{{ name }}</div>
-
-          <div
-            class="absolute top-full size-8"
-            :class="opened === index ? '' : 'opacity-0'"
-          >
-            <svg viewBox="-50 -50 100 100">
-              <polygon points="-50 50 0 0 50 50" class="fill-light" />
-            </svg>
-          </div>
         </button>
 
         <!-- details -->
@@ -226,6 +226,16 @@ useEventListener("keydown", (event: KeyboardEvent) => {
           v-if="opened === index"
           class="bg-light paper max relative z-10 col-start-1 -col-end-1 flex flex-col items-center gap-4 p-4"
         >
+          <div
+            class="absolute -top-8 size-8 -translate-x-1/2"
+            :class="opened === index ? '' : 'opacity-0'"
+            :style="{ left: `${xOffset}px` }"
+          >
+            <svg viewBox="-50 -50 100 100">
+              <polygon points="-50 50 0 0 50 50" class="fill-light" />
+            </svg>
+          </div>
+
           <button
             class="hover:text-dark absolute top-4 right-4 size-8 transition-opacity"
             aria-label="Close details"

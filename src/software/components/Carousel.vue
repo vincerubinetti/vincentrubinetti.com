@@ -128,7 +128,7 @@ useEventListener("keydown", (event: KeyboardEvent) => {
     <SwiperSlide
       v-for="({ image }, index) in slides"
       :key="index"
-      class="cursor-grab"
+      :class="slides.length > 1 ? 'cursor-grab' : ''"
     >
       <img
         :src="loaded[index] ? image : ''"
@@ -148,7 +148,10 @@ useEventListener("keydown", (event: KeyboardEvent) => {
     </button>
   </Swiper>
 
-  <div v-if="controls" class="[&>*:hover]:text-dark flex items-center *:size-8">
+  <div
+    v-if="controls"
+    class="[&>*:hover]:text-dark flex max-w-full flex-wrap items-center *:size-8"
+  >
     <template v-if="slides.length > 1">
       <button aria-label="Previous image" @click="swiper?.slidePrev()">
         <Chevron class="-scale-x-100" />
