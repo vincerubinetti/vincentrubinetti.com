@@ -29,7 +29,7 @@ const shape = ref<string>();
 </script>
 
 <template>
-  <section>
+  <section class="bg-light paper">
     <div class="flex items-center gap-8">
       <div class="flex flex-col gap-2">
         <button

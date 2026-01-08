@@ -40,19 +40,9 @@ type Props = {
 const { pointer, inside, shape } = defineProps<Props>();
 
 /** color palette */
-const colors = `
-  --color-light: hsl(30, 100%, 90%);
-  --color-light: hsl(10, 100%, 90%);
-  --color-mid: hsl(160, 100%, 90%);
-  --color-sky: hsl(200, 100%, 90%);
-`
-  .split("\n")
-  .map((line) => line.split(":")[1]?.trim().slice(0, -1))
-  .filter(Boolean)
-  .map((hsl) => hsl.match(/(\d+)\D+(\d+)\D+(\d+)/) ?? [])
-  .filter(Boolean)
-  .map(([, h, s, l]) => `hsl(${h}, ${s}%, ${+l / 2}%)`)
-  .map((color) => new Color(color));
+const colors = ["#f43f5e", "#22c55e", "#0ea5e9", "#8b5cf6"].map(
+  (color) => new Color(color),
+);
 
 /** point objects */
 const points = range(-bounds + 1, bounds)

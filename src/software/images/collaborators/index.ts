@@ -2,12 +2,12 @@ import { fromPairs, toPairs } from "lodash-es";
 
 export default fromPairs(
   toPairs(
-    import.meta.glob<{ default: string }>("./*.jpg", {
+    import.meta.glob<{ default: string }>("./*.svg", {
       eager: true,
-      query: "url&w=800&format=webp",
+      query: "component",
     }),
   ).map(([path, { default: _default }]) => {
-    const name = path.match(/.*\/(.*)\.jpg/)?.[1];
+    const name = path.match(/.*\/(.*)\.svg/)?.[1];
     return [name!, _default];
   }),
 );

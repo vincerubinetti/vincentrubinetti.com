@@ -22,7 +22,7 @@ const processHeadings = async () => {
   }
 };
 
-window.addEventListener("astro:page-load", () => {
+window.addEventListener("load", () => {
   processHeadings();
   new MutationObserver(processHeadings).observe(document.body, {
     childList: true,

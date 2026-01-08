@@ -38,8 +38,8 @@ const tech = [
 </script>
 
 <template>
-  <section class="bg-light paper">
-    <h2>Tech<Dash /></h2>
+  <section>
+    <h2><Dash flip />Tech</h2>
 
     <div class="grid grid-cols-3 gap-8 max-lg:grid-cols-2 max-md:grid-cols-1">
       <div

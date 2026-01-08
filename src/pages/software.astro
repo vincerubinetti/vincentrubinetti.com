@@ -5,7 +5,6 @@ import Contact from "@/software/Contact.vue";
 import Extras from "@/software/Extras.vue";
 import Footer from "@/software/Footer.vue";
 import Header from "@/software/Header.vue";
-// import Hero from "@/software/Hero.vue";
 import Projects from "@/software/Projects.vue";
 import SubHeader from "@/software/SubHeader.vue";
 import Tech from "@/software/Tech.vue";
@@ -18,11 +17,10 @@ import "@/software/styles.css";
 >
   <Header client:load />
   <main>
-    <!-- <Hero client:only="vue" /> -->
     <SubHeader />
     <About client:load />
-    <Tech client:load />
     <Projects client:visible />
+    <Tech client:load />
     <Extras />
     <Contact client:load />
   </main>

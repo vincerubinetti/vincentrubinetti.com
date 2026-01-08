@@ -1,6 +1,12 @@
 <script setup lang="ts">
 import { map, max, min, orderBy, startCase } from "lodash-es";
-import { Bug, Eye, GitCommit, GitPullRequest } from "lucide-vue-next";
+import {
+  Bug,
+  ExternalLink,
+  Eye,
+  GitCommit,
+  GitPullRequest,
+} from "lucide-vue-next";
 import Table, { type Cols } from "./components/Table.vue";
 import contributions from "./data/contributions.json";
 
@@ -55,6 +61,7 @@ const cols: Cols<typeof repos> = [
           class="button -m-2 justify-start p-2"
         >
           Repo
+          <ExternalLink />
         </a>
         <b v-else>{{ startCase(row.fullName) }}</b>
       </template>

@@ -2,15 +2,16 @@
 import { computed, ref, useTemplateRef } from "vue";
 import { useElementBounding, useEventListener } from "@vueuse/core";
 import { countBy, uniq } from "lodash-es";
-import { ExternalLink, TriangleAlert, X } from "lucide-vue-next";
+import { ExternalLink, X } from "lucide-vue-next";
 import logos from "@/images/logos";
-import GitHub from "@/images/logos/github.svg?component";
 import { sleep } from "@/util/misc";
 import { formatValue, renderMarkdown, slugify } from "@/util/string";
 import Carousel from "./components/Carousel.vue";
 import Dash from "./components/Dash.vue";
+import collaborators from "./data/collaborators.json";
 import projects from "./data/projects.json";
-import images from "./images/projects";
+import collaboratorLogos from "./images/collaborators";
+import { files, images } from "./images/projects";
 
 /** indexOf with fallback */
 const index = (array: unknown[], value: unknown, fallback: number) => {
@@ -23,21 +24,22 @@ const projectOrder = [
   "SVG to PNG",
   "Lab Website Template",
   "Manubot",
+  "UX/UI for Researchers",
   "Word4Word",
   "Simplex",
   "Word Lapse",
   "Human Microbiome Compendium",
   "Preprint Similarity Search",
-  "Word Spot",
   "Exploring Cancer in Colorado",
   "Connectivity Search",
   "Het.io",
+  "Word Spot",
+  "Wall of Software",
+  "DBMI Screensaver",
   "Adage",
   "mygeneset.info",
   "STRchive",
   "GenePlexus",
-  "Wall of Software",
-  "DBMI Screensaver",
   "NIH Reporting",
   "3Blue1Brown.com",
   "3Blue1Brown Dubbing",
@@ -146,8 +148,21 @@ const xOffset = computed(
 </script>
 
 <template>
-  <section>
-    <h2><Dash flip />Projects</h2>
+  <section class="bg-light paper">
+    <h2>Projects<Dash /></h2>
+
+    <div class="flex justify-center gap-8">
+      <div
+        v-for="({ name }, index) in collaborators"
+        :key="index"
+        :title="name"
+      >
+        <component
+          :is="collaboratorLogos[slugify(name)]"
+          class="size-12 opacity-50 grayscale transition-all hover:opacity-100 hover:grayscale-0"
+        />
+      </div>
+    </div>
 
     <div class="relative flex grow items-center">
       <input
@@ -189,8 +204,7 @@ const xOffset = computed(
             group,
             type,
             description,
-            site,
-            repo,
+            links,
             feat,
             work,
             base,
@@ -205,7 +219,7 @@ const xOffset = computed(
         <!-- open/close button -->
         <button
           ref="button"
-          class="flex flex-col hover:scale-105 hover:ring-2"
+          class="hover:bg-mid flex flex-col gap-2 p-2 hover:scale-105"
           aria-label="Toggle details for {{ name }}"
           :aria-expanded="opened === index"
           :aria-controls="`details-${index}`"
@@ -217,14 +231,14 @@ const xOffset = computed(
             :class="opened === index ? 'brightness-200 contrast-0' : ''"
           />
 
-          <div class="p-2 text-lg">{{ name }}</div>
+          <div class="text-lg">{{ name }}</div>
         </button>
 
         <!-- details -->
         <div
           ref="details"
           v-if="opened === index"
-          class="bg-light paper max relative z-10 col-start-1 -col-end-1 flex flex-col items-center gap-4 p-4"
+          class="relative z-10 col-start-1 -col-end-1 flex flex-col items-center gap-4 bg-black/5 p-4"
         >
           <div
             class="absolute -top-8 size-8 -translate-x-1/2"
@@ -232,7 +246,7 @@ const xOffset = computed(
             :style="{ left: `${xOffset}px` }"
           >
             <svg viewBox="-50 -50 100 100">
-              <polygon points="-50 50 0 0 50 50" class="fill-light" />
+              <polygon points="-50 50 0 0 50 50" class="fill-black/5" />
             </svg>
           </div>
 
@@ -244,6 +258,7 @@ const xOffset = computed(
             <X />
           </button>
 
+          <!-- title -->
           <p class="font-sans text-xl font-medium">{{ name }}</p>
 
           <!-- images -->
@@ -256,19 +271,28 @@ const xOffset = computed(
             class="aspect-4/3 w-full max-w-100"
           />
 
-          <p class="flex gap-4">
-            <a v-if="site" :href="site">Site<ExternalLink /></a>
-            <a v-if="repo" :href="repo">Repo<ExternalLink /></a>
-          </p>
+          <!-- links -->
+          <div class="flex gap-4">
+            <a
+              v-for="(url, label) in links"
+              :key="label"
+              :href="files[url as keyof typeof files] ?? url"
+              class="button"
+            >
+              {{ label }}
+              <ExternalLink />
+            </a>
+          </div>
 
           <div class="flex flex-col gap-4">
+            <!-- tags -->
             <div class="flex flex-wrap gap-2">
               <button
                 v-for="(item, index) in [group, type, work, base, tech, lib]
                   .flat()
                   .filter(Boolean)"
                 :key="index"
-                class="flex items-center gap-1 bg-zinc-200 p-1 hover:bg-zinc-300"
+                class="hover:bg-mid flex items-center gap-1 border p-1"
                 :aria-label="`Search '${item}'`"
                 @click="
                   search = item;
@@ -287,13 +311,16 @@ const xOffset = computed(
               </button>
             </div>
 
+            <!-- warning -->
             <p v-if="warning">
-              <TriangleAlert class="fill-orange-300" />
+              ⚠️
               {{ warning }}
             </p>
 
+            <!-- description -->
             <p v-html="renderMarkdown(description)" />
 
+            <!-- features -->
             <ul>
               <li v-for="(feature, index) in feat" :key="index">
                 {{ feature }}
@@ -304,12 +331,9 @@ const xOffset = computed(
       </template>
     </div>
 
-    <a href="/github" class="button-big highlight corners-4 self-center">
-      <GitHub />All public GitHub contributions
-    </a>
-
     <p class="text-center">
-      Plus many in-progress, private, and legacy projects not listed here!
+      Plus many other <a href="/github">public GitHub contributions</a> and
+      private/in-progress/legacy/etc. projects not listed here!
     </p>
   </section>
 </template>
