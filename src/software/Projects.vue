@@ -264,6 +264,15 @@ const xOffset = computed(
             class="aspect-4/3 w-full max-w-100 border border-current/10 bg-black"
           />
 
+          <!-- description -->
+          <p v-html="renderMarkdown(description)" />
+
+          <!-- warning -->
+          <p v-if="warning">
+            ⚠️
+            {{ warning }}
+          </p>
+
           <!-- links -->
           <div class="flex flex-wrap justify-center gap-x-2">
             <a
@@ -303,15 +312,6 @@ const xOffset = computed(
                 {{ item }}
               </button>
             </div>
-
-            <!-- warning -->
-            <p v-if="warning">
-              ⚠️
-              {{ warning }}
-            </p>
-
-            <!-- description -->
-            <p v-html="renderMarkdown(description)" />
 
             <!-- features -->
             <ul>
