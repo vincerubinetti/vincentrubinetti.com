@@ -254,14 +254,6 @@ const xOffset = computed(
             </svg>
           </div>
 
-          <button
-            class="hover:text-dark absolute top-4 right-4 size-8 transition-opacity"
-            aria-label="Close details"
-            @click="close(index)"
-          >
-            <X />
-          </button>
-
           <!-- title -->
           <p class="font-sans text-xl font-medium">{{ name }}</p>
 

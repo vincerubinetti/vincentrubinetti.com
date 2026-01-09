@@ -84,11 +84,7 @@ const { toggle, isFullscreen } = useFullscreen(rootRef);
 </script>
 
 <template>
-  <div
-    ref="root"
-    v-bind="$attrs"
-    :class="['relative overflow-hidden', $attrs.class]"
-  >
+  <div ref="root" v-bind="$attrs" class="relative touch-none overflow-hidden">
     <div
       v-for="index in range(
         Math.floor(current) - 1,
