@@ -156,10 +156,11 @@ const xOffset = computed(
         v-for="({ name }, index) in collaborators"
         :key="index"
         :title="name"
+        role="img"
       >
         <component
           :is="collaboratorLogos[slugify(name)]"
-          class="size-12 opacity-50 grayscale transition-all hover:opacity-100 hover:grayscale-0"
+          class="-0 size-12 opacity-50 grayscale transition-all hover:opacity-100 hover:grayscale"
         />
       </div>
     </div>
@@ -176,7 +177,7 @@ const xOffset = computed(
       <button
         class="hover:text-dark absolute right-0 aspect-square h-full"
         @click="search = ''"
-        aria-label="Clear search"
+        title="Clear search"
       >
         <X />
       </button>
@@ -220,7 +221,7 @@ const xOffset = computed(
         <button
           ref="button"
           class="hover:bg-mid flex flex-col gap-2 p-2 hover:scale-105"
-          :aria-label="
+          :title="
             opened === index
               ? `Hide details for ${name}`
               : `Show details for ${name}`
@@ -286,7 +287,7 @@ const xOffset = computed(
                   .filter(Boolean)"
                 :key="index"
                 class="hover:bg-mid flex items-center gap-1 border border-current/25 p-1"
-                :aria-label="`Search '${item}'`"
+                :title="`Filter by ${item}`"
                 @click="
                   search = item;
                   input?.scrollIntoView({

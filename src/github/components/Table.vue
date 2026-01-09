@@ -170,14 +170,14 @@ const cellAttrs = (col?: Cols[number], row?: Row) => {
     <div class="flex items-center gap-2">
       <button
         :disabled="!table.getCanPreviousPage()"
-        aria-label="First page"
+        title="First page"
         @click="table.setPageIndex(0)"
       >
         <ChevronsLeft />
       </button>
       <button
         :disabled="!table.getCanPreviousPage()"
-        aria-label="Previous page"
+        title="Previous page"
         @click="table.previousPage()"
       >
         <ChevronLeft />
@@ -188,14 +188,14 @@ const cellAttrs = (col?: Cols[number], row?: Row) => {
 
       <button
         :disabled="!table.getCanNextPage()"
-        aria-label="Next page"
+        title="Next page"
         @click="table.nextPage()"
       >
         <ChevronRight />
       </button>
       <button
         :disabled="!table.getCanNextPage()"
-        aria-label="Last page"
+        title="Last page"
         @click="table.setPageIndex(table.getPageCount() - 1)"
       >
         <ChevronsRight />

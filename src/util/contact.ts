@@ -54,7 +54,7 @@ export const onSubmit = async (
 
   /** debug */
   console.groupCollapsed("Token");
-  console.info(token);
+  console.debug(token);
   console.groupEnd();
 
   /** send email to server */
@@ -73,7 +73,7 @@ export const onSubmit = async (
 
   /** debug */
   console.groupCollapsed("Response");
-  console.info(response);
+  console.debug(response);
   console.groupEnd();
 
   /** alert response */

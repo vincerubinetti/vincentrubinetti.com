@@ -106,7 +106,7 @@ const { toggle, isFullscreen } = useFullscreen(rootRef);
     <button
       v-if="isFullscreen"
       class="fixed top-0 right-0 z-100 size-8 bg-black text-white"
-      aria-label="Exit fullscreen"
+      title="Exit fullscreen"
       @click="toggle()"
     >
       <Minimize />
@@ -118,7 +118,7 @@ const { toggle, isFullscreen } = useFullscreen(rootRef);
     class="[&>*:hover]:text-dark flex max-w-full items-center justify-center *:size-8"
   >
     <button
-      :aria-label="`${isActive ? 'Pause' : 'Resume'} autoplay`"
+      :title="`${isActive ? 'Pause' : 'Resume'} autoplay`"
       @click="isActive ? pause() : resume()"
     >
       <Pause v-if="isActive" />
@@ -128,7 +128,7 @@ const { toggle, isFullscreen } = useFullscreen(rootRef);
     <div />
 
     <template v-if="images.length > 1">
-      <button aria-label="Previous image" @click="previous()">
+      <button title="Previous image" @click="previous()">
         <Chevron class="-scale-x-100" />
       </button>
       <button
@@ -137,23 +137,19 @@ const { toggle, isFullscreen } = useFullscreen(rootRef);
         :class="
           index === mod(Math.round(current), images.length) ? '' : 'opacity-25'
         "
-        aria-label="Go to image {{ index + 1 }}"
+        title="Go to image {{ index + 1 }}"
         @click="goTo(index)"
       >
         <Circle />
       </button>
-      <button aria-label="Next image" @click="next()">
+      <button title="Next image" @click="next()">
         <Chevron />
       </button>
     </template>
 
     <div />
 
-    <button
-      v-if="!isFullscreen"
-      aria-label="Enter fullscreen"
-      @click="toggle()"
-    >
+    <button v-if="!isFullscreen" title="Enter fullscreen" @click="toggle()">
       <Maximize />
     </button>
   </div>

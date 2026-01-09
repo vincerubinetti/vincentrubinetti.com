@@ -67,7 +67,7 @@ onMounted(() =>
         :key="index"
         class="group relative overflow-hidden rounded"
         aria-controls="highlights-player"
-        :aria-label="highlight.title"
+        :title="highlight.title"
         @click="select(highlight)"
       >
         <div

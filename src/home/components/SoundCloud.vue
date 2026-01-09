@@ -117,6 +117,7 @@ const onLoad = generator(async function* () {
   level.value = 0;
   track.value = {};
 
+  console.debug("loading api script");
   /** wait for soundcloud api script to load */
   yield waitFor(() => apiScript.value);
 
@@ -130,9 +131,11 @@ const onLoad = generator(async function* () {
   events = window.SC.Widget.Events;
   if (!widget) throw Error("Widget couldn't be hooked up");
 
+  console.debug("waiting for widget ready");
   /** wait for widget to be ready */
   yield new Promise<void>((resolve) => widget.bind(events.READY, resolve));
 
+  console.debug("getting number of tracks");
   /** get number of tracks */
   let count = 0;
   yield waitFor(() => {
@@ -145,11 +148,15 @@ const onLoad = generator(async function* () {
 
   /** load from cache */
   tracks.value = playlistCache[playlist] || [];
+  if (tracks.value.length) console.debug("loaded tracks from cache");
 
   /** if nothing loaded from cache */
   if (!tracks.value.length) {
     /** go through each track and get details */
     for (const index of range(count)) {
+      console.debug(`track ${index + 1}`);
+
+      console.debug("getting current track");
       /** get current track */
       let track: Partial<Sound> = {};
       yield waitFor(() => {
@@ -158,18 +165,20 @@ const onLoad = generator(async function* () {
         return track.artwork_url;
       });
 
+      /** derive extra props */
+      const tags = getTags(track);
+      console.debug("getting waveform");
+      const waveform = await getWaveform(track);
+      console.debug("getting colors");
+      const colors = await getColors(track);
+
       /** add track */
-      tracks.value.push({
-        ...track,
-        /** derive extra props */
-        waveform: await getWaveform(track),
-        tags: getTags(track),
-        colors: await getColors(track),
-      });
+      tracks.value.push({ ...track, waveform, tags, colors });
 
       /** move to next track */
       widget.next();
 
+      console.debug("waiting for track to change");
       /** wait for track to actually change */
       let currentIndex = -1;
       widget.getCurrentSoundIndex((index) => (currentIndex = index));

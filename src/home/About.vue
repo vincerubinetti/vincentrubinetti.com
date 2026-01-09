@@ -22,7 +22,7 @@ import Outline from "./components/Outline.vue";
     </div>
 
     <div
-      class="max-xs:grid-cols-1 grid max-w-max grid-cols-3 gap-4 self-center"
+      class="max-xs:grid-cols-1 grid max-w-max grid-cols-3 flex-wrap gap-4 self-center"
     >
       <a href="studio" class="button hover:text-rose-500">
         <Outline />

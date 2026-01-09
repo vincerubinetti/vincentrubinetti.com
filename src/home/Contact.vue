@@ -35,8 +35,8 @@ useCaptcha();
 
       <form
         class="flex flex-col gap-4"
+        title="Contact form"
         @submit="onSubmit($event, name, email, message)"
-        aria-label="Contact form"
       >
         <input
           v-model="name"

@@ -27,6 +27,6 @@ const model = defineModel<number[]>();
     <SliderTrack class="relative h-1 grow rounded-full bg-current/10">
       <SliderRange class="absolute h-full rounded-full bg-current" />
     </SliderTrack>
-    <SliderThumb class="size-3 rounded-full bg-current" aria-label="label" />
+    <SliderThumb class="size-3 rounded-full bg-current" />
   </SliderRoot>
 </template>

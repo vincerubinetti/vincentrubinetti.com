@@ -183,7 +183,7 @@ const getBandcamp = (track: Track) =>
                 class="flex flex-col rounded-br bg-black/25 p-2"
               >
                 <div
-                  class="gap flex items-center justify-center max-md:flex-wrap"
+                  class="gap flex items-center justify-center *:shrink-0 max-md:flex-wrap"
                 >
                   <!-- controls -->
                   <button
@@ -219,7 +219,7 @@ const getBandcamp = (track: Track) =>
 
                   <!-- waveform -->
                   <button
-                    class="button-dark group h-12 w-full grow px-2 py-0 max-md:-order-1"
+                    class="button-dark group h-12 grow px-2 py-0 max-md:-order-1 max-md:w-full"
                     title="Seek"
                     @click="
                       seek(pointerCoords($event).x * (track.duration ?? 1))
@@ -305,7 +305,7 @@ const getBandcamp = (track: Track) =>
                     </div>
                   </button>
 
-                  <div class="w-16 shrink-0 px-2 max-sm:hidden">
+                  <div class="w-16 px-2 max-sm:hidden">
                     <Slider
                       :model-value="[volume]"
                       :min="0"

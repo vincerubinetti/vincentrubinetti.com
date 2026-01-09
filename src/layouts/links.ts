@@ -13,7 +13,7 @@ const processLinks = async () => {
     if (href.match(/^https?/)) link.setAttribute("target", "_blank");
     /** disable links that point to the current page */
     if (
-      new URL(href, window.location.href).href ===
+      new URL(href, window.location.href).href.replace(/\/$/, "") ===
       window.location.href.replace(/\/$/, "")
     )
       link.removeAttribute("href");
