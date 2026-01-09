@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { ref, useTemplateRef, watch } from "vue";
 import {
-  useElementSize,
   useElementVisibility,
   useEventListener,
   useFullscreen,
@@ -22,8 +21,6 @@ type Props = {
 const { images, controls } = defineProps<Props>();
 
 const rootRef = useTemplateRef("root");
-
-const size = useElementSize(rootRef);
 
 /** current image index */
 const current = ref(0);
@@ -64,8 +61,8 @@ const visible = useElementVisibility(rootRef, { threshold: 1 });
 const { pause, resume, isActive } = useIntervalFn(() => next(false), 3000);
 
 /** control auto-play */
-watch(visible, () => {
-  if (visible.value) resume();
+watch([visible, () => images.length], () => {
+  if (visible.value && images.length > 1) resume();
   else pause();
 });
 
@@ -87,12 +84,7 @@ const { toggle, isFullscreen } = useFullscreen(rootRef);
 </script>
 
 <template>
-  <div
-    ref="root"
-    v-bind="$attrs"
-    class="relative touch-none overflow-hidden perspective-distant"
-    :style="{ '--width': size.width.value + 'px' }"
-  >
+  <div ref="root" v-bind="$attrs" class="relative touch-none overflow-hidden">
     <div
       v-for="index in range(
         Math.floor(current) - 1,
@@ -171,9 +163,7 @@ const { toggle, isFullscreen } = useFullscreen(rootRef);
 @reference "tailwindcss";
 
 .image {
-  --depth: calc(var(--width) / 2);
-  transform: translateZ(2px) translateZ(calc(-1 * var(--depth)))
-    rotateY(calc(var(--percent) * 90deg)) translateZ(var(--depth));
+  transform: scale(1.005) translateX(calc(var(--percent) * 25%));
   opacity: calc(clamp(1 - abs(var(--percent)), 0, 1));
 }
 </style>
