@@ -63,8 +63,12 @@
     @apply h-px w-full border-0 bg-current/10;
   }
 
+  img {
+    @apply max-w-full;
+  }
+
   svg {
-    @apply shrink-0 overflow-visible;
+    @apply max-w-full shrink-0 overflow-visible;
   }
 
   a {
@@ -142,5 +146,10 @@
   .icon,
   .lucide {
     @apply inline-block h-[1em] w-[unset];
+  }
+
+  .lucide-play,
+  .lucide-pause {
+    @apply fill-current stroke-0!;
   }
 }

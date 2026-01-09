@@ -1,142 +1,114 @@
 <script setup lang="ts">
-import { ref, useTemplateRef, watchEffect } from "vue";
+import { ref, useTemplateRef, watch } from "vue";
 import {
   useElementVisibility,
   useEventListener,
   useFullscreen,
+  useIntervalFn,
 } from "@vueuse/core";
-import { clamp, range } from "lodash-es";
-import { Maximize, Minimize } from "lucide-vue-next";
-import { Autoplay } from "swiper/modules";
-import type { SwiperEvents, Swiper as SwiperType } from "swiper/types";
-import { Swiper, SwiperSlide } from "swiper/vue";
+import { range } from "lodash-es";
+import { Maximize, Minimize, Pause, Play } from "lucide-vue-next";
+import { useSwipe } from "@/util/composables";
 import { mod } from "@/util/math";
 import Chevron from "../images/chevron.svg?component";
 import Circle from "../images/circle.svg?component";
-import "swiper/css";
 
 type Props = {
-  slides: { image: string }[];
+  images: { image: string }[];
   controls?: boolean;
 };
 
-const { slides, controls } = defineProps<Props>();
+const { images, controls } = defineProps<Props>();
 
-const root = useTemplateRef("root");
+const rootRef = useTemplateRef("root");
 
-/** fullscreen controls */
-const { toggle, isFullscreen } = useFullscreen(root as unknown as HTMLElement);
+/** current image index */
+const current = ref(0);
 
-/** swiper instance (non-reactive) */
-const swiper = ref<SwiperType>();
-
-const isVisible = useElementVisibility(() => swiper.value?.el, {
-  threshold: 1,
-});
-
-/** autoplay control based on visibility */
-watchEffect(() => {
-  if (isVisible.value) swiper.value?.autoplay.start();
-  else swiper.value?.autoplay.stop();
-});
-
-/** reactive slide index */
-const slide = ref(0);
-
-/** which slides should be loaded */
-const loaded = ref<boolean[]>([]);
-
-/** reset loaded when slides change */
-watchEffect(() => {
-  for (let index = 0; index < slides.length; index++)
-    loaded.value[index] ??= false;
-});
-
-/** load current slide */
-watchEffect(() => (loaded.value[slide.value] = true));
-
-/** handle slide change */
-const onSlideChange: SwiperEvents["slideChange"] = ({
-  realIndex,
-  progress,
-  swipeDirection,
-}) => {
-  /** update slide number */
-  slide.value = realIndex;
-
-  /** if directly on current slide, load */
-  loaded.value[realIndex] = true;
-
-  /** if swiping/transitioning between slides, load destination slide */
-  if (progress % 1) {
-    if (swipeDirection === "next")
-      loaded.value[mod(realIndex + 1, slides.length)] = true;
-    if (swipeDirection === "prev")
-      loaded.value[mod(realIndex - 1, slides.length)] = true;
-  }
+/** go to previous image */
+const previous = (userAction = true) => {
+  current.value--;
+  if (userAction) pause();
 };
 
-/** custom transition */
-const onProgress: SwiperEvents["progress"] = (swiper) => {
-  for (let index = 0; index < swiper.slides.length; index++) {
-    const slide = swiper.slides[index] as HTMLElement & { progress: number };
-    const { progress } = slide;
-    slide.style.translate = [progress * swiper.width * 0.75, 0]
-      .map((value) => `${value}px`)
-      .join(" ");
-    slide.style.opacity = String(clamp(1 - Math.abs(progress), 0, 1));
-  }
+/** go to next image */
+const next = (userAction = true) => {
+  current.value++;
+  if (userAction) pause();
 };
 
-/** custom transition */
-const onSetTransition: (swiper: SwiperType, duration: number) => void = (
-  swiper,
-  duration,
-) => {
-  for (const slide of swiper.slides) {
-    slide.style.transitionProperty = "all";
-    slide.style.transitionDuration = `${duration}ms`;
-  }
+/** go to specific image */
+const goTo = (index: number, userAction = true) => {
+  current.value = index;
+  if (userAction) pause();
 };
 
-defineOptions({ inheritAttrs: false });
+/** current image index at start of swipe */
+const startCurrent = ref(0);
+
+/** swiping gesture */
+const { x, swiping } = useSwipe({
+  target: rootRef,
+  onStart: () => (startCurrent.value = current.value),
+  onMove: () => (current.value = startCurrent.value - x.value),
+  onEnd: () => (current.value = Math.round(current.value)),
+});
+
+/** is carousel fully in viewport */
+const visible = useElementVisibility(rootRef, { threshold: 1 });
+
+/** auto-play */
+const { pause, resume, isActive } = useIntervalFn(() => next(false), 3000);
+
+/** control auto-play */
+watch(visible, () => {
+  if (visible.value) resume();
+  else pause();
+});
+
+/** pause autoplay while swiping */
+watch(swiping, (value) => {
+  if (value) pause();
+});
 
 /** keyboard control */
 useEventListener("keydown", (event: KeyboardEvent) => {
   if (controls) {
-    if (event.key === "ArrowLeft") swiper.value?.slidePrev();
-    if (event.key === "ArrowRight") swiper.value?.slideNext();
+    if (event.key === "ArrowLeft") previous();
+    if (event.key === "ArrowRight") next();
   }
 });
+
+/** fullscreen controls */
+const { toggle, isFullscreen } = useFullscreen(rootRef);
 </script>
 
 <template>
-  <Swiper
+  <div
     ref="root"
-    :v-bind="$attrs"
-    :class="['group w-full bg-black shadow', $attrs.class]"
-    :loop="slides.length > 1"
-    :loop-prevents-sliding="false"
-    :autoplay="{ disableOnInteraction: true }"
-    :watch-slides-progress="true"
-    :modules="[Autoplay]"
-    @swiper="(value) => (swiper = value)"
-    @slide-change="onSlideChange"
-    @set-translate="onProgress"
-    @set-transition="onSetTransition"
+    v-bind="$attrs"
+    :class="['relative overflow-hidden', $attrs.class]"
   >
-    <SwiperSlide
-      v-for="({ image }, index) in slides"
+    <div
+      v-for="index in range(
+        Math.floor(current) - 1,
+        Math.ceil(current) + 1 + 1,
+      )"
       :key="index"
-      :class="slides.length > 1 ? 'cursor-grab' : ''"
+      class="image absolute inset-0 size-full transition-all"
+      :class="[
+        images.length > 1 ? 'cursor-grab' : '',
+        swiping ? 'duration-0' : 'duration-250',
+      ]"
+      :style="{ '--percent': index - current }"
     >
       <img
-        :src="loaded[index] ? image : ''"
+        :src="images[mod(index, images.length)]?.image"
         alt=""
         loading="lazy"
         class="size-full object-contain"
       />
-    </SwiperSlide>
+    </div>
 
     <button
       v-if="isFullscreen"
@@ -146,29 +118,44 @@ useEventListener("keydown", (event: KeyboardEvent) => {
     >
       <Minimize />
     </button>
-  </Swiper>
+  </div>
 
   <div
     v-if="controls"
-    class="[&>*:hover]:text-dark flex max-w-full flex-wrap items-center justify-center *:size-8"
+    class="[&>*:hover]:text-dark flex max-w-full items-center justify-center *:size-8"
   >
-    <template v-if="slides.length > 1">
-      <button aria-label="Previous image" @click="swiper?.slidePrev()">
+    <button
+      :aria-label="`${isActive ? 'Pause' : 'Resume'} autoplay`"
+      @click="isActive ? pause() : resume()"
+    >
+      <Pause v-if="isActive" />
+      <Play v-else />
+    </button>
+
+    <div />
+
+    <template v-if="images.length > 1">
+      <button aria-label="Previous image" @click="previous()">
         <Chevron class="-scale-x-100" />
       </button>
       <button
-        v-for="index in range(slides.length)"
+        v-for="index in range(images.length)"
         :key="index"
-        :class="slide === index ? '' : 'opacity-25'"
+        :class="
+          index === mod(Math.round(current), images.length) ? '' : 'opacity-25'
+        "
         aria-label="Go to image {{ index + 1 }}"
-        @click="swiper?.slideToLoop(index)"
+        @click="goTo(index)"
       >
         <Circle />
       </button>
-      <button aria-label="Next image" @click="swiper?.slideNext()">
+      <button aria-label="Next image" @click="next()">
         <Chevron />
       </button>
     </template>
+
+    <div />
+
     <button
       v-if="!isFullscreen"
       aria-label="Enter fullscreen"
@@ -181,4 +168,9 @@ useEventListener("keydown", (event: KeyboardEvent) => {
 
 <style scoped>
 @reference "tailwindcss";
+
+.image {
+  translate: calc(100% * var(--percent) / 4) 0;
+  opacity: calc(clamp(1 - abs(var(--percent)), 0, 1));
+}
 </style>

@@ -220,14 +220,18 @@ const xOffset = computed(
         <button
           ref="button"
           class="hover:bg-mid flex flex-col gap-2 p-2 hover:scale-105"
-          aria-label="Toggle details for {{ name }}"
+          :aria-label="
+            opened === index
+              ? `Hide details for ${name}`
+              : `Show details for ${name}`
+          "
           :aria-expanded="opened === index"
           :aria-controls="`details-${index}`"
           @click="opened === index ? close(index) : open(index)"
         >
           <Carousel
-            :slides="images.map((image) => ({ image }))"
-            class="pointer-events-none aspect-4/3 transition-all"
+            :images="images.map((image) => ({ image }))"
+            class="pointer-events-none aspect-4/3 w-full border bg-black transition-all"
             :class="opened === index ? 'brightness-200 contrast-0' : ''"
           />
 
@@ -238,7 +242,7 @@ const xOffset = computed(
         <div
           ref="details"
           v-if="opened === index"
-          class="relative z-10 col-start-1 -col-end-1 flex flex-col items-center gap-4 bg-black/5 p-4"
+          class="relative z-10 col-start-1 -col-end-1 flex scroll-mt-8 flex-col items-center gap-4 bg-black/5 p-4"
         >
           <div
             class="absolute -top-8 size-8 -translate-x-1/2"
@@ -263,12 +267,9 @@ const xOffset = computed(
 
           <!-- images -->
           <Carousel
+            :images="images.map((image) => ({ image }))"
             :controls="true"
-            :slides="
-              images.map((image, index) => ({ image, debug: name + index }))
-            "
-            :name="name"
-            class="aspect-4/3 w-full max-w-100"
+            class="aspect-4/3 w-full max-w-100 border bg-black"
           />
 
           <!-- links -->
