@@ -25,7 +25,7 @@
   header,
   section,
   footer {
-    @apply relative z-0 flex w-full flex-col gap-12 px-[max(--spacing(14),(100%-var(--width))/2)] py-14 max-xl:gap-12 max-xl:p-12 max-lg:gap-10 max-lg:p-10 max-md:gap-8 max-md:p-8 max-sm:gap-6 max-sm:p-6;
+    @apply max-xs:[--size:--spacing(4)] relative z-0 flex w-full flex-col gap-12 px-[max(var(--size),(100%-var(--width))/2)] py-(--size) [--size:--spacing(14)] max-xl:[--size:--spacing(12)] max-lg:[--size:--spacing(10)] max-md:[--size:--spacing(8)] max-sm:[--size:--spacing(6)];
   }
 
   h1,
@@ -35,7 +35,7 @@
   }
 
   h1 {
-    @apply text-2xl font-light tracking-widest uppercase;
+    @apply text-3xl font-light tracking-widest uppercase;
   }
 
   h2 {

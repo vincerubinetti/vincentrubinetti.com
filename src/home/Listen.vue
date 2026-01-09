@@ -86,13 +86,13 @@ const getBandcamp = (track: Track) =>
 
     <!-- playlists -->
     <div
-      class="max-xs:grid-cols-1 -mb-4 grid w-full grid-cols-6 max-lg:grid-cols-3 max-md:grid-cols-2"
+      class="max-xs:grid-cols-1 grid w-full grid-cols-6 gap-4 max-lg:grid-cols-3 max-md:grid-cols-2"
     >
       <button
         v-for="({ title, id }, index) of playlists"
         :key="index"
-        class="button-dark rounded-b-none! border-b-2"
-        :class="[selectedPlaylist.id === id ? '' : 'border-white/10']"
+        class="button-dark"
+        :class="[selectedPlaylist.id === id ? 'bg-current/10' : '']"
         :aria-current="selectedPlaylist.id === id"
         :title="`Load ${title} playlist`"
         aria-controls="listen-player"
