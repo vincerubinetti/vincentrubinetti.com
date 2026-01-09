@@ -12,8 +12,8 @@ import Outline from "./components/Outline.vue";
         I started writing music over 20 years ago, with a humble notation
         program and an obsession with video game music. Throughout my academic
         years, I was part of drumlines, choirs, and other bands, where I
-        continued to discover the emotions and perspectives that music has to
-        offer. Since those days, I've worked on indie games, videos, ads,
+        continued to discover all the emotions and perspectives that music has
+        to offer. Since those days, I've worked on indie games, videos, ads,
         collabs, and all sorts of other projects, serving as composer, producer,
         arranger, musician, and more. I am driven to create music that impacts
         others in the same way that so many great works of art have profoundly

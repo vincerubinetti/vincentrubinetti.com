@@ -102,7 +102,7 @@ onMounted(() =>
 
         <p v-html="renderMarkdown(selected.description)" />
 
-        <div class="flex flex-wrap gap-4">
+        <div class="flex flex-wrap gap-4 max-sm:gap-2">
           <a
             v-for="(link, index) in selected.links"
             :key="index"

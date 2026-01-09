@@ -86,7 +86,7 @@ const getBandcamp = (track: Track) =>
 
     <!-- playlists -->
     <div
-      class="max-xs:grid-cols-1 grid w-full grid-cols-6 gap-4 max-lg:grid-cols-3 max-md:grid-cols-2"
+      class="max-xs:grid-cols-1 grid w-full grid-cols-6 gap-4 max-lg:grid-cols-3 max-md:grid-cols-2 max-md:gap-2"
     >
       <button
         v-for="({ title, id }, index) of playlists"
@@ -128,9 +128,20 @@ const getBandcamp = (track: Track) =>
         }"
       >
         <div
-          v-if="status === 'loading'"
-          class="grid h-100 w-full animate-pulse place-content-center rounded bg-white/10"
+          v-if="typeof status === 'number'"
+          class="flex h-100 w-full animate-pulse items-center justify-center gap-4 rounded bg-white/10"
         >
+          <svg viewBox="-5 -5 10 10" height="2em">
+            <circle
+              r="4"
+              fill="none"
+              stroke="currentColor"
+              pathLength="1"
+              stroke-dasharray="1"
+              :stroke-dashoffset="1 - status"
+              transform="rotate(-90)"
+            />
+          </svg>
           Loading
         </div>
 
@@ -161,7 +172,7 @@ const getBandcamp = (track: Track) =>
                 "
               >
                 <img :src="_track.artwork_url ?? ''" alt="" class="h-full" />
-                <div class="grow truncate text-left">
+                <div class="grow truncate py-2 text-left">
                   {{ _track.title }}
                 </div>
                 <div
@@ -173,7 +184,7 @@ const getBandcamp = (track: Track) =>
                   <Play />
                 </div>
                 <div
-                  class="hidden max-w-1/2 truncate text-right text-sm opacity-50 group-hover:block"
+                  class="hidden max-w-1/2 truncate py-2 text-right text-sm opacity-50 group-hover:block"
                 >
                   {{ _track.tags?.join(",  ") }}
                 </div>

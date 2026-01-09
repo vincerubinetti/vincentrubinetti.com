@@ -26,7 +26,7 @@ defineOptions({ inheritAttrs: false });
 /** iframe element */
 const iframe = useTemplateRef("iframe");
 /** status */
-const status = ref<"loading" | "error" | "success">("loading");
+const status = ref<number | "error" | "success">(0);
 /** playlist tracks */
 const tracks = ref<Track[]>([]);
 /** current track */
@@ -111,7 +111,7 @@ const onError = (error?: unknown) => {
 /** on iframe load */
 const onLoad = generator(async function* () {
   /** reset values */
-  status.value = "loading";
+  status.value = 0;
   playing.value = false;
   time.value = 0;
   level.value = 0;
@@ -120,6 +120,7 @@ const onLoad = generator(async function* () {
   console.debug("loading api script");
   /** wait for soundcloud api script to load */
   yield waitFor(() => apiScript.value);
+  status.value = 0.1;
 
   /** check for iframe element */
   if (!iframe.value) throw Error("iframe not defined");
@@ -134,6 +135,7 @@ const onLoad = generator(async function* () {
   console.debug("waiting for widget ready");
   /** wait for widget to be ready */
   yield new Promise<void>((resolve) => widget.bind(events.READY, resolve));
+  status.value = 0.2;
 
   console.debug("getting number of tracks");
   /** get number of tracks */
@@ -145,6 +147,7 @@ const onLoad = generator(async function* () {
   });
   /** do this regardless of cache because widget not *actually* ready (event
    * bindings will fail) until getSounds returns something */
+  status.value = 0.3;
 
   /** load from cache */
   tracks.value = playlistCache[playlist] || [];
@@ -155,6 +158,7 @@ const onLoad = generator(async function* () {
     /** go through each track and get details */
     for (const index of range(count)) {
       console.debug(`track ${index + 1}`);
+      status.value = 0.3 + 0.7 * (index / count);
 
       console.debug("getting current track");
       /** get current track */
@@ -165,6 +169,7 @@ const onLoad = generator(async function* () {
         return track.artwork_url;
       });
 
+      status.value += 0.1 / 3;
       /** derive extra props */
       const tags = getTags(track);
       console.debug("getting waveform");
@@ -178,6 +183,7 @@ const onLoad = generator(async function* () {
       /** move to next track */
       widget.next();
 
+      status.value += 0.1 / 3;
       console.debug("waiting for track to change");
       /** wait for track to actually change */
       let currentIndex = -1;
