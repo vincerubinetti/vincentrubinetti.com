@@ -79,11 +79,11 @@ onMounted(() =>
       </button>
     </div>
 
-    <div class="grid grid-cols-2 gap-8 max-lg:grid-cols-1">
+    <div class="grid grid-cols-2 gap-8 max-lg:grid-cols-1 max-md:gap-4">
       <youtube-video
         ref="player"
         id="highlights-player"
-        class="min-h-[unset]! min-w-0! max-lg:aspect-video"
+        class="min-h-[unset] min-w-0 max-lg:aspect-video"
         :src="src"
         controls
         allowfullscreen

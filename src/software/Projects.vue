@@ -151,7 +151,9 @@ const xOffset = computed(
   <section class="bg-light paper">
     <h2>Projects<Dash /></h2>
 
-    <div class="flex justify-center-safe gap-8 overflow-auto">
+    <div
+      class="flex justify-center-safe gap-8 overflow-auto max-lg:gap-6 max-md:gap-4 max-sm:gap-2"
+    >
       <div
         v-for="({ name }, index) in collaborators"
         :key="index"
@@ -160,7 +162,7 @@ const xOffset = computed(
       >
         <component
           :is="collaboratorLogos[slugify(name)]"
-          class="-0 size-12 opacity-50 grayscale transition-all hover:opacity-100 hover:grayscale"
+          class="-0 size-12 opacity-50 grayscale transition-all hover:opacity-100 hover:grayscale-0"
         />
       </div>
     </div>
@@ -194,7 +196,7 @@ const xOffset = computed(
     </b>
 
     <div
-      class="gallery grid grid-flow-dense grid-cols-3 items-start gap-8 max-md:grid-cols-2 max-sm:grid-cols-1"
+      class="gallery grid grid-flow-dense grid-cols-3 items-start gap-4 max-md:grid-cols-2 max-sm:grid-cols-1"
     >
       <!-- project card -->
       <template
@@ -222,9 +224,7 @@ const xOffset = computed(
           ref="button"
           class="hover:bg-mid flex flex-col gap-2 p-2 hover:scale-105"
           :title="
-            opened === index
-              ? `Hide details for ${name}`
-              : `Show details for ${name}`
+            opened === index ? 'Hide project details' : 'Show project details'
           "
           :aria-expanded="opened === index"
           :aria-controls="`details-${index}`"
@@ -243,7 +243,7 @@ const xOffset = computed(
         <div
           ref="details"
           v-if="opened === index"
-          class="relative z-10 col-start-1 -col-end-1 flex scroll-mt-8 flex-col items-center gap-4 bg-black/5 p-4"
+          class="relative z-10 col-start-1 -col-end-1 flex scroll-mt-8 flex-col items-center gap-4 bg-black/5 p-4 max-sm:gap-2"
         >
           <div
             class="absolute -top-8 size-8 -translate-x-1/2"
@@ -266,7 +266,7 @@ const xOffset = computed(
           />
 
           <!-- links -->
-          <div class="flex flex-wrap justify-center gap-x-4 gap-y-2">
+          <div class="flex flex-wrap justify-center gap-x-2">
             <a
               v-for="(url, label) in links"
               :key="label"

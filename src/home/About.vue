@@ -6,7 +6,7 @@ import Outline from "./components/Outline.vue";
 
 <template>
   <section class="text-white">
-    <div class="flex items-center gap-8 max-lg:flex-col">
+    <div class="flex items-center gap-(--gap) max-lg:flex-col">
       <img :src="profile" class="size-50 rounded-full" alt="A handsome man" />
       <p>
         I started writing music over 20 years ago, with a humble notation
@@ -22,7 +22,7 @@ import Outline from "./components/Outline.vue";
     </div>
 
     <div
-      class="max-xs:grid-cols-1 grid max-w-max grid-cols-3 flex-wrap gap-4 self-center"
+      class="grid max-w-max grid-cols-3 gap-4 self-center max-sm:grid-cols-1"
     >
       <a href="studio" class="button hover:text-rose-500">
         <Outline />

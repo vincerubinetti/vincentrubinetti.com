@@ -141,8 +141,9 @@ const getBandcamp = (track: Track) =>
           <!-- track list -->
           <div class="flex w-full flex-col">
             <template v-for="(_track, index) in tracks" :key="index">
+              <!-- track button -->
               <button
-                class="button-dark group h-14 gap-4! p-0! pr-4! aria-pressed:rounded-br-none aria-pressed:bg-black/25"
+                class="button-dark group h-14 gap-4 p-0 pr-4 aria-pressed:rounded-br-none aria-pressed:bg-black/25"
                 :title="`Play ${_track.title}`"
                 :aria-pressed="track.id === _track.id"
                 @click="
@@ -178,12 +179,13 @@ const getBandcamp = (track: Track) =>
                 </div>
               </button>
 
+              <!-- track controls -->
               <div
                 v-if="track.id === _track.id"
-                class="flex flex-col rounded-br bg-black/25 p-2"
+                class="flex flex-col gap-4 rounded-br bg-black/25 p-2"
               >
                 <div
-                  class="gap flex items-center justify-center *:shrink-0 max-md:flex-wrap"
+                  class="flex items-center justify-center *:shrink-0 max-md:flex-wrap"
                 >
                   <!-- controls -->
                   <button
@@ -229,7 +231,7 @@ const getBandcamp = (track: Track) =>
                     @keydown.space.prevent="playing ? pause() : play()"
                   >
                     <svg
-                      viewBox="0 0 1 2"
+                      viewBox="0 0 1 1"
                       preserveAspectRatio="none"
                       class="size-full"
                     >
@@ -273,15 +275,10 @@ const getBandcamp = (track: Track) =>
                         class="fill-current"
                         :points="
                           track?.waveform?.smoothed
-                            ?.map(({ x, y }) => `${x},${1 - y * 0.8}`)
+                            ?.map(({ x, y }) => `${x},${1 - y ** 2}`)
                             ?.flat()
                             ?.join(' ')
                         "
-                      />
-                      <use
-                        href="#waveform"
-                        transform="translate(0, 1) scale(1, -1) translate(0, -1)"
-                        :opacity="0.9"
                       />
                     </svg>
                     <div

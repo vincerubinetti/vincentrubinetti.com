@@ -8,7 +8,7 @@ import Dash from "./components/Dash.vue";
   <section>
     <h2><Dash flip />About</h2>
 
-    <div class="flex max-w-full items-center gap-8 max-lg:flex-col">
+    <div class="flex max-w-full items-center gap-(--gap) max-lg:flex-col">
       <div class="size-50 shrink-0">
         <img :src="profile" alt="A handsome man" />
       </div>
@@ -24,7 +24,7 @@ import Dash from "./components/Dash.vue";
       </p>
     </div>
 
-    <p class="self-center text-lg">
+    <p class="self-center">
       But really, the best way to understand what I do is to
       <i>see it yourself</i>...
       <CornerRightDown class="ml-2 animate-bounce" />

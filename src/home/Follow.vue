@@ -12,7 +12,7 @@ import { getColor } from "./util/colors";
   <section class="bg-light">
     <h2 class="sr-only">Follow</h2>
 
-    <div class="grid grid-cols-[1fr_1fr] items-center gap-12 max-lg:contents">
+    <div class="grid grid-cols-2 items-center gap-(--gap) max-md:contents">
       <a
         href="https://vincerubinetti.bandcamp.com/"
         class="button"

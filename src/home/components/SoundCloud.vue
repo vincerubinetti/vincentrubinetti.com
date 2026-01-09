@@ -202,6 +202,7 @@ const onLoad = generator(async function* () {
   widget.bind(events.ERROR, onError);
 
   status.value = "success";
+  console.debug("success");
 });
 
 /** get waveform data */

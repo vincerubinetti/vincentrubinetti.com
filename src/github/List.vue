@@ -51,7 +51,7 @@ const cols: Cols<typeof repos> = [
 
 <template>
   <section>
-    <h2 class="self-center">Public GitHub contributions</h2>
+    <h2 class="self-center text-center">Public GitHub contributions</h2>
 
     <Table :rows="repos" :cols="cols">
       <template #link="{ row }">

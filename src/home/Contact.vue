@@ -17,7 +17,7 @@ useCaptcha();
   <section class="bg-light">
     <h2 class="sr-only">Contact</h2>
 
-    <div class="grid grid-cols-2 gap-12 max-lg:grid-cols-1">
+    <div class="grid grid-cols-2 gap-(--gap) max-lg:grid-cols-1">
       <div class="flex flex-col gap-4">
         <p>
           To use the <b>3Blue1Brown music</b> in videos or projects,

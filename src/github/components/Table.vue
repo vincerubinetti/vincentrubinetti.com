@@ -167,62 +167,72 @@ const cellAttrs = (col?: Cols[number], row?: Row) => {
 
 <template>
   <div class="flex flex-col gap-4">
-    <div class="flex items-center gap-2">
-      <button
-        :disabled="!table.getCanPreviousPage()"
-        title="First page"
-        @click="table.setPageIndex(0)"
-      >
-        <ChevronsLeft />
-      </button>
-      <button
-        :disabled="!table.getCanPreviousPage()"
-        title="Previous page"
-        @click="table.previousPage()"
-      >
-        <ChevronLeft />
-      </button>
+    <!-- controls -->
+    <div
+      class="flex flex-wrap items-center justify-between gap-4 max-md:flex-col"
+    >
+      <!-- pages -->
+      <div class="flex flex-wrap items-center gap-2">
+        <button
+          :disabled="!table.getCanPreviousPage()"
+          title="First page"
+          @click="table.setPageIndex(0)"
+        >
+          <ChevronsLeft />
+        </button>
+        <button
+          :disabled="!table.getCanPreviousPage()"
+          title="Previous page"
+          @click="table.previousPage()"
+        >
+          <ChevronLeft />
+        </button>
 
-      {{ table.getState().pagination.pageIndex + 1 }} of
-      {{ table.getPageCount() }}
+        <span>
+          {{ table.getState().pagination.pageIndex + 1 }} of
+          {{ table.getPageCount() }}
+        </span>
 
-      <button
-        :disabled="!table.getCanNextPage()"
-        title="Next page"
-        @click="table.nextPage()"
-      >
-        <ChevronRight />
-      </button>
-      <button
-        :disabled="!table.getCanNextPage()"
-        title="Last page"
-        @click="table.setPageIndex(table.getPageCount() - 1)"
-      >
-        <ChevronsRight />
-      </button>
+        <button
+          :disabled="!table.getCanNextPage()"
+          title="Next page"
+          @click="table.nextPage()"
+        >
+          <ChevronRight />
+        </button>
+        <button
+          :disabled="!table.getCanNextPage()"
+          title="Last page"
+          @click="table.setPageIndex(table.getPageCount() - 1)"
+        >
+          <ChevronsRight />
+        </button>
+      </div>
 
-      <div class="grow"></div>
-
-      <label>
-        Show
-        <Select
-          :modelValue="table.getState().pagination.pageSize as 5"
-          @update:modelValue="(value) => table.setPageSize(value ?? 5)"
-          :options="
-            [
-              { value: 5 },
-              { value: 10 },
-              { value: 25 },
-              { value: 50 },
-              { value: 100 },
-              { value: 9999, label: 'All' },
-            ] as const
-          "
-        />
-      </label>
-      <div>of {{ formatValue(rows.length) }} items</div>
+      <!-- page size -->
+      <div class="flex flex-wrap items-center gap-2">
+        <label>
+          Show
+          <Select
+            :modelValue="table.getState().pagination.pageSize as 5"
+            @update:modelValue="(value) => table.setPageSize(value ?? 5)"
+            :options="
+              [
+                { value: 5 },
+                { value: 10 },
+                { value: 25 },
+                { value: 50 },
+                { value: 100 },
+                { value: 9999, label: 'All' },
+              ] as const
+            "
+          />
+        </label>
+        <div>of {{ formatValue(rows.length) }} items</div>
+      </div>
     </div>
 
+    <!-- table body -->
     <div class="w-full overflow-x-auto">
       <table class="w-full">
         <thead>

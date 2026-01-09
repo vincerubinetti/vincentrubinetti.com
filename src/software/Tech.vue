@@ -41,15 +41,15 @@ const tech = [
   <section>
     <h2><Dash flip />Tech</h2>
 
-    <div class="grid grid-cols-3 gap-8 max-lg:grid-cols-2 max-md:grid-cols-1">
+    <div
+      class="grid grid-cols-3 gap-8 max-lg:grid-cols-2 max-lg:gap-6 max-md:grid-cols-1 max-md:gap-4"
+    >
       <div
         v-for="({ icons, description }, index) in tech"
         :key="index"
-        class="corners-1 relative flex gap-6 pt-6 pl-6"
+        class="corners-1 max-md relative flex gap-6 pt-6 pl-6"
       >
-        <div
-          class="flex h-full w-6 shrink-0 flex-col items-center justify-between"
-        >
+        <div class="flex h-full w-6 shrink-0 flex-col items-center gap-2">
           <component
             v-for="(icon, name, index) in icons"
             :key="index"
