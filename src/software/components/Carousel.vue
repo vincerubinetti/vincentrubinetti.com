@@ -47,7 +47,7 @@ const goTo = (index: number, userAction = true) => {
 const startCurrent = ref(0);
 
 /** swiping gesture */
-const { x, swiping } = useSwipe({
+const { x, state } = useSwipe({
   target: rootRef,
   onStart: () => (startCurrent.value = current.value),
   onMove: () => (current.value = startCurrent.value - x.value),
@@ -67,8 +67,8 @@ watch(visible, () => {
 });
 
 /** pause autoplay while swiping */
-watch(swiping, (value) => {
-  if (value) pause();
+watch(state, () => {
+  if (state.value !== "idle") pause();
 });
 
 /** keyboard control */
@@ -84,18 +84,19 @@ const { toggle, isFullscreen } = useFullscreen(rootRef);
 </script>
 
 <template>
-  <div ref="root" v-bind="$attrs" class="relative touch-none overflow-hidden">
+  <div
+    ref="root"
+    v-bind="$attrs"
+    class="relative touch-none overflow-hidden perspective-normal"
+  >
     <div
       v-for="index in range(
         Math.floor(current) - 1,
         Math.ceil(current) + 1 + 1,
       )"
       :key="index"
-      class="image absolute inset-0 size-full transition-all"
-      :class="[
-        images.length > 1 ? 'cursor-grab' : '',
-        swiping ? 'duration-0' : 'duration-250',
-      ]"
+      class="image absolute inset-0 size-full cursor-grab transition-all backface-hidden"
+      :class="state === 'idle' ? 'duration-250' : 'duration-0'"
       :style="{ '--percent': index - current }"
     >
       <img
@@ -166,7 +167,8 @@ const { toggle, isFullscreen } = useFullscreen(rootRef);
 @reference "tailwindcss";
 
 .image {
-  translate: calc(100% * var(--percent) / 4) 0;
+  transform: translateZ(--spacing(-50)) rotateY(calc(var(--percent) * 90deg))
+    translateZ(--spacing(50));
   opacity: calc(clamp(1 - abs(var(--percent)), 0, 1));
 }
 </style>
