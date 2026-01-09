@@ -84,7 +84,7 @@ const { toggle, isFullscreen } = useFullscreen(rootRef);
 </script>
 
 <template>
-  <div ref="root" v-bind="$attrs" class="relative touch-none overflow-hidden">
+  <div ref="root" class="group relative touch-none overflow-hidden">
     <div
       v-for="index in range(
         Math.floor(current) - 1,
@@ -103,55 +103,52 @@ const { toggle, isFullscreen } = useFullscreen(rootRef);
       />
     </div>
 
-    <button
-      v-if="isFullscreen"
-      class="fixed top-0 right-0 z-100 size-8 bg-black text-white"
-      title="Exit fullscreen"
-      @click="toggle()"
+    <div
+      v-if="controls"
+      class="absolute bottom-0 -mt-4 flex w-full items-center justify-center bg-black/75 text-white opacity-0 transition-opacity *:size-8 group-focus-within:opacity-100 group-hover:opacity-100 *:hover:opacity-50"
     >
-      <Minimize />
-    </button>
-  </div>
+      <template v-if="images.length > 1">
+        <button
+          class="mr-auto"
+          :title="`${isActive ? 'Pause' : 'Resume'} autoplay`"
+          @click="isActive ? pause() : resume()"
+        >
+          <Pause v-if="isActive" />
+          <Play v-else />
+        </button>
 
-  <div
-    v-if="controls"
-    class="[&>*:hover]:text-dark flex max-w-full items-center justify-center *:size-8"
-  >
-    <button
-      :title="`${isActive ? 'Pause' : 'Resume'} autoplay`"
-      @click="isActive ? pause() : resume()"
-    >
-      <Pause v-if="isActive" />
-      <Play v-else />
-    </button>
+        <button title="Previous image" @click="previous()">
+          <Chevron class="-scale-x-100" />
+        </button>
 
-    <div />
+        <button
+          v-for="index in range(images.length)"
+          :key="index"
+          :class="
+            index === mod(Math.round(current), images.length)
+              ? 'opacity-100!'
+              : 'opacity-25'
+          "
+          title="Go to image {{ index + 1 }}"
+          @click="goTo(index)"
+        >
+          <Circle />
+        </button>
 
-    <template v-if="images.length > 1">
-      <button title="Previous image" @click="previous()">
-        <Chevron class="-scale-x-100" />
-      </button>
+        <button title="Next image" @click="next()">
+          <Chevron />
+        </button>
+      </template>
+
       <button
-        v-for="index in range(images.length)"
-        :key="index"
-        :class="
-          index === mod(Math.round(current), images.length) ? '' : 'opacity-25'
-        "
-        title="Go to image {{ index + 1 }}"
-        @click="goTo(index)"
+        class="ml-auto"
+        :title="isFullscreen ? 'Exit fullscreen' : 'Enter fullscreen'"
+        @click="toggle()"
       >
-        <Circle />
+        <Minimize v-if="isFullscreen" />
+        <Maximize v-else />
       </button>
-      <button title="Next image" @click="next()">
-        <Chevron />
-      </button>
-    </template>
-
-    <div />
-
-    <button v-if="!isFullscreen" title="Enter fullscreen" @click="toggle()">
-      <Maximize />
-    </button>
+    </div>
   </div>
 </template>
 
@@ -159,7 +156,7 @@ const { toggle, isFullscreen } = useFullscreen(rootRef);
 @reference "tailwindcss";
 
 .image {
-  transform: scale(1.005) translateX(calc(var(--percent) * 25%));
+  transform: translateX(calc(var(--percent) * 25%));
   opacity: calc(clamp(1 - abs(var(--percent)), 0, 1));
 }
 </style>

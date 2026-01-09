@@ -119,7 +119,6 @@ const open = async (index: number) => {
   const el = details.value?.[0];
   if (!el) return;
   el.scrollIntoView({ behavior: "smooth", block: "start" });
-  el.querySelector("button")?.focus();
 };
 
 /** close project details */
