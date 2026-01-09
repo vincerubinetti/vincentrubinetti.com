@@ -24,13 +24,13 @@ import Outline from "./components/Outline.vue";
     <div
       class="grid max-w-max grid-cols-3 gap-4 self-center max-sm:grid-cols-1"
     >
-      <a href="studio" class="button hover:text-rose-500">
+      <a href="studio" class="button hover:text-red-500">
         <Outline />
         <Headphones />
         Studio
       </a>
 
-      <a href="stems" class="button hover:text-emerald-500">
+      <a href="stems" class="button hover:text-green-500">
         <Outline />
         <Leaf />
         Stems

@@ -60,7 +60,9 @@ useCaptcha();
           placeholder="Message"
           rows="5"
         />
-        <button type="submit" class="button"><Outline /><Send />Send</button>
+        <button type="submit" class="button hover:text-blue-500">
+          <Outline /><Send />Send
+        </button>
       </form>
     </div>
   </section>
