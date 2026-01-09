@@ -231,7 +231,7 @@ const xOffset = computed(
         >
           <Carousel
             :images="images.map((image) => ({ image }))"
-            class="pointer-events-none aspect-4/3 w-full border bg-black transition-all"
+            class="pointer-events-none aspect-4/3 w-full border border-zinc-500 bg-black transition-all"
             :class="opened === index ? 'brightness-200 contrast-0' : ''"
           />
 
@@ -261,7 +261,7 @@ const xOffset = computed(
           <Carousel
             :images="images.map((image) => ({ image }))"
             :controls="true"
-            class="aspect-4/3 w-full max-w-100 border bg-black"
+            class="aspect-4/3 w-full max-w-100 border border-current/10 bg-black"
           />
 
           <!-- links -->
@@ -285,7 +285,7 @@ const xOffset = computed(
                   .flat()
                   .filter(Boolean)"
                 :key="index"
-                class="hover:bg-mid flex items-center gap-1 border p-1"
+                class="hover:bg-mid flex items-center gap-1 border border-current/25 p-1"
                 :aria-label="`Search '${item}'`"
                 @click="
                   search = item;

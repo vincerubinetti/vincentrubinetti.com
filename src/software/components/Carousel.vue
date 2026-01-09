@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref, useTemplateRef, watch } from "vue";
 import {
+  useElementSize,
   useElementVisibility,
   useEventListener,
   useFullscreen,
@@ -21,6 +22,8 @@ type Props = {
 const { images, controls } = defineProps<Props>();
 
 const rootRef = useTemplateRef("root");
+
+const size = useElementSize(rootRef);
 
 /** current image index */
 const current = ref(0);
@@ -87,7 +90,8 @@ const { toggle, isFullscreen } = useFullscreen(rootRef);
   <div
     ref="root"
     v-bind="$attrs"
-    class="relative touch-none overflow-hidden perspective-normal"
+    class="relative touch-none overflow-hidden perspective-distant"
+    :style="{ '--width': size.width.value + 'px' }"
   >
     <div
       v-for="index in range(
@@ -96,7 +100,7 @@ const { toggle, isFullscreen } = useFullscreen(rootRef);
       )"
       :key="index"
       class="image absolute inset-0 size-full cursor-grab transition-all backface-hidden"
-      :class="state === 'idle' ? 'duration-250' : 'duration-0'"
+      :class="state === 'idle' ? 'duration-500' : 'duration-0'"
       :style="{ '--percent': index - current }"
     >
       <img
@@ -167,8 +171,9 @@ const { toggle, isFullscreen } = useFullscreen(rootRef);
 @reference "tailwindcss";
 
 .image {
-  transform: translateZ(--spacing(-50)) rotateY(calc(var(--percent) * 90deg))
-    translateZ(--spacing(50));
+  --depth: calc(var(--width) / 2);
+  transform: translateZ(2px) translateZ(calc(-1 * var(--depth)))
+    rotateY(calc(var(--percent) * 90deg)) translateZ(var(--depth));
   opacity: calc(clamp(1 - abs(var(--percent)), 0, 1));
 }
 </style>
