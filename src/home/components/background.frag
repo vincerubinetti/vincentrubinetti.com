@@ -10,10 +10,10 @@ uniform float u_level;
 uniform float u_play;
 uniform vec3 u_colors[6];
 
+out vec4 outColor;
+
 // number of colors
 const float colors = 6.0f;
-
-out vec4 outColor;
 
 #define PI 3.14159265
 

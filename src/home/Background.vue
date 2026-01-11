@@ -2,7 +2,7 @@
 import { computed, useTemplateRef, watchEffect } from "vue";
 import { useIntervalFn } from "@vueuse/core";
 import { Canvas } from "glsl-canvas-js";
-import type { Canvas as CanvasType } from "glsl-canvas-js/dist/esm/glsl";
+import type { Canvas as CanvasType } from "glsl-canvas-js";
 import { range } from "lodash-es";
 import shader from "./components/background.frag?raw";
 import { playing, smoothedLevel, track } from "./util/state";

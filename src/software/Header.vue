@@ -3,6 +3,7 @@ import { computed, useTemplateRef, watch } from "vue";
 import { useMouseInElement } from "@vueuse/core";
 import { range } from "lodash-es";
 import svgFile from "@/images/brand/title.svg?raw";
+import Background from "@/software/Background.vue";
 
 const svg = useTemplateRef("svg");
 
@@ -59,6 +60,8 @@ const hatch = 10;
 
 <template>
   <header class="bg-dark text-white">
+    <Background />
+
     <hgroup class="flex flex-col items-center gap-2 py-8 text-center">
       <h1 class="sr-only">Vincent Rubinetti</h1>
       <a href="/software" class="corners-2 w-86 max-w-full text-white">
