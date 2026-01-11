@@ -1,7 +1,5 @@
 <script setup lang="ts">
-import { Headphones, Leaf, Music } from "lucide-vue-next";
 import profile from "@/images/vince.png?url&format=webp";
-import Outline from "./components/Outline.vue";
 </script>
 
 <template>
@@ -19,28 +17,6 @@ import Outline from "./components/Outline.vue";
         others in the same way that so many great works of art have profoundly
         impacted me.
       </p>
-    </div>
-
-    <div
-      class="grid max-w-max grid-cols-3 gap-4 self-center max-sm:grid-cols-1"
-    >
-      <a href="studio" class="button hover:text-red-500">
-        <Outline />
-        <Headphones />
-        Studio
-      </a>
-
-      <a href="stems" class="button hover:text-green-500">
-        <Outline />
-        <Leaf />
-        Stems
-      </a>
-
-      <a href="sheets" class="button hover:text-cyan-500">
-        <Outline />
-        <Music />
-        Sheets
-      </a>
     </div>
   </section>
 </template>

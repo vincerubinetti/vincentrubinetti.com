@@ -6,9 +6,10 @@
 
   --radius: 0;
 
-  --color-light: oklch(97% 0.01 40);
-  --color-mid: oklch(90% 0.05 220);
-  --color-dark: oklch(50% 0.15 350);
+  --color-light: oklch(97% 0.015 40);
+  --color-light-2: oklch(97% 0.02 240);
+  --color-mid: oklch(90% 0.08 240);
+  --color-dark: oklch(55% 0.1 240);
 
   --tl-corner: radial-gradient(black 0, black 100%, transparent) top left
     no-repeat;
@@ -47,11 +48,11 @@
   @apply relative z-0 transition-all;
 
   &::before {
-    @apply bg-mid absolute inset-0 -z-10 scale-x-0 -skew-x-90 transition-all content-[''];
+    @apply bg-mid absolute inset-0 -z-10 transform-[skewX(-45deg)_scaleX(0)] transition-all duration-250 content-[''];
   }
 
   &:hover::before {
-    @apply scale-x-100 skew-x-0;
+    @apply transform-[skewX(0deg)_scaleX(1)];
   }
 }
 
@@ -59,7 +60,7 @@
   @apply relative z-0;
 
   &::after {
-    @apply absolute inset-0 -z-10 border-2 border-current mask-size-[8px_8px]! transition-all content-[''] [mask:var(--tl-corner),var(--tr-corner),var(--br-corner),var(--bl-corner)];
+    @apply absolute inset-0 -z-10 border-2 border-current mask-size-[8px_8px]! transition-all duration-250 content-[''] [mask:var(--tl-corner),var(--tr-corner),var(--br-corner),var(--bl-corner)];
   }
 
   &:hover::after {
@@ -71,7 +72,7 @@
   @apply relative z-0;
 
   &::after {
-    @apply absolute inset-0 -z-10 border-2 border-current mask-size-[8px_8px]! transition-all content-[''] [mask:var(--tl-corner),var(--br-corner)];
+    @apply absolute inset-0 -z-10 border-2 border-current mask-size-[8px_8px]! transition-all duration-250 content-[''] [mask:var(--tl-corner),var(--br-corner)];
   }
 
   &:hover::after {
@@ -83,18 +84,10 @@
   @apply relative z-0;
 
   &::after {
-    @apply absolute inset-0 -z-10 border-2 border-current mask-size-[8px_8px]! transition-all content-[''] [mask:var(--tl-corner)];
+    @apply absolute inset-0 -z-10 border-2 border-current mask-size-[8px_8px]! transition-all duration-250 content-[''] [mask:var(--tl-corner)];
   }
 
   &:hover::after {
     @apply mask-size-[16px_16px]!;
-  }
-}
-
-@utility slant {
-  @apply relative z-0;
-
-  &::before {
-    @apply bg-mid absolute inset-0 -z-10 -skew-2 content-[''];
   }
 }

@@ -8,7 +8,7 @@ const icons = { Bot, Cpu, Drum, Library, MicVocal, Plug };
 
 <template>
   <section>
-    <h2>Studio</h2>
+    <h2 class="self-center text-center">Studio</h2>
 
     <div class="grid grid-cols-2 items-start gap-4 max-md:grid-cols-1">
       <a :href="picture" class="self-stretch overflow-hidden">

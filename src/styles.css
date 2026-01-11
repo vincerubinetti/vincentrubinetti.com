@@ -63,12 +63,8 @@
     @apply h-px w-full border-0 bg-current/10;
   }
 
-  img {
-    @apply max-w-full;
-  }
-
   svg {
-    @apply max-w-full shrink-0 overflow-visible;
+    @apply shrink-0 overflow-visible;
   }
 
   a {

@@ -150,22 +150,7 @@ const xOffset = computed(
   <section class="bg-light paper">
     <h2>Projects<Dash /></h2>
 
-    <div
-      class="flex justify-center-safe gap-8 overflow-auto max-lg:gap-6 max-md:gap-4 max-sm:gap-2"
-    >
-      <div
-        v-for="({ name }, index) in collaborators"
-        :key="index"
-        :title="name"
-        role="img"
-      >
-        <component
-          :is="collaboratorLogos[slugify(name)]"
-          class="-0 size-12 opacity-50 grayscale transition-all hover:opacity-100 hover:grayscale-0"
-        />
-      </div>
-    </div>
-
+    <!-- search -->
     <div class="relative flex items-center">
       <input
         ref="input"
@@ -184,20 +169,23 @@ const xOffset = computed(
       </button>
     </div>
 
+    <!-- autocomplete -->
     <datalist id="search-suggestions">
       <option v-for="(option, index) in options" :key="index" :value="option">
         {{ counts[option] }}
       </option>
     </datalist>
 
-    <b class="text-center">
+    <!-- filter info -->
+    <b class="-my-4 text-center max-md:-my-2">
       {{ formatValue(filteredProjects.length) }} projects
     </b>
 
+    <!-- gallery -->
     <div
-      class="gallery grid grid-flow-dense grid-cols-3 items-start gap-4 max-md:grid-cols-2 max-sm:grid-cols-1"
+      class="gallery grid grid-flow-dense grid-cols-3 items-start gap-8 max-md:grid-cols-2 max-md:gap-4 max-sm:grid-cols-1"
     >
-      <!-- project card -->
+      <!-- card -->
       <template
         v-for="(
           {
@@ -221,7 +209,7 @@ const xOffset = computed(
         <!-- open/close button -->
         <button
           ref="button"
-          class="hover:bg-mid flex flex-col gap-2 p-2 hover:scale-105"
+          class="hover:before:bg-mid relative flex flex-col gap-2 before:absolute before:-inset-2 before:-z-10 before:transition-all hover:scale-105"
           :title="
             opened === index ? 'Hide project details' : 'Show project details'
           "
@@ -231,7 +219,7 @@ const xOffset = computed(
         >
           <Carousel
             :images="images.map((image) => ({ image }))"
-            class="pointer-events-none aspect-4/3 w-full border border-zinc-500 bg-black transition-all"
+            class="pointer-events-none aspect-4/3 w-full bg-black transition-all"
             :class="opened === index ? 'brightness-200 contrast-0' : ''"
           />
 
@@ -261,7 +249,7 @@ const xOffset = computed(
           <Carousel
             :images="images.map((image) => ({ image }))"
             :controls="true"
-            class="aspect-4/3 w-full max-w-100 border border-current/10 bg-black"
+            class="aspect-4/3 w-full max-w-100 bg-black"
           />
 
           <!-- description -->
@@ -324,9 +312,29 @@ const xOffset = computed(
       </template>
     </div>
 
-    <p class="text-center">
-      Plus many other <a href="/github">public GitHub contributions</a> and
-      private/in-progress/legacy/etc. projects not listed here!
-    </p>
+    <!-- collaborators -->
+    <div
+      class="flex justify-center-safe gap-8 overflow-auto max-lg:gap-6 max-md:gap-4 max-sm:gap-2"
+    >
+      <div
+        v-for="({ name }, index) in collaborators"
+        :key="index"
+        :title="name"
+        role="img"
+      >
+        <component
+          :is="collaboratorLogos[slugify(name)]"
+          class="-0 size-12 opacity-50 grayscale transition-all hover:opacity-100 hover:grayscale-0"
+        />
+      </div>
+    </div>
+
+    <div class="flex flex-col gap-2 self-center">
+      <p>Plus <b>many more</b> professional and personal projects...</p>
+      <ul>
+        <li>Private or in-progress projects I can't share (yet)</li>
+        <li>An archive of apps/games/experiments/etc. too long to list</li>
+      </ul>
+    </div>
   </section>
 </template>

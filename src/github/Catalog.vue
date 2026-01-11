@@ -50,9 +50,17 @@ const cols: Cols<typeof repos> = [
 </script>
 
 <template>
-  <section>
-    <h2 class="self-center text-center">Public GitHub contributions</h2>
+  <section class="bg-light paper">
+    <hgroup class="flex flex-col gap-6">
+      <h2 class="self-center text-center">GitHub Catalog</h2>
 
+      <div class="text-center text-lg">
+        Full listing of my public GitHub contributions
+      </div>
+    </hgroup>
+  </section>
+
+  <section>
     <Table :rows="repos" :cols="cols">
       <template #link="{ row }">
         <a
