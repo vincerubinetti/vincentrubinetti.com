@@ -111,7 +111,7 @@ const hatch = 10;
             <rect
               :x="-p"
               :y="-p"
-              width="0"
+              :width="0"
               :height="h"
               transform="skewX(-45)"
               :style="{ transformOrigin }"
@@ -141,9 +141,9 @@ const hatch = 10;
               class="stroke-current stroke-3"
               transform="skewX(-45)"
               :x="-p"
-              :y="-p"
+              :y="-p + h / 4"
               width="1"
-              :height="h"
+              :height="h / 2"
               opacity="0"
               :style="{ transformOrigin }"
             >
