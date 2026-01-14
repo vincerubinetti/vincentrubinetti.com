@@ -37,7 +37,7 @@ void main() {
   // coord normalized -1 to 1
   vec2 xy = (2.0f * gl_FragCoord.xy - u_resolution.xy) / min(u_resolution.x, u_resolution.y);
 
-  float time = u_time * speed + 0.25f;
+  float time = u_time * speed - 0.25f;
 
   // transform scene
   xy /= zoom;
@@ -46,7 +46,6 @@ void main() {
   // line widths
   float thickness = 0.002f;
   float smoothing = 0.002f;
-  float corners = 0.75f;
 
   // ring from center of scene
   float ring = floor(max(abs(xy.x), abs(xy.y)) * 2.0f);
@@ -62,13 +61,9 @@ void main() {
     // scale down line widths with fractal scale
     thickness *= scale;
     smoothing *= scale;
-    corners /= scale;
-    // leave only corners
-    if(abs(xy.x) < corners || abs(xy.y) < corners)
-      continue;
     // square dist from center
     float dist = max(abs(xy.x), abs(xy.y));
-    dist -= time - level / levels;
+    dist -= time + level / levels;
     dist = mod(dist, 1.0f);
     // line brightness
     float line = doublesmooth(0.5f - thickness - smoothing, 0.5f - thickness, 0.5f + thickness, 0.5f + thickness + smoothing, dist);

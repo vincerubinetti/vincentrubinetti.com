@@ -18,5 +18,5 @@ watchEffect(() => {
 </script>
 
 <template>
-  <canvas ref="canvas" class="absolute inset-0 size-full opacity-10" />
+  <canvas ref="canvas" class="absolute inset-0 size-full opacity-50" />
 </template>
