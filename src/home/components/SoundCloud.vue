@@ -248,17 +248,13 @@ const getTags = (track: Track) =>
 const getColors = async (track: Track) => {
   const img = new Image();
   img.crossOrigin = "Anonymous";
-  img.src = track.artwork_url || "";
-  await new Promise((resolve) => (img.onload = () => resolve(true)));
-  const palette = await new Vibrant(img).getPalette();
-  return [
-    palette.LightVibrant,
-    palette.Vibrant,
-    palette.DarkVibrant,
-    palette.LightMuted,
-    palette.Muted,
-    palette.DarkMuted,
-  ]
+  /** load img url */
+  img.src = (track.artwork_url || "").replace("-large.jpg", "-t500x500.png");
+  /** (size affects palette results) */
+  /** wait for image to load */
+  await img.decode();
+  /** get palette */
+  return Object.values(await new Vibrant(img).getPalette())
     .filter((color) => color !== null)
     .map(({ r, g, b }) => [r / 255, g / 255, b / 255]);
 };
