@@ -2,7 +2,6 @@
 import { computed, useTemplateRef, watchEffect } from "vue";
 import { useIntervalFn } from "@vueuse/core";
 import { Canvas } from "glsl-canvas-js";
-import type { Canvas as CanvasType } from "glsl-canvas-js";
 import { range } from "lodash-es";
 import shader from "./components/background.frag?raw";
 import { playing, smoothedLevel, track } from "./util/state";
@@ -12,7 +11,10 @@ const canvas = useTemplateRef("canvas");
 /** attach glsl lib to canvas element */
 const glsl = computed(() => {
   if (!canvas.value) return null;
-  return new Canvas(canvas.value, { fragmentString: shader }) as CanvasType;
+  return new Canvas(canvas.value, {
+    fragmentString: shader,
+    failIfMajorPerformanceCaveat: true,
+  });
 });
 
 /** set shader "level" uniform */

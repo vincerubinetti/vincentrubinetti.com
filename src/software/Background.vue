@@ -1,22 +1,20 @@
 <script setup lang="ts">
-import { computed, useTemplateRef, watchEffect } from "vue";
+import { useTemplateRef, watch } from "vue";
 import { Canvas } from "glsl-canvas-js";
-import type { Canvas as CanvasType } from "glsl-canvas-js";
 import shader from "./components/background.frag?raw";
 
 const canvas = useTemplateRef("canvas");
 
 /** attach glsl lib to canvas element */
-const glsl = computed(() => {
+watch(canvas, () => {
   if (!canvas.value) return null;
-  return new Canvas(canvas.value, { fragmentString: shader }) as CanvasType;
-});
-
-watchEffect(() => {
-  console.log(glsl.value);
+  new Canvas(canvas.value, {
+    fragmentString: shader,
+    failIfMajorPerformanceCaveat: true,
+  });
 });
 </script>
 
 <template>
-  <canvas ref="canvas" class="absolute inset-0 size-full opacity-50" />
+  <canvas ref="canvas" class="absolute inset-0 size-full" />
 </template>

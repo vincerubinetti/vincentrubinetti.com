@@ -9,65 +9,85 @@ uniform vec2 u_resolution;
 
 out vec4 outColor;
 
-const float levels = 4.0f;
-const float scale = 2.0f;
-const float zoom = 3.0f;
-const float speed = 0.1f;
-
-// rotate 2d vec
-vec2 rotate(vec2 xy, float degrees) {
-  float c = cos(radians(degrees));
-  float s = sin(radians(degrees));
-  mat2 rot = mat2(c, -s, s, c);
-  return rot * xy;
+// angle to direction vector
+vec2 dir(float direction) {
+  return vec2(cos(direction), sin(direction));
 }
 
-// double-sided smoothstep: __a⟋b‾‾c⟍d__
-float doublesmooth(float a, float b, float c, float d, float x) {
-  if(x >= b && x <= c)
-    return 1.0f;
-  if(x >= a && x <= b)
-    return smoothstep(a, b, x);
-  if(x >= c && x <= d)
-    return smoothstep(d, c, x);
-  return 0.0f;
+// perpendicular distance from point to line
+float distToLine(vec2 start, vec2 direction, vec2 point) {
+  return length(cross(vec3(direction, 0.0f), vec3(point - start, 0.0f))) / length(direction);
 }
+
+// distance along line from line start to point's projection on line
+float distAlongLine(vec2 start, vec2 direction, vec2 point) {
+  return dot(point - start, normalize(direction));
+}
+
+// simple random float from -1 to 1
+float randFloat(vec2 seed) {
+  return -1.0f + 2.0f * fract(sin(dot(seed, vec2(12.9898f, 78.233f))) * 43758.5453f);
+}
+
+// random vec2
+vec2 rand(vec2 seed) {
+  return vec2(randFloat(seed), randFloat(seed + 1.0f));
+}
+
+const float _thickness = 2.0f;
+const float _length = 5000.0f;
+const float _levels = 50.0f;
+const float _gap = 100.0f;
+const float _jitter = 10.0f;
+
+const float _diagGap = _gap * sqrt(2.0f);
 
 void main() {
-  // coord normalized -1 to 1
-  vec2 xy = (2.0f * gl_FragCoord.xy - u_resolution.xy) / min(u_resolution.x, u_resolution.y);
+  // center coordinates
+  vec2 xy = gl_FragCoord.xy - u_resolution.xy * 0.5f;
 
-  float time = u_time * speed - 0.25f;
+  // skip pixels not near diagonal line (for performance)
+  float diag1 = xy.x + xy.y;
+  float diag2 = xy.x - xy.y;
+  if(!(mod(diag1, _diagGap) < _jitter || mod(-diag1, _diagGap) < _jitter || mod(diag2, _diagGap) < _jitter || mod(-diag2, _diagGap) < _jitter)) {
+    return;
+  }
 
-  // transform scene
-  xy /= zoom;
-  xy = rotate(xy, 45.0f);
+  // angle of line
+  float angle = radians(45.0f);
+  // distance of line from center
+  float dist = 400.0f;
 
-  // line widths
-  float thickness = 0.002f;
-  float smoothing = 0.002f;
+  // each level of lines
+  for(float level = 1.0f; level <= _levels; level++) {
+    // start vector of line
+    vec2 start = vec2(cos(angle) * dist, sin(angle) * dist);
+    // direction vector of line
+    vec2 direction = dir(angle - radians(90.0f));
+    // back up to center line
+    start -= direction * (_length / 2.0f);
+    // how far along in animation are we, from 0 to 1
+    float phase = mod(0.5f - 0.5f * level / _levels + 0.1f * u_time, 1.0f);
+    // animate length
+    float animLength = _length * smoothstep(0.5f, 0.8f, phase);
+    // animate jitter
+    float animJitter = _jitter * smoothstep(0.8f, 0.5f, phase);
+    // animate fade/alpha
+    float animFade = smoothstep(1.0f, 0.8f, phase);
+    // offset coord by jitter
+    vec2 point = xy + rand(xy) * animJitter;
 
-  // ring from center of scene
-  float ring = floor(max(abs(xy.x), abs(xy.y)) * 2.0f);
-  time -= ring / levels;
+    // compute distances
+    float toLine = distToLine(start, direction, point);
+    float alongLine = distAlongLine(start, direction, point) / animLength;
 
-  // fractal levels
-  for(float level = 0.0f; level < levels; level++) {
-    // only go down to level 1 in ring 1, level 2 in ring 2, etc
-    if(level >= ring)
-      break;
-    // fractalize coords
-    xy = fract(xy * scale) - 0.5f;
-    // scale down line widths with fractal scale
-    thickness *= scale;
-    smoothing *= scale;
-    // square dist from center
-    float dist = max(abs(xy.x), abs(xy.y));
-    dist -= time + level / levels;
-    dist = mod(dist, 1.0f);
-    // line brightness
-    float line = doublesmooth(0.5f - thickness - smoothing, 0.5f - thickness, 0.5f + thickness, 0.5f + thickness + smoothing, dist);
-    // accumulate brightness
-    outColor += vec4(line);
+    // draw line segment
+    if(toLine < _thickness && alongLine > 0.0f && alongLine < 1.0f)
+      outColor += vec4(animFade);
+
+    // increment line
+    angle += radians(90.0f);
+    if(mod(level, 4.0f) == 0.0f)
+      dist += _gap;
   }
 }
