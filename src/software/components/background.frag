@@ -11,9 +11,9 @@ out vec4 outColor;
 
 const float _levels = 7.0f;
 const float _thickness = 2.0f;
-const float _dist = 500.0f;
+const float _dist = 600.0f;
 const float _gap = 100.0f;
-const float _dash = 50.0f;
+const float _dash = 20.0f;
 const float _delay = -0.25f;
 const float _speed = 0.1f;
 const float _stagger = 0.01f;
