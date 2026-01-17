@@ -104,7 +104,7 @@ void main() {
 
       // draw line segment
       if(inThickness && inLength && inDash) {
-        outColor = vec4(1.0f);
+        outColor = vec4(animFade);
         return;
       }
 
