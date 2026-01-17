@@ -24,12 +24,16 @@ float distAlongLine(vec2 start, vec2 direction, vec2 point) {
   return dot(point - start, normalize(direction));
 }
 
+bool inRange(float value, float threshold) {
+  return value < threshold || value > (1.0f - threshold);
+}
+
 const float _levels = 12.0f;
-const float _thickness = 2.0f;
+const float _thickness = 1.0f;
 const float _gap = 100.0f;
 const float _dist = 500.0f;
-const float _dash = 1.0f / 64.0f;
-const float _length = 2000.0f * sqrt(2.0f);
+const float _length = 3000.0f;
+const float _dash = 25.0f;
 const float _delay = 0.1f;
 const float _speed = 0.1f;
 const float _stagger = -0.5f;
@@ -81,17 +85,16 @@ void main() {
 
       // compute distances
       float toLine = distToLine(start, direction, xy);
-      float alongLine = distAlongLine(start, direction, xy) / animLength;
-      float dashDist = distAlongLine(start, direction, xy) / _length;
+      float alongLine = distAlongLine(start, direction, xy);
 
       // draw conditions
       bool inThickness = toLine < _thickness;
-      bool inLength = alongLine > 0.0f && alongLine < 1.0f;
+      bool inLength = alongLine > 0.0f && alongLine < animLength;
       bool inDash = true;
       if(mod(level, 4.0f) == 2.0f)
-        inDash = mod(dashDist, _dash) < _dash / 2.0f;
+        inDash = inRange(mod(alongLine, _dash) / _dash, 0.25f);
       else if(mod(level, 4.0f) == 1.0f || mod(level, 4.0f) == 3.0f)
-        inDash = mod(dashDist, _dash) < _dash / 16.0f;
+        inDash = inRange(mod(alongLine, _dash) / _dash, 0.0625f);
 
       // draw line segment
       if(inThickness && inLength && inDash) {
