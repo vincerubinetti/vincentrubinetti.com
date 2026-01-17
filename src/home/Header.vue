@@ -2,7 +2,7 @@
 import Logo from "@/images/brand/vr.svg?component";
 
 /** share.png generate */
-const share = true;
+const share = false;
 </script>
 
 <template>
