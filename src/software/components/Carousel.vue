@@ -91,8 +91,14 @@ const { toggle, isFullscreen } = useFullscreen(rootRef);
         Math.ceil(current) + 1 + 1,
       )"
       :key="index"
-      class="image absolute inset-0 size-full cursor-grab transition-all backface-hidden"
-      :class="state === 'idle' ? 'duration-500' : 'duration-0'"
+      class="image absolute inset-0 size-full cursor-grab transition-all"
+      :class="
+        isActive
+          ? 'duration-500'
+          : state === 'idle'
+            ? 'duration-250'
+            : 'duration-0'
+      "
       :style="{ '--percent': index - current }"
     >
       <img
@@ -106,6 +112,7 @@ const { toggle, isFullscreen } = useFullscreen(rootRef);
     <div
       v-if="controls"
       class="absolute bottom-0 -mt-4 flex w-full items-center justify-center bg-black/75 text-white opacity-0 transition-opacity *:size-8 group-focus-within:opacity-100 group-hover:opacity-100 *:hover:opacity-50"
+      @pointerdown.stop
     >
       <template v-if="images.length > 1">
         <button
