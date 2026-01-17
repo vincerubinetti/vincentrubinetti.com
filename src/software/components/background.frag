@@ -29,7 +29,7 @@ bool inRange(float value, float threshold) {
 }
 
 const float _levels = 12.0f;
-const float _thickness = 1.0f;
+const float _thickness = 2.0f;
 const float _gap = 100.0f;
 const float _dist = 500.0f;
 const float _length = 3000.0f;
@@ -41,7 +41,6 @@ const float _strokePoint = 0.0f;
 const float _fadePoint = 0.75f;
 
 const float _diagGap = _gap * sqrt(2.0f);
-const float _double = 2.0f * _thickness;
 
 void main() {
   // center coordinates
@@ -53,7 +52,7 @@ void main() {
   // skip pixels not near diagonal line (for performance)
   float diag1 = xy.x + xy.y;
   float diag2 = xy.x - xy.y;
-  if(!(mod(diag1, _diagGap) < _double || mod(-diag1, _diagGap) < _double || mod(diag2, _diagGap) < _double || mod(-diag2, _diagGap) < _double)) {
+  if(!(mod(diag1, _diagGap) < _thickness || mod(-diag1, _diagGap) < _thickness || mod(diag2, _diagGap) < _thickness || mod(-diag2, _diagGap) < _thickness)) {
     return;
   }
 
@@ -88,7 +87,7 @@ void main() {
       float alongLine = distAlongLine(start, direction, xy);
 
       // draw conditions
-      bool inThickness = toLine < _thickness;
+      bool inThickness = toLine < _thickness / 2.0f;
       bool inLength = alongLine > 0.0f && alongLine < animLength;
       bool inDash = true;
       if(mod(level, 4.0f) == 2.0f)
