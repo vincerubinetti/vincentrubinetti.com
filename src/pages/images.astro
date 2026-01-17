@@ -1,0 +1,11 @@
+---
+import Images_ from "@/images/Images.vue";
+import Layout from "@/layouts/Layout.astro";
+import "@/home/styles.css";
+
+export const prerender = import.meta.env.PROD ? false : true;
+---
+
+<Layout title="" description="">
+  <Images_ client:only="vue" />
+</Layout>

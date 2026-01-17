@@ -68,9 +68,8 @@ const map = computed(() =>
 </script>
 
 <template>
-  <div
-    class="flex h-[180px] w-[975px] flex-col items-center bg-black text-white"
-  >
+  <p>Bandcamp Header</p>
+  <div class="flex h-45 w-243.75 flex-col items-center bg-black text-white">
     <h1 ref="ref" class="my-auto flex items-center gap-4">
       <Logo class="relative top-0.5 size-8" />Vincent Rubinetti
     </h1>
