@@ -24,70 +24,86 @@ float distAlongLine(vec2 start, vec2 direction, vec2 point) {
   return dot(point - start, normalize(direction));
 }
 
-// simple random float from -1 to 1
-float randFloat(vec2 seed) {
-  return -1.0f + 2.0f * fract(sin(dot(seed, vec2(12.9898f, 78.233f))) * 43758.5453f);
-}
-
-// random vec2
-vec2 rand(vec2 seed) {
-  return vec2(randFloat(seed), randFloat(seed + 1.0f));
-}
-
+const float _levels = 12.0f;
 const float _thickness = 2.0f;
-const float _length = 5000.0f;
-const float _levels = 50.0f;
 const float _gap = 100.0f;
-const float _jitter = 10.0f;
+const float _dist = 500.0f;
+const float _dash = 1.0f / 64.0f;
+const float _length = 2000.0f * sqrt(2.0f);
+const float _delay = 0.1f;
+const float _speed = 0.1f;
+const float _stagger = -0.5f;
+const float _strokePoint = 0.0f;
+const float _fadePoint = 0.75f;
 
 const float _diagGap = _gap * sqrt(2.0f);
+const float _double = 2.0f * _thickness;
 
 void main() {
   // center coordinates
   vec2 xy = gl_FragCoord.xy - u_resolution.xy * 0.5f;
 
+  // time
+  float time = u_time * _speed + _delay;
+
   // skip pixels not near diagonal line (for performance)
   float diag1 = xy.x + xy.y;
   float diag2 = xy.x - xy.y;
-  if(!(mod(diag1, _diagGap) < _jitter || mod(-diag1, _diagGap) < _jitter || mod(diag2, _diagGap) < _jitter || mod(-diag2, _diagGap) < _jitter)) {
+  if(!(mod(diag1, _diagGap) < _double || mod(-diag1, _diagGap) < _double || mod(diag2, _diagGap) < _double || mod(-diag2, _diagGap) < _double)) {
     return;
   }
 
   // angle of line
   float angle = radians(45.0f);
   // distance of line from center
-  float dist = 400.0f;
+  float dist = _dist;
 
   // each level of lines
-  for(float level = 1.0f; level <= _levels; level++) {
-    // start vector of line
-    vec2 start = vec2(cos(angle) * dist, sin(angle) * dist);
-    // direction vector of line
-    vec2 direction = dir(angle - radians(90.0f));
-    // back up to center line
-    start -= direction * (_length / 2.0f);
-    // how far along in animation are we, from 0 to 1
-    float phase = mod(0.5f - 0.5f * level / _levels + 0.1f * u_time, 1.0f);
-    // animate length
-    float animLength = _length * smoothstep(0.5f, 0.8f, phase);
-    // animate jitter
-    float animJitter = _jitter * smoothstep(0.8f, 0.5f, phase);
-    // animate fade/alpha
-    float animFade = smoothstep(1.0f, 0.8f, phase);
-    // offset coord by jitter
-    vec2 point = xy + rand(xy) * animJitter;
+  for(float level = 0.0f; level < _levels; level++) {
+    // percent through levels
+    float percent = level / _levels;
+    for(float line = 0.0f; line < 4.0f; line++) {
+      // start vector of line
+      vec2 start = vec2(cos(angle) * dist, sin(angle) * dist);
+      // direction vector of line
+      vec2 direction = dir(angle - radians(90.0f));
+      // back up to center line
+      start -= direction * (_length / 2.0f);
+      // how far along in animation are we, from 0 to 1
+      float phase = time + _stagger * percent;
+      phase = max(phase, 0.0f);
+      phase = mod(phase, 1.0f);
 
-    // compute distances
-    float toLine = distToLine(start, direction, point);
-    float alongLine = distAlongLine(start, direction, point) / animLength;
+      // animate length
+      float animLength = _length * smoothstep(_strokePoint, _fadePoint, phase);
+      // animate fade/alpha
+      float animFade = smoothstep(1.0f, _fadePoint, phase);
 
-    // draw line segment
-    if(toLine < _thickness && alongLine > 0.0f && alongLine < 1.0f)
-      outColor += vec4(animFade);
+      // compute distances
+      float toLine = distToLine(start, direction, xy);
+      float alongLine = distAlongLine(start, direction, xy) / animLength;
+      float dashDist = distAlongLine(start, direction, xy) / _length;
 
-    // increment line
-    angle += radians(90.0f);
-    if(mod(level, 4.0f) == 0.0f)
-      dist += _gap;
+      // draw conditions
+      bool inThickness = toLine < _thickness;
+      bool inLength = alongLine > 0.0f && alongLine < 1.0f;
+      bool inDash = true;
+      if(mod(level, 4.0f) == 2.0f)
+        inDash = mod(dashDist, _dash) < _dash / 2.0f;
+      else if(mod(level, 4.0f) == 1.0f || mod(level, 4.0f) == 3.0f)
+        inDash = mod(dashDist, _dash) < _dash / 16.0f;
+
+      // draw line segment
+      if(inThickness && inLength && inDash) {
+        outColor += vec4(animFade);
+        break;
+      }
+
+      // rotate line
+      angle += radians(90.0f);
+    }
+
+    // expand lines
+    dist += _gap;
   }
 }
