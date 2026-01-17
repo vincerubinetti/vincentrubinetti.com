@@ -622,7 +622,7 @@
     "type": "Presentation",
     "description": "An introductory presentation on UX and UI, aimed specifically at researchers, given to faculty and staff in CU DBMI",
     "links": {
-      "PDF": "ux-ui-for-researcher",
+      "PDF": "ux-ui-for-researchers.pdf",
       "Source": "https://docs.google.com/presentation/d/1nErkfWnpLIK4EkcJ-LSrhd7mwhNcdGCqdtlGGu3lEI8"
     },
     "feat": ["Gives a good idea of my philosophies and approach around UX/UI"],
