@@ -645,7 +645,7 @@
     "work": ["Design", "Implementation"],
     "base": ["React"],
     "tech": [],
-    "lib": ["Formik", "Yup"],
+    "lib": ["Zod", "React Hook Form"],
     "warning": ""
   },
   {

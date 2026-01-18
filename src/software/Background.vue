@@ -17,7 +17,7 @@ watch(canvas, () => {
     doubleSided: false,
     failIfMajorPerformanceCaveat: true,
     powerPreference: "low-power",
-    premultipliedAlpha: false,
+    premultipliedAlpha: true,
     preserveDrawingBuffer: false,
     stencil: false,
   });
