@@ -11,7 +11,7 @@ out vec4 outColor;
 
 const float _levels = 7.0f;
 const float _thickness = 2.0f;
-const float _dist = 600.0f;
+const float _dist = 400.0f;
 const float _gap = 100.0f;
 const float _dash = 20.0f;
 const float _delay = -0.25f;
@@ -57,6 +57,11 @@ void main() {
   // skip pixels in center area
   if(abs(xy.x) + abs(xy.y) < _diagDist - _thickness)
     return;
+
+  // skip pixels in outer area
+  if(abs(xy.x) + abs(xy.y) > _diagDist + _levels * _diagGap + _thickness)
+    return;
+
   // skip pixels not near diagonal line
   float diag1 = xy.x + xy.y;
   float diag2 = xy.x - xy.y;

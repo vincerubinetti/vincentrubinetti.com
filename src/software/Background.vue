@@ -10,7 +10,16 @@ watch(canvas, () => {
   if (!canvas.value) return null;
   new Canvas(canvas.value, {
     fragmentString: shader,
+    alpha: true,
+    antialias: true,
+    depth: false,
+    desynchronized: false,
+    doubleSided: false,
     failIfMajorPerformanceCaveat: true,
+    powerPreference: "low-power",
+    premultipliedAlpha: false,
+    preserveDrawingBuffer: false,
+    stencil: false,
   });
 });
 </script>
