@@ -41,6 +41,7 @@ const projectOrder = [
   "STRchive",
   "GenePlexus",
   "NIH Reporting",
+  "VincentRubinetti.com",
   "3Blue1Brown.com",
   "3Blue1Brown Dubbing",
   "Using the Music of 3Blue1Brown",
@@ -276,7 +277,7 @@ const xOffset = computed(
 
           <div class="flex flex-col gap-4">
             <!-- tags -->
-            <div class="flex flex-wrap gap-2">
+            <div class="flex flex-wrap justify-center gap-2">
               <button
                 v-for="(item, index) in [group, type, work, base, tech, lib]
                   .flat()

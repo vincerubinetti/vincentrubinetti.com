@@ -658,6 +658,25 @@
     "warning": ""
   },
   {
+    "name": "VincentRubinetti.com",
+    "group": "Personal",
+    "type": "Site",
+    "description": "This very site",
+    "links": {
+      "Source": "https://github.com/vincerubinetti/vincentrubinetti.com"
+    },
+    "feat": [
+      "Fun, reactive background visualizations written with shaders",
+      "Custom, complex, and beautiful wrapper around SoundCloud embed widget",
+      "Clean presentation and organization of content"
+    ],
+    "work": ["Design", "Implementation", "Branding", "Writing"],
+    "base": ["Astro", "Vue"],
+    "tech": ["PHP", "GLSL"],
+    "lib": ["Tailwind"],
+    "warning": ""
+  },
+  {
     "name": "Wall of Software",
     "group": "CU DBMI",
     "type": "Site",
