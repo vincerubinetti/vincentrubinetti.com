@@ -16,7 +16,7 @@
     "base": ["TypeScript", "React"],
     "tech": [],
     "lib": [],
-    "warning": "Prototype for a fuller version developed by someone else"
+    "warning": "Prototype, replaced by a fuller version developed by someone else"
   },
   {
     "name": "3Blue1Brown Dubbing",
@@ -31,7 +31,7 @@
       "Mic selection and preview",
       "Audio recording, processing, layering, and export",
       "Waveform and spectrogram visualizations",
-      "Audio node graph"
+      "Complex audio node graph"
     ],
     "work": [
       "Design",
@@ -48,7 +48,7 @@
     "name": "3Blue1Brown.com",
     "group": "3Blue1Brown",
     "type": "Site",
-    "description": "Site for the educational math YouTube channel [3Blue1Brown](https://www.3blue1brown.com)",
+    "description": "Official site for the educational math YouTube channel [3Blue1Brown](https://www.3blue1brown.com)",
     "links": {
       "Site": "https://www.3blue1brown.com/",
       "Source": "https://github.com/3b1b/3Blue1Brown.com"
@@ -76,7 +76,8 @@
     },
     "feat": [
       "Collection of networks, heatmaps, and other charts/plots",
-      "Advanced statistical analysis done in-browser with Web Workers with comprehensive unit tests"
+      "Involved state management system based on progressive user selections",
+      "Advanced statistical analysis done in-browser with Web Workers, with comprehensive unit tests"
     ],
     "work": [
       "Research",
@@ -104,10 +105,10 @@
       "Source": "https://github.com/greenelab/connectivity-search-frontend"
     },
     "feat": [
-      "Unique interactive network UI",
-      "Unique table UI",
+      "Unique interactive network UI, with features like grid snapping, manual sizing, and layout controls",
+      "Unique table UI with multi-row selection, expansion, and cell selection, plus standard features like sorting",
       "Unique deployment of SPA within static site",
-      "Branded library of components for sister apps"
+      "Custom, branded library of components for sister apps"
     ],
     "work": ["Design", "Data Visualization", "Implementation"],
     "base": ["React"],
@@ -125,9 +126,8 @@
       "Source": "https://github.com/CU-DBMI/screensaver"
     },
     "feat": [
-      "3D figures generated from models",
-      "Morphing animations",
-      "Mouse interaction"
+      "Fluid morphing animations between 3D figures, generated automatically from models",
+      "Mouse interaction projected into 3D scene"
     ],
     "work": ["Design", "Implementation", "Math"],
     "base": ["JavaScript"],
@@ -145,9 +145,9 @@
       "Source": "https://github.com/colorado-cancer-center/ecco/tree/main/frontend"
     },
     "feat": [
-      "Geographic map with data visualization overlays",
-      "Advanced map style and data customization",
-      "Various charts & plots"
+      "Interactive geographic map with various forms of data visualization",
+      "Advanced system for user customization of data presentation and map style",
+      "Various charts and plots"
     ],
     "work": ["Research", "Design", "Implementation", "Data Visualization"],
     "base": ["TypeScript", "Vue"],
@@ -165,8 +165,8 @@
       "Source": "https://github.com/krishnanlab/geneplexus-app/tree/main/frontend"
     },
     "feat": [
-      "Friendly UI for creating and managing analyses",
-      "Interactive network UI"
+      "Friendly, guided UI for choosing input parameters and managing analyses",
+      "Interactive network UI, comprehensive data tables, and more"
     ],
     "work": [
       "Design",
@@ -190,8 +190,8 @@
       "Source": "https://github.com/greenelab/hclust"
     },
     "feat": [
-      "Well-documented",
-      "In-depth comparison with alternatives",
+      "Well-documented, flexible, standalone package for hierarchical clustering",
+      "In-depth comparison with alternatives, capturing benefits and avoiding pitfalls of other similar packages",
       "Support for Web Workers"
     ],
     "work": ["Implementation", "Optimization", "Math"],
@@ -210,9 +210,9 @@
       "Source": "https://github.com/hetio/het.io"
     },
     "feat": [
-      "Collection of consistently branded embedded dynamic apps",
+      "Suite of consistently branded embedded dynamic apps",
       "Collection of rich content and media",
-      "Fun home page visualization"
+      "Fun, dynamic home page visualization"
     ],
     "work": ["Design", "Implementation", "Copywriting", "Logo"],
     "base": ["Jekyll"],
@@ -224,7 +224,7 @@
     "name": "Human Microbiome Compendium",
     "group": "Blekhman Lab",
     "type": "Web App",
-    "description": "Explore a large dataset of the human microbiome",
+    "description": "Explore the largest dataset of the human microbiome to date",
     "links": {
       "Site": "https://microbiomap.org/",
       "Source": "https://github.com/blekhmanlab/compendium_website"
@@ -232,7 +232,7 @@
     "feat": [
       "Sophisticated categorization of data and search functionality",
       "Complex data pre-processing pipeline",
-      "World map data visualization",
+      "Interactive world map data visualization",
       "Fun header visualization"
     ],
     "work": [
@@ -251,7 +251,7 @@
     "name": "Intro to SVGs",
     "group": "Greene Lab",
     "type": "Lesson",
-    "description": "Introduction to SVGs specifically aimed at most common academic usage",
+    "description": "Learn the basics of SVGs for most common academic usage",
     "links": {
       "Lesson": "https://vincerubinetti.github.io/intro-to-svgs/",
       "Source": "https://github.com/vincerubinetti/intro-to-svgs"
@@ -278,8 +278,8 @@
       "Source": "https://github.com/greenelab/lab-website-template"
     },
     "feat": [
-      "One of the most popular lab website templates on GitHub, with 500+ stars",
-      "Advanced automation that generates citations, configures the repo, and more",
+      "One of the most popular lab website templates, with 500+ stars",
+      "Advanced CI automation that generates citations, configures settings, and much more",
       "Suite of easy-to-use, well-documented components",
       "Dedicated docs suite with GitBook",
       "Extensive user support"
@@ -329,7 +329,7 @@
     "feat": [
       "Comprehensive styles for static manuscript content",
       "Suite of dynamic plugins like table of contents, citation links, figure preview, and more",
-      "Design of landing and catalog pages"
+      "Design and branding of ecosystem, including landing and catalog pages"
     ],
     "work": ["Design", "Implementation", "Documentation", "Logo", "Branding"],
     "base": ["JavaScript"],
@@ -341,15 +341,14 @@
     "name": "MIDI Humanizer",
     "group": "Personal",
     "type": "Web App",
-    "description": "Randomize note starts, durations, tempo drift, and velocities in MIDIs to make them sound more human",
+    "description": "Randomize MIDIs to make them sound more human",
     "links": {
       "App": "https://vincerubinetti.github.io/midi-humanizer/",
       "Source": "https://github.com/vincerubinetti/midi-humanizer"
     },
     "feat": [
-      "Note visualizer",
-      "File import/export",
-      "Detailed and advanced controls"
+      "Randomize note starts, durations, tempo drift, and velocities",
+      "Piano roll note visualizer"
     ],
     "work": ["Design", "Implementation", "MIDI Processing"],
     "base": ["TypeScript", "React"],
@@ -368,8 +367,8 @@
     },
     "feat": [
       "Unique designs informed by functionality",
-      "Consistent branding",
-      "Hand-coded SVGs with occasional animations"
+      "Hand-coded SVGs with occasional animations",
+      "Consistent branding for related projects"
     ],
     "work": ["Design", "Logo", "Branding"],
     "base": [],
@@ -381,7 +380,7 @@
     "name": "Monarch",
     "group": "Monarch Initiative",
     "type": "Web App",
-    "description": "Complex ecosystem of tools for exploring a multi-omic knowledge graph of phenotypes, genes, diseases, and more",
+    "description": "Complex ecosystem of tools for exploring a vast knowledge graph of phenotypes, genes, diseases, and more",
     "links": {
       "App": "https://monarchinitiative.org/",
       "Source": "https://github.com/monarch-initiative/monarch-app/tree/main/frontend"
@@ -390,8 +389,9 @@
       "Automated unit, integration, and accessibility testing",
       "Early Vue 3 and Composition API adoption",
       "Custom suite of components thoroughly tested for accessibility",
-      "Complex charts, plots, plots, & tables",
-      "Large sitemap of rich, dynamic content"
+      "Simplified laborious and complicated 'wizard' style tools into compact, intuitive, unique but conventional control layouts",
+      "Complex charts, plots, and tables",
+      "Large sitemap of rich and dynamic content"
     ],
     "work": [
       "Research",
@@ -421,7 +421,7 @@
     "feat": [
       "(Previously) rated 4.5 stars with 4k+ users on Chrome Web Store",
       "Friendly UI for adding/removing domains/pages",
-      "Advanced allow/block lists",
+      "Advanced allow/block list behaviors to accommodate any user needs",
       "Fully customizable keyboard shortcuts",
       "Well documented and handles user permissions gracefully"
     ],
@@ -442,10 +442,8 @@
     },
     "feat": [
       "Search thousands of pre-made gene sets or create your own",
-      "Share privately or publicly",
-      "Export gene sets in any format",
-      "API explorer interface",
-      "User accounts"
+      "Share genesets privately or publicly, and export to any format with flexible options",
+      "Unique API explorer interface"
     ],
     "work": ["Design", "Mockup", "Implementation", "Testing", "Logo"],
     "base": ["TypeScript", "Vue"],
@@ -463,11 +461,12 @@
     },
     "feat": [
       "Advanced data gathering pipeline, with multiple API/scraping sources, memoization, concurrency, logging, etc.",
-      "Advanced CI/CD with split between public and private data",
+      "Unique repo and CI/CD setup to split public and private data but maintain code transparency",
+      "Novel architecture to allow ingestion of new groups' software and site analytics with minimal steps",
       "End-to-end TypeScript to ensure data accuracy",
-      "Dashboard with charts & plots",
-      "Auto-printed reports from dashboard",
-      "In-depth use of GitHub and Google Analytics APIs"
+      "Clean and detailed dashboard with charts and plots",
+      "Auto-printed PDF reports from dashboard",
+      "Extensive use of GitHub and Google Analytics APIs"
     ],
     "work": [
       "Design",
@@ -503,12 +502,14 @@
     "name": "Preprint Similarity Search",
     "group": "Greene Lab",
     "type": "Web App",
-    "description": "Find suitable journals based on the text content of your preprint using machine learning",
+    "description": "Find suitable journals based for your preprint using natural language processing",
     "links": {
       "App": "https://greenelab.github.io/preprint-similarity-search/",
       "Source": "https://github.com/greenelab/preprint-similarity-search/tree/master/frontend"
     },
-    "feat": ["Unique word cloud and color map of ML space"],
+    "feat": [
+      "Unique UI for exploring model space of results, including word cloud buttons, orthogonal color map, and regular charts"
+    ],
     "work": ["Design", "Implementation", "Data Visualization", "Logo"],
     "base": ["React"],
     "tech": [],
@@ -543,7 +544,7 @@
       "Game": "https://vincerubinetti.github.io/set/",
       "Source": "https://github.com/vincerubinetti/set"
     },
-    "feat": ["Clean and fun implementation of a classic card game"],
+    "feat": ["Clean, fluid, and pretty implementation of a classic card game"],
     "work": [],
     "base": ["TypeScript", "React"],
     "tech": ["SVG"],
@@ -561,6 +562,7 @@
     },
     "feat": [
       "System for saving and sharing revisions of your text",
+      "Utilities for readability assessment and simplifying text with synonyms",
       "User accounts with robust login system"
     ],
     "work": ["Design", "Mockup", "Implementation", "Logo"],
@@ -580,7 +582,7 @@
     },
     "feat": [
       "Diverse data presented aesthetically with tables, charts, and creative layout",
-      "Automatic and custom generation of forms based on JSON schema",
+      "Automatic and custom generation of forms based on JSON schemas",
       "Automatic pull request and issue submission via cloud functions"
     ],
     "work": [
@@ -625,7 +627,11 @@
       "PDF": "ux-ui-for-researchers.pdf",
       "Source": "https://docs.google.com/presentation/d/1nErkfWnpLIK4EkcJ-LSrhd7mwhNcdGCqdtlGGu3lEI8"
     },
-    "feat": ["Gives a good idea of my philosophies and approach around UX/UI"],
+    "feat": [
+      "Gives a good idea of my philosophies and approach to UX/UI",
+      "Illustrative diagrams, examples, and graphics",
+      "Ending exercise where participants find issues in a custom example and suggest improvements, then see a version that I've redesigned"
+    ],
     "work": ["Design", "Writing"],
     "base": [],
     "tech": [],
@@ -641,7 +647,10 @@
       "App": "https://vincerubinetti.github.io/using-the-music-of-3blue1brown",
       "Source": "https://github.com/vincerubinetti/using-the-music-of-3blue1brown"
     },
-    "feat": ["Clean and quick form"],
+    "feat": [
+      "Pleasant, painless, and accessible",
+      "3Blue1Brown-themed design and background visualization"
+    ],
     "work": ["Design", "Implementation"],
     "base": ["React"],
     "tech": [],
@@ -652,15 +661,15 @@
     "name": "Wall of Software",
     "group": "CU DBMI",
     "type": "Site",
-    "description": "On-going catalog and showcase of software products made in the University of Colorado Department of Biomedical Informatics",
+    "description": "On-going showcase of software products made in CU DBMI",
     "links": {
       "Site": "https://cu-dbmi.github.io/wall-of-software/",
       "Source": "https://github.com/CU-DBMI/wall-of-software"
     },
     "feat": [
       "Fun 3D animated header visualization, with shaders",
-      "Responsive hex grid layout",
-      "CI checks to ensure that user-submitted images and content are properly formatted"
+      "Unique implementation of responsive hex grid layout",
+      "CI checks to ensure user-submitted images and content are consistently formatted"
     ],
     "work": ["Design", "Implementation", "Documentation", "CI/CD"],
     "base": ["JavaScript"],
@@ -678,7 +687,7 @@
       "Source": "https://github.com/vincerubinetti/word4word"
     },
     "feat": [
-      "Auto-selected daily game",
+      "Daily auto-generated globally-shared challenge without use of server",
       "Clean, fun, and colorful UI",
       "C++ implementation of Floyd-Warshall algorithm to pre-compute all word pairs"
     ],
@@ -692,13 +701,13 @@
     "name": "Word Lapse",
     "group": "Greene Lab",
     "type": "Web App",
-    "description": "Explore how a word changes in meaning over time based on natural language processing machine learning",
+    "description": "Explore how a word changes in meaning over time based on natural language processing",
     "links": {
       "App": "https://greenelab.github.io/word-lapse/",
       "Source": "https://github.com/greenelab/word-lapse/tree/main/app"
     },
     "feat": [
-      "Fun and functional use of theming",
+      "Use of theming to convey meaning in addition to aesthetics",
       "Unique 'trajectory' and 'overlap' visualizations of word meaning"
     ],
     "work": ["Design", "Implementation", "Data Visualization", "Logo"],
@@ -717,8 +726,8 @@
       "Source": "https://github.com/CU-DBMI/word-spot"
     },
     "feat": [
-      "Special, efficient by-word n-gram search algorithm for fuzzy searching for phrases",
-      "Clean and intuitive UI",
+      "Special, optimized word-based n-gram search algorithm for fuzzy searching for phrases",
+      "Clean, pretty, and intuitive UI",
       "Special free-text highlighting component"
     ],
     "work": ["Design", "Implementation", "Optimization", "Logo"],
