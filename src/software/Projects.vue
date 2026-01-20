@@ -2,7 +2,7 @@
 import { computed, ref, useTemplateRef } from "vue";
 import { useElementBounding, useEventListener } from "@vueuse/core";
 import { countBy, uniq } from "lodash-es";
-import { ExternalLink, X } from "lucide-vue-next";
+import { ExternalLink, Logs, X } from "lucide-vue-next";
 import logos from "@/images/logos";
 import { sleep } from "@/util/misc";
 import { formatValue, renderMarkdown, slugify } from "@/util/string";
@@ -315,7 +315,7 @@ const xOffset = computed(
 
     <!-- collaborators -->
     <div
-      class="flex justify-center-safe gap-8 overflow-auto max-lg:gap-6 max-md:gap-4 max-sm:gap-2"
+      class="flex justify-center-safe gap-6 overflow-auto max-lg:gap-6 max-md:gap-4 max-sm:gap-2"
     >
       <div
         v-for="({ name }, index) in collaborators"
@@ -325,15 +325,17 @@ const xOffset = computed(
       >
         <component
           :is="collaboratorLogos[slugify(name)]"
-          class="-0 size-12 opacity-50 grayscale transition-all hover:opacity-100 hover:grayscale-0"
+          class="-0 size-14 opacity-50 grayscale transition-all hover:opacity-100 hover:grayscale-0"
         />
       </div>
     </div>
 
+    <a href="/github" class="button self-center"><Logs />GitHub Catalog</a>
+
     <div class="flex flex-col gap-2 self-center">
       <p>Plus <b>many more</b> professional and personal projects...</p>
       <ul>
-        <li>Private or in-progress projects I can't share (yet)</li>
+        <li>Private or in-progress work I can't share (yet)</li>
         <li>An archive of apps/games/experiments/etc. too long to list</li>
       </ul>
     </div>

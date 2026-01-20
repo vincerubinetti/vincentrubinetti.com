@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { CornerRightDown } from "lucide-vue-next";
 import profile from "@/images/vince.png?url&format=webp";
 import Dash from "./components/Dash.vue";
 </script>
@@ -23,11 +22,5 @@ import Dash from "./components/Dash.vue";
         thorough, always chasing the most clean and robust product possible.
       </p>
     </div>
-
-    <p class="self-center">
-      But really, the best way to understand what I do is to
-      <i>see it yourself</i>...
-      <CornerRightDown class="ml-2 animate-bounce" />
-    </p>
   </section>
 </template>
