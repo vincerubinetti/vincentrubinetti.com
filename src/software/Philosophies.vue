@@ -11,7 +11,7 @@ const philosophies = [
   },
   {
     description:
-      "**Organization is paramount**. Clean and thoughtful layout, grouping, & alignment → better intuition.",
+      "**Organization is paramount**. Clean and thoughtful layout, grouping, & alignment → more intuitive.",
   },
   {
     description:
@@ -27,7 +27,7 @@ const philosophies = [
   },
   {
     description:
-      "**Continually evolve**. Seek out new techniques, tools, features that can improve your software or process.",
+      "**Continually evolve**. Seek out new techniques, tools, or features that can improve your software or process.",
   },
 ];
 </script>
@@ -53,7 +53,7 @@ const philosophies = [
       target="_blank"
       rel="noopener noreferrer"
     >
-      <Microscope />In More Detail
+      <Microscope />More on UX/UI
     </a>
   </section>
 </template>
