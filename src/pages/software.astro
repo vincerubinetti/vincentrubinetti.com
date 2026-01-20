@@ -1,6 +1,7 @@
 ---
 import Layout from "@/layouts/Layout.astro";
 import About from "@/software/About.vue";
+import BSOD from "@/software/components/BSOD.vue";
 import Contact from "@/software/Contact.vue";
 import Extras from "@/software/Extras.vue";
 import Footer from "@/software/Footer.vue";
@@ -23,6 +24,7 @@ import "@/software/styles.css";
     <Tech client:load />
     <Extras />
     <Contact client:load />
+    <BSOD client:only="vue" />
   </main>
   <Footer />
 </Layout>

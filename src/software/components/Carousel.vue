@@ -58,7 +58,9 @@ const { x, state } = useSwipe({
 const visible = useElementVisibility(rootRef, { threshold: 1 });
 
 /** auto-play */
-const { pause, resume, isActive } = useIntervalFn(() => next(false), 3000);
+const { pause, resume, isActive } = useIntervalFn(() => next(false), 3000, {
+  immediate: false,
+});
 
 /** control auto-play */
 watch([visible, () => images.length], () => {
