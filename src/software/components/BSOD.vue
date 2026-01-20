@@ -35,10 +35,7 @@ watchEffect(() => {
           :dx="20"
           :dy="20"
         />
-        <feComponentTransfer>
-          <feFuncA type="linear" slope="0.9" />
-        </feComponentTransfer>
-        <feComposite in2="SourceGraphic" operator="over"></feComposite>
+        <feBlend mode="darken" in2="SourceGraphic" />
       </template>
     </filter>
   </svg>
