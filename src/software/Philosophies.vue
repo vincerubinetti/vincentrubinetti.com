@@ -4,35 +4,35 @@ import Dash from "./components/Dash.vue";
 
 const philosophies = [
   {
-    color: "bg-red-50",
+    color: "bg-red-500",
     title: "Software is a craft",
     description: "It demands respect and extreme attention to detail.",
   },
   {
-    color: "bg-green-50",
+    color: "bg-green-500",
     title: "Organization is key",
     description:
       "Clean and thoughtful grouping and layout of info → more intuitive.",
   },
   {
-    color: "bg-blue-50",
+    color: "bg-blue-500",
     title: "Show, don't tell",
     description:
       "Form a design language of colors, icons, type, etc. Simplify copy text.",
   },
   {
-    color: "bg-yellow-50",
+    color: "bg-yellow-500",
     title: "Accessibility ≠ afterthought",
     description:
       "Semantic HTML, keyboard nav, color contrast, etc. are critical.",
   },
   {
-    color: "bg-cyan-50",
-    title: "Code is a UX too",
+    color: "bg-cyan-500",
+    title: "Code is a user experience too",
     description: "Cleanness over cleverness. Clarity over micro-optimization.",
   },
   {
-    color: "bg-purple-50",
+    color: "bg-purple-500",
     title: "Continually evolve",
     description:
       "Seek out better techniques, tools, or features for your software or process.",
@@ -50,12 +50,15 @@ const philosophies = [
       <div
         v-for="({ color, title, description }, index) in philosophies"
         :key="index"
-        class="corners-1 max-md relative flex flex-col gap-4 pt-6 pl-6"
+        class="group corners-1 max-md relative flex flex-col items-start gap-4 pt-6 pl-6"
       >
         <b class="relative">
-          <span class="absolute -inset-1 -z-10" :class="color" />
-          {{ title }}</b
-        >
+          <span
+            class="absolute -inset-1 -z-10 -skew-x-45 opacity-10"
+            :class="color"
+          />
+          {{ title }}
+        </b>
         <p v-html="renderMarkdown(description)" class="text-balance" />
       </div>
     </div>

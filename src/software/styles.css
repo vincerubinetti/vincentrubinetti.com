@@ -27,11 +27,11 @@
 }
 
 @utility button-big {
-  @apply corners-4 highlight flex items-center justify-center gap-2 p-4 font-sans transition-all;
+  @apply corners-4 highlight flex items-center justify-center gap-2 p-4 font-sans;
 }
 
 @utility button {
-  @apply bg-dark/10 hover:bg-mid flex items-center justify-center gap-2 p-4 font-sans transition-all;
+  @apply bg-dark/10 hover:bg-mid flex items-center justify-center gap-2 p-4 font-sans;
 }
 
 @utility paper {
@@ -44,7 +44,7 @@
 }
 
 @utility highlight {
-  @apply relative z-0 transition-all;
+  @apply relative z-0;
 
   &::before {
     @apply bg-mid absolute inset-0 -z-10 transform-[skewX(-45deg)_scaleX(0)] transition-all duration-250 content-[''];

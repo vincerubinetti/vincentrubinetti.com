@@ -19,11 +19,9 @@ import collaboratorLogos from "./images/collaborators";
         :key="index"
         :title="name"
         role="img"
+        class="size-12 opacity-50 grayscale transition-all hover:opacity-100 hover:grayscale-0"
       >
-        <component
-          :is="collaboratorLogos[slugify(name)]"
-          class="size-12 opacity-50 grayscale transition-all hover:opacity-100 hover:grayscale-0"
-        />
+        <component :is="collaboratorLogos[slugify(name)]" class="size-full" />
       </div>
     </div>
   </section>

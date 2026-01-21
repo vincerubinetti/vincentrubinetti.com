@@ -16,10 +16,7 @@ const model = defineModel<Option["value"]>();
 
 <template>
   <div class="relative flex grow">
-    <select
-      class="bg-current/5 p-2 pr-8 transition-all hover:bg-current/10"
-      v-model="model"
-    >
+    <select class="bg-current/5 p-2 pr-8 hover:bg-current/10" v-model="model">
       <option v-for="{ value, label } in options" :key="value" :value="value">
         {{ label ?? value }}
       </option>

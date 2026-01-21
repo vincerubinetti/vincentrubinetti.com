@@ -191,9 +191,9 @@ const share = false;
         </svg>
       </a>
 
-      <div class="font-light tracking-wider">
+      <p class="font-light tracking-wider text-balance">
         Frontend developer · UX/UI designer
-      </div>
+      </p>
     </hgroup>
   </header>
 </template>

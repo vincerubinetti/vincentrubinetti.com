@@ -210,7 +210,7 @@ const coords = computed(() => ({
         <!-- open/close button -->
         <button
           ref="button"
-          class="hover:before:bg-mid relative flex flex-col gap-2 before:absolute before:-inset-2 before:-z-10 before:transition-all hover:scale-105"
+          class="hover:before:bg-mid relative flex flex-col gap-2 before:absolute before:-inset-2 before:-z-10 before:transition-colors hover:scale-105"
           :title="
             opened === index ? 'Hide project details' : 'Show project details'
           "
@@ -220,7 +220,7 @@ const coords = computed(() => ({
         >
           <Carousel
             :images="images.map((image) => ({ image }))"
-            class="pointer-events-none aspect-4/3 w-full bg-black transition-all"
+            class="pointer-events-none aspect-4/3 w-full bg-black"
             :class="opened === index ? 'brightness-200 contrast-0' : ''"
           />
 
