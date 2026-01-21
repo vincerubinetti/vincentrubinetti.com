@@ -138,11 +138,13 @@ useEventListener("keydown", (event: KeyboardEvent) => {
 const buttonBbox = useElementBounding(() => button.value?.[opened.value]);
 const detailsBbox = useElementBounding(() => details.value?.[0]);
 
-/** x coord offset of opened button */
-const xOffset = computed(
-  () =>
+/** coords relative to opened details */
+const coords = computed(() => ({
+  w: detailsBbox.width.value,
+  h: detailsBbox.height.value,
+  x:
     buttonBbox.left.value - detailsBbox.left.value + buttonBbox.width.value / 2,
-);
+}));
 </script>
 
 <template>
@@ -229,13 +231,30 @@ const xOffset = computed(
         <div
           ref="details"
           v-if="opened === index"
-          class="relative z-10 col-start-1 -col-end-1 flex scroll-mt-8 flex-col items-center gap-4 bg-white p-4"
+          class="relative z-10 col-start-1 -col-end-1 flex scroll-mt-8 flex-col items-center gap-4 p-4"
         >
-          <div
-            class="absolute top-0 size-6 -translate-1/2 rotate-45 bg-white [clip-path:polygon(0%_0%,100%_0%,0%_100%)]"
+          <svg
+            class="absolute inset-0"
             :class="opened === index ? '' : 'opacity-0'"
-            :style="{ left: `${xOffset}px` }"
-          ></div>
+          >
+            <path
+              class="stroke-dark fill-none stroke-2"
+              :d="
+                [
+                  ['M', 0, 0],
+                  ['h', coords.x - 20],
+                  ['l', 20, -20],
+                  ['l', 20, 20],
+                  ['H', coords.w],
+                  ['V', coords.h],
+                  ['H', 0],
+                  ['z'],
+                ]
+                  .flat()
+                  .join(' ')
+              "
+            />
+          </svg>
 
           <!-- title -->
           <div class="font-sans text-xl font-medium">{{ name }}</div>
