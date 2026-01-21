@@ -229,7 +229,7 @@ const xOffset = computed(
         <div
           ref="details"
           v-if="opened === index"
-          class="relative z-10 col-start-1 -col-end-1 flex scroll-mt-8 flex-col items-center gap-4 bg-black/5 p-4 max-sm:gap-2"
+          class="relative z-10 col-start-1 -col-end-1 flex scroll-mt-8 flex-col items-center gap-4 bg-black/5 p-4"
         >
           <div
             class="absolute -top-8 size-8 -translate-x-1/2"
@@ -242,7 +242,7 @@ const xOffset = computed(
           </div>
 
           <!-- title -->
-          <p class="font-sans text-xl font-medium">{{ name }}</p>
+          <div class="font-sans text-xl font-medium">{{ name }}</div>
 
           <!-- images -->
           <Carousel
