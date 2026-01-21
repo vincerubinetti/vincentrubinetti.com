@@ -229,17 +229,13 @@ const xOffset = computed(
         <div
           ref="details"
           v-if="opened === index"
-          class="relative z-10 col-start-1 -col-end-1 flex scroll-mt-8 flex-col items-center gap-4 bg-black/5 p-4"
+          class="relative z-10 col-start-1 -col-end-1 flex scroll-mt-8 flex-col items-center gap-4 bg-white p-4"
         >
           <div
-            class="absolute -top-8 size-8 -translate-x-1/2"
+            class="absolute top-0 size-6 -translate-1/2 rotate-45 bg-white [clip-path:polygon(0%_0%,100%_0%,0%_100%)]"
             :class="opened === index ? '' : 'opacity-0'"
             :style="{ left: `${xOffset}px` }"
-          >
-            <svg viewBox="-50 -50 100 100">
-              <polygon points="-50 50 0 0 50 50" class="fill-black/5" />
-            </svg>
-          </div>
+          ></div>
 
           <!-- title -->
           <div class="font-sans text-xl font-medium">{{ name }}</div>
