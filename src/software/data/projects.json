@@ -712,7 +712,7 @@
     "work": ["Design", "Implementation", "Documentation", "CI/CD"],
     "base": ["TypeScript", "Vue"],
     "tech": ["C++"],
-    "lib": ["Tailwind"],
+    "lib": [],
     "warning": ""
   },
   {
