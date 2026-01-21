@@ -39,4 +39,6 @@ export const linkify = (content = "") =>
 
 /** markdown to html */
 export const renderMarkdown = (markdown = "") =>
-  micromark(markdown).replace("<p>", "").replace("</p>", "");
+  micromark(markdown, { allowDangerousHtml: true })
+    .replace("<p>", "")
+    .replace("</p>", "");

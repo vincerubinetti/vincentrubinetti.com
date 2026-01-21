@@ -8,9 +8,7 @@ import { sleep } from "@/util/misc";
 import { formatValue, renderMarkdown, slugify } from "@/util/string";
 import Carousel from "./components/Carousel.vue";
 import Dash from "./components/Dash.vue";
-import collaborators from "./data/collaborators.json";
 import projects from "./data/projects.json";
-import collaboratorLogos from "./images/collaborators";
 import { files, images } from "./images/projects";
 
 /** indexOf with fallback */
@@ -283,7 +281,7 @@ const xOffset = computed(
                   .flat()
                   .filter(Boolean)"
                 :key="index"
-                class="hover:bg-mid flex items-center gap-1 border border-current/25 p-1"
+                class="button-small"
                 :title="`Filter by ${item}`"
                 @click="
                   search = item;
@@ -313,24 +311,9 @@ const xOffset = computed(
       </template>
     </div>
 
-    <!-- collaborators -->
-    <div
-      class="flex justify-center-safe gap-6 overflow-auto max-lg:gap-6 max-md:gap-4 max-sm:gap-2"
-    >
-      <div
-        v-for="({ name }, index) in collaborators"
-        :key="index"
-        :title="name"
-        role="img"
-      >
-        <component
-          :is="collaboratorLogos[slugify(name)]"
-          class="-0 size-14 opacity-50 grayscale transition-all hover:opacity-100 hover:grayscale-0"
-        />
-      </div>
-    </div>
-
-    <a href="/github" class="button self-center"><Logs />GitHub Catalog</a>
+    <a href="/github" class="button -my-4 self-center">
+      <Logs />GitHub Catalog
+    </a>
 
     <div class="flex flex-col gap-2 self-center">
       <p>Plus <b>many more</b> professional and personal projects...</p>

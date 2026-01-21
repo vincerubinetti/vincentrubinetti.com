@@ -8,7 +8,7 @@ import Background from "@/software/Background.vue";
 const svg = useTemplateRef("svg");
 
 /** animation duration in seconds */
-const duration = 2;
+const duration = 3;
 
 /** parent container */
 const parent = computed(() => svg.value);
@@ -108,7 +108,7 @@ const share = false;
             :height="hatch"
           >
             <path
-              class="stroke-current stroke-3"
+              class="stroke-current stroke-2"
               :d="['M', 0, hatch / 2, 'h', hatch].flat().join(' ')"
             />
           </pattern>
@@ -144,7 +144,7 @@ const share = false;
 
           <g>
             <rect
-              class="stroke-current stroke-3"
+              class="stroke-current stroke-2"
               transform="skewX(-45)"
               :x="-p"
               :y="-p + h / 4"
@@ -176,7 +176,7 @@ const share = false;
               v-html="svgContent"
             />
             <g
-              class="stroke-current stroke-3"
+              class="stroke-current stroke-2"
               fill="url(#hatch)"
               clip-path="url(#clip-2)"
               filter="url(#chalk-filter)"
