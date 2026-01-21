@@ -6,7 +6,7 @@
 
   --radius: 0;
 
-  --color-light: oklch(97% 0.015 40);
+  --color-light: oklch(97% 0.015 60);
   --color-mid: oklch(90% 0.08 240);
   --color-dark: oklch(55% 0.1 240);
 
@@ -35,14 +35,14 @@
 }
 
 @utility button-small {
-  @apply flex items-center gap-1 bg-current/5 p-1 hover:bg-current/10;
+  @apply flex items-center justify-center gap-1 bg-current/5 p-1 font-sans transition-all hover:bg-current/10;
 }
 
 @utility paper {
   @apply relative z-0;
 
   &::before {
-    @apply absolute inset-0 -z-10 opacity-15 mix-blend-darken content-[''];
+    @apply absolute inset-0 -z-10 opacity-10 mix-blend-darken content-[''];
     background-image: url("./images/paper.svg");
   }
 }

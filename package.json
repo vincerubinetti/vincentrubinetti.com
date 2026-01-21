@@ -7,10 +7,10 @@
     "upload": "bun run build && bun upload.ts",
     "astro": "astro",
     "lint": "eslint . --fix",
-    "format": "prettier --write src/",
+    "format": "prettier --write .",
     "test:types": "tsc -b",
     "test:lint": "eslint .",
-    "test:format": "prettier --check src/",
+    "test:format": "prettier --check .",
     "test": "bun run test:types && bun run test:lint && bun run test:format",
     "clean": "rm -rf node_modules dist bun.lock && bun pm cache rm"
   },

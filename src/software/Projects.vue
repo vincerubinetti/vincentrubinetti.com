@@ -311,9 +311,7 @@ const xOffset = computed(
       </template>
     </div>
 
-    <a href="/github" class="button -my-4 self-center">
-      <Logs />GitHub Catalog
-    </a>
+    <a href="/github" class="button self-center"> <Logs />GitHub Catalog </a>
 
     <div class="flex flex-col gap-2 self-center">
       <p>Plus <b>many more</b> professional and personal projects...</p>

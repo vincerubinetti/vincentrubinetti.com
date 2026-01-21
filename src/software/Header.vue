@@ -86,14 +86,14 @@ const share = false;
             <feDisplacementMap
               in="SourceGraphic"
               in2="turbulence"
-              scale="5"
+              scale="2"
               xChannelSelector="G"
               yChannelSelector="A"
               result="displacement"
             >
               <animate
                 attributeName="scale"
-                to="1"
+                to="0"
                 :dur="`${duration}s`"
                 fill="freeze"
               />

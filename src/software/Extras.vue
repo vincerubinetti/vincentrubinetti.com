@@ -3,7 +3,7 @@ import { ArrowDown } from "lucide-vue-next";
 </script>
 
 <template>
-  <section class="bg-slate-50">
+  <section class="bg-dark/5">
     <h2 class="sr-only">Extras</h2>
 
     <div class="flex flex-wrap items-center justify-center gap-8 max-md:gap-4">

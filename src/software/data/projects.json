@@ -662,7 +662,6 @@
     "type": "Site",
     "description": "This very site",
     "links": {
-      "Site": "#bsod",
       "Source": "https://github.com/vincerubinetti/vincentrubinetti.com"
     },
     "feat": [

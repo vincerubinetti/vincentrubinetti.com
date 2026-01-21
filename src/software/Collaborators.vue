@@ -5,12 +5,10 @@ import collaboratorLogos from "./images/collaborators";
 </script>
 
 <template>
-  <section class="bg-slate-50">
+  <section class="bg-dark/5">
     <h2 class="sr-only">Collaborators</h2>
 
-    <div
-      class="flex justify-center-safe gap-6 overflow-auto max-lg:gap-6 max-md:gap-4 max-sm:gap-2"
-    >
+    <div class="flex justify-center-safe gap-4 overflow-auto">
       <div
         v-for="({ name }, index) in collaborators"
         :key="index"
