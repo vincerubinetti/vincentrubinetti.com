@@ -303,3 +303,23 @@ const cellAttrs = (col?: Cols[number], row?: Row) => {
     </div>
   </div>
 </template>
+
+<style scoped>
+@reference "tailwindcss";
+
+table {
+  @apply bg-white;
+}
+
+tr:nth-child(even) {
+  @apply bg-zinc-50;
+}
+
+th {
+  @apply bg-zinc-100;
+}
+
+td:not(:first-child) {
+  @apply border-l-2 border-zinc-100;
+}
+</style>

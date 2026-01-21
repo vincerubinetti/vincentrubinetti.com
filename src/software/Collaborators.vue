@@ -5,10 +5,15 @@ import collaboratorLogos from "./images/collaborators";
 </script>
 
 <template>
-  <section class="bg-dark/5">
+  <section class="bg-dark/3">
     <h2 class="sr-only">Collaborators</h2>
 
-    <div class="flex justify-center-safe gap-4 overflow-auto">
+    <div
+      class="grid max-w-full gap-8 self-center overflow-x-auto"
+      :style="{
+        gridTemplateColumns: `repeat(${collaborators.length}, auto)`,
+      }"
+    >
       <div
         v-for="({ name }, index) in collaborators"
         :key="index"
@@ -17,7 +22,7 @@ import collaboratorLogos from "./images/collaborators";
       >
         <component
           :is="collaboratorLogos[slugify(name)]"
-          class="-0 size-14 opacity-50 grayscale transition-all hover:opacity-100 hover:grayscale-0"
+          class="size-12 opacity-50 grayscale transition-all hover:opacity-100 hover:grayscale-0"
         />
       </div>
     </div>

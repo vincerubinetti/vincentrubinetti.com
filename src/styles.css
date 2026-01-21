@@ -123,18 +123,6 @@
     @apply min-w-0 cursor-pointer appearance-none transition-all;
   }
 
-  table {
-    @apply border-collapse bg-white wrap-break-word;
-  }
-
-  tr:nth-child(even) {
-    @apply bg-zinc-100;
-  }
-
-  th {
-    @apply bg-zinc-100;
-  }
-
   [disabled] {
     @apply cursor-not-allowed opacity-25 grayscale;
   }

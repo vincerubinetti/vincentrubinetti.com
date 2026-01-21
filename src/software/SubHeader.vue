@@ -9,10 +9,7 @@ import GitHub from "@/images/logos/github.svg?component";
     <div
       class="flex flex-wrap items-center justify-center gap-8 max-md:gap-4 max-md:text-center"
     >
-      <a
-        href="https://github.com/vincerubinetti"
-        class="button-big highlight corners-4"
-      >
+      <a href="https://github.com/vincerubinetti" class="button-big">
         <GitHub />
         GitHub
       </a>

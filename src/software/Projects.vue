@@ -2,7 +2,7 @@
 import { computed, ref, useTemplateRef } from "vue";
 import { useElementBounding, useEventListener } from "@vueuse/core";
 import { countBy, uniq } from "lodash-es";
-import { ExternalLink, Logs, X } from "lucide-vue-next";
+import { ExternalLink, TriangleAlert, X } from "lucide-vue-next";
 import logos from "@/images/logos";
 import { sleep } from "@/util/misc";
 import { formatValue, renderMarkdown, slugify } from "@/util/string";
@@ -117,7 +117,7 @@ const open = async (index: number) => {
   await sleep();
   const el = details.value?.[0];
   if (!el) return;
-  el.scrollIntoView({ behavior: "smooth", block: "start" });
+  el.scrollIntoView({ behavior: "smooth", block: "nearest" });
 };
 
 /** close project details */
@@ -127,7 +127,7 @@ const close = async (index: number) => {
   const el = button.value?.[index];
   if (!el) return;
   el.focus();
-  el.scrollIntoView({ behavior: "smooth", block: "center" });
+  el.scrollIntoView({ behavior: "smooth", block: "nearest" });
 };
 
 /** close project details */
@@ -237,8 +237,22 @@ const coords = computed(() => ({
             class="absolute inset-0 -z-10"
             :class="opened === index ? '' : 'opacity-0'"
           >
+            <defs>
+              <linearGradient
+                id="details-gradient"
+                x1="0%"
+                y1="-10%"
+                x2="0%"
+                y2="100%"
+                gradientUnits="userSpaceOnUse"
+              >
+                <stop offset="0%" stop-color="#00000020" />
+                <stop offset="15%" stop-color="#00000006" />
+              </linearGradient>
+            </defs>
             <path
-              class="stroke-dark/25 fill-none stroke-2"
+              fill="url(#details-gradient)"
+              pathLength="500"
               :d="
                 [
                   ['M', 0, 0],
@@ -257,7 +271,20 @@ const coords = computed(() => ({
           </svg>
 
           <!-- title -->
-          <div class="font-sans text-xl font-medium">{{ name }}</div>
+          <div
+            class="p-4 text-center font-sans text-xl font-medium text-balance"
+          >
+            {{ name }}
+          </div>
+
+          <!-- close -->
+          <button
+            class="button absolute top-0 right-0 bg-transparent!"
+            @click="close(index)"
+            title="Close project details"
+          >
+            <X />
+          </button>
 
           <!-- images -->
           <Carousel
@@ -271,62 +298,58 @@ const coords = computed(() => ({
 
           <!-- warning -->
           <p v-if="warning">
-            ⚠️
+            <TriangleAlert class="relative -top-0.5 fill-yellow-300" />
             {{ warning }}
           </p>
 
           <!-- links -->
-          <div class="flex flex-wrap justify-center gap-x-2">
+          <div class="flex flex-wrap justify-center gap-4">
             <a
               v-for="(url, label) in links"
               :key="label"
               :href="files[url as keyof typeof files] ?? url"
-              class="button p-2"
+              class="button gap-2 p-2"
             >
               {{ label }}
               <ExternalLink />
             </a>
           </div>
 
-          <div class="flex flex-col gap-4">
-            <!-- tags -->
-            <div class="flex flex-wrap justify-center gap-2">
-              <button
-                v-for="(item, index) in [group, type, work, base, tech, lib]
-                  .flat()
-                  .filter(Boolean)"
-                :key="index"
-                class="button-small"
-                :title="`Filter by ${item}`"
-                @click="
-                  search = item;
-                  input?.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'nearest',
-                  });
-                "
-              >
-                <component
-                  :is="logos[item as keyof typeof logos] ?? 'template'"
-                  :title="item"
-                  class="size-[1em]"
-                />
-                {{ item }}
-              </button>
-            </div>
+          <!-- features -->
+          <ul>
+            <li v-for="(feature, index) in feat" :key="index">
+              {{ feature }}
+            </li>
+          </ul>
 
-            <!-- features -->
-            <ul>
-              <li v-for="(feature, index) in feat" :key="index">
-                {{ feature }}
-              </li>
-            </ul>
+          <!-- tags -->
+          <div class="my-2 flex flex-wrap justify-center gap-2">
+            <button
+              v-for="(item, index) in [group, type, work, base, tech, lib]
+                .flat()
+                .filter(Boolean)"
+              :key="index"
+              class="button gap-1 p-1"
+              :title="`Filter by ${item}`"
+              @click="
+                search = item;
+                input?.scrollIntoView({
+                  behavior: 'smooth',
+                  block: 'nearest',
+                });
+              "
+            >
+              <component
+                :is="logos[item as keyof typeof logos] ?? 'template'"
+                :title="item"
+                class="size-[1em]"
+              />
+              {{ item }}
+            </button>
           </div>
         </div>
       </template>
     </div>
-
-    <a href="/github" class="button self-center"> <Logs />GitHub Catalog </a>
 
     <div class="flex flex-col gap-2 self-center">
       <p>Plus <b>many more</b> professional and personal projects...</p>

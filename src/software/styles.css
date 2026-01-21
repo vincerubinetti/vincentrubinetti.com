@@ -6,8 +6,8 @@
 
   --radius: 0;
 
-  --color-light: oklch(97% 0.015 60);
-  --color-mid: oklch(90% 0.08 240);
+  --color-light: oklch(97% 0.02 60);
+  --color-mid: oklch(90% 0.05 240);
   --color-dark: oklch(55% 0.1 240);
 
   --tl-corner: radial-gradient(black 0, black 100%, transparent) top left
@@ -27,15 +27,11 @@
 }
 
 @utility button-big {
-  @apply flex items-center justify-center gap-2 p-4 font-sans transition-all;
+  @apply corners-4 highlight flex items-center justify-center gap-2 p-4 font-sans transition-all;
 }
 
 @utility button {
-  @apply text-dark flex items-center justify-center gap-2 bg-current/5 p-4 font-sans transition-all hover:bg-current/10;
-}
-
-@utility button-small {
-  @apply flex items-center justify-center gap-1 bg-current/5 p-1 font-sans transition-all hover:bg-current/10;
+  @apply bg-dark/10 hover:bg-mid flex items-center justify-center gap-2 p-4 font-sans transition-all;
 }
 
 @utility paper {

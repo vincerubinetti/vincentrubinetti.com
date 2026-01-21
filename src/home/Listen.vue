@@ -367,10 +367,7 @@ const getBandcamp = (track: Track) =>
                   </div>
 
                   <!-- track description -->
-                  <p
-                    class="description wrap-break-word"
-                    v-html="getDescription(track)"
-                  />
+                  <p class="description" v-html="getDescription(track)" />
                 </div>
               </div>
             </template>

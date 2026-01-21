@@ -1,8 +1,6 @@
 <script setup lang="ts">
-import { Microscope } from "lucide-vue-next";
 import { renderMarkdown } from "@/util/string";
 import Dash from "./components/Dash.vue";
-import UXUI from "./images/projects/ux-ui-for-researchers.pdf";
 
 const philosophies = [
   {
@@ -61,13 +59,5 @@ const philosophies = [
         <p v-html="renderMarkdown(description)" class="text-balance" />
       </div>
     </div>
-    <a
-      :href="UXUI"
-      class="button self-center"
-      target="_blank"
-      rel="noopener noreferrer"
-    >
-      <Microscope />More on UX/UI
-    </a>
   </section>
 </template>
