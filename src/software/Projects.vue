@@ -234,17 +234,17 @@ const coords = computed(() => ({
           class="relative z-10 col-start-1 -col-end-1 flex scroll-mt-8 flex-col items-center gap-4 p-4"
         >
           <svg
-            class="absolute inset-0"
+            class="absolute inset-0 -z-10"
             :class="opened === index ? '' : 'opacity-0'"
           >
             <path
-              class="stroke-dark fill-none stroke-2"
+              class="stroke-dark/25 fill-none stroke-2"
               :d="
                 [
                   ['M', 0, 0],
-                  ['h', coords.x - 20],
-                  ['l', 20, -20],
-                  ['l', 20, 20],
+                  ['h', coords.x - 15],
+                  ['l', 15, -15],
+                  ['l', 15, 15],
                   ['H', coords.w],
                   ['V', coords.h],
                   ['H', 0],
