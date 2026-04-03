@@ -23,14 +23,14 @@ export default defineConfig({
       }),
       tailwindcss(),
       transformPlugin({
-        tStart: "__{",
-        tEnd: "}__",
+        tStart: "%{",
+        tEnd: "}%",
         replace: loadEnv(import.meta.env.MODE, process.cwd(), [
           "WEBSITE_",
           "MAIL_",
           "RECAPTCHA",
         ]),
-        replaceFiles: ["public/email.php"],
+        replaceFiles: ["dist/email.php"],
       }),
     ],
   },

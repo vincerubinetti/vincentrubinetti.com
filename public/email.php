@@ -48,7 +48,7 @@ if (
 /** verify captcha */
 if (!empty($token)) {
   try {
-    $secret = "6LcLcs8ZAAAAANiFb04QVyJJ24EGBwMByDBqhcWv";
+    $secret = "%{RECAPTCHA}%";
     $url = "https://www.google.com/recaptcha/api/siteverify?secret={$secret}&response={$token}";
     $response = json_decode(file_get_contents($url));
     echo "Captcha score: {$response->score}\r\n";
@@ -73,15 +73,15 @@ try {
   /** server settings */
   $mail->SMTPDebug = SMTP::DEBUG_SERVER;
   $mail->isSMTP();
-  $mail->Host = "mail.vincentrubinetti.com";
   $mail->SMTPAuth = true;
-  $mail->Username = "vince@vincentrubinetti.com";
-  $mail->Password = "5dzeRZJAamnUuK";
+  $mail->Host = "%{MAIL_HOST}%";
+  $mail->Username = "%{MAIL_USERNAME}%";
+  $mail->Password = "%{MAIL_PASSWORD}%";
+  $mail->Port = (int) "%{MAIL_PORT}%";
   $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
-  $mail->Port = (int) "465";
 
   /** message recipients */
-  $mail->setFrom("vince@vincentrubinetti.com", "Vincent Rubinetti");
+  $mail->setFrom("%{MAIL_USERNAME}%", "Vincent Rubinetti");
   $mail->addReplyTo($fromAddress, $fromName);
   $mail->addAddress($toAddress, $toName);
   if (!empty($ccAddress)) {
