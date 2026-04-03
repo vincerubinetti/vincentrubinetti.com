@@ -1,5 +1,7 @@
-# DirectoryIndex index.html /listing.html
-ErrorDocument 404 /404.html
+Options +Indexes
+
+DirectoryIndex index.html /listing.html
+# ErrorDocument 404 /404.html
 
 RewriteEngine on
 RewriteCond %{HTTPS} off 

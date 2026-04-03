@@ -1,26 +1,17 @@
 import Client from "ssh2-sftp-client";
 
 const {
-  WEBSITE_HOST,
-  WEBSITE_PORT,
-  WEBSITE_USERNAME,
-  WEBSITE_PASSWORD,
-  WEBSITE_SOURCE,
-  WEBSITE_TARGET,
+  FTP_HOST: host,
+  FTP_PORT: port,
+  FTP_USERNAME: username,
+  FTP_PASSWORD: password,
+  WEBSITE_SOURCE: source,
+  WEBSITE_TARGET: target,
 } = import.meta.env;
-
-const config = {
-  host: WEBSITE_HOST,
-  port: WEBSITE_PORT,
-  username: WEBSITE_USERNAME,
-  password: WEBSITE_PASSWORD,
-};
-const source = WEBSITE_SOURCE;
-const target = WEBSITE_TARGET;
 
 /** upload local directory w/ built website to remote host directory */
 const sftp = new Client();
-await sftp.connect(config);
+await sftp.connect({ host, port, username, password });
 sftp.on("upload", (info) => console.info(`Uploaded ${info.source}`));
 const result = await sftp.uploadDir(source, target);
 console.info(result);
