@@ -31,7 +31,6 @@ $ccName = get("ccName");
 $subject = get("subject");
 $html = get("html");
 $plain = get("plain");
-$token = get("token");
 
 /** check for all input variables */
 if (
@@ -43,24 +42,6 @@ if (
 ) {
   echo "Incomplete inputs";
   exit(1);
-}
-
-/** verify captcha */
-if (!empty($token)) {
-  try {
-    $secret = "%{RECAPTCHA}%";
-    $url = "https://www.google.com/recaptcha/api/siteverify?secret={$secret}&response={$token}";
-    $response = json_decode(file_get_contents($url));
-    echo "Captcha score: {$response->score}\r\n";
-    if ($response->success === false) {
-      throw new Exception("Invalid token");
-    } else if ($response->score < 0.5) {
-      echo "Captcha failed";
-      exit(1);
-    }
-  } catch (Exception $error) {
-    echo "Error verifying captcha: {$error}\r\n";
-  }
 }
 
 /** start phpmailer */

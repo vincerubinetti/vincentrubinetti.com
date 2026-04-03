@@ -1,5 +1,4 @@
 import { onMounted, ref } from "vue";
-import { useScriptTag } from "@vueuse/core";
 
 /** encoded email address link to reduce spam */
 export const useAddress = () => {
@@ -20,19 +19,6 @@ export const useAddress = () => {
   return address;
 };
 
-/** google captcha */
-export const useCaptcha = () =>
-  useScriptTag("https://www.google.com/recaptcha/api.js");
-
-const getCaptcha = async () => {
-  try {
-    const key = "6LcLcs8ZAAAAAIXUglBHUKmWXLEGzv7vSWWIVLDu";
-    return window.grecaptcha.execute(key, { action: "submit" });
-  } catch (error) {
-    return "";
-  }
-};
-
 /** send email to server */
 const sendEmail = async (args: unknown) =>
   (
@@ -49,14 +35,6 @@ export const onSubmit = async (
   /** avoid nav */
   event.preventDefault();
 
-  /** google captcha */
-  const token = await getCaptcha();
-
-  /** debug */
-  console.groupCollapsed("Token");
-  console.debug(token);
-  console.groupEnd();
-
   /** send email to server */
   const response = await sendEmail({
     fromAddress: email,
@@ -68,7 +46,6 @@ export const onSubmit = async (
     subject: "vincentrubinetti.com email form submission from " + name,
     html: message,
     plain: message,
-    token,
   });
 
   /** debug */

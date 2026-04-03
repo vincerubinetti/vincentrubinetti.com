@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useLocalStorage } from "@vueuse/core";
 import { Send } from "lucide-vue-next";
-import { onSubmit, useAddress, useCaptcha } from "@/util/contact";
+import { onSubmit, useAddress } from "@/util/contact";
 import Dash from "./components/Dash.vue";
 
 /** form state */
@@ -10,7 +10,6 @@ const email = useLocalStorage("email", "");
 const message = useLocalStorage("message", "");
 
 const address = useAddress();
-useCaptcha();
 </script>
 
 <template>
