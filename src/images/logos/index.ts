@@ -10,10 +10,10 @@ import Figma from "./figma.svg?component";
 import Html from "./html.svg?component";
 import JavaScript from "./javascript.svg?component";
 import Jekyll from "./jekyll.svg?component";
-import Next from "./next.svg?component";
 import Node from "./node.svg?component";
 import Playwright from "./playwright.svg?component";
 import React from "./react.svg?component";
+import Remix from "./remix.svg?component";
 import SoundCloud from "./soundcloud.svg?component";
 import Spotify from "./spotify.svg?component";
 import Steam from "./steam.svg?component";
@@ -36,10 +36,10 @@ export default {
   Html,
   JavaScript,
   Jekyll,
-  Next,
   Node,
   Playwright,
   React,
+  Remix,
   SoundCloud,
   Spotify,
   Steam,

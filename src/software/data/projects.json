@@ -57,13 +57,15 @@
       "Large body of various static and dynamic content",
       "Complex lesson pages with rich and interactive content and media",
       "Large suite of easy-to-use components for authors",
-      "Various scripts for data aggregation and site maintenance"
+      "Various scripts for data aggregation and site maintenance",
+      "(~2021) Designed and architected first version of site first in Next",
+      "(~2022) Project continued by others",
+      "(~2026) Re-designed and re-architected site in React Router (Remix)"
     ],
     "work": ["Design", "Implementation"],
-    "base": ["Next", "React"],
+    "base": ["Remix", "Next", "React"],
     "tech": ["SVG", "Canvas", "MDX", "LaTeX"],
-    "lib": ["Rehype", "Remark"],
-    "warning": "Left my hands a while ago, and maintained/tweaked by others."
+    "lib": ["Rehype", "Remark", "Axe"]
   },
   {
     "name": "Adage",

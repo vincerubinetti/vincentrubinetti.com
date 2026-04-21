@@ -22,6 +22,7 @@ const projectOrder = [
   "SVG to PNG",
   "Lab Website Template",
   "Manubot",
+  "3Blue1Brown.com",
   "UX/UI for Researchers",
   "Word4Word",
   "Simplex",
@@ -39,9 +40,8 @@ const projectOrder = [
   "STRchive",
   "GenePlexus",
   "NIH Reporting",
-  "VincentRubinetti.com",
-  "3Blue1Brown.com",
   "3Blue1Brown Dubbing",
+  "VincentRubinetti.com",
   "Using the Music of 3Blue1Brown",
   "Set",
   "MIDI Humanizer",
@@ -229,123 +229,127 @@ const coords = computed(() => ({
 
         <!-- details -->
         <div
-          ref="details"
           v-if="opened === index"
-          class="relative z-10 col-start-1 -col-end-1 flex scroll-mt-8 flex-col items-center gap-4 p-4"
+          class="col-start-1 -col-end-1 flex flex-col items-center"
         >
-          <svg
-            class="absolute inset-0 -z-10"
-            :class="opened === index ? '' : 'opacity-0'"
-          >
-            <defs>
-              <linearGradient
-                id="details-gradient"
-                x1="0%"
-                y1="-10%"
-                x2="0%"
-                y2="100%"
-                gradientUnits="userSpaceOnUse"
-              >
-                <stop offset="0%" stop-color="#00000020" />
-                <stop offset="15%" stop-color="#00000006" />
-              </linearGradient>
-            </defs>
-            <path
-              fill="url(#details-gradient)"
-              pathLength="500"
-              :d="
-                [
-                  ['M', 0, 0],
-                  ['h', coords.x - 15],
-                  ['l', 15, -15],
-                  ['l', 15, 15],
-                  ['H', coords.w],
-                  ['V', coords.h],
-                  ['H', 0],
-                  ['z'],
-                ]
-                  .flat()
-                  .join(' ')
-              "
-            />
-          </svg>
-
-          <!-- title -->
           <div
-            class="p-4 text-center font-sans text-xl font-medium text-balance"
+            ref="details"
+            class="relative z-10 flex w-dvw max-w-360 scroll-mt-8 items-center gap-8 p-8 max-xl:flex-col"
           >
-            {{ name }}
-          </div>
-
-          <!-- close -->
-          <button
-            class="button absolute top-0 right-0 bg-transparent!"
-            @click="close(index)"
-            title="Close project details"
-          >
-            <X />
-          </button>
-
-          <!-- images -->
-          <Carousel
-            :images="images.map((image) => ({ image }))"
-            :controls="true"
-            class="aspect-4/3 w-full max-w-100 bg-black"
-          />
-
-          <!-- description -->
-          <p v-html="renderMarkdown(description)" />
-
-          <!-- warning -->
-          <p v-if="warning">
-            <TriangleAlert class="relative -top-0.5 fill-yellow-300" />
-            {{ warning }}
-          </p>
-
-          <!-- links -->
-          <div class="flex flex-wrap justify-center gap-4">
-            <a
-              v-for="(url, label) in links"
-              :key="label"
-              :href="files[url as keyof typeof files] ?? url"
-              class="button gap-2 p-2"
+            <svg
+              class="absolute inset-0 -z-10"
+              :class="opened === index ? '' : 'opacity-0'"
             >
-              {{ label }}
-              <ExternalLink />
-            </a>
-          </div>
-
-          <!-- features -->
-          <ul>
-            <li v-for="(feature, index) in feat" :key="index">
-              {{ feature }}
-            </li>
-          </ul>
-
-          <!-- tags -->
-          <div class="my-2 flex flex-wrap justify-center gap-2">
-            <button
-              v-for="(item, index) in [group, type, work, base, tech, lib]
-                .flat()
-                .filter(Boolean)"
-              :key="index"
-              class="button gap-1 p-1"
-              :title="`Filter by ${item}`"
-              @click="
-                search = item;
-                input?.scrollIntoView({
-                  behavior: 'smooth',
-                  block: 'nearest',
-                });
-              "
-            >
-              <component
-                :is="logos[item as keyof typeof logos] ?? 'template'"
-                :title="item"
-                class="size-[1em]"
+              <defs>
+                <linearGradient
+                  id="details-gradient"
+                  x1="0%"
+                  y1="-10%"
+                  x2="0%"
+                  y2="100%"
+                  gradientUnits="userSpaceOnUse"
+                >
+                  <stop offset="0%" stop-color="#00000020" />
+                  <stop offset="15%" stop-color="#00000006" />
+                </linearGradient>
+              </defs>
+              <path
+                fill="url(#details-gradient)"
+                pathLength="500"
+                :d="
+                  [
+                    ['M', 0, 0],
+                    ['h', coords.x - 15],
+                    ['l', 15, -15],
+                    ['l', 15, 15],
+                    ['H', coords.w],
+                    ['V', coords.h],
+                    ['H', 0],
+                    ['z'],
+                  ]
+                    .flat()
+                    .join(' ')
+                "
               />
-              {{ item }}
+            </svg>
+
+            <!-- close -->
+            <button
+              class="button absolute top-0 right-0 bg-transparent!"
+              @click="close(index)"
+              title="Close project details"
+            >
+              <X />
             </button>
+
+            <!-- images -->
+            <Carousel
+              :images="images.map((image) => ({ image }))"
+              :controls="true"
+              class="aspect-4/3 w-full max-w-120 bg-black"
+            />
+
+            <div class="flex flex-1 flex-col items-start gap-4">
+              <!-- title -->
+              <div class="font-sans text-xl font-medium text-balance">
+                {{ name }}
+              </div>
+
+              <!-- description -->
+              <p v-html="renderMarkdown(description)" />
+
+              <!-- warning -->
+              <p v-if="warning">
+                <TriangleAlert class="relative -top-0.5 fill-yellow-300" />
+                {{ warning }}
+              </p>
+
+              <!-- links -->
+              <div class="flex flex-wrap gap-4">
+                <a
+                  v-for="(url, label) in links"
+                  :key="label"
+                  :href="files[url as keyof typeof files] ?? url"
+                  class="button gap-2 p-2"
+                >
+                  {{ label }}
+                  <ExternalLink />
+                </a>
+              </div>
+
+              <!-- features -->
+              <ul>
+                <li v-for="(feature, index) in feat" :key="index">
+                  {{ feature }}
+                </li>
+              </ul>
+
+              <!-- tags -->
+              <div class="my-2 flex flex-wrap gap-2">
+                <button
+                  v-for="(item, index) in [group, type, work, base, tech, lib]
+                    .flat()
+                    .filter(Boolean)"
+                  :key="index"
+                  class="button gap-1 p-1"
+                  :title="`Filter by ${item}`"
+                  @click="
+                    search = item;
+                    input?.scrollIntoView({
+                      behavior: 'smooth',
+                      block: 'nearest',
+                    });
+                  "
+                >
+                  <component
+                    :is="logos[item as keyof typeof logos] ?? 'template'"
+                    :title="item"
+                    class="size-[1em]"
+                  />
+                  {{ item }}
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       </template>

@@ -26,9 +26,9 @@ const tech = [
       "Experience building pipelines, automation, bots, & CLIs w/ **Node**, **Bun**, & **GitHub Actions**",
   },
   {
-    icons: pick(logos, ["Jekyll", "Astro", "Next"]),
+    icons: pick(logos, ["Jekyll", "Astro", "Remix"]),
     description:
-      "Experience building static & server-rendered sites w/ **Jekyll**, **Astro**, & **Next**",
+      "Experience building static & server-rendered sites w/ **Jekyll**, **Astro**, & **Remix**",
   },
   {
     icons: pick(logos, ["Playwright", "Tailwind", "Figma"]),
