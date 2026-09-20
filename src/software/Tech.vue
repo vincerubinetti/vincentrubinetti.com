@@ -2,7 +2,7 @@
 import { pick } from "lodash-es";
 import logos from "@/images/logos";
 import { renderMarkdown } from "@/util/string";
-import Dash from "./components/Dash.vue";
+import Divider from "@/software/components/Divider.vue";
 
 const tech = [
   {
@@ -39,7 +39,7 @@ const tech = [
 
 <template>
   <section>
-    <h2><Dash flip />Tech</h2>
+    <h2>Tech<Divider /></h2>
 
     <div
       class="grid grid-cols-3 gap-8 max-lg:grid-cols-2 max-lg:gap-6 max-md:grid-cols-1 max-md:gap-4"
@@ -47,7 +47,7 @@ const tech = [
       <div
         v-for="({ icons, description }, index) in tech"
         :key="index"
-        class="corners-1 max-md relative flex gap-6 pt-6 pl-6"
+        class="max-md relative flex gap-6"
       >
         <div class="flex h-full w-6 shrink-0 flex-col items-center gap-3.5">
           <component

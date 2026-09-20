@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import type { Track } from "@/home/components/SoundCloud";
 import { ref } from "vue";
 import {
   IconCalendar,
@@ -8,18 +9,17 @@ import {
   IconHeart,
   IconInfoCircle,
   IconMessageCircle,
-  IconPlayerPause,
-  IconPlayerPlay,
+  IconPlayerPauseFilled,
+  IconPlayerPlayFilled,
   IconRefresh,
 } from "@tabler/icons-vue";
 import { pointerCoords } from "@/util/dom";
 import { sleep } from "@/util/misc";
 import { formatTime, formatValue, linkify } from "@/util/string";
-import Slider from "./components/Slider.vue";
-import type { Track } from "./components/SoundCloud";
-import SoundCloud from "./components/SoundCloud.vue";
-import bandcamp from "./data/bandcamp.json";
-import { level, playing, track } from "./util/state";
+import Slider from "@/home/components/Slider.vue";
+import SoundCloud from "@/home/components/SoundCloud.vue";
+import bandcamp from "@/home/data/bandcamp.json";
+import { level, playing, track } from "@/home/util/state";
 
 const playlists = [
   { title: "Best Of", id: "652705266" },
@@ -86,7 +86,7 @@ const getBandcamp = (track: Track) =>
 
     <!-- playlists -->
     <div
-      class="max-xs:grid-cols-1 grid w-full grid-cols-6 gap-4 max-lg:grid-cols-3 max-md:grid-cols-2 max-md:gap-2"
+      class="grid w-full grid-cols-6 gap-4 max-lg:grid-cols-3 max-md:grid-cols-2 max-md:gap-2 max-xs:grid-cols-1"
     >
       <button
         v-for="({ title, id }, index) of playlists"
@@ -181,7 +181,7 @@ const getBandcamp = (track: Track) =>
                   <span class="truncate">
                     {{ formatValue(_track.playback_count) }}
                   </span>
-                  <IconPlayerPlay />
+                  <IconPlayerPlayFilled />
                 </div>
                 <div
                   class="hidden max-w-1/2 truncate py-2 text-right text-sm opacity-50 group-hover:block"
@@ -215,8 +215,8 @@ const getBandcamp = (track: Track) =>
                     title="Play/Pause"
                     @click="playing ? pause() : play()"
                   >
-                    <IconPlayerPlay v-if="!playing" />
-                    <IconPlayerPause v-if="playing" />
+                    <IconPlayerPlayFilled v-if="!playing" />
+                    <IconPlayerPauseFilled v-if="playing" />
                   </button>
                   <button
                     class="button-dark"

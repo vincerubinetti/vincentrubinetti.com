@@ -5,7 +5,6 @@
   --breakpoint-sm: 32rem;
   --breakpoint-md: 44rem;
   --breakpoint-lg: 56rem;
-  --breakpoint-xl: 68rem;
 
   --font-serif: "Aleo Variable", serif;
   --font-sans: "Outfit Variable", sans-serif;
@@ -25,17 +24,12 @@
   header,
   section,
   footer {
-    @apply max-xs:[--gap:--spacing(4)] relative z-0 flex w-full flex-col gap-(--gap) px-[max(var(--gap),(100%-var(--width))/2)] py-(--gap) [--gap:--spacing(14)] max-xl:[--gap:--spacing(12)] max-lg:[--gap:--spacing(10)] max-md:[--gap:--spacing(8)] max-sm:[--gap:--spacing(6)];
+    @apply relative z-0 flex w-full flex-col gap-(--gap) px-[max(var(--gap),(100%-var(--width))/2)] py-(--gap) [--gap:--spacing(12)] max-lg:[--gap:--spacing(10)] max-md:[--gap:--spacing(8)] max-sm:[--gap:--spacing(6)] max-xs:[--gap:--spacing(4)];
   }
 
-  h1,
   h2,
   h3 {
     @apply flex items-center gap-[0.75em] font-sans leading-none;
-  }
-
-  h1 {
-    @apply text-3xl font-light tracking-widest uppercase;
   }
 
   h2 {
@@ -89,41 +83,11 @@
     @apply min-w-0 rounded border border-current/50 bg-white p-4 font-sans placeholder:text-current/50;
   }
 
-  input::-webkit-calendar-picker-indicator,
-  input::-webkit-list-button {
-    @apply opacity-0;
-  }
-
-  label:has(input[type="checkbox"]) {
-    @apply cursor-pointer p-2 hover:bg-zinc-100;
-  }
-
-  input[type="checkbox"] {
-    @apply size-4;
-  }
-
-  details {
-    @apply flex flex-col justify-items-center-safe;
-
-    &::details-content {
-      @apply flex h-0 w-full flex-col overflow-hidden transition-discrete duration-500;
-      interpolate-size: allow-keywords;
-    }
-
-    &[open]::details-content {
-      @apply h-auto;
-    }
-  }
-
-  details[open] summary svg {
-    @apply -scale-y-100;
-  }
-
   select {
     @apply min-w-0 cursor-pointer appearance-none transition-all;
   }
 
-  [disabled] {
+  [aria-disabled="true"] {
     @apply cursor-not-allowed opacity-25 grayscale;
   }
 

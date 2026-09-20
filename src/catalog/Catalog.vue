@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { map, max, min, orderBy, startCase } from "lodash-es";
+import type { Cols } from "@/catalog/components/Table.vue";
 import {
   IconBug,
   IconExternalLink,
@@ -7,8 +7,10 @@ import {
   IconGitCommit,
   IconGitPullRequest,
 } from "@tabler/icons-vue";
-import Table, { type Cols } from "./components/Table.vue";
-import contributions from "./data/contributions.json";
+import { map, max, min, orderBy, startCase } from "lodash-es";
+import Divider from "@/software/components/Divider.vue";
+import Table from "@/catalog/components/Table.vue";
+import contributions from "@/catalog/data/contributions.json";
 
 /** fall-off function */
 const value = (x: number, w: number, v: number) => (1 - 2 ** (-x / w)) * v;
@@ -52,10 +54,10 @@ const cols: Cols<typeof repos> = [
 <template>
   <section class="bg-light paper">
     <hgroup class="flex flex-col gap-6">
-      <h2 class="self-center text-center">GitHub Catalog</h2>
+      <h2><Divider flip />Catalog<Divider /></h2>
 
       <div class="text-center text-lg">
-        Full listing of my public GitHub contributions
+        All of my public GitHub contributions
       </div>
     </hgroup>
   </section>

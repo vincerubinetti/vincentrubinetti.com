@@ -4,8 +4,8 @@ import Bandcamp from "@/images/logos/bandcamp.svg?component";
 import SoundCloud from "@/images/logos/soundcloud.svg?component";
 import Spotify from "@/images/logos/spotify.svg?component";
 import YouTube from "@/images/logos/youtube.svg?component";
-import Outline from "./components/Outline.vue";
-import { getColor } from "./util/colors";
+import Outline from "@/home/components/Outline.vue";
+import { getColor } from "@/home/util/colors";
 </script>
 
 <template>
@@ -30,7 +30,7 @@ import { getColor } from "./util/colors";
 
       <hr class="col-start-1 -col-end-1" />
 
-      <div class="grid grid-cols-2 gap-4 max-xl:grid-cols-1">
+      <div class="grid grid-cols-2 gap-4 max-lg:grid-cols-1">
         <a
           href="https://music.apple.com/us/artist/vincent-rubinetti/274886492"
           class="button"

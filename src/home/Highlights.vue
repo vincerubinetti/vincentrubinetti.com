@@ -10,10 +10,10 @@ import { useEventListener } from "@vueuse/core";
 import logos from "@/images/logos";
 import { waitFor } from "@/util/misc";
 import { renderMarkdown, slugify } from "@/util/string";
-import Outline from "./components/Outline.vue";
-import highlights from "./data/highlights.json";
-import albums from "./images/albums";
-import { getColor } from "./util/colors";
+import Outline from "@/home/components/Outline.vue";
+import highlights from "@/home/data/highlights.json";
+import albums from "@/home/images/albums";
+import { getColor } from "@/home/util/colors";
 import "youtube-video-element";
 
 type Highlight = (typeof highlights)[number];
@@ -61,7 +61,7 @@ onMounted(() =>
   <section class="bg-white">
     <h2 class="sr-only">Highlights</h2>
 
-    <div class="max-xs:grid-cols-1 grid grid-cols-4 gap-2 max-sm:grid-cols-2">
+    <div class="grid grid-cols-4 gap-2 max-sm:grid-cols-2 max-xs:grid-cols-1">
       <button
         v-for="(highlight, index) in highlights"
         :key="index"

@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { useLocalStorage } from "@vueuse/core";
 import { IconSend } from "@tabler/icons-vue";
+import { useLocalStorage } from "@vueuse/core";
 import { onSubmit, useAddress } from "@/util/contact";
-import Dash from "./components/Dash.vue";
+import Divider from "@/software/components/Divider.vue";
 
 /** form state */
 const name = useLocalStorage("name", "");
@@ -13,8 +13,8 @@ const address = useAddress();
 </script>
 
 <template>
-  <section class="paper bg-light [--width:--spacing(200)]">
-    <h2>Contact<Dash /></h2>
+  <section>
+    <h2>Contact<Divider /></h2>
 
     <div class="grid grid-cols-2 gap-(--gap) max-lg:grid-cols-1">
       <div class="flex flex-col gap-4">

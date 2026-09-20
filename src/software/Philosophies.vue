@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { renderMarkdown } from "@/util/string";
-import Dash from "./components/Dash.vue";
+import Divider from "@/software/components/Divider.vue";
 
 const philosophies = [
   {
@@ -41,8 +41,8 @@ const philosophies = [
 </script>
 
 <template>
-  <section>
-    <h2>Philosophies<Dash /></h2>
+  <section class="bg-dark/3">
+    <h2><Divider flip />Philosophies</h2>
 
     <div
       class="grid grid-cols-3 gap-8 max-lg:grid-cols-2 max-lg:gap-6 max-md:grid-cols-1 max-md:gap-4"
@@ -50,7 +50,7 @@ const philosophies = [
       <div
         v-for="({ color, title, description }, index) in philosophies"
         :key="index"
-        class="group corners-1 max-md relative flex flex-col items-start gap-4 pt-6 pl-6"
+        class="group max-md relative flex flex-col items-start gap-4"
       >
         <b class="relative">
           <span

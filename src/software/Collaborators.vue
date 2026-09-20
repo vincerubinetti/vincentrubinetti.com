@@ -1,19 +1,15 @@
 <script setup lang="ts">
+import Braces from "@/software/components/Braces.vue";
 import { slugify } from "@/util/string";
-import collaborators from "./data/collaborators.json";
-import collaboratorLogos from "./images/collaborators";
+import collaborators from "@/software/data/collaborators.json";
+import collaboratorLogos from "@/software/images/collaborators";
 </script>
 
 <template>
   <section class="bg-dark/3">
     <h2 class="sr-only">Collaborators</h2>
 
-    <div
-      class="grid max-w-full gap-8 self-center overflow-x-auto"
-      :style="{
-        gridTemplateColumns: `repeat(${collaborators.length}, auto)`,
-      }"
-    >
+    <Braces>
       <div
         v-for="({ name }, index) in collaborators"
         :key="index"
@@ -23,6 +19,6 @@ import collaboratorLogos from "./images/collaborators";
       >
         <component :is="collaboratorLogos[slugify(name)]" class="size-full" />
       </div>
-    </div>
+    </Braces>
   </section>
 </template>

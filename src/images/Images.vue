@@ -70,9 +70,12 @@ const map = computed(() =>
 <template>
   <p>Bandcamp Header</p>
   <div class="flex h-45 w-243.75 flex-col items-center bg-black text-white">
-    <h1 ref="ref" class="my-auto flex items-center gap-4">
+    <div
+      ref="ref"
+      class="my-auto flex items-center gap-4 font-sans text-2xl leading-none font-light tracking-widest uppercase"
+    >
       <Logo class="relative top-0.5 size-8" />Vincent Rubinetti
-    </h1>
+    </div>
 
     <div class="mb-5 flex items-center gap-5 font-sans">
       <div

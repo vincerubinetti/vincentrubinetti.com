@@ -69,7 +69,6 @@ const share = false;
     <Background />
 
     <hgroup class="flex flex-col items-center gap-2 py-8 text-center">
-      <h1 class="sr-only">Vincent Rubinetti</h1>
       <a href="/software" class="corners-4 w-100 max-w-full text-white">
         <svg
           ref="svg"

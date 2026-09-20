@@ -1,22 +1,23 @@
 <script setup lang="ts">
 import { ref, useTemplateRef, watch } from "vue";
 import {
+  IconChevronLeft,
+  IconChevronRight,
+  IconMaximize,
+  IconMinimize,
+  IconPlayerPauseFilled,
+  IconPlayerPlayFilled,
+  IconPointFilled,
+} from "@tabler/icons-vue";
+import {
   useElementVisibility,
   useEventListener,
   useFullscreen,
   useIntervalFn,
 } from "@vueuse/core";
 import { range } from "lodash-es";
-import {
-  IconMaximize,
-  IconMinimize,
-  IconPlayerPause,
-  IconPlayerPlay,
-} from "@tabler/icons-vue";
 import { useSwipe } from "@/util/composables";
 import { mod } from "@/util/math";
-import Chevron from "../images/chevron.svg?component";
-import Circle from "../images/circle.svg?component";
 
 type Props = {
   images: { image: string }[];
@@ -127,12 +128,12 @@ const { toggle, isFullscreen } = useFullscreen(rootRef);
           :title="`${isActive ? 'Pause' : 'Resume'} autoplay`"
           @click="isActive ? pause() : resume()"
         >
-          <IconPlayerPause v-if="isActive" />
-          <IconPlayerPlay v-else />
+          <IconPlayerPauseFilled v-if="isActive" />
+          <IconPlayerPlayFilled v-else />
         </button>
 
         <button title="Previous image" @click="previous()">
-          <Chevron class="-scale-x-100" />
+          <IconChevronLeft />
         </button>
 
         <button
@@ -146,11 +147,11 @@ const { toggle, isFullscreen } = useFullscreen(rootRef);
           title="Go to image {{ index + 1 }}"
           @click="goTo(index)"
         >
-          <Circle />
+          <IconPointFilled />
         </button>
 
         <button title="Next image" @click="next()">
-          <Chevron />
+          <IconChevronRight />
         </button>
       </template>
 

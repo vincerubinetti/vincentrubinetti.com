@@ -1,6 +1,6 @@
+import type { Track } from "@/home/components/SoundCloud";
 import { ref } from "vue";
 import { useIntervalFn } from "@vueuse/core";
-import type { Track } from "../components/SoundCloud";
 
 /** currently selected track */
 export const track = ref<Track>();

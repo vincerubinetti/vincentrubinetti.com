@@ -23,7 +23,7 @@ const tailwindSelectors = [
 ];
 
 export default defineConfig([
-  globalIgnores(["dist", "public", ".astro", "cloud"]),
+  globalIgnores(["dist", "public", ".astro"]),
 
   {
     name: "TypeScript",

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useTemplateRef, watch } from "vue";
 import { Canvas } from "glsl-canvas-js";
-import shader from "./components/background.frag?raw";
+import shader from "@/software/components/background.frag?raw";
 
 const canvas = useTemplateRef("canvas");
 

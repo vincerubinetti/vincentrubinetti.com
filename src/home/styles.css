@@ -6,14 +6,14 @@
 
   --color-light: oklch(98% 0 0);
   --color-mid: oklch(80% 0.15 240);
-  --color-mid-dark: oklch(50% 0.15 240);
+  --color-dark: oklch(50% 0.15 240);
 
   --radius: 7.5px;
 }
 
 @layer components {
   p a {
-    @apply text-mid-dark;
+    @apply text-dark;
   }
 }
 

@@ -1,15 +1,15 @@
 <script setup lang="ts">
 import { computed, ref, useTemplateRef } from "vue";
+import { IconAlertTriangle, IconExternalLink, IconX } from "@tabler/icons-vue";
 import { useElementBounding, useEventListener } from "@vueuse/core";
 import { countBy, uniq } from "lodash-es";
-import { IconAlertTriangle, IconExternalLink, IconX } from "@tabler/icons-vue";
 import logos from "@/images/logos";
 import { sleep } from "@/util/misc";
 import { formatValue, renderMarkdown, slugify } from "@/util/string";
-import Carousel from "./components/Carousel.vue";
-import Dash from "./components/Dash.vue";
-import projects from "./data/projects.json";
-import { files, images } from "./images/projects";
+import Carousel from "@/software/components/Carousel.vue";
+import Divider from "@/software/components/Divider.vue";
+import projects from "@/software/data/projects.json";
+import { files, images } from "@/software/images/projects";
 
 /** indexOf with fallback */
 const index = (array: unknown[], value: unknown, fallback: number) => {
@@ -149,7 +149,7 @@ const coords = computed(() => ({
 
 <template>
   <section class="bg-light paper">
-    <h2>Projects<Dash /></h2>
+    <h2>Projects<Divider /></h2>
 
     <!-- search -->
     <div class="relative flex items-center">
@@ -237,7 +237,7 @@ const coords = computed(() => ({
         >
           <div
             ref="details"
-            class="relative z-10 flex w-dvw max-w-360 scroll-mt-8 items-center gap-8 p-8 max-xl:flex-col"
+            class="relative z-10 flex w-dvw max-w-360 scroll-mt-8 items-center gap-8 p-8 max-lg:flex-col"
           >
             <svg
               class="absolute inset-0 -z-10"
@@ -257,7 +257,9 @@ const coords = computed(() => ({
                 </linearGradient>
               </defs>
               <path
-                class="fill-white stroke-current/50"
+                class="stroke-mid-alt fill-white stroke-1"
+                stroke-dasharray="4 4"
+                vector-effect="non-scaling-stroke"
                 :d="
                   [
                     ['M', 0, 0],
@@ -272,7 +274,15 @@ const coords = computed(() => ({
                     .flat()
                     .join(' ')
                 "
-              />
+              >
+                <animate
+                  attributeName="stroke-dashoffset"
+                  from="8"
+                  to="0"
+                  dur="0.5s"
+                  repeatCount="indefinite"
+                />
+              </path>
             </svg>
 
             <!-- close -->

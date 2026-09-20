@@ -16,7 +16,11 @@ const share = false;
     <Logo v-if="share" class="size-14" />
     <a href="/" class="my-8" :class="share && 'm-0!'">
       <hgroup class="flex flex-col items-center gap-4 text-center">
-        <h1>Vincent Rubinetti</h1>
+        <div
+          class="font-sans text-3xl leading-none font-light tracking-widest uppercase"
+        >
+          Vincent Rubinetti
+        </div>
         <div class="font-light tracking-wider">Composer · Producer</div>
       </hgroup>
     </a>

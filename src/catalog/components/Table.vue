@@ -31,12 +31,21 @@ const features = tableFeatures({
 </script>
 
 <script setup lang="ts" generic="Rows extends Cell[]">
+import type { CSSProperties, HTMLAttributes, VNode } from "vue";
+import type {
+  SortFn,
+  SortingState,
+  Row as TanstackRow,
+} from "@tanstack/vue-table";
+import { computed } from "vue";
 import {
-  computed,
-  type CSSProperties,
-  type HTMLAttributes,
-  type VNode,
-} from "vue";
+  IconArrowDown,
+  IconArrowUp,
+  IconChevronLeft,
+  IconChevronRight,
+  IconChevronsLeft,
+  IconChevronsRight,
+} from "@tabler/icons-vue";
 import {
   createColumnHelper,
   createPaginatedRowModel,
@@ -47,21 +56,9 @@ import {
   rowSortingFeature,
   tableFeatures,
   useTable,
-  type Row as TanstackRow,
-  type SortFn,
-  type SortingState,
 } from "@tanstack/vue-table";
-import {
-  IconArrowDown,
-  IconArrowsSort,
-  IconArrowUp,
-  IconChevronLeft,
-  IconChevronRight,
-  IconChevronsLeft,
-  IconChevronsRight,
-} from "@tabler/icons-vue";
 import { formatValue } from "@/util/string";
-import Select from "./Select.vue";
+import Select from "@/catalog/components/Select.vue";
 
 type Props = {
   cols: Cols<Rows>;
@@ -125,7 +122,7 @@ const table = useTable<typeof features, Row>({
   data: computed(() => props.rows),
   columns,
   initialState: {
-    sorting: props.sort,
+    sorting: props.sort ?? [],
     pagination: {
       pageIndex: 0,
       pageSize: 50,
@@ -164,16 +161,16 @@ const cellAttrs = (col?: Cols[number], row?: Row) => {
       <!-- pages -->
       <div class="flex flex-wrap items-center gap-2">
         <button
-          :disabled="!table.getCanPreviousPage()"
+          :aria-disabled="!table.getCanPreviousPage()"
           title="First page"
-          @click="table.setPageIndex(0)"
+          @click="table.getCanPreviousPage() && table.setPageIndex(0)"
         >
           <IconChevronsLeft />
         </button>
         <button
-          :disabled="!table.getCanPreviousPage()"
+          :aria-disabled="!table.getCanPreviousPage()"
           title="Previous page"
-          @click="table.previousPage()"
+          @click="table.getCanPreviousPage() && table.previousPage()"
         >
           <IconChevronLeft />
         </button>
@@ -184,16 +181,19 @@ const cellAttrs = (col?: Cols[number], row?: Row) => {
         </span>
 
         <button
-          :disabled="!table.getCanNextPage()"
+          :aria-disabled="!table.getCanNextPage()"
           title="Next page"
-          @click="table.nextPage()"
+          @click="table.getCanNextPage() && table.nextPage()"
         >
           <IconChevronRight />
         </button>
         <button
-          :disabled="!table.getCanNextPage()"
+          :aria-disabled="!table.getCanNextPage()"
           title="Last page"
-          @click="table.setPageIndex(table.getPageCount() - 1)"
+          @click="
+            table.getCanNextPage() &&
+            table.setPageIndex(table.getPageCount() - 1)
+          "
         >
           <IconChevronsRight />
         </button>
@@ -202,7 +202,6 @@ const cellAttrs = (col?: Cols[number], row?: Row) => {
       <!-- page size -->
       <div class="flex flex-wrap items-center gap-2">
         <label>
-          Show
           <Select
             :modelValue="pagination.pageSize as 5"
             @update:modelValue="(value) => table.setPageSize(value ?? 5)"
@@ -241,9 +240,11 @@ const cellAttrs = (col?: Cols[number], row?: Row) => {
                   ...cellStyle(header.column.columnDef.meta),
                 }"
                 v-bind="cellAttrs(header.column.columnDef.meta)"
-                class="w-full gap-2 p-2"
-                :class="header.column.getCanSort() ? 'hover:bg-zinc-200' : ''"
-                @click="header.column.getToggleSortingHandler()?.($event)"
+                class="hover:bg-dark/5 w-full gap-2 p-2"
+                @click="
+                  (event: Event) =>
+                    header.column.getToggleSortingHandler()?.(event)
+                "
               >
                 <component :is="header.column.columnDef.meta?.icon" />
                 <FlexRender :header="header" />
@@ -254,7 +255,6 @@ const cellAttrs = (col?: Cols[number], row?: Row) => {
                   <IconArrowUp
                     v-else-if="header.column.getIsSorted() === 'asc'"
                   />
-                  <IconArrowsSort v-else class="text-zinc-400" />
                 </template>
               </component>
             </th>
@@ -295,20 +295,21 @@ const cellAttrs = (col?: Cols[number], row?: Row) => {
 
 <style scoped>
 @reference "tailwindcss";
+@reference "../../software/styles.css";
 
 table {
   @apply bg-white;
 }
 
 tr:nth-child(even) {
-  @apply bg-zinc-50;
+  @apply bg-dark/3;
 }
 
 th {
-  @apply bg-zinc-100;
+  @apply bg-dark/3;
 }
 
 td:not(:first-child) {
-  @apply border-l-2 border-zinc-100;
+  @apply border-dark/3 border-l-2;
 }
 </style>

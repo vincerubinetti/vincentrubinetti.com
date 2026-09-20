@@ -1,18 +1,18 @@
 <script setup lang="ts">
-import {
-  computed,
-  onMounted,
-  ref,
-  useTemplateRef,
-  watchEffect,
-  type UnwrapRef,
-} from "vue";
+import type { UnwrapRef } from "vue";
+import type {
+  AudioData,
+  Events,
+  Sound,
+  Track,
+  Widget,
+} from "@/home/components/SoundCloud";
+import { computed, onMounted, ref, useTemplateRef, watchEffect } from "vue";
 import { useEventListener, useScriptTag } from "@vueuse/core";
 import { clamp, max, range, uniq } from "lodash-es";
 import { Vibrant } from "node-vibrant/browser";
 import { lerp, smooth } from "@/util/math";
 import { generator, waitFor } from "@/util/misc";
-import type { AudioData, Events, Sound, Track, Widget } from "./SoundCloud";
 
 type Props = {
   /** playlist id */

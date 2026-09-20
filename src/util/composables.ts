@@ -1,5 +1,5 @@
-import { computed, ref } from "vue";
 import type { MaybeRefOrGetter } from "vue";
+import { computed, ref } from "vue";
 import {
   useElementSize,
   useEventListener,

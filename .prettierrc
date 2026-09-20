@@ -4,22 +4,37 @@
     "@ianvs/prettier-plugin-sort-imports",
     "prettier-plugin-tailwindcss"
   ],
+  "tailwindStylesheet": "./src/styles.css",
   "overrides": [
     {
       "files": "*.astro",
       "options": {
         "parser": "astro"
       }
+    },
+    {
+      "files": "*.!(css)",
+      "options": {
+        "importOrder": [
+          "<TYPES>^vue",
+          "<TYPES>^@[a-zA-Z]",
+          "<TYPES>^[a-zA-Z]",
+          "<TYPES>^@/",
+          "<TYPES>^/",
+          "<TYPES>^./",
+          "<TYPES>^../",
+          "<TYPES>",
+          "^vue",
+          "^@[a-zA-Z]",
+          "^[a-zA-Z]",
+          "^@/",
+          "^/",
+          "^./",
+          "^../"
+        ],
+        "importOrderParserPlugins": ["typescript", "importAssertions"],
+        "htmlWhitespaceSensitivity": "strict"
+      }
     }
-  ],
-  "importOrder": [
-    "^vue",
-    "^@[a-zA-Z]",
-    "^[a-zA-Z]",
-    "^@/",
-    "^/",
-    "^./",
-    "^../"
-  ],
-  "importOrderParserPlugins": ["typescript", "jsx", "importAssertions"]
+  ]
 }

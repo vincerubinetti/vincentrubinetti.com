@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import profile from "@/images/vince.png?url&format=webp";
-import Dash from "./components/Dash.vue";
+import Divider from "@/software/components/Divider.vue";
 </script>
 
 <template>
   <section>
-    <h2><Dash flip />About</h2>
+    <h2><Divider flip />About</h2>
 
     <div class="flex max-w-full items-center gap-(--gap) max-lg:flex-col">
       <div class="size-50 shrink-0">

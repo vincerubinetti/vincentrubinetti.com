@@ -1,7 +1,6 @@
 <script setup lang="ts">
-import { onMounted, useId, useTemplateRef, watchEffect } from "vue";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useId, useTemplateRef } from "vue";
+import { useElementVisibility } from "@vueuse/core";
 
 type Props = {
   flip?: boolean;
@@ -9,37 +8,28 @@ type Props = {
 
 const { flip } = defineProps<Props>();
 
-// unique per instance so patterns don't collide across multiple <Dash>
 const id = useId();
-
-onMounted(() => gsap.registerPlugin(ScrollTrigger));
 
 const line = useTemplateRef("line");
 
-watchEffect(() => {
-  if (!line.value) return;
-
-  gsap.fromTo(
-    line.value,
-    { clipPath: flip ? "inset(0% 0% 0% 100%)" : "inset(0% 100% 0% 0%)" },
-    {
-      clipPath: "inset(0% 0% 0% 0%)",
-      scrollTrigger: {
-        trigger: line.value,
-        start: "top 100%",
-        end: "bottom 0%",
-        toggleActions: "play reset play reset",
-      },
-      duration: 2,
-    },
-  );
-});
+/** whether line has scrolled into view */
+const visible = useElementVisibility(line, { threshold: 0 });
 
 const hatch = 8;
 </script>
 
 <template>
-  <svg ref="line" class="h-2 min-w-0 flex-1">
+  <svg
+    ref="line"
+    class="h-2 min-w-0 flex-1 transition-all duration-1000"
+    :class="
+      visible
+        ? '[clip-path:inset(0%_0%_0%_0%)]'
+        : flip
+          ? '[clip-path:inset(0%_0%_0%_100%)]'
+          : '[clip-path:inset(0%_100%_0%_0%)]'
+    "
+  >
     <pattern
       :id="id"
       patternUnits="userSpaceOnUse"
