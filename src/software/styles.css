@@ -8,7 +8,7 @@
 
   --color-light: oklch(98% 0.015 60);
   --color-mid: oklch(85% 0.1 60);
-  --color-mid-alt: oklch(75% 0.05 240);
+  --color-mid-alt: oklch(85% 0.025 60);
   --color-dark: oklch(45% 0.1 240);
 
   --tl-corner: radial-gradient(black 0, black 100%, transparent) top left
