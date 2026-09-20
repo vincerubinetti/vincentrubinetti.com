@@ -13,12 +13,7 @@ import UXUI from "./images/projects/ux-ui-for-researchers.pdf";
         <IconLogs />GitHub Catalog
       </a>
 
-      <a
-        :href="UXUI"
-        class="button self-center"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
+      <a :href="UXUI" class="button self-center">
         <IconMicroscope />Ideas on UX/UI
       </a>
 

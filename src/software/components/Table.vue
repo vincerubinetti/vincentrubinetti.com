@@ -145,6 +145,7 @@ const cellAttrs = (col?: Cols[number], row?: Row) => {
             v-for="header in headerGroup.headers"
             :key="header.id"
             :colSpan="header.colSpan"
+            :class="!header.column.getCanSort() && 'bg-dark/10'"
           >
             <button
               v-if="header.column.getCanSort()"
@@ -152,7 +153,7 @@ const cellAttrs = (col?: Cols[number], row?: Row) => {
                 ...cellStyle(header.column.columnDef.meta),
               }"
               v-bind="cellAttrs(header.column.columnDef.meta)"
-              class="hover:bg-dark/5 w-full gap-2 p-2"
+              class="button w-full gap-2 px-4 py-2 font-normal"
               @click="
                 (event: Event) =>
                   header.column.getToggleSortingHandler()?.(event)
@@ -177,7 +178,7 @@ const cellAttrs = (col?: Cols[number], row?: Row) => {
             <div
               :style="{ ...cellStyle(cell.column.columnDef.meta) }"
               v-bind="cellAttrs(cell.column.columnDef.meta, row.original)"
-              class="flex gap-2 p-2"
+              class="flex gap-2 px-4 py-2"
             >
               <slot
                 v-if="
@@ -206,15 +207,7 @@ const cellAttrs = (col?: Cols[number], row?: Row) => {
 @reference "tailwindcss";
 @reference "../../software/styles.css";
 
-table {
-  @apply bg-white;
-}
-
 tr:nth-child(even) {
-  @apply bg-dark/3;
-}
-
-th {
   @apply bg-dark/3;
 }
 

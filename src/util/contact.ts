@@ -13,7 +13,7 @@ export const useAddress = () => {
   onMounted(() => {
     const mailto = encode("mailto:vince@vincentrubinetti.com");
     const text = encode("vince@vincentrubinetti.com");
-    address.value = `<a href="${mailto}" target="_blank">${text}</a>`;
+    address.value = `<a href="${mailto}">${text}</a>`;
   });
 
   return address;

@@ -10,15 +10,15 @@ import collaboratorLogos from "./images/collaborators";
     <h2 class="sr-only">Collaborators</h2>
 
     <Braces>
-      <div
-        v-for="({ name }, index) in collaborators"
+      <a
+        v-for="({ name, link }, index) in collaborators"
         :key="index"
         :title="name"
-        role="img"
+        :href="link"
         class="size-12 opacity-50 grayscale transition-all hover:opacity-100 hover:grayscale-0"
       >
         <component :is="collaboratorLogos[slugify(name)]" class="size-full" />
-      </div>
+      </a>
     </Braces>
   </section>
 </template>

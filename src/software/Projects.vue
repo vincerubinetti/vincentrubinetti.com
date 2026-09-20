@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import Autocomplete from "./components/Autocomplete.vue";
 import { computed, ref, useTemplateRef } from "vue";
 import { IconAlertTriangle, IconExternalLink, IconX } from "@tabler/icons-vue";
 import { useElementBounding, useEventListener } from "@vueuse/core";
@@ -79,10 +80,18 @@ const keywords = projects.flatMap((project) =>
 const counts = countBy(keywords);
 
 /** search suggestion options */
-const options = uniq(keywords);
-
-/** sort options by frequency */
-options.sort((a, b) => counts[b] - counts[a]);
+const options = uniq(keywords)
+  /** remove empty values */
+  .filter(Boolean)
+  /** sort options by frequency */
+  .sort((a, b) => counts[b] - counts[a])
+  /** map to full option */
+  .map((option) => ({
+    value: option,
+    label: option,
+    info: counts[option],
+    icon: logos[option as keyof typeof logos],
+  }));
 
 const input = useTemplateRef("input");
 
@@ -148,34 +157,16 @@ const coords = computed(() => ({
 </script>
 
 <template>
-  <section class="bg-light paper">
+  <section class="bg-light">
     <h2>Projects<Divider /></h2>
 
     <!-- search -->
-    <div class="relative flex items-center">
-      <input
-        ref="input"
-        v-model="search"
-        placeholder="Search"
-        list="search-suggestions"
-        class="grow"
-      />
-
-      <button
-        class="hover:text-dark absolute right-0 aspect-square h-full"
-        @click="search = ''"
-        title="Clear search"
-      >
-        <IconX />
-      </button>
-    </div>
-
-    <!-- autocomplete -->
-    <datalist id="search-suggestions">
-      <option v-for="(option, index) in options" :key="index" :value="option">
-        {{ counts[option] }}
-      </option>
-    </datalist>
+    <Autocomplete
+      ref="input"
+      v-model="search"
+      :options="options"
+      placeholder="Search projects"
+    />
 
     <!-- filter info -->
     <b class="-my-4 text-center max-md:-my-2">
@@ -287,7 +278,7 @@ const coords = computed(() => ({
 
             <!-- close -->
             <button
-              class="button absolute top-0 right-0 bg-transparent!"
+              class="button absolute top-0 right-0"
               @click="close(index)"
               title="Close project details"
             >
@@ -347,7 +338,8 @@ const coords = computed(() => ({
                   :title="`Filter by ${item}`"
                   @click="
                     search = item;
-                    input?.scrollIntoView({
+                    console.log(input);
+                    input?.anchor?.scrollIntoView({
                       behavior: 'smooth',
                       block: 'nearest',
                     });
@@ -365,14 +357,12 @@ const coords = computed(() => ({
           </div>
         </div>
       </template>
-    </div>
 
-    <div class="flex flex-col gap-2 self-center">
-      <p>Plus <b>many more</b> professional and personal projects...</p>
-      <ul>
-        <li>Private or in-progress work I can't share (yet)</li>
-        <li>An archive of apps/games/experiments/etc. too long to list</li>
-      </ul>
+      <p class="border-mid-alt border border-dashed p-4">
+        Plus <b>many more</b> professional and personal projects: Private or
+        in-progress work I can't share (yet), and an archive of apps/<wbr />games/<wbr />experiments/<wbr />etc.
+        too long to list.
+      </p>
     </div>
   </section>
 </template>

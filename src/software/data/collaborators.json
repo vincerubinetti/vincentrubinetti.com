@@ -1,20 +1,26 @@
 [
   {
-    "name": "Greene Lab"
+    "name": "3Blue1Brown",
+    "link": "https://3blue1brown.com/"
   },
   {
-    "name": "University of Colorado"
+    "name": "University of Colorado",
+    "link": "https://medschool.cuanschutz.edu/dbmi"
   },
   {
-    "name": "University of Pennsylvania"
+    "name": "University of Pennsylvania",
+    "link": "https://www.upenn.edu/"
   },
   {
-    "name": "3Blue1Brown"
+    "name": "National Institutes of Health",
+    "link": "https://commonfund.nih.gov/dataecosystem"
   },
   {
-    "name": "National Institutes of Health"
+    "name": "Greene Lab",
+    "link": "https://greenelab.com/"
   },
   {
-    "name": "Manubot"
+    "name": "Manubot",
+    "link": "https://manubot.org/"
   }
 ]

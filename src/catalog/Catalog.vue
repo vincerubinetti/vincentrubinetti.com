@@ -52,7 +52,7 @@ const cols: Cols<typeof repos> = [
 </script>
 
 <template>
-  <section class="bg-light paper">
+  <section class="bg-light">
     <hgroup class="flex flex-col gap-6">
       <h2><Divider flip />Catalog<Divider /></h2>
 
@@ -62,7 +62,7 @@ const cols: Cols<typeof repos> = [
     </hgroup>
   </section>
 
-  <section>
+  <section class="[--width:999]">
     <Table :rows="repos" :cols="cols">
       <template #link="{ row }">
         <a

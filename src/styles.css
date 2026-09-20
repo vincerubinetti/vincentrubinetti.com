@@ -18,13 +18,13 @@
   }
 
   main {
-    @apply flex grow flex-col items-center;
+    @apply flex grow flex-col;
   }
 
   header,
   section,
   footer {
-    @apply relative z-0 flex w-full flex-col gap-(--gap) px-[max(var(--gap),(100%-var(--width))/2)] py-(--gap) [--gap:--spacing(12)] max-lg:[--gap:--spacing(10)] max-md:[--gap:--spacing(8)] max-sm:[--gap:--spacing(6)] max-xs:[--gap:--spacing(4)];
+    @apply relative isolate flex flex-col gap-(--gap) px-[max(var(--gap),(100%-var(--width)*(--spacing(1)))/2)] py-(--gap) [--gap:--spacing(12)] max-lg:[--gap:--spacing(10)] max-md:[--gap:--spacing(8)] max-sm:[--gap:--spacing(6)] max-xs:[--gap:--spacing(4)];
   }
 
   h2,
