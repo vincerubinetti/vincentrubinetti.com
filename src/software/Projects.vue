@@ -6,10 +6,10 @@ import { countBy, uniq } from "lodash-es";
 import logos from "@/images/logos";
 import { sleep } from "@/util/misc";
 import { formatValue, renderMarkdown, slugify } from "@/util/string";
-import Carousel from "@/software/components/Carousel.vue";
-import Divider from "@/software/components/Divider.vue";
-import projects from "@/software/data/projects.json";
-import { files, images } from "@/software/images/projects";
+import Carousel from "./components/Carousel.vue";
+import Divider from "./components/Divider.vue";
+import projects from "./data/projects.json";
+import { files, images } from "./images/projects";
 
 /** indexOf with fallback */
 const index = (array: unknown[], value: unknown, fallback: number) => {

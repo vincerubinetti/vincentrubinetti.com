@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { renderMarkdown } from "@/util/string";
-import Divider from "@/software/components/Divider.vue";
+import Divider from "./components/Divider.vue";
 
 const philosophies = [
   {

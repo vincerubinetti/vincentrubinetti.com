@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { IconArrowDown, IconLogs, IconMicroscope } from "@tabler/icons-vue";
-import Braces from "@/software/components/Braces.vue";
-import UXUI from "@/software/images/projects/ux-ui-for-researchers.pdf";
+import Braces from "./components/Braces.vue";
+import UXUI from "./images/projects/ux-ui-for-researchers.pdf";
 </script>
 
 <template>

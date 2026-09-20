@@ -7,8 +7,8 @@ import {
   IconPlug,
   IconRobot,
 } from "@tabler/icons-vue";
-import setup from "@/studio/data/setup.json";
-import picture from "@/studio/images/studio.jpg?url";
+import setup from "./data/setup.json";
+import picture from "./images/studio.jpg?url";
 
 const icons = {
   Machine: IconCpu,

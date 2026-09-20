@@ -3,7 +3,7 @@ import { computed, useTemplateRef, watch } from "vue";
 import { useMouseInElement } from "@vueuse/core";
 import { range } from "lodash-es";
 import svgFile from "@/images/brand/title.svg?raw";
-import Background from "@/software/Background.vue";
+import Background from "./Background.vue";
 
 const svg = useTemplateRef("svg");
 

@@ -6,7 +6,7 @@ import { Octokit } from "octokit";
 const login = "vincerubinetti";
 const start = 2008;
 const end = new Date().getFullYear();
-const output = "src/software/contributions.json";
+const output = "src/catalog/data/contributions.json";
 
 /** github api client */
 const octokit = new (Octokit.plugin(throttling))({

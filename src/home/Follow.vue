@@ -4,8 +4,8 @@ import Bandcamp from "@/images/logos/bandcamp.svg?component";
 import SoundCloud from "@/images/logos/soundcloud.svg?component";
 import Spotify from "@/images/logos/spotify.svg?component";
 import YouTube from "@/images/logos/youtube.svg?component";
-import Outline from "@/home/components/Outline.vue";
-import { getColor } from "@/home/util/colors";
+import Outline from "./components/Outline.vue";
+import { getColor } from "./util/colors";
 </script>
 
 <template>

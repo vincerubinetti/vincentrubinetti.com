@@ -2,7 +2,7 @@
 import { IconSend } from "@tabler/icons-vue";
 import { useLocalStorage } from "@vueuse/core";
 import { onSubmit, useAddress } from "@/util/contact";
-import Outline from "@/home/components/Outline.vue";
+import Outline from "./components/Outline.vue";
 
 /** form state */
 const name = useLocalStorage("name", "");

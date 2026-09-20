@@ -58,7 +58,7 @@ import {
   useTable,
 } from "@tanstack/vue-table";
 import { formatValue } from "@/util/string";
-import Select from "@/catalog/components/Select.vue";
+import Select from "./Select.vue";
 
 type Props = {
   cols: Cols<Rows>;

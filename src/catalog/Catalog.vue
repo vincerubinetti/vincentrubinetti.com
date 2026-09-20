@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Cols } from "@/catalog/components/Table.vue";
+import type { Cols } from "@/software/components/Table.vue";
 import {
   IconBug,
   IconExternalLink,
@@ -9,8 +9,8 @@ import {
 } from "@tabler/icons-vue";
 import { map, max, min, orderBy, startCase } from "lodash-es";
 import Divider from "@/software/components/Divider.vue";
-import Table from "@/catalog/components/Table.vue";
-import contributions from "@/catalog/data/contributions.json";
+import Table from "@/software/components/Table.vue";
+import contributions from "./data/contributions.json";
 
 /** fall-off function */
 const value = (x: number, w: number, v: number) => (1 - 2 ** (-x / w)) * v;

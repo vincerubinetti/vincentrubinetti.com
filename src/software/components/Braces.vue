@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useId, useTemplateRef } from "vue";
 import { useElementVisibility } from "@vueuse/core";
-import Brace from "@/software/images/brace.svg?component";
+import Brace from "./brace.svg?component";
 
 const id = useId();
 

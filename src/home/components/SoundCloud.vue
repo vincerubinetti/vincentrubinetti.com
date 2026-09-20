@@ -1,12 +1,6 @@
 <script setup lang="ts">
 import type { UnwrapRef } from "vue";
-import type {
-  AudioData,
-  Events,
-  Sound,
-  Track,
-  Widget,
-} from "@/home/components/SoundCloud";
+import type { AudioData, Events, Sound, Track, Widget } from "./SoundCloud";
 import { computed, onMounted, ref, useTemplateRef, watchEffect } from "vue";
 import { useEventListener, useScriptTag } from "@vueuse/core";
 import { clamp, max, range, uniq } from "lodash-es";

@@ -3,8 +3,8 @@ import { computed, useTemplateRef, watchEffect } from "vue";
 import { useIntervalFn } from "@vueuse/core";
 import { Canvas } from "glsl-canvas-js";
 import { range } from "lodash-es";
-import shader from "@/home/components/background.frag?raw";
-import { playing, smoothedLevel, track } from "@/home/util/state";
+import shader from "./background.frag?raw";
+import { playing, smoothedLevel, track } from "./util/state";
 
 const canvas = useTemplateRef("canvas");
 

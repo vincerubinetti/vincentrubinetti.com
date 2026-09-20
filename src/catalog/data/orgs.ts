@@ -2,7 +2,7 @@ import { writeFileSync } from "fs";
 import { Octokit } from "octokit";
 
 /** params */
-const output = "src/software/orgs.json";
+const output = "src/catalog/data/orgs.json";
 
 /** github api client */
 const octokit = new Octokit({ auth: process.env.GITHUB_TOKEN });

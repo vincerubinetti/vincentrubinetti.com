@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import Braces from "@/software/components/Braces.vue";
+import Braces from "./components/Braces.vue";
 import { slugify } from "@/util/string";
-import collaborators from "@/software/data/collaborators.json";
-import collaboratorLogos from "@/software/images/collaborators";
+import collaborators from "./data/collaborators.json";
+import collaboratorLogos from "./images/collaborators";
 </script>
 
 <template>

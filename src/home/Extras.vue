@@ -5,7 +5,7 @@ import {
   IconLeaf,
   IconMusic,
 } from "@tabler/icons-vue";
-import Outline from "@/home/components/Outline.vue";
+import Outline from "./components/Outline.vue";
 </script>
 
 <template>

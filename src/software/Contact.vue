@@ -2,7 +2,7 @@
 import { IconSend } from "@tabler/icons-vue";
 import { useLocalStorage } from "@vueuse/core";
 import { onSubmit, useAddress } from "@/util/contact";
-import Divider from "@/software/components/Divider.vue";
+import Divider from "./components/Divider.vue";
 
 /** form state */
 const name = useLocalStorage("name", "");

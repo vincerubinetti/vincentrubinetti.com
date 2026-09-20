@@ -10,10 +10,10 @@ import { useEventListener } from "@vueuse/core";
 import logos from "@/images/logos";
 import { waitFor } from "@/util/misc";
 import { renderMarkdown, slugify } from "@/util/string";
-import Outline from "@/home/components/Outline.vue";
-import highlights from "@/home/data/highlights.json";
-import albums from "@/home/images/albums";
-import { getColor } from "@/home/util/colors";
+import Outline from "./components/Outline.vue";
+import highlights from "./data/highlights.json";
+import albums from "./images/albums";
+import { getColor } from "./util/colors";
 import "youtube-video-element";
 
 type Highlight = (typeof highlights)[number];

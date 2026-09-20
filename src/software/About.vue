@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import profile from "@/images/vince.png?url&format=webp";
-import Divider from "@/software/components/Divider.vue";
+import Divider from "./components/Divider.vue";
 </script>
 
 <template>

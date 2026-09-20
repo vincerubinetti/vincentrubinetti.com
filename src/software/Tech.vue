@@ -2,7 +2,7 @@
 import { pick } from "lodash-es";
 import logos from "@/images/logos";
 import { renderMarkdown } from "@/util/string";
-import Divider from "@/software/components/Divider.vue";
+import Divider from "./components/Divider.vue";
 
 const tech = [
   {
