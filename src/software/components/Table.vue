@@ -24,8 +24,6 @@ export type Cols<Rows extends Cell[] = Cell[]> = {
 const features = tableFeatures({
   rowSortingFeature,
   sortedRowModel: createSortedRowModel(),
-  rowPaginationFeature,
-  paginatedRowModel: createPaginatedRowModel(),
   columnMeta: metaHelper<Cols<Cell[]>[number]>(),
 });
 </script>
@@ -38,27 +36,17 @@ import type {
   Row as TanstackRow,
 } from "@tanstack/vue-table";
 import { computed } from "vue";
-import {
-  IconArrowDown,
-  IconArrowUp,
-  IconChevronLeft,
-  IconChevronRight,
-  IconChevronsLeft,
-  IconChevronsRight,
-} from "@tabler/icons-vue";
+import { IconArrowDown, IconArrowUp } from "@tabler/icons-vue";
 import {
   createColumnHelper,
-  createPaginatedRowModel,
   createSortedRowModel,
   FlexRender,
   metaHelper,
-  rowPaginationFeature,
   rowSortingFeature,
   tableFeatures,
   useTable,
 } from "@tanstack/vue-table";
 import { formatValue } from "@/util/string";
-import Select from "./Select.vue";
 
 type Props = {
   cols: Cols<Rows>;
@@ -123,15 +111,8 @@ const table = useTable<typeof features, Row>({
   columns,
   initialState: {
     sorting: props.sort ?? [],
-    pagination: {
-      pageIndex: 0,
-      pageSize: 50,
-    },
   },
 });
-
-/** current pagination state */
-const pagination = computed(() => table.atoms.pagination.get());
 
 /** get cell style from col definition */
 const cellStyle = (col?: Cols[number]) => ({
@@ -153,143 +134,71 @@ const cellAttrs = (col?: Cols[number], row?: Row) => {
 </script>
 
 <template>
-  <div class="flex flex-col gap-4">
-    <!-- controls -->
-    <div
-      class="flex flex-wrap items-center justify-between gap-4 max-md:flex-col"
-    >
-      <!-- pages -->
-      <div class="flex flex-wrap items-center gap-2">
-        <button
-          :aria-disabled="!table.getCanPreviousPage()"
-          title="First page"
-          @click="table.getCanPreviousPage() && table.setPageIndex(0)"
+  <div class="w-full overflow-x-auto">
+    <table class="w-full">
+      <thead>
+        <tr
+          v-for="headerGroup in table.getHeaderGroups()"
+          :key="headerGroup.id"
         >
-          <IconChevronsLeft />
-        </button>
-        <button
-          :aria-disabled="!table.getCanPreviousPage()"
-          title="Previous page"
-          @click="table.getCanPreviousPage() && table.previousPage()"
-        >
-          <IconChevronLeft />
-        </button>
-
-        <span>
-          {{ pagination.pageIndex + 1 }} of
-          {{ table.getPageCount() }}
-        </span>
-
-        <button
-          :aria-disabled="!table.getCanNextPage()"
-          title="Next page"
-          @click="table.getCanNextPage() && table.nextPage()"
-        >
-          <IconChevronRight />
-        </button>
-        <button
-          :aria-disabled="!table.getCanNextPage()"
-          title="Last page"
-          @click="
-            table.getCanNextPage() &&
-            table.setPageIndex(table.getPageCount() - 1)
-          "
-        >
-          <IconChevronsRight />
-        </button>
-      </div>
-
-      <!-- page size -->
-      <div class="flex flex-wrap items-center gap-2">
-        <label>
-          <Select
-            :modelValue="pagination.pageSize as 5"
-            @update:modelValue="(value) => table.setPageSize(value ?? 5)"
-            :options="
-              [
-                { value: 5 },
-                { value: 10 },
-                { value: 25 },
-                { value: 50 },
-                { value: 100 },
-                { value: 9999, label: 'All' },
-              ] as const
-            "
-          />
-        </label>
-        <div>of {{ formatValue(rows.length) }} items</div>
-      </div>
-    </div>
-
-    <!-- table body -->
-    <div class="w-full overflow-x-auto">
-      <table class="w-full">
-        <thead>
-          <tr
-            v-for="headerGroup in table.getHeaderGroups()"
-            :key="headerGroup.id"
+          <th
+            v-for="header in headerGroup.headers"
+            :key="header.id"
+            :colSpan="header.colSpan"
           >
-            <th
-              v-for="header in headerGroup.headers"
-              :key="header.id"
-              :colSpan="header.colSpan"
+            <button
+              v-if="header.column.getCanSort()"
+              :style="{
+                ...cellStyle(header.column.columnDef.meta),
+              }"
+              v-bind="cellAttrs(header.column.columnDef.meta)"
+              class="hover:bg-dark/5 w-full gap-2 p-2"
+              @click="
+                (event: Event) =>
+                  header.column.getToggleSortingHandler()?.(event)
+              "
             >
-              <component
-                :is="header.column.getCanSort() ? 'button' : 'div'"
-                :style="{
-                  ...cellStyle(header.column.columnDef.meta),
-                }"
-                v-bind="cellAttrs(header.column.columnDef.meta)"
-                class="hover:bg-dark/5 w-full gap-2 p-2"
-                @click="
-                  (event: Event) =>
-                    header.column.getToggleSortingHandler()?.(event)
-                "
-              >
-                <component :is="header.column.columnDef.meta?.icon" />
-                <FlexRender :header="header" />
-                <template v-if="header.column.getCanSort()">
-                  <IconArrowDown
-                    v-if="header.column.getIsSorted() === 'desc'"
-                  />
-                  <IconArrowUp
-                    v-else-if="header.column.getIsSorted() === 'asc'"
-                  />
-                </template>
-              </component>
-            </th>
-          </tr>
-        </thead>
-
-        <tbody>
-          <tr v-for="row in table.getRowModel().rows" :key="row.id">
-            <td v-for="cell in row.getAllCells()" :key="cell.id">
-              <div
-                :style="{ ...cellStyle(cell.column.columnDef.meta) }"
-                v-bind="cellAttrs(cell.column.columnDef.meta, row.original)"
-                class="flex gap-2 p-2"
-              >
-                <slot
-                  v-if="
-                    cell.column.columnDef.meta?.slot &&
-                    $slots[cell.column.columnDef.meta?.slot]
-                  "
-                  :name="cell.column.columnDef.meta?.slot"
-                  :row="row.original"
+              <component :is="header.column.columnDef.meta?.icon" />
+              <FlexRender :header="header" />
+              <template v-if="header.column.getCanSort()">
+                <IconArrowDown v-if="header.column.getIsSorted() === 'desc'" />
+                <IconArrowUp
+                  v-else-if="header.column.getIsSorted() === 'asc'"
                 />
-                <template v-else>
-                  {{ formatValue(cell.getValue()) }}
-                </template>
-              </div>
-            </td>
-          </tr>
+              </template>
+            </button>
+          </th>
+        </tr>
+      </thead>
 
-          <tr v-if="!table.getRowModel().rows.length">
-            <td :colspan="cols.length">No data</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+      <tbody>
+        <tr v-for="row in table.getRowModel().rows" :key="row.id">
+          <td v-for="cell in row.getAllCells()" :key="cell.id">
+            <div
+              :style="{ ...cellStyle(cell.column.columnDef.meta) }"
+              v-bind="cellAttrs(cell.column.columnDef.meta, row.original)"
+              class="flex gap-2 p-2"
+            >
+              <slot
+                v-if="
+                  cell.column.columnDef.meta?.slot &&
+                  $slots[cell.column.columnDef.meta?.slot]
+                "
+                :name="cell.column.columnDef.meta?.slot"
+                :row="row.original"
+              />
+              <template v-else>
+                {{ formatValue(cell.getValue()) }}
+              </template>
+            </div>
+          </td>
+        </tr>
+
+        <tr v-if="!table.getRowModel().rows.length">
+          <td :colspan="cols.length">No data</td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </template>
 

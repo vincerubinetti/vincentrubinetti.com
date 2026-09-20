@@ -13,8 +13,8 @@ const visible = useElementVisibility(container, { threshold: 0 });
 <template>
   <Brace
     ref="left"
-    class="text-dark/25 absolute top-[anchor(center)] -translate-x-16 -translate-y-1/2 scale-500 transition-all duration-1000"
-    :class="visible ? 'left-[anchor(left)]' : 'left-1/2'"
+    class="text-dark absolute top-[anchor(center)] -translate-x-16 -translate-y-1/2 scale-500 transition-all duration-1000"
+    :class="visible ? 'left-[anchor(left)] opacity-10' : 'left-1/2'"
     :style="{ positionAnchor: `--${id}` }"
   />
   <div
@@ -31,8 +31,8 @@ const visible = useElementVisibility(container, { threshold: 0 });
   </div>
   <Brace
     ref="right"
-    class="text-dark/25 absolute top-[anchor(center)] translate-x-16 -translate-y-1/2 scale-500 -scale-x-500 transition-all duration-1000"
-    :class="visible ? 'right-[anchor(right)]' : 'right-1/2'"
+    class="text-dark absolute top-[anchor(center)] translate-x-16 -translate-y-1/2 scale-500 -scale-x-500 transition-all duration-1000"
+    :class="visible ? 'right-[anchor(right)] opacity-10' : 'right-1/2'"
     :style="{ positionAnchor: `--${id}` }"
   />
 </template>
