@@ -36,7 +36,11 @@ import type {
   Row as TanstackRow,
 } from "@tanstack/vue-table";
 import { computed } from "vue";
-import { IconArrowDown, IconArrowUp } from "@tabler/icons-vue";
+import {
+  IconArrowDown,
+  IconArrowsUpDown,
+  IconArrowUp,
+} from "@tabler/icons-vue";
 import {
   createColumnHelper,
   createSortedRowModel,
@@ -166,6 +170,7 @@ const cellAttrs = (col?: Cols[number], row?: Row) => {
                 <IconArrowUp
                   v-else-if="header.column.getIsSorted() === 'asc'"
                 />
+                <IconArrowsUpDown v-else class="opacity-0" />
               </template>
             </button>
           </th>
