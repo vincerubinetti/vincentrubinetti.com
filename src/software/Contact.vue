@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useLocalStorage } from "@vueuse/core";
-import { Send } from "lucide-vue-next";
+import { IconSend } from "@tabler/icons-vue";
 import { onSubmit, useAddress } from "@/util/contact";
 import Dash from "./components/Dash.vue";
 
@@ -52,7 +52,7 @@ const address = useAddress();
           placeholder="Message"
           rows="5"
         />
-        <button type="submit" class="button-big"><Send />Send</button>
+        <button type="submit" class="button-big"><IconSend />Send</button>
       </form>
     </div>
   </section>

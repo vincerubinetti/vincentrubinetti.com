@@ -7,7 +7,12 @@ import {
   useIntervalFn,
 } from "@vueuse/core";
 import { range } from "lodash-es";
-import { Maximize, Minimize, Pause, Play } from "lucide-vue-next";
+import {
+  IconMaximize,
+  IconMinimize,
+  IconPlayerPause,
+  IconPlayerPlay,
+} from "@tabler/icons-vue";
 import { useSwipe } from "@/util/composables";
 import { mod } from "@/util/math";
 import Chevron from "../images/chevron.svg?component";
@@ -122,8 +127,8 @@ const { toggle, isFullscreen } = useFullscreen(rootRef);
           :title="`${isActive ? 'Pause' : 'Resume'} autoplay`"
           @click="isActive ? pause() : resume()"
         >
-          <Pause v-if="isActive" />
-          <Play v-else />
+          <IconPlayerPause v-if="isActive" />
+          <IconPlayerPlay v-else />
         </button>
 
         <button title="Previous image" @click="previous()">
@@ -154,8 +159,8 @@ const { toggle, isFullscreen } = useFullscreen(rootRef);
         :title="isFullscreen ? 'Exit fullscreen' : 'Enter fullscreen'"
         @click="toggle()"
       >
-        <Minimize v-if="isFullscreen" />
-        <Maximize v-else />
+        <IconMinimize v-if="isFullscreen" />
+        <IconMaximize v-else />
       </button>
     </div>
   </div>

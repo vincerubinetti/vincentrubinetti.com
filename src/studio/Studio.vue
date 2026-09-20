@@ -1,9 +1,23 @@
 <script setup lang="ts">
-import { Bot, Cpu, Drum, Library, MicVocal, Plug } from "lucide-vue-next";
+import {
+  IconCpu,
+  IconPiano,
+  IconLibrary,
+  IconMicrophone,
+  IconPlug,
+  IconRobot,
+} from "@tabler/icons-vue";
 import setup from "./data/setup.json";
 import picture from "./images/studio.jpg?url";
 
-const icons = { Bot, Cpu, Drum, Library, MicVocal, Plug };
+const icons = {
+  Machine: IconCpu,
+  Software: IconRobot,
+  Equipment: IconMicrophone,
+  Instruments: IconPiano,
+  Plugins: IconPlug,
+  "Sample Libraries": IconLibrary,
+};
 </script>
 
 <template>
@@ -21,14 +35,14 @@ const icons = { Bot, Cpu, Drum, Library, MicVocal, Plug };
       </a>
 
       <div
-        v-for="({ name, icon, items }, index) in setup"
+        v-for="({ name, items }, index) in setup"
         :key="index"
         class="flex flex-col gap-6 rounded bg-zinc-100 p-4"
         :class="[items.length > 10 && 'row-span-2']"
       >
         <h3>
           <component
-            :is="icons[icon as keyof typeof icons]"
+            :is="icons[name as keyof typeof icons]"
             class="text-zinc-500"
           />
           {{ name }}

@@ -25,6 +25,7 @@ export const generator = <Type>(func: () => AsyncGenerator<Type>) => {
     /** make generator */
     const generator = func();
     /** run generator step by step */
+    // eslint-disable-next-line
     for await (const _ of generator) {
       /** if this run not latest, abort */
       if (current !== latest) return console.debug("aborted");

@@ -20,12 +20,14 @@ export type Cols<Rows extends Cell[] = Cell[]> = {
   sortable?: boolean;
 }[];
 
-declare module "@tanstack/vue-table" {
-  // eslint-disable-next-line
-  interface ColumnMeta<TData extends RowData, TValue> {
-    colProp: Cols<Cell[]>[number];
-  }
-}
+/** only sorting and pagination are used, so only those features are enabled */
+const features = tableFeatures({
+  rowSortingFeature,
+  sortedRowModel: createSortedRowModel(),
+  rowPaginationFeature,
+  paginatedRowModel: createPaginatedRowModel(),
+  columnMeta: metaHelper<Cols<Cell[]>[number]>(),
+});
 </script>
 
 <script setup lang="ts" generic="Rows extends Cell[]">
@@ -37,27 +39,27 @@ import {
 } from "vue";
 import {
   createColumnHelper,
+  createPaginatedRowModel,
+  createSortedRowModel,
   FlexRender,
-  getCoreRowModel,
-  getFacetedMinMaxValues,
-  getFacetedRowModel,
-  getFacetedUniqueValues,
-  getFilteredRowModel,
-  getPaginationRowModel,
-  getSortedRowModel,
-  useVueTable,
+  metaHelper,
+  rowPaginationFeature,
+  rowSortingFeature,
+  tableFeatures,
+  useTable,
   type Row as TanstackRow,
+  type SortFn,
+  type SortingState,
 } from "@tanstack/vue-table";
-import type { RowData, SortingFn, SortingState } from "@tanstack/vue-table";
 import {
-  ArrowDown,
-  ArrowUp,
-  ArrowUpDown,
-  ChevronLeft,
-  ChevronRight,
-  ChevronsLeft,
-  ChevronsRight,
-} from "lucide-vue-next";
+  IconArrowDown,
+  IconArrowsSort,
+  IconArrowUp,
+  IconChevronLeft,
+  IconChevronRight,
+  IconChevronsLeft,
+  IconChevronsRight,
+} from "@tabler/icons-vue";
 import { formatValue } from "@/util/string";
 import Select from "./Select.vue";
 
@@ -77,12 +79,12 @@ defineSlots<{
   [slot in SlotNames]: ({ row }: { row: Row }) => VNode;
 }>();
 
-const columnHelper = createColumnHelper<Row>();
+const columnHelper = createColumnHelper<typeof features, Row>();
 
 /** custom sorting function */
-const sortingFunction: SortingFn<Row> = (
-  a: TanstackRow<Row>,
-  b: TanstackRow<Row>,
+const sortingFunction: SortFn<typeof features, Row> = (
+  a: TanstackRow<typeof features, Row>,
+  b: TanstackRow<typeof features, Row>,
   columnId: string,
 ) => {
   /** get row values */
@@ -100,7 +102,7 @@ const sortingFunction: SortingFn<Row> = (
 /** column definitions */
 const columns = computed(() =>
   props.cols.map((col) =>
-    columnHelper.accessor((row: Row) => row[col.key], {
+    columnHelper.accessor((row: Row) => row[col.key] as unknown, {
       /** unique column id */
       id: col.key,
       /** name */
@@ -108,35 +110,20 @@ const columns = computed(() =>
       /** sortable */
       enableSorting: col.sortable ?? true,
       /** sorting function */
-      sortingFn: sortingFunction,
+      sortFn: sortingFunction,
       /** put nullish values lower */
       sortUndefined: -1,
       /** extra metadata */
-      meta: {
-        colProp: col,
-      },
+      meta: col,
     }),
   ),
 );
 
-/** note: https://github.com/TanStack/table/issues/5653 */
-
 /** tanstack table api */
-const table = useVueTable({
-  /** https://github.com/TanStack/table/discussions/4455 */
-  get data() {
-    return props.rows;
-  },
-  get columns() {
-    return columns.value;
-  },
-  getCoreRowModel: getCoreRowModel(),
-  getFilteredRowModel: getFilteredRowModel(),
-  getPaginationRowModel: getPaginationRowModel(),
-  getSortedRowModel: getSortedRowModel(),
-  getFacetedRowModel: getFacetedRowModel(),
-  getFacetedUniqueValues: getFacetedUniqueValues(),
-  getFacetedMinMaxValues: getFacetedMinMaxValues(),
+const table = useTable<typeof features, Row>({
+  features,
+  data: computed(() => props.rows),
+  columns,
   initialState: {
     sorting: props.sort,
     pagination: {
@@ -145,6 +132,9 @@ const table = useVueTable({
     },
   },
 });
+
+/** current pagination state */
+const pagination = computed(() => table.atoms.pagination.get());
 
 /** get cell style from col definition */
 const cellStyle = (col?: Cols[number]) => ({
@@ -178,18 +168,18 @@ const cellAttrs = (col?: Cols[number], row?: Row) => {
           title="First page"
           @click="table.setPageIndex(0)"
         >
-          <ChevronsLeft />
+          <IconChevronsLeft />
         </button>
         <button
           :disabled="!table.getCanPreviousPage()"
           title="Previous page"
           @click="table.previousPage()"
         >
-          <ChevronLeft />
+          <IconChevronLeft />
         </button>
 
         <span>
-          {{ table.getState().pagination.pageIndex + 1 }} of
+          {{ pagination.pageIndex + 1 }} of
           {{ table.getPageCount() }}
         </span>
 
@@ -198,14 +188,14 @@ const cellAttrs = (col?: Cols[number], row?: Row) => {
           title="Next page"
           @click="table.nextPage()"
         >
-          <ChevronRight />
+          <IconChevronRight />
         </button>
         <button
           :disabled="!table.getCanNextPage()"
           title="Last page"
           @click="table.setPageIndex(table.getPageCount() - 1)"
         >
-          <ChevronsRight />
+          <IconChevronsRight />
         </button>
       </div>
 
@@ -214,7 +204,7 @@ const cellAttrs = (col?: Cols[number], row?: Row) => {
         <label>
           Show
           <Select
-            :modelValue="table.getState().pagination.pageSize as 5"
+            :modelValue="pagination.pageSize as 5"
             @update:modelValue="(value) => table.setPageSize(value ?? 5)"
             :options="
               [
@@ -248,22 +238,23 @@ const cellAttrs = (col?: Cols[number], row?: Row) => {
               <component
                 :is="header.column.getCanSort() ? 'button' : 'div'"
                 :style="{
-                  ...cellStyle(header.column.columnDef.meta?.colProp),
+                  ...cellStyle(header.column.columnDef.meta),
                 }"
-                v-bind="cellAttrs(header.column.columnDef.meta?.colProp)"
+                v-bind="cellAttrs(header.column.columnDef.meta)"
                 class="w-full gap-2 p-2"
                 :class="header.column.getCanSort() ? 'hover:bg-zinc-200' : ''"
                 @click="header.column.getToggleSortingHandler()?.($event)"
               >
-                <component :is="header.column.columnDef.meta?.colProp.icon" />
-                <FlexRender
-                  :render="header.column.columnDef.header"
-                  :props="header.getContext()"
-                />
+                <component :is="header.column.columnDef.meta?.icon" />
+                <FlexRender :header="header" />
                 <template v-if="header.column.getCanSort()">
-                  <ArrowDown v-if="header.column.getIsSorted() === 'desc'" />
-                  <ArrowUp v-else-if="header.column.getIsSorted() === 'asc'" />
-                  <ArrowUpDown v-else class="text-zinc-400" />
+                  <IconArrowDown
+                    v-if="header.column.getIsSorted() === 'desc'"
+                  />
+                  <IconArrowUp
+                    v-else-if="header.column.getIsSorted() === 'asc'"
+                  />
+                  <IconArrowsSort v-else class="text-zinc-400" />
                 </template>
               </component>
             </th>
@@ -272,20 +263,18 @@ const cellAttrs = (col?: Cols[number], row?: Row) => {
 
         <tbody>
           <tr v-for="row in table.getRowModel().rows" :key="row.id">
-            <td v-for="cell in row.getVisibleCells()" :key="cell.id">
+            <td v-for="cell in row.getAllCells()" :key="cell.id">
               <div
-                :style="{ ...cellStyle(cell.column.columnDef.meta?.colProp) }"
-                v-bind="
-                  cellAttrs(cell.column.columnDef.meta?.colProp, row.original)
-                "
+                :style="{ ...cellStyle(cell.column.columnDef.meta) }"
+                v-bind="cellAttrs(cell.column.columnDef.meta, row.original)"
                 class="flex gap-2 p-2"
               >
                 <slot
                   v-if="
-                    cell.column.columnDef.meta?.colProp.slot &&
-                    $slots[cell.column.columnDef.meta?.colProp.slot]
+                    cell.column.columnDef.meta?.slot &&
+                    $slots[cell.column.columnDef.meta?.slot]
                   "
-                  :name="cell.column.columnDef.meta?.colProp.slot"
+                  :name="cell.column.columnDef.meta?.slot"
                   :row="row.original"
                 />
                 <template v-else>

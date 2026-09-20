@@ -1,17 +1,17 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import {
-  Calendar,
-  ChevronLeft,
-  ChevronRight,
-  Download,
-  Heart,
-  Info,
-  MessageCircle,
-  Pause,
-  Play,
-  RefreshCcw,
-} from "lucide-vue-next";
+  IconCalendar,
+  IconChevronLeft,
+  IconChevronRight,
+  IconDownload,
+  IconHeart,
+  IconInfoCircle,
+  IconMessageCircle,
+  IconPlayerPause,
+  IconPlayerPlay,
+  IconRefresh,
+} from "@tabler/icons-vue";
 import { pointerCoords } from "@/util/dom";
 import { sleep } from "@/util/misc";
 import { formatTime, formatValue, linkify } from "@/util/string";
@@ -38,27 +38,27 @@ const showInfo = ref(false);
 /** track stats */
 const getStats = (track: Track) => [
   {
-    icon: Calendar,
+    icon: IconCalendar,
     text: track.description?.match(/📅 ?(.*)$/m)?.[1] || "",
     title: "Date finished",
   },
   {
-    icon: Heart,
+    icon: IconHeart,
     text: formatValue(track.likes_count),
     title: "Likes on SoundCloud",
   },
   {
-    icon: Download,
+    icon: IconDownload,
     text: formatValue(track.download_count),
     title: "Downloads on SoundCloud",
   },
   {
-    icon: MessageCircle,
+    icon: IconMessageCircle,
     text: formatValue(track.comment_count),
     title: "Comments on SoundCloud",
   },
   {
-    icon: RefreshCcw,
+    icon: IconRefresh,
     text: formatValue(track.reposts_count),
     title: "Reposts on SoundCloud",
   },
@@ -181,7 +181,7 @@ const getBandcamp = (track: Track) =>
                   <span class="truncate">
                     {{ formatValue(_track.playback_count) }}
                   </span>
-                  <Play />
+                  <IconPlayerPlay />
                 </div>
                 <div
                   class="hidden max-w-1/2 truncate py-2 text-right text-sm opacity-50 group-hover:block"
@@ -208,15 +208,15 @@ const getBandcamp = (track: Track) =>
                       play();
                     "
                   >
-                    <ChevronLeft />
+                    <IconChevronLeft />
                   </button>
                   <button
                     class="button-dark"
                     title="Play/Pause"
                     @click="playing ? pause() : play()"
                   >
-                    <Play v-if="!playing" />
-                    <Pause v-if="playing" />
+                    <IconPlayerPlay v-if="!playing" />
+                    <IconPlayerPause v-if="playing" />
                   </button>
                   <button
                     class="button-dark"
@@ -227,7 +227,7 @@ const getBandcamp = (track: Track) =>
                       play();
                     "
                   >
-                    <ChevronRight />
+                    <IconChevronRight />
                   </button>
 
                   <!-- waveform -->
@@ -333,7 +333,7 @@ const getBandcamp = (track: Track) =>
                       class="button-dark"
                       title="Download on Bandcamp"
                     >
-                      <Download />
+                      <IconDownload />
                     </a>
                     <button
                       class="button-dark"
@@ -342,7 +342,7 @@ const getBandcamp = (track: Track) =>
                       :title="showInfo ? 'Hide track info' : 'Show track info'"
                       @click="showInfo = !showInfo"
                     >
-                      <Info />
+                      <IconInfoCircle />
                     </button>
                   </div>
                 </div>

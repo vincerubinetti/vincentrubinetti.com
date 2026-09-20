@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useLocalStorage } from "@vueuse/core";
-import { Send } from "lucide-vue-next";
+import { IconSend } from "@tabler/icons-vue";
 import { onSubmit, useAddress } from "@/util/contact";
 import Outline from "./components/Outline.vue";
 
@@ -60,7 +60,7 @@ const address = useAddress();
           rows="5"
         />
         <button type="submit" class="button hover:text-blue-500">
-          <Outline /><Send />Send
+          <Outline /><IconSend />Send
         </button>
       </form>
     </div>

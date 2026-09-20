@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import { map, max, min, orderBy, startCase } from "lodash-es";
 import {
-  Bug,
-  ExternalLink,
-  Eye,
-  GitCommit,
-  GitPullRequest,
-} from "lucide-vue-next";
+  IconBug,
+  IconExternalLink,
+  IconEye,
+  IconGitCommit,
+  IconGitPullRequest,
+} from "@tabler/icons-vue";
 import Table, { type Cols } from "./components/Table.vue";
 import contributions from "./data/contributions.json";
 
@@ -42,10 +42,10 @@ const cols: Cols<typeof repos> = [
   { name: " ", key: "fullName", slot: "link", align: "left", sortable: false },
   { name: "Owner", key: "owner", align: "left" },
   { name: "Name", key: "name", align: "left" },
-  { name: "Commits", icon: GitCommit, key: "commits", slot: "commits" },
-  { name: "Issues", icon: Bug, key: "issues", slot: "issues" },
-  { name: "PRs", icon: GitPullRequest, key: "prs", slot: "prs" },
-  { name: "Reviews", icon: Eye, key: "reviews", slot: "reviews" },
+  { name: "Commits", icon: IconGitCommit, key: "commits", slot: "commits" },
+  { name: "Issues", icon: IconBug, key: "issues", slot: "issues" },
+  { name: "PRs", icon: IconGitPullRequest, key: "prs", slot: "prs" },
+  { name: "Reviews", icon: IconEye, key: "reviews", slot: "reviews" },
 ];
 </script>
 
@@ -69,7 +69,7 @@ const cols: Cols<typeof repos> = [
           class="button -m-2 bg-transparent p-2"
         >
           Repo
-          <ExternalLink />
+          <IconExternalLink />
         </a>
         <b v-else>{{ startCase(row.fullName) }}</b>
       </template>

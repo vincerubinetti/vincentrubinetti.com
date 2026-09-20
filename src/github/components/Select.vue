@@ -3,7 +3,7 @@
   setup
   generic="Option extends { value: string | number; label?: string }"
 >
-import { ChevronDown } from "lucide-vue-next";
+import { IconChevronDown } from "@tabler/icons-vue";
 
 type Props = {
   options: Option[];
@@ -21,6 +21,6 @@ const model = defineModel<Option["value"]>();
         {{ label ?? value }}
       </option>
     </select>
-    <ChevronDown class="absolute top-1/2 right-2 -translate-y-1/2" />
+    <IconChevronDown class="absolute top-1/2 right-2 -translate-y-1/2" />
   </div>
 </template>

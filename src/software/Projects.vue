@@ -2,7 +2,7 @@
 import { computed, ref, useTemplateRef } from "vue";
 import { useElementBounding, useEventListener } from "@vueuse/core";
 import { countBy, uniq } from "lodash-es";
-import { ExternalLink, TriangleAlert, X } from "lucide-vue-next";
+import { IconAlertTriangle, IconExternalLink, IconX } from "@tabler/icons-vue";
 import logos from "@/images/logos";
 import { sleep } from "@/util/misc";
 import { formatValue, renderMarkdown, slugify } from "@/util/string";
@@ -166,7 +166,7 @@ const coords = computed(() => ({
         @click="search = ''"
         title="Clear search"
       >
-        <X />
+        <IconX />
       </button>
     </div>
 
@@ -279,7 +279,7 @@ const coords = computed(() => ({
               @click="close(index)"
               title="Close project details"
             >
-              <X />
+              <IconX />
             </button>
 
             <!-- images -->
@@ -300,7 +300,7 @@ const coords = computed(() => ({
 
               <!-- warning -->
               <p v-if="warning">
-                <TriangleAlert class="relative -top-0.5 fill-yellow-300" />
+                <IconAlertTriangle class="relative -top-0.5 fill-yellow-300" />
                 {{ warning }}
               </p>
 
@@ -313,7 +313,7 @@ const coords = computed(() => ({
                   class="button gap-2 p-2"
                 >
                   {{ label }}
-                  <ExternalLink />
+                  <IconExternalLink />
                 </a>
               </div>
 
