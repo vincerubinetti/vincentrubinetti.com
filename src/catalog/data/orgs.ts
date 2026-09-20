@@ -23,4 +23,4 @@ const getOrgs = async () =>
 const orgs = await getOrgs();
 
 /** save */
-writeFileSync(output, JSON.stringify(orgs, null, 2));
+writeFileSync(output, JSON.stringify(orgs, null, 2) + "\n");

@@ -159,4 +159,4 @@ for (let year = start; year < end; year++) {
 }
 
 /** save */
-writeFileSync(output, JSON.stringify(contributions, null, 2));
+writeFileSync(output, JSON.stringify(contributions, null, 2) + "\n");
