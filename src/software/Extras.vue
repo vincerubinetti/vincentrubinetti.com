@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { IconArrowDown, IconLogs, IconMicroscope } from "@tabler/icons-vue";
+import { IconArrowDown, IconBulb } from "@tabler/icons-vue";
+import GitHub from "@/images/logos/github.svg?component";
 import Braces from "./components/Braces.vue";
 import UXUI from "./images/projects/ux-ui-for-researchers.pdf";
 </script>
@@ -10,11 +11,11 @@ import UXUI from "./images/projects/ux-ui-for-researchers.pdf";
 
     <Braces>
       <a href="/catalog" class="button self-center">
-        <IconLogs />GitHub Catalog
+        <GitHub />GitHub Catalog
       </a>
 
       <a :href="UXUI" class="button self-center">
-        <IconMicroscope />Ideas on UX/UI
+        <IconBulb />Ideas on UX/UI
       </a>
 
       <a href="/" class="button-big self-center">

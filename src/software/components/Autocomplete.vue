@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import type { FunctionalComponent } from "vue";
+import { useTemplateRef } from "vue";
 import { IconX } from "@tabler/icons-vue";
 import {
   AutocompleteAnchor,
@@ -10,8 +12,6 @@ import {
   AutocompleteRoot,
   AutocompleteViewport,
 } from "reka-ui";
-import type { FunctionalComponent } from "vue";
-import { useTemplateRef } from "vue";
 
 type Props = {
   options: {

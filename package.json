@@ -11,7 +11,7 @@
     "test:types": "astro check && vue-tsc",
     "test:lint": "eslint .",
     "test:format": "prettier --check .",
-    "test": "bun run test:types && bun run test:lint && bun run test:format",
+    "test": "bun run test:types && bun run test:lint && bun run test:format && bun run build",
     "clean": "rm -rf node_modules dist bun.lock && bun pm cache rm"
   },
   "dependencies": {

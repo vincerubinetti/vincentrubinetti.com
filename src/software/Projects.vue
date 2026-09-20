@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import Autocomplete from "./components/Autocomplete.vue";
 import { computed, ref, useTemplateRef } from "vue";
 import { IconAlertTriangle, IconExternalLink, IconX } from "@tabler/icons-vue";
 import { useElementBounding, useEventListener } from "@vueuse/core";
@@ -7,6 +6,7 @@ import { countBy, uniq } from "lodash-es";
 import logos from "@/images/logos";
 import { sleep } from "@/util/misc";
 import { formatValue, renderMarkdown, slugify } from "@/util/string";
+import Autocomplete from "./components/Autocomplete.vue";
 import Carousel from "./components/Carousel.vue";
 import Divider from "./components/Divider.vue";
 import projects from "./data/projects.json";
@@ -358,7 +358,7 @@ const coords = computed(() => ({
         </div>
       </template>
 
-      <p class="border-mid-alt border border-dashed p-4">
+      <p class="more p-4">
         Plus <b>many more</b> professional and personal projects: Private or
         in-progress work I can't share (yet), and an archive of apps/<wbr />games/<wbr />experiments/<wbr />etc.
         too long to list.
@@ -366,3 +366,9 @@ const coords = computed(() => ({
     </div>
   </section>
 </template>
+
+<style scoped>
+.more {
+  background-image: url("./images/lines.svg");
+}
+</style>
