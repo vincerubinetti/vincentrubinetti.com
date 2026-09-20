@@ -184,7 +184,7 @@ const coords = computed(() => ({
 
     <!-- gallery -->
     <div
-      class="gallery grid grid-flow-dense grid-cols-3 items-start gap-8 max-md:grid-cols-2 max-md:gap-4 max-sm:grid-cols-1"
+      class="gallery grid grid-flow-dense grid-cols-3 items-start gap-12 max-md:grid-cols-2 max-md:gap-4 max-sm:grid-cols-1"
     >
       <!-- card -->
       <template
@@ -216,11 +216,14 @@ const coords = computed(() => ({
           "
           :aria-expanded="opened === index"
           :aria-controls="`details-${index}`"
-          @click="opened === index ? close(index) : open(index)"
+          @click="
+            opened === index ? close(index) : open(index);
+            sleep().then(detailsBbox.update);
+          "
         >
           <Carousel
             :images="images.map((image) => ({ image }))"
-            class="pointer-events-none aspect-4/3 w-full bg-black"
+            class="pointer-events-none aspect-4/3 w-full"
             :class="opened === index ? 'brightness-200 contrast-0' : ''"
           />
 
@@ -254,8 +257,7 @@ const coords = computed(() => ({
                 </linearGradient>
               </defs>
               <path
-                fill="url(#details-gradient)"
-                pathLength="500"
+                class="fill-white stroke-current/50"
                 :d="
                   [
                     ['M', 0, 0],
@@ -286,7 +288,7 @@ const coords = computed(() => ({
             <Carousel
               :images="images.map((image) => ({ image }))"
               :controls="true"
-              class="aspect-4/3 w-full max-w-120 bg-black"
+              class="aspect-4/3 w-full max-w-120"
             />
 
             <div class="flex flex-1 flex-col items-start gap-4">

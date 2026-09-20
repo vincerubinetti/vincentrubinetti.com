@@ -18,7 +18,7 @@ import UXUI from "./images/projects/ux-ui-for-researchers.pdf";
         target="_blank"
         rel="noopener noreferrer"
       >
-        <IconMicroscope />More on UX/UI
+        <IconMicroscope />Ideas on UX/UI
       </a>
 
       <a href="/" class="button-big self-center">

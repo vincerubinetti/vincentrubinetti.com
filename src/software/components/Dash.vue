@@ -39,7 +39,7 @@ const hatch = 8;
 </script>
 
 <template>
-  <svg ref="line" class="h-3 min-w-0 flex-1">
+  <svg ref="line" class="h-2 min-w-0 flex-1">
     <pattern
       :id="id"
       patternUnits="userSpaceOnUse"

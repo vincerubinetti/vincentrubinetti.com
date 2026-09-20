@@ -86,7 +86,7 @@
 
   input,
   textarea {
-    @apply min-w-0 rounded border border-current/10 bg-white p-4 font-sans placeholder:text-current/50;
+    @apply min-w-0 rounded border border-current/50 bg-white p-4 font-sans placeholder:text-current/50;
   }
 
   input::-webkit-calendar-picker-indicator,
