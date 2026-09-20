@@ -55,7 +55,7 @@ h += p * 2;
 const transformOrigin = `${w / 2 - p}px ${h / 2 - p}px`;
 
 /** svg fill pattern size */
-const hatch = 10;
+const hatch = 16;
 
 /** share.png generate */
 const share = false;
@@ -70,36 +70,12 @@ const share = false;
 
     <hgroup class="flex flex-col items-center gap-2 py-8 text-center">
       <h1 class="sr-only">Vincent Rubinetti</h1>
-      <a href="/software" class="corners-2 w-86 max-w-full text-white">
+      <a href="/software" class="corners-4 w-100 max-w-full text-white">
         <svg
           ref="svg"
           xmlns="http://www.w3.org/2000/svg"
           :viewBox="[x, y, w, h].join(' ')"
         >
-          <filter id="chalk-filter">
-            <feTurbulence
-              type="turbulence"
-              baseFrequency="0.25"
-              stitchTiles="noStitch"
-              result="turbulence"
-            />
-            <feDisplacementMap
-              in="SourceGraphic"
-              in2="turbulence"
-              scale="2"
-              xChannelSelector="G"
-              yChannelSelector="A"
-              result="displacement"
-            >
-              <animate
-                attributeName="scale"
-                to="0"
-                :dur="`${duration}s`"
-                fill="freeze"
-              />
-            </feDisplacementMap>
-          </filter>
-
           <pattern
             id="hatch"
             patternUnits="userSpaceOnUse"
@@ -109,7 +85,15 @@ const share = false;
           >
             <path
               class="stroke-current stroke-2"
-              :d="['M', 0, hatch / 2, 'h', hatch].flat().join(' ')"
+              :d="
+                [
+                  ['M', 0, (0 / 2) * hatch, 'h', hatch],
+                  ['M', 0, (1 / 2) * hatch, 'h', hatch],
+                  ['M', 0, (2 / 2) * hatch, 'h', hatch],
+                ]
+                  .flat()
+                  .join(' ')
+              "
             />
           </pattern>
 
@@ -170,16 +154,14 @@ const share = false;
             </rect>
 
             <g
+              class="fill-none stroke-current stroke-2"
               clip-path="url(#clip-1)"
-              fill="url(#hatch)"
-              filter="url(#chalk-filter)"
               v-html="svgContent"
             />
             <g
               class="stroke-current stroke-2"
               fill="url(#hatch)"
               clip-path="url(#clip-2)"
-              filter="url(#chalk-filter)"
               v-html="svgContent"
             />
             <g

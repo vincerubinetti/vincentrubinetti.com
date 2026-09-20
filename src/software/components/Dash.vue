@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, useTemplateRef, watchEffect } from "vue";
+import { onMounted, useId, useTemplateRef, watchEffect } from "vue";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
@@ -7,7 +7,10 @@ type Props = {
   flip?: boolean;
 };
 
-defineProps<Props>();
+const { flip } = defineProps<Props>();
+
+// unique per instance so patterns don't collide across multiple <Dash>
+const id = useId();
 
 onMounted(() => gsap.registerPlugin(ScrollTrigger));
 
@@ -18,7 +21,7 @@ watchEffect(() => {
 
   gsap.fromTo(
     line.value,
-    { clipPath: "inset(0% 100% 0% 0%)" },
+    { clipPath: flip ? "inset(0% 0% 0% 100%)" : "inset(0% 100% 0% 0%)" },
     {
       clipPath: "inset(0% 0% 0% 0%)",
       scrollTrigger: {
@@ -31,21 +34,32 @@ watchEffect(() => {
     },
   );
 });
+
+const hatch = 8;
 </script>
 
 <template>
-  <svg
-    ref="line"
-    class="h-2 min-w-0 flex-1 opacity-25"
-    :class="flip ? '-scale-x-100' : ''"
-  >
-    <line
-      x1="0%"
-      y1="50%"
-      x2="100%"
-      y2="50%"
-      class="stroke-current stroke-2"
-      stroke-dasharray="4 4"
-    />
+  <svg ref="line" class="h-3 min-w-0 flex-1">
+    <pattern
+      :id="id"
+      patternUnits="userSpaceOnUse"
+      patternTransform="rotate(-45)"
+      :width="hatch"
+      :height="hatch"
+    >
+      <path
+        class="stroke-dark stroke-1"
+        :d="
+          [
+            ['M', 0, (0 / 2) * hatch, 'h', hatch],
+            ['M', 0, (1 / 2) * hatch, 'h', hatch],
+            ['M', 0, (2 / 2) * hatch, 'h', hatch],
+          ]
+            .flat()
+            .join(' ')
+        "
+      />
+    </pattern>
+    <rect :fill="`url(#${id})`" x="0%" y="0%" width="100%" height="100%" />
   </svg>
 </template>
