@@ -68,7 +68,7 @@ const cols: Cols<typeof repos> = [
         <a
           v-if="row.fullName.includes('/')"
           :href="`https://github.com/${row.fullName}`"
-          class="button -m-2 bg-transparent p-2"
+          class="button -mx-4 -my-2 bg-transparent p-2"
         >
           Repo
           <IconExternalLink />

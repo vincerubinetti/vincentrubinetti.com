@@ -213,7 +213,7 @@ const coords = computed(() => ({
             sleep().then(detailsBbox.update);
           "
         >
-          <div class="lines pointer-events-none grid aspect-4/3 w-full">
+          <div class="box pointer-events-none grid aspect-4/3 w-full">
             <Carousel
               :images="images.map((image) => ({ image }))"
               fit="cover"
@@ -253,7 +253,6 @@ const coords = computed(() => ({
               <path
                 class="stroke-mid-alt fill-white stroke-1"
                 stroke-dasharray="4 4"
-                vector-effect="non-scaling-stroke"
                 :d="
                   [
                     ['M', 0, 0],
@@ -269,7 +268,6 @@ const coords = computed(() => ({
                     .join(' ')
                 "
               />
-               
             </svg>
 
             <!-- close -->
@@ -282,7 +280,7 @@ const coords = computed(() => ({
             </button>
 
             <!-- images -->
-            <div class="lines grid aspect-4/3 w-full max-w-120">
+            <div class="box grid aspect-4/3 w-full max-w-120">
               <Carousel
                 :images="images.map((image) => ({ image }))"
                 :controls="true"
@@ -355,7 +353,7 @@ const coords = computed(() => ({
         </div>
       </template>
 
-      <p class="lines col-span-full p-4 text-center text-balance">
+      <p class="box col-span-full p-4 text-center text-balance">
         Plus <b>many more</b> professional and personal projects:<br />
         Private or in-progress work I can't share (yet)<br />
         An archive of apps/<wbr />games/<wbr />experiments/<wbr />etc. too long
@@ -368,12 +366,12 @@ const coords = computed(() => ({
 <style scoped>
 @reference "tailwindcss";
 
-.lines {
+.box {
   @apply relative;
 
   &::before {
     @apply pointer-events-none absolute -inset-px content-[''];
-    background-image: url("./images/lines.svg");
+    background-image: url("./images/box.svg");
   }
 }
 </style>

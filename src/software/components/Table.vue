@@ -213,10 +213,10 @@ const cellAttrs = (col?: Cols[number], row?: Row) => {
 @reference "../../software/styles.css";
 
 tr:nth-child(even) {
-  @apply bg-dark/3;
+  @apply bg-dark/5;
 }
 
 td:not(:first-child) {
-  @apply border-dark/3 border-l-2;
+  @apply border-dark/5 border-l-2;
 }
 </style>

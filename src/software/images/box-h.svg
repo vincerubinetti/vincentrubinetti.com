@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg">
+  <g stroke="oklch(75% 0.05 60)" stroke-width="2" stroke-dasharray="4 4">
+    <line x1="0%" x2="100%" y1="0%" y2="0%" />
+    <line x1="0%" x2="100%" y1="100%" y2="100%" />
+  </g>
+</svg>
