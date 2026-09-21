@@ -11,16 +11,16 @@
   --radius: 7.5px;
 }
 
-@layer components {
+@layer base {
   p a {
     @apply text-dark;
   }
 }
 
 @utility button-dark {
-  @apply relative flex items-center justify-center gap-2 rounded p-4 font-sans hover:bg-current/10;
+  @apply relative flex items-center justify-center gap-2 rounded p-4 font-sans leading-none hover:bg-current/10;
 }
 
 @utility button {
-  @apply relative flex items-center justify-center gap-2 rounded bg-current/5 p-4 font-sans hover:bg-current/10;
+  @apply relative flex items-center justify-center gap-2 rounded bg-current/5 p-4 font-sans leading-none hover:bg-current/10;
 }

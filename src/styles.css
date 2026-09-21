@@ -9,12 +9,12 @@
   --font-serif: "Aleo Variable", serif;
   --font-sans: "Outfit Variable", sans-serif;
 
-  --shadow: 0 0 10px #0001, 0 0 2px #0001;
+  --shadow: 0 0 12px #0001, 0 0 3px #0001;
 }
 
-@layer components {
+@layer base {
   body {
-    @apply flex min-h-dvh flex-col font-serif text-[105%] leading-none;
+    @apply flex min-h-dvh flex-col font-serif text-[105%] leading-normal;
   }
 
   main {
@@ -95,4 +95,8 @@
   .tabler-icon {
     @apply inline-block h-[1em] w-[unset];
   }
+}
+
+@utility trim {
+  text-box: trim-both text;
 }

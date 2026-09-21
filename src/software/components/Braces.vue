@@ -19,7 +19,7 @@ const visible = useElementVisibility(container, { threshold: 0 });
   />
   <div
     ref="container"
-    class="flex flex-wrap items-center justify-center gap-8 self-center transition-all duration-1000 max-md:gap-4"
+    class="flex flex-wrap items-center justify-center gap-8 self-center transition-all duration-1000 max-lg:gap-6 max-md:gap-4"
     :class="
       visible
         ? '[clip-path:inset(-10%_-10%_-10%_-10%)]'

@@ -65,7 +65,7 @@
     "work": ["Design", "Implementation"],
     "base": ["Remix", "Next", "React"],
     "tech": ["SVG", "Canvas", "MDX", "LaTeX"],
-    "lib": ["Rehype", "Remark", "Axe"]
+    "lib": ["Tailwind", "Rehype", "Remark", "Axe"]
   },
   {
     "name": "Adage",
@@ -148,6 +148,7 @@
     },
     "feat": [
       "Interactive geographic map with various forms of data visualization",
+      "Intuitive system for selecting, re-arranging, and comparing multiple maps",
       "Advanced system for user customization of data presentation and map style",
       "Various charts and plots"
     ],
@@ -246,7 +247,7 @@
     ],
     "base": ["TypeScript", "React", "Node"],
     "tech": ["SVG", "Web Workers"],
-    "lib": ["D3", "GSAP", "Comlink"],
+    "lib": ["Tailwind", "D3", "GSAP", "Comlink"],
     "warning": ""
   },
   {
@@ -340,6 +341,25 @@
     "warning": ""
   },
   {
+    "name": "Meta2Onto",
+    "group": "Krishnan Lab",
+    "type": "Web App",
+    "description": "Search for tissue and disease terms, collect studies marked relevant by machine learning models, and share them",
+    "links": {
+      "Site": "https://meta2onto.org/",
+      "Source": "https://github.com/krishnanlab/meta2onto"
+    },
+    "feat": [
+      "Colorful and readable display of complex numerical data in search results",
+      "Flexible cart system for collecting and sharing studies"
+    ],
+    "work": ["Design", "Implementation", "Logo", "Branding"],
+    "base": ["TypeScript", "React"],
+    "tech": [],
+    "lib": ["Tailwind"],
+    "warning": ""
+  },
+  {
     "name": "MIDI Humanizer",
     "group": "Personal",
     "type": "Web App",
@@ -365,17 +385,20 @@
     "description": "Other logos for various orgs and projects",
     "links": {
       "Software Gardening": "https://github.com/software-gardening",
-      "CytoMining": "https://github.com/orgs/cytomining/discussions/3"
+      "CytoMining": "https://github.com/orgs/cytomining/discussions/3",
+      "Zed Profiler": "https://github.com/WayScience/ZedProfiler/tree/main/logo",
+      "inSTRbility": "https://github.com/dashnowlab/inSTRbility",
+      "Manufold": "https://github.com/pivlab/manufold"
     },
     "feat": [
       "Unique designs informed by functionality",
-      "Hand-coded SVGs with occasional animations",
+      "Hand-coded SVGs or renderings, occasionally with tasteful animations",
       "Consistent branding for related projects"
     ],
     "work": ["Design", "Logo", "Branding"],
     "base": [],
     "tech": ["SVG", "Adobe Illustrator"],
-    "lib": [],
+    "lib": ["Three JS"],
     "warning": ""
   },
   {
@@ -409,7 +432,7 @@
     "base": ["TypeScript", "Vue"],
     "tech": ["Figma"],
     "lib": ["Playwright", "Mock Service Worker", "Axe", "Sentry", "Hotjar"],
-    "warning": "Left my hands years ago and diverged significantly, but original foundation was my work. Screenshots are from mockups and early implementation."
+    "warning": "Left my hands years ago and has since undergone questionable decisions, but original foundation was my work. Screenshots are from mockups and my original implementation."
   },
   {
     "name": "Mute Tabs By URL",
@@ -595,9 +618,9 @@
       "Cloud Functions",
       "Logo"
     ],
-    "base": ["Astro", "React", "JavaScript"],
+    "base": ["Astro", "TypeScript", "React"],
     "tech": ["SVG"],
-    "lib": ["Plotly"],
+    "lib": ["Tailwind", "Plotly"],
     "warning": ""
   },
   {
@@ -617,7 +640,7 @@
     "work": ["Design", "Implementation", "Logo"],
     "base": ["TypeScript", "React"],
     "tech": ["SVG", "Canvas"],
-    "lib": [],
+    "lib": ["Tailwind"],
     "warning": ""
   },
   {

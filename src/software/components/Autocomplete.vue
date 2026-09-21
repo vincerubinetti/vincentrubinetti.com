@@ -58,7 +58,7 @@ defineExpose({ anchor });
             v-for="(option, index) in options"
             :key="index"
             :value="option.value"
-            class="hover:bg-dark/10 data-highlighted:bg-dark/10 flex cursor-pointer items-center gap-4 p-2"
+            class="hover:bg-dark/10 data-highlighted:bg-dark/10 flex cursor-pointer items-center gap-4 p-2 transition"
           >
             <component :is="option.icon || 'div'" class="size-4" />
             <div class="flex items-center gap-2">

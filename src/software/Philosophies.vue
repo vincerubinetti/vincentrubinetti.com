@@ -4,35 +4,35 @@ import Divider from "./components/Divider.vue";
 
 const philosophies = [
   {
-    color: "bg-red-500",
+    color: "bg-red-100",
     title: "Software is a craft",
     description: "It demands respect and extreme attention to detail.",
   },
   {
-    color: "bg-green-500",
+    color: "bg-green-100",
     title: "Organization is key",
     description:
       "Clean and thoughtful grouping and layout of info → more intuitive.",
   },
   {
-    color: "bg-blue-500",
+    color: "bg-blue-100",
     title: "Show, don't tell",
     description:
       "Form a design language of colors, icons, type, etc. Simplify copy text.",
   },
   {
-    color: "bg-yellow-500",
+    color: "bg-yellow-100",
     title: "Accessibility ≠ afterthought",
     description:
       "Semantic HTML, keyboard nav, color contrast, etc. are critical.",
   },
   {
-    color: "bg-cyan-500",
+    color: "bg-cyan-100",
     title: "Code is a user experience too",
     description: "Cleanness over cleverness. Clarity over micro-optimization.",
   },
   {
-    color: "bg-purple-500",
+    color: "bg-purple-100",
     title: "Continually evolve",
     description:
       "Seek out better techniques, tools, or features for your software or process.",
@@ -53,10 +53,7 @@ const philosophies = [
         class="group max-md relative flex flex-col items-start gap-4"
       >
         <b class="relative">
-          <span
-            class="absolute -inset-1 -z-10 -skew-x-45 opacity-10"
-            :class="color"
-          />
+          <span class="absolute -inset-1 -z-10 -skew-x-25" :class="color" />
           {{ title }}
         </b>
         <p v-html="renderMarkdown(description)" class="text-balance" />

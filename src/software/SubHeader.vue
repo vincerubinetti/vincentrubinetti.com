@@ -7,7 +7,7 @@ import GitHub from "@/images/logos/github.svg?component";
     <h2 class="sr-only">Intro</h2>
 
     <div
-      class="flex flex-wrap items-center justify-center gap-8 max-md:gap-4 max-md:text-center"
+      class="flex flex-wrap items-center justify-center gap-8 max-lg:gap-6 max-md:gap-4 max-md:text-center"
     >
       <a href="https://github.com/vincerubinetti" class="button-big">
         <GitHub />

@@ -21,10 +21,11 @@ import { mod } from "@/util/math";
 
 type Props = {
   images: { image: string }[];
+  fit?: "cover" | "contain";
   controls?: boolean;
 };
 
-const { images, controls } = defineProps<Props>();
+const { images, controls, fit = "contain" } = defineProps<Props>();
 
 const rootRef = useTemplateRef("root");
 
@@ -113,7 +114,11 @@ const { toggle, isFullscreen } = useFullscreen(rootRef);
         :src="images[mod(index, images.length)]?.image"
         alt=""
         loading="lazy"
-        class="size-full object-contain"
+        class="size-full scale-101"
+        :class="[
+          fit === 'cover' && 'object-cover',
+          fit === 'contain' && 'object-contain',
+        ]"
       />
     </div>
 

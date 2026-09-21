@@ -22,28 +22,29 @@ const index = (array: unknown[], value: unknown, fallback: number) => {
 const projectOrder = [
   "SVG to PNG",
   "Lab Website Template",
-  "Manubot",
   "3Blue1Brown.com",
+  "Manubot",
   "UX/UI for Researchers",
   "Word4Word",
   "Simplex",
-  "Word Lapse",
   "Human Microbiome Compendium",
-  "Preprint Similarity Search",
+  "Meta2Onto",
   "Exploring Cancer in Colorado",
+  "STRchive",
+  "VincentRubinetti.com",
+  "Using the Music of 3Blue1Brown",
+  "Word Lapse",
+  "Preprint Similarity Search",
   "Connectivity Search",
   "Het.io",
   "Word Spot",
   "Wall of Software",
+  "GenePlexus",
   "DBMI Screensaver",
   "Adage",
   "mygeneset.info",
-  "STRchive",
-  "GenePlexus",
   "NIH Reporting",
   "3Blue1Brown Dubbing",
-  "VincentRubinetti.com",
-  "Using the Music of 3Blue1Brown",
   "Set",
   "MIDI Humanizer",
   "Lab Website Template Poster",
@@ -175,7 +176,7 @@ const coords = computed(() => ({
 
     <!-- gallery -->
     <div
-      class="gallery grid grid-flow-dense grid-cols-3 items-start gap-12 max-md:grid-cols-2 max-md:gap-4 max-sm:grid-cols-1"
+      class="gallery grid grid-flow-dense grid-cols-4 items-start gap-8 max-lg:grid-cols-3 max-lg:gap-6 max-md:grid-cols-2 max-md:gap-4 max-sm:grid-cols-1"
     >
       <!-- card -->
       <template
@@ -201,7 +202,7 @@ const coords = computed(() => ({
         <!-- open/close button -->
         <button
           ref="button"
-          class="hover:before:bg-mid relative flex flex-col gap-2 before:absolute before:-inset-2 before:-z-10 before:transition-colors hover:scale-105"
+          class="hover:before:bg-mid relative flex flex-col gap-2 before:absolute before:-inset-2 before:-z-10 before:transition-colors hover:scale-103"
           :title="
             opened === index ? 'Hide project details' : 'Show project details'
           "
@@ -212,13 +213,15 @@ const coords = computed(() => ({
             sleep().then(detailsBbox.update);
           "
         >
-          <Carousel
-            :images="images.map((image) => ({ image }))"
-            class="pointer-events-none aspect-4/3 w-full"
-            :class="opened === index ? 'brightness-200 contrast-0' : ''"
-          />
+          <div class="lines pointer-events-none grid aspect-4/3 w-full">
+            <Carousel
+              :images="images.map((image) => ({ image }))"
+              fit="cover"
+              :class="opened === index ? 'brightness-200 contrast-0' : ''"
+            />
+          </div>
 
-          <div class="text-lg">{{ name }}</div>
+          {{ name }}
         </button>
 
         <!-- details -->
@@ -270,7 +273,7 @@ const coords = computed(() => ({
                   attributeName="stroke-dashoffset"
                   from="8"
                   to="0"
-                  dur="0.5s"
+                  dur="2s"
                   repeatCount="indefinite"
                 />
               </path>
@@ -286,11 +289,12 @@ const coords = computed(() => ({
             </button>
 
             <!-- images -->
-            <Carousel
-              :images="images.map((image) => ({ image }))"
-              :controls="true"
-              class="aspect-4/3 w-full max-w-120"
-            />
+            <div class="lines grid aspect-4/3 w-full max-w-120">
+              <Carousel
+                :images="images.map((image) => ({ image }))"
+                :controls="true"
+              />
+            </div>
 
             <div class="flex flex-1 flex-col items-start gap-4">
               <!-- title -->
@@ -302,8 +306,8 @@ const coords = computed(() => ({
               <p v-html="renderMarkdown(description)" />
 
               <!-- warning -->
-              <p v-if="warning">
-                <IconAlertTriangle class="relative -top-0.5 fill-yellow-300" />
+              <p v-if="warning" class="text-mid-alt">
+                <IconAlertTriangle />
                 {{ warning }}
               </p>
 
@@ -358,17 +362,25 @@ const coords = computed(() => ({
         </div>
       </template>
 
-      <p class="more p-4">
-        Plus <b>many more</b> professional and personal projects: Private or
-        in-progress work I can't share (yet), and an archive of apps/<wbr />games/<wbr />experiments/<wbr />etc.
-        too long to list.
+      <p class="lines col-span-full p-4 text-center text-balance">
+        Plus <b>many more</b> professional and personal projects:<br />
+        Private or in-progress work I can't share (yet)<br />
+        An archive of apps/<wbr />games/<wbr />experiments/<wbr />etc. too long
+        to list.
       </p>
     </div>
   </section>
 </template>
 
 <style scoped>
-.more {
-  background-image: url("./images/lines.svg");
+@reference "tailwindcss";
+
+.lines {
+  @apply relative;
+
+  &::before {
+    @apply pointer-events-none absolute -inset-px content-[''];
+    background-image: url("./images/lines.svg");
+  }
 }
 </style>

@@ -79,7 +79,9 @@ onMounted(() =>
       </button>
     </div>
 
-    <div class="grid grid-cols-2 gap-8 max-lg:grid-cols-1 max-md:gap-4">
+    <div
+      class="grid grid-cols-2 gap-8 max-lg:grid-cols-1 max-lg:gap-6 max-md:gap-4"
+    >
       <youtube-video
         ref="player"
         id="highlights-player"
