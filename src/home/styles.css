@@ -2,7 +2,7 @@
 @import "../styles.css";
 
 @theme {
-  --width: 200;
+  --width: 220;
 
   --color-light: oklch(98% 0 0);
   --color-mid: oklch(80% 0.15 240);

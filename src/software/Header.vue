@@ -56,16 +56,10 @@ const transformOrigin = `${w / 2 - p}px ${h / 2 - p}px`;
 
 /** svg fill pattern size */
 const hatch = 16;
-
-/** share.png generate */
-const share = false;
 </script>
 
 <template>
-  <header
-    class="bg-dark justify-center text-white"
-    :class="share && 'aspect-3/2 w-150'"
-  >
+  <header class="bg-dark justify-center text-white">
     <Background />
 
     <hgroup class="flex flex-col items-center gap-2 py-8 text-center">

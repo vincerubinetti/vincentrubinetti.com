@@ -12,7 +12,7 @@ import { getColor } from "./util/colors";
   <section class="bg-light">
     <h2 class="sr-only">Follow</h2>
 
-    <div class="grid grid-cols-2 items-center gap-(--gap) max-md:contents">
+    <div class="grid grid-cols-2 items-center gap-16 max-md:contents">
       <a
         href="https://vincerubinetti.bandcamp.com/"
         class="button"
@@ -30,7 +30,7 @@ import { getColor } from "./util/colors";
 
       <hr class="col-start-1 -col-end-1" />
 
-      <div class="grid grid-cols-2 gap-4 max-lg:grid-cols-1">
+      <div class="grid grid-cols-2 gap-4 max-sm:grid-cols-1">
         <a
           href="https://music.apple.com/us/artist/vincent-rubinetti/274886492"
           class="button"

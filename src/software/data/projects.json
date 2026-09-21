@@ -432,7 +432,7 @@
     "base": ["TypeScript", "Vue"],
     "tech": ["Figma"],
     "lib": ["Playwright", "Mock Service Worker", "Axe", "Sentry", "Hotjar"],
-    "warning": "Left my hands years ago and has since undergone questionable decisions, but original foundation was my work. Screenshots are from mockups and my original implementation."
+    "warning": "Left my hands years ago and has since undergone questionable changes, but original foundation was my work. Screenshots are from mockups and my original implementation."
   },
   {
     "name": "Mute Tabs By URL",

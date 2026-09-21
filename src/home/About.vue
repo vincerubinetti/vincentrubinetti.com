@@ -4,8 +4,12 @@ import profile from "@/images/vince.png?url&format=webp";
 
 <template>
   <section class="text-white">
-    <div class="flex items-center gap-(--gap) max-lg:flex-col">
-      <img :src="profile" class="size-50 rounded-full" alt="A handsome man" />
+    <div class="relative flex items-center gap-16 max-md:flex-col">
+      <img
+        :src="profile"
+        class="size-48 rounded-full lg:absolute lg:right-full lg:-translate-x-16"
+        alt="A handsome man"
+      />
       <p>
         I started writing music over 20 years ago, with a humble notation
         program and an obsession with video game music. Throughout my academic

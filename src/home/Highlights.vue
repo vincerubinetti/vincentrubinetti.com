@@ -61,13 +61,13 @@ onMounted(() =>
   <section class="bg-white">
     <h2 class="sr-only">Highlights</h2>
 
-    <div class="grid grid-cols-4 gap-2 max-sm:grid-cols-2 max-xs:grid-cols-1">
+    <div class="grid grid-cols-4 gap-2 max-md:grid-cols-3 max-sm:grid-cols-2">
       <button
         v-for="(highlight, index) in highlights"
         :key="index"
         class="group relative overflow-hidden rounded"
         aria-controls="highlights-player"
-        :title="highlight.title"
+        :title="`View \&quot;${highlight.title}\&quot;`"
         @click="select(highlight)"
       >
         <div
@@ -79,13 +79,11 @@ onMounted(() =>
       </button>
     </div>
 
-    <div
-      class="grid grid-cols-2 gap-8 max-lg:grid-cols-1 max-lg:gap-6 max-md:gap-4"
-    >
+    <div class="grid grid-cols-2 gap-8 max-md:grid-cols-1">
       <youtube-video
         ref="player"
         id="highlights-player"
-        class="min-h-[unset] min-w-0 max-lg:aspect-video"
+        class="min-h-[unset] min-w-0 max-md:aspect-video"
         :src="src"
         controls
         allowfullscreen
@@ -104,7 +102,7 @@ onMounted(() =>
 
         <p v-html="renderMarkdown(selected.description)" />
 
-        <div class="flex flex-wrap gap-4 max-sm:gap-2">
+        <div class="flex flex-wrap gap-4">
           <a
             v-for="(link, index) in selected.links"
             :key="index"

@@ -7,19 +7,19 @@ const id = useId();
 
 const container = useTemplateRef("container");
 
-const visible = useElementVisibility(container, { threshold: 0 });
+const visible = useElementVisibility(container);
 </script>
 
 <template>
   <Brace
     ref="left"
-    class="text-dark absolute top-[anchor(center)] -translate-x-16 -translate-y-1/2 scale-500 transition-all duration-1000"
-    :class="visible ? 'left-[anchor(left)] opacity-10' : 'left-1/2'"
+    class="text-dark absolute top-[anchor(center)] -translate-x-16 -translate-y-1/2 scale-500 transition-all duration-1000 max-md:-translate-x-8"
+    :class="visible ? 'left-[anchor(left)] opacity-25' : 'left-1/2'"
     :style="{ positionAnchor: `--${id}` }"
   />
   <div
     ref="container"
-    class="flex flex-wrap items-center justify-center gap-8 self-center transition-all duration-1000 max-lg:gap-6 max-md:gap-4"
+    class="flex flex-wrap items-center justify-center gap-8 self-center transition-all duration-1000"
     :class="
       visible
         ? '[clip-path:inset(-10%_-10%_-10%_-10%)]'
@@ -31,8 +31,8 @@ const visible = useElementVisibility(container, { threshold: 0 });
   </div>
   <Brace
     ref="right"
-    class="text-dark absolute top-[anchor(center)] translate-x-16 -translate-y-1/2 scale-500 -scale-x-500 transition-all duration-1000"
-    :class="visible ? 'right-[anchor(right)] opacity-10' : 'right-1/2'"
+    class="text-dark absolute top-[anchor(center)] translate-x-16 -translate-y-1/2 scale-500 -scale-x-500 transition-all duration-1000 max-md:translate-x-8"
+    :class="visible ? 'right-[anchor(right)] opacity-25' : 'right-1/2'"
     :style="{ positionAnchor: `--${id}` }"
   />
 </template>

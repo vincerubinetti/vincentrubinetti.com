@@ -1,7 +1,11 @@
 <script setup lang="ts">
 import { computed, ref, useTemplateRef } from "vue";
-import { IconAlertTriangle, IconExternalLink, IconX } from "@tabler/icons-vue";
-import { useElementBounding, useEventListener } from "@vueuse/core";
+import { IconExternalLink, IconX } from "@tabler/icons-vue";
+import {
+  onClickOutside,
+  useElementBounding,
+  useEventListener,
+} from "@vueuse/core";
 import { countBy, uniq } from "lodash-es";
 import logos from "@/images/logos";
 import { sleep } from "@/util/misc";
@@ -131,10 +135,10 @@ const open = async (index: number) => {
 };
 
 /** close project details */
-const close = async (index: number) => {
-  opened.value = -1;
+const close = async () => {
   await sleep();
-  const el = button.value?.[index];
+  const el = button.value?.[opened.value];
+  opened.value = -1;
   if (!el) return;
   el.focus();
   el.scrollIntoView({ behavior: "smooth", block: "nearest" });
@@ -142,8 +146,16 @@ const close = async (index: number) => {
 
 /** close project details */
 useEventListener("keydown", (event: KeyboardEvent) => {
-  if (event.key === "Escape") close(opened.value);
+  if (event.key === "Escape") close();
 });
+onClickOutside(
+  () => details.value?.[0],
+  ({ target }) => {
+    if (!(target instanceof HTMLElement)) return;
+    if (!target.matches("section")) return;
+    close();
+  },
+);
 
 const buttonBbox = useElementBounding(() => button.value?.[opened.value]);
 const detailsBbox = useElementBounding(() => details.value?.[0]);
@@ -170,13 +182,13 @@ const coords = computed(() => ({
     />
 
     <!-- filter info -->
-    <b class="-my-4 text-center max-md:-my-2">
+    <b class="-my-4 text-center">
       {{ formatValue(filteredProjects.length) }} projects
     </b>
 
     <!-- gallery -->
     <div
-      class="gallery grid grid-flow-dense grid-cols-4 items-start gap-8 max-lg:grid-cols-3 max-lg:gap-6 max-md:grid-cols-2 max-md:gap-4 max-sm:grid-cols-1"
+      class="gallery grid grid-flow-dense grid-cols-4 items-start gap-8 max-lg:grid-cols-4 max-md:grid-cols-3 max-sm:grid-cols-2"
     >
       <!-- card -->
       <template
@@ -209,7 +221,7 @@ const coords = computed(() => ({
           :aria-expanded="opened === index"
           :aria-controls="`details-${index}`"
           @click="
-            opened === index ? close(index) : open(index);
+            opened === index ? close() : open(index);
             sleep().then(detailsBbox.update);
           "
         >
@@ -231,7 +243,7 @@ const coords = computed(() => ({
         >
           <div
             ref="details"
-            class="relative z-10 flex w-dvw max-w-360 scroll-mt-8 items-center gap-8 p-8 max-lg:flex-col"
+            class="relative z-10 flex w-dvw max-w-360 scroll-mt-8 items-center gap-8 p-8 max-md:flex-col"
           >
             <svg
               class="absolute inset-0 -z-10"
@@ -272,15 +284,15 @@ const coords = computed(() => ({
 
             <!-- close -->
             <button
-              class="button absolute top-0 right-0"
-              @click="close(index)"
+              class="button absolute top-0 right-0 z-10"
+              @click="close()"
               title="Close project details"
             >
               <IconX />
             </button>
 
             <!-- images -->
-            <div class="box grid aspect-4/3 w-full max-w-120">
+            <div class="box grid aspect-4/3 max-w-120 flex-1 max-md:w-full">
               <Carousel
                 :images="images.map((image) => ({ image }))"
                 :controls="true"
@@ -297,8 +309,7 @@ const coords = computed(() => ({
               <p v-html="renderMarkdown(description)" />
 
               <!-- warning -->
-              <p v-if="warning" class="text-mid-alt">
-                <IconAlertTriangle />
+              <p v-if="warning" class="text-red-500">
                 {{ warning }}
               </p>
 
@@ -330,10 +341,9 @@ const coords = computed(() => ({
                     .filter(Boolean)"
                   :key="index"
                   class="button gap-1 p-1"
-                  :title="`Filter by ${item}`"
+                  :title="`Filter by &quot;${item}&quot;`"
                   @click="
                     search = item;
-                    console.log(input);
                     input?.anchor?.scrollIntoView({
                       behavior: 'smooth',
                       block: 'nearest',
@@ -354,10 +364,9 @@ const coords = computed(() => ({
       </template>
 
       <p class="box col-span-full p-4 text-center text-balance">
-        Plus <b>many more</b> professional and personal projects:<br />
-        Private or in-progress work I can't share (yet)<br />
-        An archive of apps/<wbr />games/<wbr />experiments/<wbr />etc. too long
-        to list.
+        Plus <b>many more</b> professional and personal projects, private or
+        in-progress work, and an archive of apps/<wbr />games/<wbr />experiments/<wbr />etc.
+        too long to list.
       </p>
     </div>
   </section>

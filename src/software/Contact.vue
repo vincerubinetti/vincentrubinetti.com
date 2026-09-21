@@ -16,7 +16,7 @@ const address = useAddress();
   <section>
     <h2>Contact<Divider /></h2>
 
-    <div class="grid grid-cols-2 gap-(--gap) max-lg:grid-cols-1">
+    <div class="grid grid-cols-2 gap-16 max-md:grid-cols-1">
       <div class="flex flex-col gap-4">
         <p>
           I'm passionate about software and always happy to chat about it.

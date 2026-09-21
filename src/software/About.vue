@@ -7,7 +7,7 @@ import Divider from "./components/Divider.vue";
   <section>
     <h2><Divider flip />About</h2>
 
-    <div class="flex max-w-full items-center gap-(--gap) max-lg:flex-col">
+    <div class="flex max-w-full items-center gap-16 max-md:flex-col">
       <div class="size-50 shrink-0">
         <img :src="profile" alt="A handsome man" />
       </div>

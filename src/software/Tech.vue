@@ -41,9 +41,7 @@ const tech = [
   <section>
     <h2>Tech<Divider /></h2>
 
-    <div
-      class="grid grid-cols-3 gap-8 max-lg:grid-cols-2 max-lg:gap-6 max-md:grid-cols-1 max-md:gap-4"
-    >
+    <div class="grid grid-cols-3 gap-8 max-md:grid-cols-2 max-sm:grid-cols-1">
       <div
         v-for="({ icons, description }, index) in tech"
         :key="index"

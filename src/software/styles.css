@@ -2,7 +2,7 @@
 @import "../styles.css";
 
 @theme {
-  --width: 250;
+  --width: 240;
 
   --radius: 0;
 
@@ -27,7 +27,7 @@
   }
 
   h2 {
-    @apply relative mb-(--gap);
+    @apply relative mb-16;
 
     &::before,
     &::after {
@@ -35,7 +35,7 @@
     }
 
     &::before {
-      @apply -inset-x-(--gap) -inset-y-128;
+      @apply -inset-x-16 -inset-y-128;
       background-image: url("./images/box-v.svg");
       mask-image: linear-gradient(
         to bottom,
@@ -47,7 +47,7 @@
     }
 
     &::after {
-      @apply -inset-x-64 -top-24 -bottom-(--gap);
+      @apply -inset-x-64 -top-24 -bottom-16;
       background-image: url("./images/box-h.svg");
       mask-image: linear-gradient(
         to right,

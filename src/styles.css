@@ -1,15 +1,32 @@
 @import "tailwindcss";
 
 @theme {
-  --breakpoint-xs: 20rem;
-  --breakpoint-sm: 32rem;
-  --breakpoint-md: 44rem;
-  --breakpoint-lg: 56rem;
+  --breakpoint-sm: 30rem;
+  --breakpoint-md: 60rem;
+  --breakpoint-lg: 90rem;
 
   --font-serif: "Aleo Variable", serif;
   --font-sans: "Outfit Variable", sans-serif;
 
   --shadow: 0 0 12px #0001, 0 0 3px #0001;
+}
+
+@media (max-width: 90rem) {
+  :root {
+    --spacing: 4px;
+  }
+}
+
+@media (max-width: 60rem) {
+  :root {
+    --spacing: 3.5px;
+  }
+}
+
+@media (max-width: 30rem) {
+  :root {
+    --spacing: 3px;
+  }
 }
 
 @layer base {
@@ -24,7 +41,7 @@
   header,
   section,
   footer {
-    @apply relative isolate flex flex-col gap-(--gap) px-[max(var(--gap),(100%-var(--width)*(--spacing(1)))/2)] py-(--gap) [--gap:--spacing(12)] max-lg:[--gap:--spacing(10)] max-md:[--gap:--spacing(8)] max-sm:[--gap:--spacing(6)] max-xs:[--gap:--spacing(4)];
+    @apply relative isolate flex flex-col gap-16 px-[max(--spacing(16),(100%-var(--width)*(--spacing(1)))/2)] py-16;
   }
 
   h2,

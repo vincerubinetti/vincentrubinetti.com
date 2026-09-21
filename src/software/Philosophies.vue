@@ -41,16 +41,14 @@ const philosophies = [
 </script>
 
 <template>
-  <section class="bg-dark/3">
+  <section class="bg-mid/5">
     <h2><Divider flip />Philosophies</h2>
 
-    <div
-      class="grid grid-cols-3 gap-8 max-lg:grid-cols-2 max-lg:gap-6 max-md:grid-cols-1 max-md:gap-4"
-    >
+    <div class="grid grid-cols-3 gap-8 max-md:grid-cols-2 max-sm:grid-cols-1">
       <div
         v-for="({ color, title, description }, index) in philosophies"
         :key="index"
-        class="group max-md relative flex flex-col items-start gap-4"
+        class="group relative flex flex-col items-start gap-4"
       >
         <b class="relative">
           <span class="absolute -inset-1 -z-10 -skew-x-25" :class="color" />

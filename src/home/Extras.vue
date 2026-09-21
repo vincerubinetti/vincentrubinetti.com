@@ -12,9 +12,7 @@ import Outline from "./components/Outline.vue";
   <section class="bg-white">
     <h2 class="sr-only">Extras</h2>
 
-    <div
-      class="flex flex-wrap items-center justify-center gap-8 max-lg:gap-6 max-md:gap-4"
-    >
+    <div class="flex flex-wrap items-center justify-center gap-8">
       <a href="studio" class="button flex-1 hover:text-red-500">
         <Outline />
         <IconHeadphones />

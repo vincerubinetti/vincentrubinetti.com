@@ -81,12 +81,12 @@ const getBandcamp = (track: Track) =>
 </script>
 
 <template>
-  <section class="pt-0 text-white">
+  <section class="gap-8 pt-0 text-white">
     <h2 class="sr-only">Listen</h2>
 
     <!-- playlists -->
     <div
-      class="grid w-full grid-cols-6 gap-4 max-lg:grid-cols-3 max-md:grid-cols-2 max-md:gap-2 max-xs:grid-cols-1"
+      class="grid w-full grid-cols-6 gap-4 max-lg:grid-cols-6 max-md:grid-cols-3 max-sm:grid-cols-2"
     >
       <button
         v-for="({ title, id }, index) of playlists"
@@ -94,7 +94,7 @@ const getBandcamp = (track: Track) =>
         class="button-dark"
         :class="[selectedPlaylist.id === id ? 'bg-current/10' : '']"
         :aria-current="selectedPlaylist.id === id"
-        :title="`Load ${title} playlist`"
+        :title="`Load &quot;${title}&quot; playlist`"
         aria-controls="listen-player"
         @click="selectedPlaylist = playlists[index]"
       >
@@ -155,7 +155,7 @@ const getBandcamp = (track: Track) =>
               <!-- track button -->
               <button
                 class="button-dark group h-14 gap-4 p-0 pr-4 aria-pressed:rounded-br-none aria-pressed:bg-black/25"
-                :title="`Play ${_track.title}`"
+                :title="`Play &quot;${_track.title}&quot;`"
                 :aria-pressed="track.id === _track.id"
                 @click="
                   async (event) => {
