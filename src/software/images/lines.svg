@@ -6,13 +6,5 @@
     stroke="oklch(75% 0.025 60)"
     stroke-width="2"
     stroke-dasharray="4 4"
-  >
-    <animate
-      attributeName="stroke-dashoffset"
-      from="8"
-      to="0"
-      dur="2s"
-      repeatCount="indefinite"
-    />
-  </rect>
+  />
 </svg>

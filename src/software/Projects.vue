@@ -268,15 +268,8 @@ const coords = computed(() => ({
                     .flat()
                     .join(' ')
                 "
-              >
-                <animate
-                  attributeName="stroke-dashoffset"
-                  from="8"
-                  to="0"
-                  dur="2s"
-                  repeatCount="indefinite"
-                />
-              </path>
+              />
+               
             </svg>
 
             <!-- close -->

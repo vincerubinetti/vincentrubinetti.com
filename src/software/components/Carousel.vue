@@ -114,7 +114,7 @@ const { toggle, isFullscreen } = useFullscreen(rootRef);
         :src="images[mod(index, images.length)]?.image"
         alt=""
         loading="lazy"
-        class="size-full scale-101"
+        class="size-full"
         :class="[
           fit === 'cover' && 'object-cover',
           fit === 'contain' && 'object-contain',
