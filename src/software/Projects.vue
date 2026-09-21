@@ -129,19 +129,20 @@ const details = useTemplateRef("details");
 const open = async (index: number) => {
   opened.value = index;
   await sleep();
-  const el = details.value?.[0];
-  if (!el) return;
-  el.scrollIntoView({ behavior: "smooth", block: "nearest" });
+  const element = details.value?.[0];
+  if (!element) return;
+  console.log(element);
+  element.scrollIntoView({ behavior: "smooth", block: "nearest" });
 };
 
 /** close project details */
 const close = async () => {
   await sleep();
-  const el = button.value?.[opened.value];
+  const element = button.value?.[opened.value];
   opened.value = -1;
-  if (!el) return;
-  el.focus();
-  el.scrollIntoView({ behavior: "smooth", block: "nearest" });
+  if (!element) return;
+  element.focus();
+  element.scrollIntoView({ behavior: "smooth", block: "nearest" });
 };
 
 /** close project details */
@@ -182,7 +183,7 @@ const coords = computed(() => ({
     />
 
     <!-- filter info -->
-    <b class="-my-4 text-center">
+    <b class="-my-8 text-center">
       {{ formatValue(filteredProjects.length) }} projects
     </b>
 
@@ -334,7 +335,7 @@ const coords = computed(() => ({
               </ul>
 
               <!-- tags -->
-              <div class="my-2 flex flex-wrap gap-2">
+              <div class="flex flex-wrap gap-2">
                 <button
                   v-for="(item, index) in [group, type, work, base, tech, lib]
                     .flat()

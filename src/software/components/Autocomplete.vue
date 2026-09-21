@@ -35,7 +35,7 @@ defineExpose({ anchor });
 <template>
   <AutocompleteRoot v-model="model" :openOnClick="true" :openOnFocus="true">
     <AutocompleteAnchor class="relative flex">
-      <div ref="anchor" />
+      <div ref="anchor" class="scroll-mt-16" />
       <AutocompleteInput class="grow pr-24" :placeholder="placeholder" />
       <div
         class="*:hover:text-dark absolute right-0 flex h-full *:flex *:w-10 *:items-center"
@@ -58,7 +58,7 @@ defineExpose({ anchor });
             v-for="(option, index) in options"
             :key="index"
             :value="option.value"
-            class="hover:bg-dark/10 data-highlighted:bg-dark/10 flex cursor-pointer items-center gap-4 p-2 transition"
+            class="hover:bg-dark/10 scroll-mt-8data-highlighted:bg-dark/10 flex cursor-pointer items-center gap-4 p-2 transition"
           >
             <component :is="option.icon || 'div'" class="size-4" />
             <div class="flex items-center gap-2">

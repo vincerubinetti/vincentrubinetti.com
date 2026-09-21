@@ -52,7 +52,7 @@ const cols: Cols<typeof repos> = [
 </script>
 
 <template>
-  <section class="bg-light">
+  <section class="bg-light paper">
     <hgroup class="flex flex-col gap-6">
       <h2><Divider flip />Catalog<Divider /></h2>
 

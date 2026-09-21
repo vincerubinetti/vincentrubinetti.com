@@ -95,3 +95,12 @@
     @apply mask-size-[16px_16px]!;
   }
 }
+
+@utility paper {
+  @apply relative z-0;
+
+  &::before {
+    @apply absolute inset-0 -z-10 opacity-10 content-[''];
+    background-image: url("./images/paper.svg");
+  }
+}

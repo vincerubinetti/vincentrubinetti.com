@@ -3,7 +3,7 @@ import GitHub from "@/images/logos/github.svg?component";
 </script>
 
 <template>
-  <section class="bg-light">
+  <section class="bg-light paper">
     <h2 class="sr-only">Intro</h2>
 
     <div

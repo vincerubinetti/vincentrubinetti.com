@@ -124,7 +124,7 @@ const { toggle, isFullscreen } = useFullscreen(rootRef);
 
     <div
       v-if="controls"
-      class="absolute bottom-0 -mt-4 flex w-full items-center justify-center bg-black text-white opacity-0 transition-opacity *:size-8 group-focus-within:opacity-100 group-hover:opacity-100 *:hover:opacity-50"
+      class="absolute bottom-0 flex w-full items-center justify-center bg-black text-white opacity-0 transition-opacity *:size-8 group-focus-within:opacity-100 group-hover:opacity-100 *:hover:opacity-50"
       @pointerdown.stop
     >
       <template v-if="images.length > 1">
