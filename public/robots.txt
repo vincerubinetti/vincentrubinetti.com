@@ -1,0 +1,9 @@
+User-agent: archive.org_bot
+Allow: /
+
+User-agent: *
+Disallow: /audio/
+Disallow: /stems/
+Disallow: /*.wav$
+Disallow: /*.ogg$
+Disallow: /*.mp3$
