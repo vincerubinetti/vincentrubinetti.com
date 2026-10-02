@@ -52,7 +52,7 @@ const cols: Cols<typeof repos> = [
 </script>
 
 <template>
-  <section class="bg-light paper">
+  <section class="paper bg-light">
     <hgroup class="flex flex-col gap-6">
       <h2><Divider flip />Catalog<Divider /></h2>
 
@@ -68,7 +68,7 @@ const cols: Cols<typeof repos> = [
         <a
           v-if="row.fullName.includes('/')"
           :href="`https://github.com/${row.fullName}`"
-          class="button -mx-4 -my-2 bg-transparent p-2"
+          class="-mx-4 -my-2 button bg-transparent p-2"
         >
           Repo
           <IconExternalLink />

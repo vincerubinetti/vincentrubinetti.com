@@ -75,7 +75,7 @@ export default defineConfig([
 
   {
     name: "Tailwind",
-    files: ["**/*.{astro,ts,tsx,js,jsx}"],
+    files: ["**/*.{astro,vue,ts}"],
     extends: [tailwind.configs.recommended],
     rules: {
       "better-tailwindcss/enforce-consistent-class-order": [
@@ -95,8 +95,36 @@ export default defineConfig([
         "warn",
         { selectors: tailwindSelectors },
       ],
+      "better-tailwindcss/no-unknown-classes": ["warn", { ignore: ["^_"] }],
     },
     settings: { "better-tailwindcss": { entryPoint: "./src/styles.css" } },
+  },
+
+  {
+    name: "Tailwind (home)",
+    files: [
+      "src/home/**/*.{astro,vue,ts}",
+      "src/studio/**/*.{astro,vue,ts}",
+      "src/pages/index.{astro,vue,ts}",
+      "src/pages/studio.{astro,vue,ts}",
+      "src/pages/_images.{astro,vue,ts}",
+    ],
+    settings: {
+      "better-tailwindcss": { entryPoint: "./src/home/styles.css" },
+    },
+  },
+
+  {
+    name: "Tailwind (software)",
+    files: [
+      "src/software/**/*.{astro,vue,ts}",
+      "src/catalog/**/*.{astro,vue,ts}",
+      "src/pages/software.{astro,vue,ts}",
+      "src/pages/catalog.{astro,vue,ts}",
+    ],
+    settings: {
+      "better-tailwindcss": { entryPoint: "./src/software/styles.css" },
+    },
   },
 
   {

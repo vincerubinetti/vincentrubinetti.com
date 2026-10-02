@@ -12,7 +12,7 @@ const visible = useElementVisibility(container);
   <div class="relative max-w-max self-center">
     <Brace
       ref="left"
-      class="text-dark absolute top-1/2 -translate-x-16 -translate-y-1/2 scale-500 transition-all duration-1000 max-sm:-translate-x-8"
+      class="absolute top-1/2 -translate-x-16 -translate-y-1/2 scale-500 text-dark transition-all duration-1000 max-sm:-translate-x-8"
       :class="visible ? 'left-0 opacity-25' : 'left-1/2'"
     />
     <div
@@ -28,7 +28,7 @@ const visible = useElementVisibility(container);
     </div>
     <Brace
       ref="right"
-      class="text-dark absolute top-1/2 translate-x-16 -translate-y-1/2 scale-500 -scale-x-500 transition-all duration-1000 "
+      class="absolute top-1/2 translate-x-16 -translate-y-1/2 scale-500 -scale-x-500 text-dark transition-all duration-1000"
       :class="visible ? 'right-0 opacity-25' : 'right-1/2'"
     />
   </div>

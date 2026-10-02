@@ -1,5 +1,5 @@
 <template>
-  <svg class="group draw absolute inset-0 size-full">
+  <svg class="group _draw absolute inset-0 size-full">
     <rect
       class="opacity-0 group-hover:opacity-100"
       width="100%"
@@ -15,7 +15,7 @@
 </template>
 
 <style scoped>
-:hover > .draw {
+:hover > ._draw {
   animation: draw 0.5s linear both;
 }
 

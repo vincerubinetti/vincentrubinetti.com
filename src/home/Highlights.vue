@@ -65,7 +65,7 @@ onMounted(() =>
       <button
         v-for="(highlight, index) in highlights"
         :key="index"
-        class="group relative overflow-hidden rounded"
+        class="group relative overflow-hidden rounded-sm"
         aria-controls="highlights-player"
         :title="`View \&quot;${highlight.title}\&quot;`"
         @click="select(highlight)"

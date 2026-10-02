@@ -22,7 +22,7 @@ const model = defineModel<number[]>();
     :min="min"
     :max="max"
     :step="step"
-    class="relative flex h-5 cursor-pointer touch-none items-center rounded px-2 hover:bg-current/10"
+    class="relative flex h-5 cursor-pointer touch-none items-center rounded-sm px-2 hover:bg-current/10"
   >
     <SliderTrack class="relative h-1 grow rounded-full bg-current/10">
       <SliderRange class="absolute h-full rounded-full bg-current" />

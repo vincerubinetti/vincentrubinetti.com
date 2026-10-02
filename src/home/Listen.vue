@@ -129,7 +129,7 @@ const getBandcamp = (track: Track) =>
       >
         <div
           v-if="typeof status === 'number'"
-          class="flex h-100 w-full animate-pulse items-center justify-center gap-4 rounded bg-white/10"
+          class="flex h-100 w-full animate-pulse items-center justify-center gap-4 rounded-sm bg-white/10"
         >
           <svg viewBox="-5 -5 10 10" height="2em">
             <circle
@@ -154,7 +154,7 @@ const getBandcamp = (track: Track) =>
             <template v-for="(_track, index) in tracks" :key="index">
               <!-- track button -->
               <button
-                class="button-dark group h-14 gap-4 p-0 pr-4 aria-pressed:rounded-br-none aria-pressed:bg-black/25"
+                class="group button-dark h-14 gap-4 p-0 pr-4 aria-pressed:rounded-br-none aria-pressed:bg-black/25"
                 :title="`Play &quot;${_track.title}&quot;`"
                 :aria-pressed="track.id === _track.id"
                 @click="
@@ -232,7 +232,7 @@ const getBandcamp = (track: Track) =>
 
                   <!-- waveform -->
                   <button
-                    class="button-dark group h-12 grow px-2 py-0 max-md:-order-1 max-md:w-full"
+                    class="group button-dark h-12 grow px-2 py-0 max-md:-order-1 max-md:w-full"
                     title="Seek"
                     @click="
                       seek(pointerCoords($event).x * (track.duration ?? 1))
@@ -367,7 +367,7 @@ const getBandcamp = (track: Track) =>
                   </div>
 
                   <!-- track description -->
-                  <p class="description" v-html="getDescription(track)" />
+                  <p class="_description" v-html="getDescription(track)" />
                 </div>
               </div>
             </template>
@@ -382,7 +382,7 @@ const getBandcamp = (track: Track) =>
 @reference "tailwindcss";
 @import "./styles.css";
 
-.description :deep(a) {
+._description :deep(a) {
   @apply text-mid hover:text-current;
 }
 </style>

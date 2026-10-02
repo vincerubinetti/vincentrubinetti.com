@@ -188,7 +188,7 @@ const coords = computed(() => ({
 
     <!-- gallery -->
     <div
-      class="gallery grid grid-flow-dense grid-cols-4 items-start gap-8 max-lg:grid-cols-4 max-md:grid-cols-3 max-sm:grid-cols-2"
+      class="grid grid-flow-dense grid-cols-4 items-start gap-8 max-lg:grid-cols-4 max-md:grid-cols-3 max-sm:grid-cols-2"
     >
       <!-- card -->
       <template
@@ -214,7 +214,7 @@ const coords = computed(() => ({
         <!-- open/close button -->
         <button
           ref="button"
-          class="hover:before:bg-mid relative flex flex-col gap-2 before:absolute before:-inset-2 before:-z-10 before:transition-colors hover:scale-103"
+          class="relative flex flex-col gap-2 before:absolute before:-inset-2 before:-z-10 before:transition-colors hover:scale-103 hover:before:bg-mid"
           :title="
             opened === index ? 'Hide project details' : 'Show project details'
           "
@@ -225,7 +225,7 @@ const coords = computed(() => ({
             sleep().then(detailsBbox.update);
           "
         >
-          <div class="box pointer-events-none grid aspect-4/3 w-full">
+          <div class="_box pointer-events-none grid aspect-4/3 w-full">
             <Carousel
               :images="images.map((image) => ({ image }))"
               fit="cover"
@@ -263,7 +263,7 @@ const coords = computed(() => ({
                 </linearGradient>
               </defs>
               <path
-                class="stroke-mid-alt fill-white stroke-1"
+                class="fill-white stroke-black stroke-1"
                 stroke-dasharray="4 4"
                 :d="
                   [
@@ -284,7 +284,7 @@ const coords = computed(() => ({
 
             <!-- close -->
             <button
-              class="button absolute top-0 right-0 z-10"
+              class="absolute top-0 right-0 z-10 button"
               @click="close()"
               title="Close project details"
             >
@@ -292,7 +292,7 @@ const coords = computed(() => ({
             </button>
 
             <!-- images -->
-            <div class="box grid aspect-4/3 max-w-120 flex-1 max-md:w-full">
+            <div class="_box grid aspect-4/3 max-w-120 flex-1 max-md:w-full">
               <Carousel
                 :images="images.map((image) => ({ image }))"
                 :controls="true"
@@ -363,7 +363,7 @@ const coords = computed(() => ({
         </div>
       </template>
 
-      <p class="box col-span-full p-4 text-center text-balance">
+      <p class="_box col-span-full p-4 text-center text-balance">
         Plus <b>many more</b> professional and personal projects, private or
         in-progress work, and an archive of apps/<wbr />games/<wbr />experiments/<wbr />etc.
         too long to list.
@@ -375,7 +375,7 @@ const coords = computed(() => ({
 <style scoped>
 @reference "tailwindcss";
 
-.box {
+._box {
   @apply relative;
 
   &::before {

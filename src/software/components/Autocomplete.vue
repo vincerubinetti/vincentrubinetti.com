@@ -38,7 +38,7 @@ defineExpose({ anchor });
       <div ref="anchor" class="scroll-mt-16" />
       <AutocompleteInput class="grow pr-24" :placeholder="placeholder" />
       <div
-        class="*:hover:text-dark absolute right-0 flex h-full *:flex *:w-10 *:items-center"
+        class="absolute right-0 flex h-full *:flex *:w-10 *:items-center *:hover:text-dark"
       >
         <AutocompleteCancel title="Clear search">
           <IconX />
@@ -48,7 +48,7 @@ defineExpose({ anchor });
 
     <AutocompletePortal>
       <AutocompleteContent
-        class="z-20 max-h-(--reka-combobox-content-available-height) w-(--reka-combobox-trigger-width) overflow-x-auto bg-white shadow"
+        class="z-20 max-h-(--reka-combobox-content-available-height) w-(--reka-combobox-trigger-width) overflow-x-auto bg-white shadow-sm"
         position="popper"
         align="start"
         :collisionPadding="20"
@@ -58,7 +58,7 @@ defineExpose({ anchor });
             v-for="(option, index) in options"
             :key="index"
             :value="option.value"
-            class="hover:bg-dark/10 scroll-mt-8data-highlighted:bg-dark/10 flex cursor-pointer items-center gap-4 p-2 transition"
+            class="flex cursor-pointer scroll-mt-8 items-center gap-4 p-2 transition hover:bg-dark/10 data-highlighted:bg-dark/10"
           >
             <component :is="option.icon || 'div'" class="size-4" />
             <div class="flex items-center gap-2">

@@ -45,7 +45,7 @@ const tech = [
       <div
         v-for="({ icons, description }, index) in tech"
         :key="index"
-        class="max-md relative flex gap-6"
+        class="flex gap-6"
       >
         <div class="flex h-full w-6 shrink-0 flex-col items-center gap-3.5">
           <component

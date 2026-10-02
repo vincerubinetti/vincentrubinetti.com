@@ -19,16 +19,16 @@ useEventListener("scroll", hideOverlay);
 <template>
   <div
     ref="overlay"
-    class="overlay pointer-events-none fixed inset-0 z-100 grid place-content-center bg-black"
+    class="_overlay pointer-events-none fixed inset-0 z-100 grid place-content-center bg-black"
   >
-    <Logo class="logo size-16 text-white" />
+    <Logo class="_logo size-16 text-white" />
   </div>
 </template>
 
 <style scoped>
 @reference "tailwindcss";
 
-.overlay {
+._overlay {
   animation: overlay 1s 1s both;
 }
 
@@ -38,7 +38,7 @@ useEventListener("scroll", hideOverlay);
   }
 }
 
-.logo {
+._logo {
   animation: logo 1s 1s both;
 }
 

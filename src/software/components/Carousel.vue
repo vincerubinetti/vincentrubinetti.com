@@ -100,7 +100,7 @@ const { toggle, isFullscreen } = useFullscreen(rootRef);
         Math.ceil(current) + 1 + 1,
       )"
       :key="index"
-      class="image absolute inset-0 size-full cursor-grab transition-all"
+      class="_image absolute inset-0 size-full cursor-grab transition-all"
       :class="
         isActive
           ? 'duration-500'
@@ -175,7 +175,7 @@ const { toggle, isFullscreen } = useFullscreen(rootRef);
 <style scoped>
 @reference "tailwindcss";
 
-.image {
+._image {
   transform: translateX(calc(var(--percent) * 25%));
   opacity: calc(clamp(1 - abs(var(--percent)), 0, 1));
 }

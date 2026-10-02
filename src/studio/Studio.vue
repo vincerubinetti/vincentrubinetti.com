@@ -37,7 +37,7 @@ const icons = {
       <div
         v-for="({ name, items }, index) in setup"
         :key="index"
-        class="flex flex-col gap-6 rounded bg-zinc-100 p-4"
+        class="flex flex-col gap-6 rounded-sm bg-zinc-100 p-4"
         :class="[items.length > 10 && 'row-span-2']"
       >
         <h3>
@@ -49,7 +49,7 @@ const icons = {
         </h3>
 
         <ul>
-          <li v-for="(item, index) in items" :key="index" class="item">
+          <li v-for="(item, index) in items" :key="index">
             {{ item }}
           </li>
         </ul>

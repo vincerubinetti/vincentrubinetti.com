@@ -6,7 +6,7 @@ import UXUI from "./images/projects/ux-ui-for-researchers.pdf";
 </script>
 
 <template>
-  <section class="bg-light paper">
+  <section class="paper bg-light">
     <h2 class="sr-only">Extras</h2>
 
     <Braces>
