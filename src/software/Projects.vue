@@ -30,7 +30,6 @@ const projectOrder = [
   "Manubot",
   "UX/UI for Researchers",
   "Word4Word",
-  "Simplex",
   "Human Microbiome Compendium",
   "Meta2Onto",
   "Exploring Cancer in Colorado",
@@ -38,12 +37,13 @@ const projectOrder = [
   "VincentRubinetti.com",
   "Using the Music of 3Blue1Brown",
   "Word Lapse",
+  "Word Spot",
   "Preprint Similarity Search",
   "Connectivity Search",
-  "Het.io",
-  "Word Spot",
-  "Wall of Software",
+  "Simplex",
   "GenePlexus",
+  "Het.io",
+  "Wall of Software",
   "DBMI Screensaver",
   "Adage",
   "mygeneset.info",
@@ -131,7 +131,6 @@ const open = async (index: number) => {
   await sleep();
   const element = details.value?.[0];
   if (!element) return;
-  console.log(element);
   element.scrollIntoView({ behavior: "smooth", block: "nearest" });
 };
 
