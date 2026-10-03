@@ -5,7 +5,7 @@ import Divider from "./components/Divider.vue";
 
 <template>
   <section>
-    <h2><Divider flip />About</h2>
+    <h2 class="sr-only"><Divider flip />About</h2>
 
     <div class="flex max-w-full items-center gap-16 max-md:flex-col">
       <div class="size-50 shrink-0">

@@ -39,7 +39,7 @@ const tech = [
 
 <template>
   <section>
-    <h2>Tech<Divider /></h2>
+    <h2 class="sr-only">Tech<Divider /></h2>
 
     <div class="grid grid-cols-3 gap-8 max-md:grid-cols-2 max-sm:grid-cols-1">
       <div

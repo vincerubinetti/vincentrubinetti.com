@@ -14,7 +14,7 @@ const address = useAddress();
 
 <template>
   <section>
-    <h2>Contact<Divider /></h2>
+    <h2 class="sr-only">Contact<Divider /></h2>
 
     <div class="grid grid-cols-2 gap-16 max-md:grid-cols-1">
       <div class="flex flex-col gap-4">

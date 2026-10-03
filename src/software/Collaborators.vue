@@ -6,7 +6,7 @@ import collaboratorLogos from "./images/collaborators";
 </script>
 
 <template>
-  <section class="paper bg-mid/5">
+  <section class="paper bg-light">
     <h2 class="sr-only">Collaborators</h2>
 
     <Braces>

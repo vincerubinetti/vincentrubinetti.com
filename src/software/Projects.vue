@@ -170,7 +170,7 @@ const coords = computed(() => ({
 </script>
 
 <template>
-  <section class="bg-light">
+  <section class="bg-pale">
     <h2>Projects<Divider /></h2>
 
     <!-- search -->
@@ -178,7 +178,7 @@ const coords = computed(() => ({
       ref="input"
       v-model="search"
       :options="options"
-      placeholder="Search projects"
+      placeholder="Search"
     />
 
     <!-- filter info -->

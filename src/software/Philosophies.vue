@@ -41,8 +41,8 @@ const philosophies = [
 </script>
 
 <template>
-  <section class="bg-mid/5">
-    <h2><Divider flip />Philosophies</h2>
+  <section class="bg-pale">
+    <h2 class="sr-only"><Divider flip />Philosophies</h2>
 
     <div class="grid grid-cols-3 gap-8 max-md:grid-cols-2 max-sm:grid-cols-1">
       <div
