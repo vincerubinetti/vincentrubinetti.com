@@ -48,7 +48,7 @@ defineExpose({ anchor });
 
     <AutocompletePortal>
       <AutocompleteContent
-        class="z-20 max-h-(--reka-combobox-content-available-height) w-(--reka-combobox-trigger-width) overflow-x-auto bg-white shadow-sm"
+        class="z-20 max-h-(--reka-combobox-content-available-height) w-(--reka-combobox-trigger-width) overflow-x-auto bg-white shadow-md shadow-black/25"
         position="popper"
         align="start"
         :collisionPadding="20"
