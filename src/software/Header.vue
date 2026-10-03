@@ -62,7 +62,9 @@ const hatch = 16;
   <header class="items-center bg-dark py-20 text-white">
     <Background />
 
-    <hgroup class="flex flex-col items-center gap-2 text-center">
+    <hgroup
+      class="flex flex-col items-center gap-2 text-center drop-shadow-[0_2px_0_black]"
+    >
       <a href="/software" class="corners-4 w-100 max-w-full text-white">
         <svg
           ref="svg"

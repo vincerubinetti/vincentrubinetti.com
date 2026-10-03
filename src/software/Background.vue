@@ -11,9 +11,11 @@ import { orderBy, random, range, uniqWith } from "lodash-es";
 import { sleep } from "@/util/misc";
 
 /** size of tile */
-const tileWidth = 80;
-const tileHeight = 40;
+const tileWidth = 100;
+const tileHeight = tileWidth / 1.73;
 const tileHypot = Math.hypot(tileWidth / 2, tileHeight / 2);
+/** hard boundary on tiles, in iso space */
+const bounds = 8;
 /** colors */
 const fillTop = "oklch(50% 0.1 260)";
 const fillLeft = "oklch(45% 0.1 260)";
@@ -48,6 +50,9 @@ const tiles = computed(() => {
   );
   let iso = xs.map((x) => ys.map((y) => cartToIso(x, y))).flat();
   iso = uniqWith(iso, (a, b) => a.col === b.col && a.row === b.row);
+  iso = iso.filter(
+    (tile) => Math.abs(tile.col) < bounds && Math.abs(tile.row) < bounds,
+  );
   let tiles = iso.map(({ col, row }) => ({
     col,
     row,
@@ -210,7 +215,7 @@ onUnmounted(() => gsap.killTweensOf(tiles.value));
 <template>
   <canvas
     ref="canvas"
-    class="absolute inset-0 -z-10 size-full opacity-25"
+    class="absolute inset-0 -z-10 size-full opacity-50"
     @click="click"
   />
 </template>
