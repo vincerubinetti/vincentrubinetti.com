@@ -76,7 +76,7 @@ const hatch = 16;
       fill-left="oklch(45% 0.1 260)"
       fill-right="oklch(55% 0.1 260)"
       stroke="white"
-      class="absolute inset-0 -z-10 size-full opacity-50"
+      class="absolute inset-0 -z-10 size-full opacity-25"
     />
 
     <hgroup class="flex flex-col items-center gap-2 text-center">
