@@ -1,21 +1,25 @@
 <script setup lang="ts">
-import { computed, ref, useTemplateRef, watchEffect } from "vue";
+import { ref, useTemplateRef, watchEffect } from "vue";
 import { useIntervalFn } from "@vueuse/core";
-import Grid from "@/software/Grid.vue";
+import { sleep } from "@/util/async.ts";
 import { renderMarkdown } from "@/util/string";
 import Divider from "./components/Divider.vue";
+import Grid from "./components/Grid.vue";
 
 const grid = useTemplateRef("grid");
 
+/** grid props */
 const tileWidth = 20;
 const bounds = 8;
 
+/** bitmap images */
 const images = import.meta.glob<number[][]>("./images/philosophies/*.png", {
   eager: true,
   query: "?bitmap",
   import: "default",
 });
 
+/** get bitmap shape for given philosophy */
 const getShape = (id: string) => images[`./images/philosophies/${id}.png`];
 
 const philosophies = [
@@ -55,34 +59,43 @@ const philosophies = [
   },
 ];
 
+/** current philosophy index */
 const current = ref(0);
-
-const philosophy = computed(
-  () => philosophies[current.value % philosophies.length],
-);
 
 watchEffect(() => {
   if (!grid.value) return;
-  const shape = getShape(philosophy.value.id);
+  const philosophy = philosophies[current.value % philosophies.length];
+  /** get shape for current philosophy */
+  const shape = getShape(philosophy.id);
   if (!shape) return;
   for (const tile of grid.value.getAll()) {
+    /** get brightness value of bitmap pixel corresponding to tile */
     const value = shape[tile.row + bounds]?.[tile.col + bounds];
+    /** toggle on/off */
     grid.value.setOn(tile, value > 127 ? 1 : 0);
   }
 });
 
-useIntervalFn(
+/** auto-cycle through list */
+const cycle = useIntervalFn(
   () => (current.value = (current.value + 1) % philosophies.length),
   4000,
 );
+
+/** handle pointer events */
+const hover = (index: number) => {
+  current.value = index;
+  cycle.pause();
+};
+const unhover = () => sleep(5000).then(cycle.resume);
 </script>
 
 <template>
-  <section class="bg-pale">
+  <section class="bg-pale [--width:999]">
     <h2 class="sr-only"><Divider flip />Philosophies</h2>
 
-    <div class="flex flex-wrap items-center justify-center gap-12">
-      <div class="relative grid h-60 w-80 place-items-center">
+    <div class="flex items-center justify-center gap-16 max-lg:flex-col">
+      <div class="relative grid h-60 w-90 place-items-center">
         <Grid
           ref="grid"
           :tile-width="tileWidth"
@@ -100,30 +113,24 @@ useIntervalFn(
         />
       </div>
 
-      <Transition name="_fade" mode="out-in">
-        <div :key="current" class="flex grow flex-col items-center gap-4">
+      <div class="grid grid-cols-3 gap-8 max-md:grid-cols-2 max-sm:grid-cols-1">
+        <div
+          v-for="({ title, description }, index) in philosophies"
+          :key="index"
+          class="flex max-w-80 flex-col items-start gap-4"
+          @pointerenter="hover(index)"
+          @pointerleave="unhover()"
+        >
           <b class="relative">
-            <span class="absolute -inset-1 -z-10 -skew-x-25 bg-mid" />
-            {{ philosophies[current]?.title }}
+            <span
+              class="absolute -inset-1 -z-10 transition"
+              :class="current === index ? '-skew-x-25 bg-mid' : 'bg-dark/10'"
+            />
+            {{ title }}
           </b>
-          <p
-            v-html="renderMarkdown(philosophies[current]?.description ?? '')"
-            class="text-center text-balance"
-          />
+          <p v-html="renderMarkdown(description ?? '')" class="text-balance" />
         </div>
-      </Transition>
+      </div>
     </div>
   </section>
 </template>
-
-<style scoped>
-._fade-enter-active,
-._fade-leave-active {
-  transition: opacity 0.5s ease;
-}
-
-._fade-enter-from,
-._fade-leave-to {
-  opacity: 0;
-}
-</style>

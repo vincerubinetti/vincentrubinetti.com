@@ -3,7 +3,7 @@ import { computed, useTemplateRef, watch } from "vue";
 import { useIntervalFn, usePointer } from "@vueuse/core";
 import { range } from "lodash-es";
 import svgFile from "@/images/brand/title.svg?raw";
-import Grid from "./Grid.vue";
+import Grid from "./components/Grid.vue";
 
 const svg = useTemplateRef("svg");
 const grid = useTemplateRef("grid");
