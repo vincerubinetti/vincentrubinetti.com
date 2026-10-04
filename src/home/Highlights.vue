@@ -8,7 +8,7 @@ import {
 } from "vue";
 import { useEventListener } from "@vueuse/core";
 import logos from "@/images/logos";
-import { waitFor } from "@/util/misc";
+import { waitFor } from "@/util/async";
 import { renderMarkdown, slugify } from "@/util/string";
 import Outline from "./components/Outline.vue";
 import highlights from "./data/highlights.json";

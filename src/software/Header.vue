@@ -1,36 +1,44 @@
 <script setup lang="ts">
 import { computed, useTemplateRef, watch } from "vue";
-import { useMouseInElement } from "@vueuse/core";
+import { useIntervalFn, usePointer } from "@vueuse/core";
 import { range } from "lodash-es";
 import svgFile from "@/images/brand/title.svg?raw";
-import Background from "./Background.vue";
+import Grid from "./Grid.vue";
 
 const svg = useTemplateRef("svg");
+const grid = useTemplateRef("grid");
+
+/** animate grid */
+useIntervalFn(() => {
+  if (!grid.value) return;
+  const center = grid.value.getRandom();
+  if (!center) return;
+  const on = grid.value.getOn(center);
+  for (const tile of grid.value.getTiles(center.col, center.row, 1))
+    grid.value.setOn(tile, !on, grid.value.getDistance(tile, center) * 0.25);
+}, 500);
 
 /** animation duration in seconds */
 const duration = 3;
 
 /** parent container */
 const parent = computed(() => svg.value);
-/** mouse relative to parent */
-const mouse = useMouseInElement(parent);
+/** mouse/touch */
+const pointer = usePointer({ target: parent });
 
-/** sync animation to mouse */
-watch([mouse.isOutside, mouse.elementX], () => {
+/** sync animation to pointer */
+watch([pointer.isInside, pointer.x], () => {
   if (!svg.value) return;
   /** wait till first play of animation finishes */
   if (window.performance.now() < duration * 1000) return;
 
-  if (mouse.isOutside.value) {
-    svg.value.unpauseAnimations();
-  } else {
-    const position = mouse.elementX.value;
-    const size = mouse.elementWidth.value;
-    if (!size) return;
-    const percent = 2 / 3 + position / size / 3;
+  if (pointer.isInside.value) {
+    const { left, width } = svg.value.getBoundingClientRect();
+    const position = pointer.x.value - left;
+    const percent = 2 / 3 + position / width / 3;
     svg.value.pauseAnimations();
     svg.value.setCurrentTime(percent * duration);
-  }
+  } else svg.value.unpauseAnimations();
 });
 
 /** parse raw title svg strings */
@@ -60,11 +68,18 @@ const hatch = 16;
 
 <template>
   <header class="items-center bg-dark py-20 text-white">
-    <Background />
+    <Grid
+      ref="grid"
+      :tile-width="80"
+      :bounds="8"
+      fill-top="oklch(50% 0.1 260)"
+      fill-left="oklch(45% 0.1 260)"
+      fill-right="oklch(55% 0.1 260)"
+      stroke="white"
+      class="absolute inset-0 -z-10 size-full opacity-50"
+    />
 
-    <hgroup
-      class="flex flex-col items-center gap-2 text-center drop-shadow-[0_2px_0_black]"
-    >
+    <hgroup class="flex flex-col items-center gap-2 text-center">
       <a href="/software" class="corners-4 w-100 max-w-full text-white">
         <svg
           ref="svg"

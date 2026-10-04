@@ -8,7 +8,7 @@ import {
 } from "@vueuse/core";
 import { countBy, uniq } from "lodash-es";
 import logos from "@/images/logos";
-import { sleep } from "@/util/misc";
+import { sleep } from "@/util/async";
 import { formatValue, renderMarkdown, slugify } from "@/util/string";
 import Autocomplete from "./components/Autocomplete.vue";
 import Carousel from "./components/Carousel.vue";

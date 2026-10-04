@@ -2,6 +2,7 @@
 import vue from "@astrojs/vue";
 import tailwindcss from "@tailwindcss/vite";
 import { defineConfig } from "astro/config";
+import sharp from "sharp";
 import { loadEnv } from "vite";
 import { imagetools } from "vite-imagetools";
 import transformPlugin from "vite-plugin-transform";
@@ -10,6 +11,27 @@ import svgLoader from "vite-svg-loader";
 export default defineConfig({
   vite: {
     plugins: [
+      {
+        name: "bitmap",
+        enforce: "pre",
+        async load(id) {
+          const [path, query] = id.split("?");
+          if (!path || !new URLSearchParams(query).has("bitmap")) return;
+          this.addWatchFile(path);
+          const { data, info } = await sharp(path)
+            .flatten({ background: "#000" })
+            .greyscale()
+            .raw()
+            .toBuffer({ resolveWithObject: true });
+          const rows = Array.from({ length: info.height }, (_, row) =>
+            Array.from(
+              { length: info.width },
+              (_, col) => (data[row * info.width + col] ?? 0) > 127,
+            ),
+          );
+          return `export default ${JSON.stringify(rows)};`;
+        },
+      },
       imagetools(),
       svgLoader({
         svgoConfig: {

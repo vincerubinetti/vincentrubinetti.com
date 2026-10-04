@@ -13,8 +13,8 @@ import {
   IconPlayerPlayFilled,
   IconRefresh,
 } from "@tabler/icons-vue";
+import { sleep } from "@/util/async";
 import { pointerCoords } from "@/util/dom";
-import { sleep } from "@/util/misc";
 import { formatTime, formatValue, linkify } from "@/util/string";
 import Slider from "./components/Slider.vue";
 import SoundCloud from "./components/SoundCloud.vue";

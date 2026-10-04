@@ -1,4 +1,4 @@
-import { sleep } from "@/util/misc";
+import { sleep } from "@/util/async";
 import { slugify } from "@/util/string";
 
 const processHeadings = async () => {

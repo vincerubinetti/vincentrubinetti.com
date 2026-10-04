@@ -5,8 +5,8 @@ import { computed, onMounted, ref, useTemplateRef, watchEffect } from "vue";
 import { useEventListener, useScriptTag } from "@vueuse/core";
 import { clamp, max, range, uniq } from "lodash-es";
 import { Vibrant } from "node-vibrant/browser";
+import { generator, waitFor } from "@/util/async";
 import { lerp, smooth } from "@/util/math";
-import { generator, waitFor } from "@/util/misc";
 
 type Props = {
   /** playlist id */

@@ -1,4 +1,4 @@
-import { sleep } from "@/util/misc";
+import { sleep } from "@/util/async";
 
 const processTitles = async () => {
   /** wait for hydration */

@@ -40,7 +40,7 @@ defineExpose({ anchor });
       <div
         class="absolute right-0 flex h-full *:flex *:w-10 *:items-center *:hover:text-dark"
       >
-        <AutocompleteCancel title="Clear search">
+        <AutocompleteCancel title="Clear search" @click.stop>
           <IconX />
         </AutocompleteCancel>
       </div>
