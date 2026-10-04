@@ -22,13 +22,14 @@ const philosophies = [
   {
     id: "craft",
     title: "Software is a craft",
-    description: "It demands respect and extreme attention to detail.",
+    description:
+      "It should be taken seriously, with extreme attention to detail.",
   },
   {
     id: "organization",
     title: "Organization is key",
     description:
-      "Clean and thoughtful grouping and layout of info → more intuitive.",
+      "Clean and thoughtful grouping and layout of info = more intuitive.",
   },
   {
     id: "show",
@@ -40,7 +41,7 @@ const philosophies = [
     id: "accessibility",
     title: "Accessibility ≠ afterthought",
     description:
-      "Semantic HTML, keyboard nav, color contrast, etc. are critical.",
+      "Semantic HTML, keyboard navigation, color contrast, etc. are essential.",
   },
   {
     id: "dx",

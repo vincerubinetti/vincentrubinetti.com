@@ -379,25 +379,27 @@
     "warning": ""
   },
   {
-    "name": "Other Logos",
+    "name": "Logos & Visualizations",
     "group": "Various",
     "type": "",
-    "description": "Other logos for various orgs and projects",
+    "description": "Other logos and visualizations for various orgs and projects",
     "links": {
       "Software Gardening": "https://github.com/software-gardening",
-      "CytoMining": "https://github.com/orgs/cytomining/discussions/3",
       "Zed Profiler": "https://github.com/WayScience/ZedProfiler/tree/main/logo",
+      "ShaderToy": "https://www.shadertoy.com/user/evesira/sort=newest",
       "inSTRbility": "https://github.com/dashnowlab/inSTRbility",
+      "CytoMining": "https://github.com/orgs/cytomining/discussions/3",
       "Manufold": "https://github.com/pivlab/manufold"
     },
     "feat": [
       "Unique designs informed by functionality",
       "Hand-coded SVGs or renderings, occasionally with tasteful animations",
-      "Consistent branding for related projects"
+      "Consistent branding for related projects",
+      "Various shaders written for experimentation and education"
     ],
     "work": ["Design", "Logo", "Branding"],
     "base": [],
-    "tech": ["SVG", "Adobe Illustrator"],
+    "tech": ["SVG", "Adobe Illustrator", "GLSL"],
     "lib": ["Three JS"],
     "warning": ""
   },
