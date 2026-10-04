@@ -15,7 +15,12 @@ useIntervalFn(() => {
   if (!center) return;
   const on = grid.value.getOn(center);
   for (const tile of grid.value.getTiles(center.col, center.row, 1))
-    grid.value.setOn(tile, !on, grid.value.getDistance(tile, center) * 0.25);
+    grid.value.setOn(
+      tile,
+      1 - on,
+      grid.value.getDistance(tile, center) * 0.25,
+      0.5,
+    );
 }, 500);
 
 /** animation duration in seconds */
@@ -72,9 +77,10 @@ const hatch = 16;
       ref="grid"
       :tile-width="80"
       :bounds="8"
+      fill-top-on="oklch(55% 0.1 260)"
       fill-top="oklch(50% 0.1 260)"
       fill-left="oklch(45% 0.1 260)"
-      fill-right="oklch(55% 0.1 260)"
+      fill-right="oklch(40% 0.1 260)"
       stroke="white"
       class="absolute inset-0 -z-10 size-full opacity-25"
     />

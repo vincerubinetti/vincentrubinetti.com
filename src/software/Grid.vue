@@ -5,7 +5,6 @@ import {
   useElementSize,
   useElementVisibility,
   useIntervalFn,
-  usePointer,
 } from "@vueuse/core";
 import gsap from "gsap";
 import { clamp, orderBy, range, sample, uniqWith } from "lodash-es";
@@ -17,13 +16,14 @@ type Props = {
   /** hard boundary on tiles, in iso space */
   bounds: number;
   /** colors */
+  fillTopOn: string;
   fillTop: string;
   fillLeft: string;
   fillRight: string;
   stroke: string;
 };
 
-const { tileWidth, bounds, fillTop, fillLeft, fillRight, stroke } =
+const { tileWidth, bounds, fillTopOn, fillTop, fillLeft, fillRight, stroke } =
   defineProps<Props>();
 
 /** tile size props */
@@ -32,7 +32,7 @@ const tileHypot = computed(() =>
   Math.hypot(tileWidth / 2, tileHeight.value / 2),
 );
 
-gsap.defaults({ ease: "sine.inOut", duration: 0.5 });
+gsap.defaults({ ease: "sine.inOut" });
 
 /** isometric coords to cartesian */
 const isoToCart = (col: number, row: number) => ({
@@ -59,7 +59,7 @@ const tiles = computed(() => {
     col,
     row,
     ...isoToCart(col, row),
-    b: 0,
+    on: 0,
   }));
   tiles = orderBy(tiles, ["y", "x"], ["asc", "asc"]);
   return tiles;
@@ -69,9 +69,6 @@ type Tile = (typeof tiles.value)[number];
 
 /** canvas element */
 const canvas = useTemplateRef("canvas");
-
-/** mouse/touch */
-const pointer = usePointer({ target: canvas });
 
 /** canvas size */
 const size = useElementSize(canvas);
@@ -118,7 +115,7 @@ const sideStroke = [
 ];
 
 /** draw isometric tile */
-const drawTile = (x: number, y: number) => {
+const drawTile = (x: number, y: number, on: number) => {
   const _ctx = ctx.value;
   if (!_ctx) return;
   _ctx.strokeStyle = stroke;
@@ -152,7 +149,7 @@ const drawTile = (x: number, y: number) => {
   _ctx.lineTo(x + tileWidth / 2, y);
   _ctx.lineTo(x, y + tileHeight.value / 2);
   _ctx.closePath();
-  _ctx.fillStyle = fillTop;
+  _ctx.fillStyle = `color-mix(in srgb, ${fillTop}, ${fillTopOn} ${on * 100}%)`;
   _ctx.fill();
   _ctx.lineDashOffset = tileHypot.value / 8;
   _ctx.setLineDash([tileHypot.value / 4]);
@@ -168,7 +165,8 @@ const render = useIntervalFn(() => {
     width.value,
     height.value,
   );
-  for (const { x, y, b } of tiles.value) drawTile(x, y - b * tileHeight.value);
+  for (const tile of tiles.value)
+    drawTile(tile.x, tile.y - tile.on * tileHeight.value, getOn(tile));
 }, 20);
 
 /** pause when not visible */
@@ -199,23 +197,27 @@ const getRandom = () => sample(tiles.value);
 const getAll = () => tiles.value;
 
 /** get tile "on" status */
-const getOn = (tile: Tile) => tile.b > 0.5;
+const getOn = (tile: Tile) => tile.on;
 
 /** set tile "on" status */
-const setOn = (tile: Tile, value: boolean, delay = 0) =>
+const setOn = (tile: Tile, value: number, delay = 0, duration = 0.25) =>
   sleep(delay * 1000).then(() =>
-    gsap.to(tile, { b: value ? 1 : 0, overwrite: true }),
+    gsap.to(tile, { on: value ? 1 : 0, overwrite: true, duration }),
   );
 
-/** on canvas pointer */
-const onPointer = (event: PointerEvent) => {
-  if (!pointer.pressure.value) return;
+/** current "on" status for pointer */
+let on = 0;
+
+/** on canvas pointer move */
+const onPointer = (first: boolean) => (event: PointerEvent) => {
+  if (!event.buttons) return;
   const x = event.offsetX - width.value / 2;
   const y = event.offsetY - height.value / 2;
   const { col, row } = cartToIso(x, y);
   const center = getTile(col, row);
   if (!center) return;
-  setOn(center, !getOn(center));
+  if (first) on = 1 - getOn(center);
+  setOn(center, on, 0, 0.1);
 };
 
 /** on unload */
@@ -233,5 +235,9 @@ defineExpose({
 </script>
 
 <template>
-  <canvas ref="canvas" @pointermove="onPointer" />
+  <canvas
+    ref="canvas"
+    @pointerdown="(event) => onPointer(true)(event)"
+    @pointermove="(event) => onPointer(false)(event)"
+  />
 </template>

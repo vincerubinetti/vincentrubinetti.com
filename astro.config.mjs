@@ -18,17 +18,21 @@ export default defineConfig({
           const [path, query] = id.split("?");
           if (!path || !new URLSearchParams(query).has("bitmap")) return;
           this.addWatchFile(path);
-          const { data, info } = await sharp(path)
+          const {
+            data,
+            info: { width, height },
+          } = await sharp(path)
             .flatten({ background: "#000" })
             .greyscale()
             .raw()
             .toBuffer({ resolveWithObject: true });
-          const rows = Array.from({ length: info.height }, (_, row) =>
-            Array.from(
-              { length: info.width },
-              (_, col) => (data[row * info.width + col] ?? 0) > 127,
-            ),
-          );
+          const rows = Array(height)
+            .fill(0)
+            .map((_, row) =>
+              Array(width)
+                .fill(0)
+                .map((_, col) => data[row * width + col] ?? 0),
+            );
           return `export default ${JSON.stringify(rows)};`;
         },
       },

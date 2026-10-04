@@ -10,7 +10,7 @@ const grid = useTemplateRef("grid");
 const tileWidth = 20;
 const bounds = 8;
 
-const images = import.meta.glob<boolean[][]>("./images/philosophies/*.png", {
+const images = import.meta.glob<number[][]>("./images/philosophies/*.png", {
   eager: true,
   query: "?bitmap",
   import: "default",
@@ -64,8 +64,10 @@ watchEffect(() => {
   if (!grid.value) return;
   const shape = getShape(philosophy.value.id);
   if (!shape) return;
-  for (const tile of grid.value.getAll())
-    grid.value.setOn(tile, shape[tile.row + bounds]?.[tile.col + bounds]);
+  for (const tile of grid.value.getAll()) {
+    const value = shape[tile.row + bounds]?.[tile.col + bounds];
+    grid.value.setOn(tile, value > 127 ? 1 : 0);
+  }
 });
 
 useIntervalFn(
@@ -84,7 +86,8 @@ useIntervalFn(
           ref="grid"
           :tile-width="tileWidth"
           :bounds="bounds"
-          fill-top="oklch(98% 0.02 40)"
+          fill-top-on="oklch(99% 0.02 40)"
+          fill-top="oklch(95% 0.02 40)"
           fill-left="oklch(93% 0.03 40)"
           fill-right="oklch(88% 0.04 40)"
           stroke="oklch(90% 0.1 40)"
