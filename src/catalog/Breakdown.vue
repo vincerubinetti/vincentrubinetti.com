@@ -98,8 +98,7 @@ const fluentLanguages = Object.entries(fluency).filter(([language]) =>
     </div>
 
     <p class="self-center">
-      * Only counting repos where I am maintainer or top contributor, to avoid
-      over-inflation.
+      * Only counting repos where I am maintainer or top 3 contributor
     </p>
   </section>
 
