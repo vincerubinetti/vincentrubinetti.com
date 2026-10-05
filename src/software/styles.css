@@ -26,39 +26,6 @@
     @apply overflow-hidden;
   }
 
-  h2 {
-    @apply relative mb-16;
-
-    &::before,
-    &::after {
-      @apply pointer-events-none absolute content-[""];
-    }
-
-    &::before {
-      @apply -inset-x-16 -inset-y-128;
-      background-image: url("./images/box-v.svg");
-      mask-image: linear-gradient(
-        to bottom,
-        transparent 0,
-        black --spacing(64),
-        black calc(100% - --spacing(64)),
-        transparent 100%
-      );
-    }
-
-    &::after {
-      @apply -inset-x-64 -top-24 -bottom-16;
-      background-image: url("./images/box-h.svg");
-      mask-image: linear-gradient(
-        to right,
-        transparent 0,
-        black --spacing(64),
-        black calc(100% - --spacing(64)),
-        transparent 100%
-      );
-    }
-  }
-
   p a {
     @apply text-dark;
   }
@@ -102,5 +69,38 @@
   &::before {
     @apply absolute inset-0 -z-10 opacity-10 content-[''];
     background-image: url("./images/paper.svg");
+  }
+}
+
+@utility draft-heading {
+  @apply relative;
+
+  &::before,
+  &::after {
+    @apply pointer-events-none absolute content-[""];
+  }
+
+  &::before {
+    @apply -inset-x-12 -inset-y-128;
+    background-image: url("./images/box-v.svg");
+    mask-image: linear-gradient(
+      to bottom,
+      transparent 0,
+      black --spacing(64),
+      black calc(100% - --spacing(64)),
+      transparent 100%
+    );
+  }
+
+  &::after {
+    @apply -inset-x-64 -top-24 -bottom-8 opacity-25;
+    background-image: url("./images/box-h.svg");
+    mask-image: linear-gradient(
+      to right,
+      transparent 0,
+      black --spacing(64),
+      black calc(100% - --spacing(64)),
+      transparent 100%
+    );
   }
 }

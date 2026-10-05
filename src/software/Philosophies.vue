@@ -2,7 +2,6 @@
 import { ref, useTemplateRef, watchEffect } from "vue";
 import { useIntervalFn } from "@vueuse/core";
 import { renderMarkdown } from "@/util/string";
-import Divider from "./components/Divider.vue";
 import Grid from "./components/Grid.vue";
 
 const grid = useTemplateRef("grid");
@@ -91,7 +90,7 @@ const unhover = () => cycle.resume;
 
 <template>
   <section class="bg-pale [--width:999]">
-    <h2 class="sr-only"><Divider flip />Philosophies</h2>
+    <h2 class="sr-only">Philosophies</h2>
 
     <div class="flex items-center justify-center gap-16 max-lg:flex-col">
       <div class="relative grid h-60 w-90 place-items-center">

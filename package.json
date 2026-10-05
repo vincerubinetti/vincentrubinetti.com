@@ -5,7 +5,7 @@
     "build": "astro build",
     "preview": "astro preview",
     "upload": "bun run build && bun upload.ts",
-    "stats": "bun ./src/catalog/data/stats/raw.ts && bun ./src/catalog/data/stats/transform.ts",
+    "stats": "bun ./src/software/data/stats/raw.ts && bun ./src/software/data/stats/transform.ts",
     "astro": "astro",
     "lint": "eslint . --fix",
     "format": "prettier --write .",

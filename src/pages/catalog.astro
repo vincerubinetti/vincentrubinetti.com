@@ -1,9 +1,11 @@
 ---
-import Catalog from "@/catalog/Catalog.vue";
-import Layout from "@/layouts/Layout.astro";
-import Footer from "@/software/Footer.vue";
-import Header from "@/software/Header.vue";
 import "@/software/styles.css";
+// import Breakdown from "@/catalog/Breakdown.vue";
+import List from "@/catalog/List.vue";
+import SubHeader from "@/catalog/SubHeader.vue";
+import Layout from "@/layouts/Layout.astro";
+import Footer from "@/software/components/Footer.vue";
+import Header from "@/software/components/Header.vue";
 ---
 
 <Layout
@@ -12,7 +14,9 @@ import "@/software/styles.css";
 >
   <Header client:load />
   <main>
-    <Catalog client:load />
+    <SubHeader />
+    <!-- <Breakdown client:load /> -->
+    <List client:load />
   </main>
   <Footer />
 </Layout>

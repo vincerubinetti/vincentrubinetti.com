@@ -1,11 +1,10 @@
 <script setup lang="ts">
 import profile from "@/images/vince.png?url&format=webp";
-import Divider from "./components/Divider.vue";
 </script>
 
 <template>
   <section>
-    <h2 class="sr-only"><Divider flip />About</h2>
+    <h2 class="sr-only">About</h2>
 
     <div class="flex max-w-full items-center gap-16 max-md:flex-col">
       <div class="size-50 shrink-0">

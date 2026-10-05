@@ -22,7 +22,7 @@ const icons = {
 
 <template>
   <section class="[--width:300]">
-    <h2 class="self-center text-center">Studio</h2>
+    <h2>Studio</h2>
 
     <div class="grid grid-cols-2 items-start gap-8 max-md:grid-cols-1">
       <a :href="picture" class="self-stretch overflow-hidden">

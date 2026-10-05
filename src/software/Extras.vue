@@ -11,7 +11,7 @@ import UXUI from "./images/projects/ux-ui-for-researchers.pdf";
 
     <Braces>
       <a href="/catalog" class="button self-center">
-        <GitHub />GitHub Catalog
+        <GitHub />Full GitHub Catalog
       </a>
 
       <a :href="UXUI" class="button self-center">

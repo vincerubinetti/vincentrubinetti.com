@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import "youtube-video-element";
 import {
   computed,
   onMounted,
@@ -14,7 +15,6 @@ import Outline from "./components/Outline.vue";
 import highlights from "./data/highlights.json";
 import albums from "./images/albums";
 import { getColor } from "./util/colors";
-import "youtube-video-element";
 
 type Highlight = (typeof highlights)[number];
 

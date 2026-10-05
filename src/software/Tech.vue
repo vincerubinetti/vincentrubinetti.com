@@ -2,7 +2,6 @@
 import { pick } from "lodash-es";
 import logos from "@/images/logos";
 import { renderMarkdown } from "@/util/string";
-import Divider from "./components/Divider.vue";
 
 const tech = [
   {
@@ -39,7 +38,7 @@ const tech = [
 
 <template>
   <section>
-    <h2 class="sr-only">Tech<Divider /></h2>
+    <h2 class="sr-only">Tech</h2>
 
     <div class="grid grid-cols-3 gap-8 max-md:grid-cols-2 max-sm:grid-cols-1">
       <div

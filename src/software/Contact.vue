@@ -2,7 +2,6 @@
 import { IconSend } from "@tabler/icons-vue";
 import { useLocalStorage } from "@vueuse/core";
 import { onSubmit, useAddress } from "@/util/contact";
-import Divider from "./components/Divider.vue";
 
 /** form state */
 const name = useLocalStorage("name", "");
@@ -14,7 +13,7 @@ const address = useAddress();
 
 <template>
   <section>
-    <h2 class="sr-only">Contact<Divider /></h2>
+    <h2 class="sr-only">Contact</h2>
 
     <div class="grid grid-cols-2 gap-16 max-md:grid-cols-1">
       <div class="flex flex-col gap-4">

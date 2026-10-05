@@ -171,7 +171,7 @@ const coords = computed(() => ({
 
 <template>
   <section class="bg-pale">
-    <h2>Projects<Divider /></h2>
+    <h2 class="draft-heading">Projects<Divider /></h2>
 
     <!-- search -->
     <Autocomplete

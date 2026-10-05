@@ -8,9 +8,8 @@ import {
   IconGitPullRequest,
 } from "@tabler/icons-vue";
 import { map, max, min, orderBy, startCase } from "lodash-es";
-import Divider from "@/software/components/Divider.vue";
 import Table from "@/software/components/Table.vue";
-import _repos from "./data/stats/transform/repos.json";
+import _repos from "./data/transform/repos.json";
 
 /** fall-off function */
 const value = (x: number, w: number, v: number) => (1 - 2 ** (-x / w)) * v;
@@ -52,16 +51,6 @@ const cols: Cols<typeof repos> = [
 </script>
 
 <template>
-  <section class="paper bg-light">
-    <hgroup class="flex flex-col gap-6">
-      <h2><Divider flip />Catalog<Divider /></h2>
-
-      <div class="text-center text-lg">
-        All of my public GitHub contributions
-      </div>
-    </hgroup>
-  </section>
-
   <section class="[--width:999]">
     <Table :rows="repos" :cols="cols">
       <template #link="{ row }">

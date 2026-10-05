@@ -1,7 +1,7 @@
 import { mkdirSync } from "fs";
 import { differenceInMonths } from "date-fns";
 import { inRange, orderBy, sumBy, uniq } from "lodash-es";
-import { login } from "@/catalog/data/stats";
+import { login } from "./";
 import contributions from "./raw/contributions.json";
 import contributors from "./raw/contributors.json";
 import languages from "./raw/languages.json";
@@ -23,7 +23,8 @@ const orgs = () => {
 
   /** orgs by contributions */
   for (const [full, users] of Object.entries(contributors))
-    if (users.find((user) => user.login === login)) result.push(full);
+    if (users.find((user) => user.login === login))
+      result.push(full.split("/")[0]);
 
   result = uniq(result);
 
