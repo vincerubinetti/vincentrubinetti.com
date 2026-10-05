@@ -37,13 +37,13 @@ const icons = {
       <div
         v-for="({ name, items }, index) in setup"
         :key="index"
-        class="flex flex-col gap-6 rounded-sm bg-zinc-100 p-4"
+        class="flex flex-col gap-6 rounded-sm border border-current/25 p-4"
         :class="[items.length > 10 && 'row-span-2']"
       >
         <h3>
           <component
             :is="icons[name as keyof typeof icons]"
-            class="text-dark opacity-50"
+            class="text-dark"
           />
           {{ name }}
         </h3>
