@@ -293,7 +293,7 @@ const getBandcamp = (track: Track) =>
                       />
                     </svg>
                     <div
-                      class="absolute bottom-full -translate-x-1/2 text-sm opacity-0 transition-opacity group-hover:opacity-50"
+                      class="absolute bottom-full -translate-x-1/2 text-sm opacity-0 transition group-hover:opacity-50"
                       :style="{
                         left: `${(time / (track.duration ?? 1)) * 100}%`,
                       }"
@@ -301,7 +301,7 @@ const getBandcamp = (track: Track) =>
                       {{ formatTime(time) }}
                     </div>
                     <div
-                      class="absolute right-0 bottom-full text-sm opacity-0 transition-opacity group-hover:opacity-50"
+                      class="absolute right-0 bottom-full text-sm opacity-0 transition group-hover:opacity-50"
                       :style="{
                         visibility:
                           time / (track.duration ?? 1) < 0.75

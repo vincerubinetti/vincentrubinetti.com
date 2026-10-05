@@ -30,7 +30,7 @@ const icons = {
           :src="picture"
           alt=""
           loading="lazy"
-          class="size-full object-cover transition-transform hover:scale-110"
+          class="size-full object-cover transition hover:scale-110"
         />
       </a>
 

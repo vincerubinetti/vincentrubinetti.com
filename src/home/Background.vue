@@ -56,7 +56,7 @@ watchEffect(() => {
   <div>
     <canvas
       ref="canvas"
-      class="size-full transition-opacity duration-1000"
+      class="size-full transition duration-1000"
       :class="playing ? 'opacity-75' : 'opacity-25'"
     />
   </div>

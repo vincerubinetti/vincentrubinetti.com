@@ -71,11 +71,16 @@ onMounted(() =>
         @click="select(highlight)"
       >
         <div
-          class="absolute inset-0 flex items-center justify-center bg-black p-2 text-white opacity-0 transition-opacity group-hover:opacity-100"
+          class="absolute inset-0 flex items-center justify-center bg-black p-2 text-white opacity-0 transition group-hover:scale-105 group-hover:opacity-100"
         >
           {{ highlight.title }}
         </div>
-        <img :src="albums[slugify(highlight.title)]" alt="" loading="lazy" />
+        <img
+          :src="albums[slugify(highlight.title)]"
+          alt=""
+          loading="lazy"
+          class="-z-10 transition group-hover:scale-110"
+        />
       </button>
     </div>
 

@@ -214,7 +214,7 @@ const coords = computed(() => ({
         <!-- open/close button -->
         <button
           ref="button"
-          class="relative flex flex-col gap-2 before:absolute before:-inset-2 before:-z-10 before:transition-colors hover:scale-103 hover:before:bg-mid"
+          class="relative flex flex-col gap-2 before:absolute before:-inset-2 before:-z-10 before:transition hover:scale-103 hover:before:bg-mid"
           :title="
             opened === index ? 'Hide project details' : 'Show project details'
           "
