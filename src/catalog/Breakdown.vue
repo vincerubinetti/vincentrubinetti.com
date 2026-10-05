@@ -106,13 +106,13 @@ const fluentLanguages = Object.entries(fluency).filter(([language]) =>
   <section class="bg-pale [--width:300]">
     <h2 class="sr-only">Languages</h2>
 
-    <div class="flex gap-8 *:flex-1 max-md:flex-col">
-      <p class="self-center text-center">
+    <div class="flex gap-8 max-md:flex-col">
+      <p class="flex-1 self-center text-center">
         <b class="text-xl">Lines of code written</b><br />Estimated by
         <code>bytes / 40</code>
       </p>
       <div
-        class="grid grid-cols-4 gap-8 max-lg:grid-cols-2 max-md:grid-cols-2 max-sm:grid-cols-1"
+        class="grid flex-2 grid-cols-4 gap-8 max-lg:grid-cols-4 max-md:grid-cols-3 max-sm:grid-cols-1"
       >
         <div
           v-for="([language, bytes], index) in fluentLanguages"
