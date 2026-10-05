@@ -22,7 +22,6 @@ const totals = () => {
   let prs = 0;
   let reviews = 0;
 
-  /** tally stars */
   for (const [full, users] of Object.entries(contributors)) {
     /** get contributor rank */
     const rank = users.findIndex((user) => user.login === login) + 1;
@@ -79,7 +78,7 @@ const orgs = () => {
     /** get contributor rank */
     const rank = users.findIndex((user) => user.login === login) + 1;
     /** only consider repos where top contributor */
-    if (!inRange(rank, 1, 11)) continue;
+    if (!rank) continue;
     result.push(full.split("/")[0]);
   }
 
@@ -200,7 +199,7 @@ const fluency = () => {
         (user) => user.login === login,
       ) ?? -1) + 1;
     /** only consider repos where top contributor */
-    if (!inRange(rank, 1, 11)) continue;
+    if (!rank) continue;
     /** tally languages */
     for (const [language, bytes] of Object.entries(breakdown))
       result[language] = (result[language] || 0) + bytes;
