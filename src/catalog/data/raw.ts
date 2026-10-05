@@ -161,6 +161,43 @@ const contributions = async () => {
   write(transformed, "raw", "contributions");
 };
 
+/** get details per repo */
+const details = async () => {
+  if (exists("raw", "details")) return;
+
+  console.info("DETAILS");
+
+  /** import raw data */
+  const contributions = (await import("./raw/contributions.json")).default;
+
+  /** all contribution repos */
+  const names = uniqWith(
+    contributions.flatMap(({ commits }) =>
+      commits.map(({ full, owner, repo }) => ({ full, owner, repo })),
+    ),
+    isEqual,
+  );
+
+  /** contributors per repo */
+  const result: Record<
+    string,
+    Awaited<ReturnType<typeof octokit.rest.repos.get>>["data"]
+  > = {};
+
+  for (const { full, owner, repo } of names) {
+    console.info(full);
+
+    /** get repo details */
+    const response = await octokit.rest.repos.get({ owner, repo });
+
+    if (response.status !== 200) throw Error();
+
+    result[full] = response.data;
+  }
+
+  write(result, "raw", "details");
+};
+
 /** get contributors per repo */
 const contributors = async () => {
   if (exists("raw", "contributors")) return;
@@ -187,7 +224,7 @@ const contributors = async () => {
   for (const { full, owner, repo } of names) {
     console.info(full);
 
-    /** get repo contributors by commit count */
+    /** get repo contributors */
     const response = await octokit.rest.repos.listContributors({
       owner,
       repo,
@@ -229,10 +266,7 @@ const languages = async () => {
     console.info(full);
 
     /** get repo languages */
-    const response = await octokit.rest.repos.listLanguages({
-      owner,
-      repo,
-    });
+    const response = await octokit.rest.repos.listLanguages({ owner, repo });
 
     if (response.status !== 200) throw Error();
 
@@ -246,5 +280,6 @@ await user();
 await memberships();
 await owned();
 await contributions();
+await details();
 await contributors();
 await languages();

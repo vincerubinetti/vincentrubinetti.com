@@ -29,6 +29,10 @@
   p a {
     @apply text-dark;
   }
+
+  code {
+    @apply bg-mid/50 rounded-md px-1 py-0.5 font-mono;
+  }
 }
 
 @utility button-big {

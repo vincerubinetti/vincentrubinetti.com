@@ -139,7 +139,7 @@ const cellAttrs = (col?: Cols[number], row?: Row) => {
 
 <template>
   <div class="w-full overflow-x-auto">
-    <table class="w-full">
+    <table class="h-px w-full">
       <thead>
         <tr
           v-for="headerGroup in table.getHeaderGroups()"
@@ -149,6 +149,7 @@ const cellAttrs = (col?: Cols[number], row?: Row) => {
             v-for="header in headerGroup.headers"
             :key="header.id"
             :colSpan="header.colSpan"
+            class="h-full"
             :class="!header.column.getCanSort() && 'bg-dark/10'"
           >
             <button
@@ -157,13 +158,16 @@ const cellAttrs = (col?: Cols[number], row?: Row) => {
                 ...cellStyle(header.column.columnDef.meta),
               }"
               v-bind="cellAttrs(header.column.columnDef.meta)"
-              class="button w-full gap-2 px-4 py-2 font-normal"
+              class="button size-full gap-2 px-4 py-2 font-normal"
               @click="
                 (event: Event) =>
                   header.column.getToggleSortingHandler()?.(event)
               "
             >
-              <component :is="header.column.columnDef.meta?.icon" />
+              <component
+                :is="header.column.columnDef.meta?.icon"
+                class="text-xl"
+              />
               <FlexRender :header="header" />
               <template v-if="header.column.getCanSort()">
                 <IconArrowDown v-if="header.column.getIsSorted() === 'desc'" />

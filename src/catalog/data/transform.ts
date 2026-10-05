@@ -1,17 +1,70 @@
 import { mkdirSync } from "fs";
 import { differenceInMonths } from "date-fns";
-import { inRange, orderBy, sumBy, uniq } from "lodash-es";
+import { inRange, orderBy, uniq } from "lodash-es";
 import { login } from "./";
 import contributions from "./raw/contributions.json";
 import contributors from "./raw/contributors.json";
+import details from "./raw/details.json";
 import languages from "./raw/languages.json";
 import memberships from "./raw/memberships.json";
-import owned from "./raw/owned.json";
 import user from "./raw/user.json";
 import { relative, write } from "./util";
 
 /** make directory if needed */
 mkdirSync(relative("transform"), { recursive: true });
+
+/** totals of all time */
+const totals = () => {
+  let repos = 0;
+  let stars = 0;
+  let commits = 0;
+  let issues = 0;
+  let prs = 0;
+  let reviews = 0;
+
+  /** tally stars */
+  for (const [full, users] of Object.entries(contributors)) {
+    /** get contributor rank */
+    const rank = users.findIndex((user) => user.login === login) + 1;
+    /** only consider repos where maintainer or top contributor */
+    if (!inRange(rank, 1, 4)) continue;
+    /** tally repos */
+    repos += 1;
+    /** tally stars */
+    const { stargazers_count = 0 } =
+      details[full as keyof typeof details] ?? {};
+    stars += stargazers_count;
+  }
+
+  /** for each time range */
+  for (const contribution of contributions) {
+    /** tally commits */
+    for (const { count } of contribution.commits) commits += count;
+    /** tally issues */
+    for (const { count } of contribution.issues) issues += count;
+    /** tally prs */
+    for (const { count } of contribution.prs) prs += count;
+    /** tally pr reviews */
+    for (const { count } of contribution.reviews) reviews += count;
+  }
+
+  /** misc extras */
+  const active = differenceInMonths(new Date(), new Date(user.created_at)) / 12;
+  const followers = user.followers;
+
+  const data = {
+    repos,
+    stars,
+    commits,
+    issues,
+    prs,
+    reviews,
+    active,
+    followers,
+  };
+
+  write(data, "transform", "totals");
+};
 
 /** all organizations */
 const orgs = () => {
@@ -22,9 +75,13 @@ const orgs = () => {
     result.push(membership.organization.login);
 
   /** orgs by contributions */
-  for (const [full, users] of Object.entries(contributors))
-    if (users.find((user) => user.login === login))
-      result.push(full.split("/")[0]);
+  for (const [full, users] of Object.entries(contributors)) {
+    /** get contributor rank */
+    const rank = users.findIndex((user) => user.login === login) + 1;
+    /** only consider repos where top contributor */
+    if (!inRange(rank, 1, 11)) continue;
+    result.push(full.split("/")[0]);
+  }
 
   result = uniq(result);
 
@@ -34,7 +91,7 @@ const orgs = () => {
 /** counts per repo */
 const repos = () => {
   /** blank counts */
-  const counts = { commits: 0, issues: 0, prs: 0, reviews: 0 };
+  const counts = { commits: 0, issues: 0, prs: 0, reviews: 0, rank: 999 };
 
   let result: Record<string, typeof counts> = {};
 
@@ -62,6 +119,16 @@ const repos = () => {
     }
   }
 
+  for (const full of Object.keys(result)) {
+    /** get contributor rank */
+    const rank =
+      (contributors[full as keyof typeof contributors]?.findIndex(
+        (user) => user.login === login,
+      ) ?? -1) + 1;
+    if (!rank) continue;
+    result[full].rank = rank;
+  }
+
   /** sort */
   result = Object.fromEntries(
     orderBy(
@@ -77,23 +144,6 @@ const repos = () => {
   );
 
   write(result, "transform", "repos");
-};
-
-/** rank per repo */
-const rank = () => {
-  let result: Record<string, number> = {};
-
-  for (const [full, users] of Object.entries(contributors)) {
-    const index = users.findIndex((user) => user.login === login) + 1;
-    if (index) result[full] = index;
-  }
-
-  /** sort */
-  result = Object.fromEntries(
-    orderBy(Object.entries(result), ([, value]) => value, "asc"),
-  );
-
-  write(result, "transform", "rank");
 };
 
 /** commits over time */
@@ -120,42 +170,23 @@ const commits = () => {
   write(result, "transform", "commits");
 };
 
-/** totals of all time */
-const totals = () => {
-  let commits = 0;
-  let issues = 0;
-  let prs = 0;
-  let reviews = 0;
+/** rank per repo */
+const rank = () => {
+  let result: Record<string, number> = {};
 
-  /** for each time range */
-  for (const contribution of contributions) {
-    /** tally commits */
-    for (const { count } of contribution.commits) commits += count;
-    /** tally issues */
-    for (const { count } of contribution.issues) issues += count;
-    /** tally prs */
-    for (const { count } of contribution.prs) prs += count;
-    /** tally pr reviews */
-    for (const { count } of contribution.reviews) reviews += count;
+  for (const [full, users] of Object.entries(contributors)) {
+    /** get contributor rank */
+    const rank = users.findIndex((user) => user.login === login) + 1;
+    if (!rank) continue;
+    result[full] = rank;
   }
 
-  /** other counts */
-  const stars = sumBy(owned, (repo) => repo.stargazers_count);
-  const followers = user.followers;
-  const active = differenceInMonths(new Date(), new Date(user.created_at)) / 12;
+  /** sort */
+  result = Object.fromEntries(
+    orderBy(Object.entries(result), ([, value]) => value, "asc"),
+  );
 
-  const data = {
-    repos: owned.length,
-    stars,
-    commits,
-    issues,
-    prs,
-    reviews,
-    followers,
-    active,
-  };
-
-  write(data, "transform", "totals");
+  write(result, "transform", "rank");
 };
 
 /** language fluency per maintained repo */
@@ -163,10 +194,14 @@ const fluency = () => {
   let result: Record<string, number> = {};
 
   for (const [full, breakdown] of Object.entries(languages)) {
-    const rank = contributors[full as keyof typeof contributors]?.findIndex(
-      (user) => user.login === login,
-    );
-    if (!inRange(rank, 0, 1)) continue;
+    /** get contributor rank */
+    const rank =
+      (contributors[full as keyof typeof contributors]?.findIndex(
+        (user) => user.login === login,
+      ) ?? -1) + 1;
+    /** only consider repos where top contributor */
+    if (!inRange(rank, 1, 11)) continue;
+    /** tally languages */
     for (const [language, bytes] of Object.entries(breakdown))
       result[language] = (result[language] || 0) + bytes;
   }
@@ -179,9 +214,9 @@ const fluency = () => {
   write(result, "transform", "fluency");
 };
 
+totals();
 orgs();
 repos();
-rank();
-totals();
 commits();
+rank();
 fluency();

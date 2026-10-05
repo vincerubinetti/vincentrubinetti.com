@@ -1,6 +1,6 @@
 ---
 import "@/software/styles.css";
-// import Breakdown from "@/catalog/Breakdown.vue";
+import Breakdown from "@/catalog/Breakdown.vue";
 import List from "@/catalog/List.vue";
 import SubHeader from "@/catalog/SubHeader.vue";
 import Layout from "@/layouts/Layout.astro";
@@ -15,7 +15,7 @@ import Header from "@/software/components/Header.vue";
   <Header client:load />
   <main>
     <SubHeader />
-    <!-- <Breakdown client:load /> -->
+    <Breakdown client:load />
     <List client:load />
   </main>
   <Footer />

@@ -89,7 +89,7 @@ const unhover = () => cycle.resume;
 </script>
 
 <template>
-  <section class="bg-pale [--width:999]">
+  <section class="bg-pale [--width:400]">
     <h2 class="sr-only">Philosophies</h2>
 
     <div class="flex items-center justify-center gap-16 max-lg:flex-col">
