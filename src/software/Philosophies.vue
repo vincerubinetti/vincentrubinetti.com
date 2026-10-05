@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { ref, useTemplateRef, watchEffect } from "vue";
 import { useIntervalFn } from "@vueuse/core";
-import { sleep } from "@/util/async.ts";
 import { renderMarkdown } from "@/util/string";
 import Divider from "./components/Divider.vue";
 import Grid from "./components/Grid.vue";
@@ -87,7 +86,7 @@ const hover = (index: number) => {
   current.value = index;
   cycle.pause();
 };
-const unhover = () => sleep(5000).then(cycle.resume);
+const unhover = () => cycle.resume;
 </script>
 
 <template>

@@ -10,14 +10,14 @@ import {
 import { map, max, min, orderBy, startCase } from "lodash-es";
 import Divider from "@/software/components/Divider.vue";
 import Table from "@/software/components/Table.vue";
-import contributions from "./data/contributions.json";
+import _repos from "./data/stats/transform/repos.json";
 
 /** fall-off function */
 const value = (x: number, w: number, v: number) => (1 - 2 ** (-x / w)) * v;
 
 /** sort repos */
 const repos = orderBy(
-  Object.entries(contributions).map(([fullName, repo]) => ({
+  Object.entries(_repos).map(([fullName, repo]) => ({
     fullName,
     owner: fullName.includes("/") ? fullName.split("/")[0] : "",
     name: fullName.includes("/") ? fullName.split("/")[1] : "",

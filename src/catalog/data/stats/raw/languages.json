@@ -1,0 +1,735 @@
+{
+  "TagPro-gg/tagpro-texture-packs": {
+    "JavaScript": 2260
+  },
+  "vincerubinetti/mute-tabs-by-url": {
+    "JavaScript": 30096,
+    "HTML": 12217,
+    "CSS": 5092
+  },
+  "manubot/resources": {
+    "HTML": 11980
+  },
+  "manubot/manufesto": {
+    "HTML": 93322,
+    "Shell": 14554
+  },
+  "greenelab/iscb-diversity-manuscript": {
+    "HTML": 93178,
+    "Shell": 14818
+  },
+  "greenelab/biopriors-review": {
+    "HTML": 124101,
+    "Shell": 7805,
+    "Python": 7285
+  },
+  "greenelab/knowledge-graph-review": {
+    "HTML": 125179,
+    "Shell": 9145
+  },
+  "greenelab/phenoplier_manuscript": {
+    "TeX": 366064,
+    "HTML": 93401,
+    "Shell": 16165,
+    "Python": 1930,
+    "Perl": 50
+  },
+  "greenelab/mpmp-manuscript": {
+    "HTML": 93322,
+    "Shell": 13806
+  },
+  "laurentperrinet/2019-05_illusions-visuelles": {
+    "HTML": 125179,
+    "Shell": 8164
+  },
+  "lelaboratoire/rethink-prs-ms": {
+    "TeX": 153775,
+    "HTML": 124057,
+    "Python": 7285,
+    "Shell": 5742
+  },
+  "greenelab/linear_models_manuscript": {
+    "HTML": 93322,
+    "Shell": 14554
+  },
+  "greenelab/word_lapse_manuscript": {
+    "HTML": 93322,
+    "Shell": 13806
+  },
+  "greenelab/finish-that-manuscript": {
+    "HTML": 93322,
+    "Shell": 13806
+  },
+  "greenelab/microberna-manuscript": {
+    "HTML": 93322,
+    "Shell": 13806
+  },
+  "greenelab/indices_manuscript": {
+    "HTML": 93322,
+    "Shell": 13806
+  },
+  "greenelab/ben_heil_dissertation": {
+    "HTML": 93322,
+    "Shell": 13806
+  },
+  "greenelab/manubot-gpt-manuscript": {
+    "TeX": 444872,
+    "HTML": 93322,
+    "Shell": 14197,
+    "Perl": 50
+  },
+  "greenelab/generalization-manuscript": {
+    "HTML": 93322,
+    "Shell": 13806
+  },
+  "greenelab/optimizer-manuscript": {
+    "HTML": 93322,
+    "Shell": 13806
+  },
+  "greenelab/jake_dissertation": {
+    "HTML": 93322,
+    "Shell": 13808
+  },
+  "yt-project/yt-4.0-paper": {
+    "Jupyter Notebook": 113255,
+    "HTML": 97356,
+    "JavaScript": 18669,
+    "Shell": 14730,
+    "Python": 9181,
+    "TeX": 8982
+  },
+  "dhimmel/bitcoin-whitepaper": {
+    "HTML": 93322,
+    "Shell": 14554
+  },
+  "greenelab/scihub-manuscript": {
+    "HTML": 94140,
+    "Shell": 14556,
+    "Jupyter Notebook": 12426
+  },
+  "manubot/rootstock": {
+    "HTML": 93322,
+    "Shell": 14677
+  },
+  "slochower/smirnoff-host-guest-manuscript": {
+    "HTML": 128429,
+    "Shell": 13182,
+    "Python": 12999
+  },
+  "greenelab/meta-review": {
+    "HTML": 3255843,
+    "Jupyter Notebook": 619745,
+    "Shell": 9227
+  },
+  "greenelab/deep-review": {
+    "HTML": 132670,
+    "Shell": 9269,
+    "Jupyter Notebook": 5881,
+    "Python": 2342
+  },
+  "greenelab/T21-cis-eqtl-Chr21-regulation-manuscript": {
+    "HTML": 93322,
+    "Shell": 14677
+  },
+  "greenelab/fm-pm-eval-manuscript": {
+    "HTML": 93322,
+    "Shell": 13934
+  },
+  "pivlab/annual_review_of_biomedical_data_science": {
+    "HTML": 93322,
+    "Shell": 13807
+  },
+  "Benjamin-Lee/deep-rules": {
+    "HTML": 132199,
+    "Jupyter Notebook": 66731,
+    "Shell": 9174
+  },
+  "trangdata/tpot-fss-ms": {
+    "HTML": 124057,
+    "Python": 7285,
+    "Shell": 6120
+  },
+  "greenelab/xswap-manuscript": {
+    "HTML": 93322,
+    "Shell": 14551
+  },
+  "jmonlong/manu-vgsv": {
+    "HTML": 124084,
+    "R": 49230,
+    "Shell": 9706,
+    "Python": 7859,
+    "TeX": 2832,
+    "Makefile": 1343
+  },
+  "greenelab/disparities_opinion": {
+    "HTML": 93322,
+    "Shell": 38501
+  },
+  "manubot/try-manubot": {
+    "HTML": 93322,
+    "Shell": 14677,
+    "TeX": 625
+  },
+  "greenelab/ccc-manuscript": {
+    "HTML": 93394,
+    "Shell": 15524,
+    "TeX": 7306,
+    "Python": 877
+  },
+  "greenelab/nature_news_manuscript": {
+    "HTML": 93322,
+    "Shell": 14574
+  },
+  "greenelab/text_mined_hetnet_manuscript": {
+    "HTML": 93322,
+    "Shell": 14553
+  },
+  "greenelab/annorxiver_manuscript": {
+    "HTML": 93322,
+    "Shell": 15042
+  },
+  "greenelab/covid19-review": {
+    "TeX": 367850,
+    "HTML": 93681,
+    "Python": 30346,
+    "Shell": 28082,
+    "Makefile": 3312
+  },
+  "greenelab/scihub-manuscript-es": {
+    "HTML": 124651,
+    "Jupyter Notebook": 12426,
+    "Shell": 7716
+  },
+  "greenelab/connectivity-search-manuscript": {
+    "HTML": 93322,
+    "Shell": 16881,
+    "Lua": 881
+  },
+  "zach-hensel/low-noise-manuscript": {
+    "HTML": 221639,
+    "Python": 6932,
+    "Shell": 5237,
+    "CSS": 125
+  },
+  "greenelab/connectivity-search-frontend": {
+    "JavaScript": 134095,
+    "CSS": 5318,
+    "HTML": 323
+  },
+  "manubot/manubot.org": {
+    "HTML": 21931,
+    "CSS": 10088,
+    "JavaScript": 1293,
+    "Ruby": 1255
+  },
+  "hetio/het.io": {
+    "HTML": 51918,
+    "JavaScript": 13350,
+    "CSS": 10907,
+    "Ruby": 1039
+  },
+  "hetio/hetionet": {
+    "HTML": 16105,
+    "Shell": 6628,
+    "Jupyter Notebook": 5708,
+    "Dockerfile": 1505
+  },
+  "greenelab/assets": {
+    "HTML": 3857
+  },
+  "hetio/frontend-components": {
+    "JavaScript": 65432,
+    "CSS": 2892,
+    "HTML": 515
+  },
+  "hetio/repurpose-frontend": {
+    "JavaScript": 39409,
+    "CSS": 1149,
+    "HTML": 323
+  },
+  "hetio/disease-genes-frontend": {
+    "JavaScript": 69250,
+    "CSS": 1149,
+    "HTML": 656
+  },
+  "greenelab/adage-frontend": {
+    "JavaScript": 292480,
+    "HTML": 21042,
+    "CSS": 18350,
+    "Shell": 720
+  },
+  "manubot/catalog": {
+    "Python": 5637
+  },
+  "vincerubinetti/set": {
+    "TypeScript": 29360,
+    "CSS": 1362,
+    "HTML": 1228,
+    "JavaScript": 696
+  },
+  "greenelab/BioBombe": {
+    "Jupyter Notebook": 16393353,
+    "HTML": 5464911,
+    "Python": 353597,
+    "R": 289935,
+    "Shell": 15506
+  },
+  "max-mapper/hexbin": {
+    "JavaScript": 6893,
+    "CSS": 6653,
+    "HTML": 6409
+  },
+  "vincerubinetti/intro-to-svgs": {
+    "CSS": 6493,
+    "JavaScript": 2263,
+    "HTML": 2040,
+    "Ruby": 1126
+  },
+  "greenelab/brand": {},
+  "dhimmel/rephetio-manuscript": {
+    "HTML": 96802,
+    "CSS": 19571,
+    "Shell": 14554,
+    "Python": 6932,
+    "JavaScript": 87
+  },
+  "greenelab/hclust": {
+    "JavaScript": 7006,
+    "Shell": 113
+  },
+  "greenelab/old-adage-server": {
+    "JavaScript": 239824,
+    "Python": 176519,
+    "HTML": 52656,
+    "CSS": 8921,
+    "Shell": 8535,
+    "Dockerfile": 1540,
+    "Smarty": 798
+  },
+  "greenelab/greenelab.com": {
+    "HTML": 31371,
+    "SCSS": 22152,
+    "Python": 19510,
+    "JavaScript": 12680,
+    "Ruby": 6110,
+    "Shell": 1522,
+    "Dockerfile": 850
+  },
+  "greenelab/preprint-similarity-search": {
+    "Python": 64769,
+    "JavaScript": 33708,
+    "Shell": 11400,
+    "CSS": 5595,
+    "HTML": 4702,
+    "R": 201
+  },
+  "pivlab/pivlab-website": {
+    "HTML": 26552,
+    "SCSS": 22152,
+    "Python": 19510,
+    "JavaScript": 12680,
+    "Ruby": 6110,
+    "Shell": 1522,
+    "Dockerfile": 850
+  },
+  "dashnowlab/lab-website": {
+    "HTML": 24820,
+    "SCSS": 21042,
+    "Python": 17356,
+    "JavaScript": 12162,
+    "Ruby": 5135,
+    "Shell": 1528,
+    "Dockerfile": 850
+  },
+  "tis-lab/tislab.org": {
+    "SCSS": 28659,
+    "HTML": 24545,
+    "Python": 16771,
+    "JavaScript": 13513,
+    "CSS": 1657,
+    "Ruby": 858
+  },
+  "greenelab/lab-website-template": {
+    "HTML": 26101,
+    "SCSS": 22151,
+    "Python": 19510,
+    "JavaScript": 12680,
+    "Ruby": 6110,
+    "Shell": 1522,
+    "Dockerfile": 850
+  },
+  "vincerubinetti/svg-to-png": {
+    "TypeScript": 51791,
+    "CSS": 1872,
+    "HTML": 863
+  },
+  "biothings/mygeneset.info-website": {
+    "Vue": 138161,
+    "TypeScript": 31517,
+    "JavaScript": 10679,
+    "SCSS": 2846,
+    "HTML": 2318
+  },
+  "greenelab/preprint-bot": {
+    "JavaScript": 14748
+  },
+  "3b1b/3Blue1Brown.com": {
+    "MDX": 1506179,
+    "TypeScript": 343362,
+    "JavaScript": 330825,
+    "CSS": 6229,
+    "GLSL": 4962,
+    "Shell": 166
+  },
+  "greenelab/backup": {
+    "TypeScript": 7551
+  },
+  "asapbio/feedback-asap": {
+    "JavaScript": 3135
+  },
+  "monarch-initiative/monarch-ui": {
+    "Vue": 250621,
+    "JavaScript": 123067,
+    "HTML": 3262,
+    "SCSS": 1962
+  },
+  "monarch-initiative/monarch-ui-new": {},
+  "greenelab/word-lapse": {
+    "JavaScript": 58591,
+    "Python": 51119,
+    "Shell": 23508,
+    "Jupyter Notebook": 18440,
+    "CSS": 7292,
+    "HTML": 1748,
+    "Dockerfile": 1587
+  },
+  "vincerubinetti/vincentrubinetti.com": {
+    "Vue": 93213,
+    "TypeScript": 37988,
+    "CSS": 4936,
+    "Astro": 4016,
+    "GLSL": 3203,
+    "PHP": 2036,
+    "JavaScript": 1879,
+    "HTML": 44
+  },
+  "vincerubinetti/using-the-music-of-3blue1brown": {
+    "TypeScript": 28932,
+    "CSS": 2176,
+    "HTML": 934,
+    "JavaScript": 696
+  },
+  "bridge2ai/redirects-website": {
+    "HTML": 1047
+  },
+  "cytomining/pycytominer": {
+    "Python": 572993,
+    "Jupyter Notebook": 79775,
+    "Shell": 3323,
+    "Dockerfile": 1553,
+    "Makefile": 1502
+  },
+  "krishnanlab/simplex": {
+    "TypeScript": 148977,
+    "JavaScript": 8134,
+    "HTML": 4125
+  },
+  "fardad-dev/prettier-plugin-jsdoc": {
+    "TypeScript": 175154,
+    "JavaScript": 59115,
+    "Shell": 990
+  },
+  "CU-DBMI/redirects-website": {
+    "JavaScript": 1123,
+    "HTML": 521
+  },
+  "CU-DBMI/redirects": {
+    "JavaScript": 6262
+  },
+  "greenelab/lab-website-template-docs": {},
+  "zxcvbn-ts/zxcvbn": {
+    "TypeScript": 483810,
+    "JavaScript": 8555
+  },
+  "monarch-initiative/monarch-app": {
+    "Python": 825040,
+    "Vue": 713315,
+    "TypeScript": 465670,
+    "JavaScript": 10921,
+    "Makefile": 7103,
+    "SCSS": 5804,
+    "HTML": 5243,
+    "Dockerfile": 1938,
+    "Shell": 417
+  },
+  "vincerubinetti/midi-humanizer": {
+    "TypeScript": 36445,
+    "CSS": 5220,
+    "HTML": 1384
+  },
+  "blekhmanlab/compendium_website": {
+    "TypeScript": 116115,
+    "CSS": 1875,
+    "HTML": 1515
+  },
+  "WayScience/CytoSnake": {
+    "Python": 143832
+  },
+  "cytomining/CytoTable": {
+    "Python": 478761
+  },
+  "cytomining/cytominer": {
+    "R": 110992
+  },
+  "vitejs/vite": {
+    "TypeScript": 2765014,
+    "JavaScript": 305175,
+    "HTML": 144455,
+    "CSS": 82458,
+    "Vue": 6450,
+    "Svelte": 5659,
+    "SCSS": 3187,
+    "Less": 1699,
+    "Stylus": 531,
+    "Shell": 363,
+    "SugarSS": 274,
+    "Pug": 165,
+    "Sass": 140,
+    "Astro": 114
+  },
+  "CU-DBMI/set-intake": {},
+  "colorado-cancer-center/ecco": {
+    "Python": 362038,
+    "Vue": 128072,
+    "TypeScript": 46968,
+    "Shell": 42066,
+    "CSS": 3839,
+    "Dockerfile": 3053,
+    "HTML": 1866,
+    "Mako": 651,
+    "JavaScript": 350
+  },
+  "vuejs/eslint-plugin-vue": {
+    "TypeScript": 3312526,
+    "JavaScript": 909050,
+    "Vue": 357
+  },
+  "CU-DBMI/example-hpc-alpine-python": {
+    "Shell": 4424,
+    "Python": 857
+  },
+  "CU-DBMI/wall-of-software": {
+    "JavaScript": 13855,
+    "HTML": 12227,
+    "CSS": 7440
+  },
+  "pivlab/manubot-ai-editor-evals": {
+    "HTML": 12689406,
+    "Jupyter Notebook": 3864727,
+    "Python": 73412,
+    "Shell": 2019
+  },
+  "Hendricks-Research-Team/RAREsim2": {
+    "Python": 167093,
+    "PowerShell": 25697,
+    "Batchfile": 1357
+  },
+  "JRaviLab/molevolvr2.0": {
+    "TypeScript": 348845,
+    "Shell": 39539,
+    "R": 22878,
+    "JavaScript": 12901,
+    "Dockerfile": 11363,
+    "CSS": 5189,
+    "HCL": 1805,
+    "HTML": 1491
+  },
+  "krishnanlab/gp-gcp-frontend": {
+    "JavaScript": 1595,
+    "HTML": 611
+  },
+  "leaflet-extras/leaflet-providers": {
+    "JavaScript": 51790,
+    "HTML": 13719,
+    "CSS": 5897
+  },
+  "3b1b/captions": {
+    "TypeScript": 60372,
+    "CSS": 10130,
+    "JavaScript": 3731,
+    "HTML": 1629,
+    "Python": 747,
+    "Shell": 243
+  },
+  "software-gardening/.github": {},
+  "krishnanlab/geneplexus-app": {
+    "TypeScript": 210996,
+    "CSS": 22668,
+    "Python": 4290,
+    "HTML": 1996,
+    "Shell": 1703,
+    "Dockerfile": 1663,
+    "JavaScript": 1518
+  },
+  "pivlab/ccc-gpu": {
+    "Python": 790628,
+    "Cuda": 103942,
+    "Shell": 59427,
+    "C++": 7624,
+    "CMake": 5883,
+    "Dockerfile": 1413,
+    "R": 1017
+  },
+  "greenelab/ccc": {
+    "Jupyter Notebook": 14514202,
+    "Python": 560430,
+    "Shell": 9162,
+    "Dockerfile": 1413,
+    "R": 1017
+  },
+  "software-gardening/brand": {
+    "JavaScript": 3653,
+    "HTML": 267,
+    "CSS": 36
+  },
+  "nih-cfde/icc-eval-core": {
+    "Python": 127852,
+    "TypeScript": 101988,
+    "Vue": 69195,
+    "Shell": 28863,
+    "HTML": 5541,
+    "CSS": 4939,
+    "JavaScript": 1939,
+    "Dockerfile": 1589
+  },
+  "CU-DBMI/screensaver": {
+    "HTML": 22460
+  },
+  "manubot/manubot-ai-editor": {
+    "Python": 181387
+  },
+  "cytomining/coSMicQC": {
+    "Python": 117152,
+    "JavaScript": 6576,
+    "Shell": 918,
+    "CSS": 37
+  },
+  "TanStack/table": {
+    "TypeScript": 2580265,
+    "JavaScript": 75445,
+    "Svelte": 3951,
+    "HTML": 737
+  },
+  "3Blue1Brown/dubbing": {
+    "TypeScript": 86890,
+    "CSS": 7313,
+    "JavaScript": 2691,
+    "HTML": 872
+  },
+  "dashnowlab/STRchive": {
+    "Python": 178561,
+    "TypeScript": 140044,
+    "Astro": 50618,
+    "HTML": 31025,
+    "JavaScript": 7662,
+    "CSS": 4787,
+    "R": 3494,
+    "Jupyter Notebook": 2910,
+    "AngelScript": 937,
+    "Shell": 625
+  },
+  "mdn/dom-examples": {
+    "JavaScript": 899429,
+    "HTML": 350998,
+    "CSS": 84627,
+    "PHP": 933
+  },
+  "software-gardening/almanack": {
+    "Jupyter Notebook": 1323525,
+    "Python": 335531,
+    "TeX": 18315,
+    "Typst": 7599,
+    "CSS": 483,
+    "Jinja": 107
+  },
+  "CU-DBMI/word-spot": {
+    "Vue": 30420,
+    "TypeScript": 10894,
+    "CSS": 2482,
+    "HTML": 1146
+  },
+  "nih-cfde/icc-eval-coordination": {
+    "HTML": 389
+  },
+  "vincerubinetti/word4word": {
+    "Vue": 54342,
+    "TypeScript": 13145,
+    "CSS": 7160,
+    "C++": 3964,
+    "HTML": 1524,
+    "Shell": 73
+  },
+  "pivlab/manufold": {
+    "Jupyter Notebook": 478262,
+    "Python": 133994,
+    "Vue": 38143,
+    "TypeScript": 18743,
+    "Shell": 4436,
+    "CSS": 2712,
+    "Dockerfile": 2009,
+    "HTML": 1278
+  },
+  "boseb/GXwasR": {
+    "R": 699075,
+    "TeX": 6958
+  },
+  "greenelab/lwt-poster": {
+    "TypeScript": 18521,
+    "HTML": 18267,
+    "JavaScript": 10877,
+    "CSS": 6719
+  },
+  "krishnanlab/meta2onto": {
+    "Python": 278888,
+    "TypeScript": 162971,
+    "Jupyter Notebook": 44873,
+    "Shell": 41068,
+    "CSS": 4161,
+    "Dockerfile": 1951,
+    "HTML": 1496
+  },
+  "WayScience/buscar": {
+    "Python": 52998
+  },
+  "cytomining/CytoDataFrame": {
+    "Python": 551891,
+    "Dockerfile": 1527,
+    "Shell": 895
+  },
+  "dewittpe/medicalcoder": {
+    "Rich Text Format": 24735867,
+    "R": 876612,
+    "HTML": 92236,
+    "Makefile": 41276,
+    "TeX": 27396,
+    "Shell": 13954,
+    "Dockerfile": 1817
+  },
+  "Moestash/soundcloud.ts": {
+    "TypeScript": 52198
+  },
+  "nih-cfde/events": {
+    "JavaScript": 17636
+  },
+  "WayScience/ZedProfiler": {
+    "Python": 427834,
+    "Jupyter Notebook": 397534,
+    "TypeScript": 6429,
+    "Dockerfile": 1527,
+    "Shell": 895,
+    "HTML": 238
+  },
+  "dashnowlab/inSTRbility": {
+    "Python": 350840
+  }
+}
