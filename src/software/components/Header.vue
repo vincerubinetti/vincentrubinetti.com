@@ -76,13 +76,17 @@ const hatch = 16;
     <Grid
       ref="grid"
       :tile-width="80"
-      :bounds="8"
-      fill-top-on="oklch(55% 0.1 260)"
+      :bounds="
+        (tile) =>
+          (Math.abs(tile.col + 3) <= 4 && Math.abs(tile.row + 10) <= 4) ||
+          (Math.abs(tile.col - 3) <= 4 && Math.abs(tile.row - 10) <= 4)
+      "
+      fill-top-on="oklch(52% 0.1 260)"
       fill-top="oklch(50% 0.1 260)"
-      fill-left="oklch(45% 0.1 260)"
-      fill-right="oklch(40% 0.1 260)"
-      stroke="white"
-      class="absolute inset-0 -z-10 size-full opacity-25"
+      fill-left="oklch(48% 0.1 260)"
+      fill-right="oklch(46% 0.1 260)"
+      stroke="oklch(75% 0.05 260)"
+      class="absolute inset-0 -z-10 size-full bg-[radial-gradient(ellipse_50%_100%_at_bottom_center,oklch(40%_0.1_260),transparent)]"
     />
 
     <hgroup class="flex flex-col items-center gap-2 text-center">

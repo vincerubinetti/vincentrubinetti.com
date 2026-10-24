@@ -13,8 +13,8 @@ import { sleep } from "@/util/async";
 type Props = {
   /** width in px */
   tileWidth: number;
-  /** hard boundary on tiles, in iso space */
-  bounds: number;
+  /** which tiles to use */
+  bounds: (tile: { col: number; row: number }) => boolean;
   /** colors */
   fillTopOn: string;
   fillTop: string;
@@ -48,13 +48,19 @@ const cartToIso = (x: number, y: number) => ({
 
 /** tile props */
 const tiles = computed(() => {
-  const xs = range(-width.value / 2, width.value / 2, tileWidth / 4);
-  const ys = range(-height.value / 2, height.value / 2, tileHeight.value / 4);
+  let xs = range(
+    -width.value / 2 - tileWidth,
+    width.value / 2 + tileWidth,
+    tileWidth / 4,
+  );
+  let ys = range(
+    -height.value / 2 - tileHeight.value,
+    height.value / 2 + tileHeight.value,
+    tileHeight.value / 4,
+  );
   let iso = xs.map((x) => ys.map((y) => cartToIso(x, y))).flat();
   iso = uniqWith(iso, (a, b) => a.col === b.col && a.row === b.row);
-  iso = iso.filter(
-    (tile) => Math.abs(tile.col) <= bounds && Math.abs(tile.row) <= bounds,
-  );
+  iso = iso.filter((tile) => bounds(tile));
   let tiles = iso.map(({ col, row }) => ({
     col,
     row,

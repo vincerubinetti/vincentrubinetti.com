@@ -97,11 +97,14 @@ const unhover = () => cycle.resume();
         <Grid
           ref="grid"
           :tile-width="tileWidth"
-          :bounds="bounds"
+          :bounds="
+            (tile) =>
+              Math.abs(tile.col) <= bounds && Math.abs(tile.row) <= bounds
+          "
           fill-top-on="oklch(99% 0.02 40)"
           fill-top="oklch(95% 0.02 40)"
-          fill-left="oklch(93% 0.03 40)"
-          fill-right="oklch(88% 0.04 40)"
+          fill-left="oklch(91% 0.03 40)"
+          fill-right="oklch(87% 0.04 40)"
           stroke="oklch(90% 0.1 40)"
           :style="{
             width: tileWidth * (2 * bounds + 1) + 'px',
