@@ -77,7 +77,7 @@ watchEffect(() => {
 /** auto-cycle through list */
 const cycle = useIntervalFn(
   () => (current.value = (current.value + 1) % philosophies.length),
-  4000,
+  3000,
 );
 
 /** handle pointer events */
@@ -85,7 +85,7 @@ const hover = (index: number) => {
   current.value = index;
   cycle.pause();
 };
-const unhover = () => cycle.resume;
+const unhover = () => cycle.resume();
 </script>
 
 <template>
