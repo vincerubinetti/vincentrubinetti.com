@@ -1,32 +1,18 @@
 <script setup lang="ts">
 import { computed, useTemplateRef, watch } from "vue";
-import { useIntervalFn, usePointer } from "@vueuse/core";
+import { useIntervalFn, usePointer, useWindowSize } from "@vueuse/core";
 import { range } from "lodash-es";
 import svgFile from "@/images/brand/title.svg?raw";
 import Grid from "@/software/components/Grid.vue";
 
+/** elements */
 const svg = useTemplateRef("svg");
 const grid = useTemplateRef("grid");
 
-/** animate grid */
-useIntervalFn(() => {
-  if (!grid.value) return;
-  const center = grid.value.getRandom();
-  if (!center) return;
-  const on = grid.value.getOn(center);
-  for (const tile of grid.value.getTiles(center.col, center.row, 1))
-    grid.value.setOn(
-      tile,
-      1 - on,
-      grid.value.getDistance(tile, center) * 0.25,
-      0.5,
-    );
-}, 500);
-
-/** animation duration in seconds */
+/** svg animation duration in seconds */
 const duration = 3;
 
-/** parent container */
+/** svg parent container */
 const parent = computed(() => svg.value);
 /** mouse/touch */
 const pointer = usePointer({ target: parent });
@@ -54,38 +40,60 @@ const viewBox = svgTag
   .map(Number);
 
 /** view box */
-let [x = 0, y = 0, w = 100, h = 10] = viewBox ?? [];
+let [x = 0, y = 0, width = 100, height = 10] = viewBox ?? [];
 
 /** corner padding */
-const p = 40;
+const padding = 40;
 
 /** add padding to view box */
-x -= p;
-y -= p;
-w += p * 2;
-h += p * 2;
+x -= padding;
+y -= padding;
+width += padding * 2;
+height += padding * 2;
 
-const transformOrigin = `${w / 2 - p}px ${h / 2 - p}px`;
+/** svg transform center */
+const transformOrigin = `${width / 2 - padding}px ${height / 2 - padding}px`;
 
 /** svg fill pattern size */
 const hatch = 16;
+
+/** animate grid */
+useIntervalFn(() => {
+  if (!grid.value) return;
+  const center = grid.value.getRandom();
+  if (!center) return;
+  const on = grid.value.getOn(center);
+  for (const tile of grid.value.getTiles(center.col, center.row, 1))
+    grid.value.setOn(tile, 1 - on, grid.value.getDistance(tile, center) * 0.25);
+}, 500);
+
+const windowSize = useWindowSize();
+
+/** which grid tiles to include */
+const filter = (tile: { col: number; row: number }) =>
+  (Math.abs(tile.col + 3) <= 4 && Math.abs(tile.row + 10) <= 4) ||
+  (Math.abs(tile.col - 3) <= 4 && Math.abs(tile.row - 9) <= 4);
 </script>
 
 <template>
   <header class="items-center bg-dark py-20 text-white">
     <Grid
       ref="grid"
-      :tile-width="80"
-      :bounds="
-        (tile) =>
-          (Math.abs(tile.col + 3) <= 4 && Math.abs(tile.row + 10) <= 4) ||
-          (Math.abs(tile.col - 3) <= 4 && Math.abs(tile.row - 10) <= 4)
+      :tile-width="
+        windowSize.width.value > 800
+          ? 70
+          : windowSize.width.value > 600
+            ? 60
+            : 50
       "
-      fill-top-on="oklch(52% 0.1 260)"
-      fill-top="oklch(50% 0.1 260)"
-      fill-left="oklch(48% 0.1 260)"
-      fill-right="oklch(46% 0.1 260)"
-      stroke="oklch(75% 0.05 260)"
+      :filter="filter"
+      fill-top-on="oklch(50% 0.1 260)"
+      fill-top="oklch(48% 0.1 260)"
+      fill-left="oklch(46% 0.1 260)"
+      fill-right="oklch(44% 0.1 260)"
+      stroke="oklch(75% 0.1 260)"
+      :dash-ratio="1 / 3"
+      :fade="true"
       class="absolute inset-0 -z-10 size-full bg-[radial-gradient(ellipse_50%_100%_at_bottom_center,oklch(40%_0.1_260),transparent)]"
     />
 
@@ -94,7 +102,7 @@ const hatch = 16;
         <svg
           ref="svg"
           xmlns="http://www.w3.org/2000/svg"
-          :viewBox="[x, y, w, h].join(' ')"
+          :viewBox="[x, y, width, height].join(' ')"
         >
           <pattern
             id="hatch"
@@ -119,17 +127,17 @@ const hatch = 16;
 
           <clipPath v-for="i in range(3)" :key="i" :id="`clip-${i + 1}`">
             <rect
-              :x="-p"
-              :y="-p"
+              :x="-padding"
+              :y="-padding"
               :width="0"
-              :height="h"
+              :height="height"
               transform="skewX(-45)"
               :style="{ transformOrigin }"
             >
               <animate
                 attributeName="width"
                 from="0"
-                :to="w"
+                :to="width"
                 :dur="`${duration / 3}s`"
                 :begin="`${i * (duration / 3)}s`"
                 fill="freeze"
@@ -137,8 +145,8 @@ const hatch = 16;
               <animate
                 v-if="i < 2"
                 attributeName="x"
-                :from="-p"
-                :to="w - p"
+                :from="-padding"
+                :to="width - padding"
                 :dur="`${duration / 3}s`"
                 :begin="`${(i + 1) * (duration / 3)}s`"
                 fill="freeze"
@@ -150,16 +158,16 @@ const hatch = 16;
             <rect
               class="stroke-current stroke-2"
               transform="skewX(-45)"
-              :x="-p"
-              :y="-p + h / 4"
+              :x="-padding"
+              :y="-padding + height / 4"
               width="1"
-              :height="h / 2"
+              :height="height / 2"
               opacity="0"
               :style="{ transformOrigin }"
             >
               <animate
                 attributeName="x"
-                :to="w - p"
+                :to="width - padding"
                 repeatCount="3"
                 :dur="`${duration / 3}s`"
                 fill="freeze"

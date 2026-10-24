@@ -10,6 +10,10 @@ const grid = useTemplateRef("grid");
 const tileWidth = 20;
 const bounds = 8;
 
+/** which grid tiles to include */
+const filter = (tile: { col: number; row: number }) =>
+  Math.abs(tile.col) <= bounds && Math.abs(tile.row) <= bounds;
+
 /** bitmap images */
 const images = import.meta.glob<number[][]>("./images/philosophies/*.png", {
   eager: true,
@@ -97,15 +101,14 @@ const unhover = () => cycle.resume();
         <Grid
           ref="grid"
           :tile-width="tileWidth"
-          :bounds="
-            (tile) =>
-              Math.abs(tile.col) <= bounds && Math.abs(tile.row) <= bounds
-          "
+          :filter="filter"
           fill-top-on="oklch(99% 0.02 40)"
           fill-top="oklch(95% 0.02 40)"
           fill-left="oklch(91% 0.03 40)"
           fill-right="oklch(87% 0.04 40)"
           stroke="oklch(90% 0.1 40)"
+          :dash-ratio="1 / 2"
+          :fade="false"
           :style="{
             width: tileWidth * (2 * bounds + 1) + 'px',
             height: tileWidth * (2 * bounds + 1) + 'px',

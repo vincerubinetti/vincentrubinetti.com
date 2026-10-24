@@ -14,17 +14,29 @@ type Props = {
   /** width in px */
   tileWidth: number;
   /** which tiles to use */
-  bounds: (tile: { col: number; row: number }) => boolean;
+  filter: (tile: { col: number; row: number }) => boolean;
   /** colors */
   fillTopOn: string;
   fillTop: string;
   fillLeft: string;
   fillRight: string;
   stroke: string;
+  dashRatio: number;
+  /** whether to fade with on state */
+  fade: boolean;
 };
 
-const { tileWidth, bounds, fillTopOn, fillTop, fillLeft, fillRight, stroke } =
-  defineProps<Props>();
+const {
+  tileWidth,
+  filter,
+  fillTopOn,
+  fillTop,
+  fillLeft,
+  fillRight,
+  stroke,
+  dashRatio,
+  fade,
+} = defineProps<Props>();
 
 /** tile size props */
 const tileHeight = computed(() => tileWidth / 1.73);
@@ -60,7 +72,7 @@ const tiles = computed(() => {
   );
   let iso = xs.map((x) => ys.map((y) => cartToIso(x, y))).flat();
   iso = uniqWith(iso, (a, b) => a.col === b.col && a.row === b.row);
-  iso = iso.filter((tile) => bounds(tile));
+  iso = iso.filter(filter);
   let tiles = iso.map(({ col, row }) => ({
     col,
     row,
@@ -98,67 +110,94 @@ watchEffect(() => {
   ctx.value.scale(scale, scale);
 });
 
+/** dash stroke for top face */
+const topStroke = computed(() => [
+  dashRatio * tileHypot.value,
+  (1 - dashRatio) * tileHypot.value,
+]);
+
 /** dash stroke for side faces */
-const sideStroke = [
+const sideStroke = computed(() => [
   /** down stroke */
-  tileHeight.value / 8,
-  tileHeight.value / 4,
-  tileHeight.value / 4,
-  tileHeight.value / 4,
-  tileHeight.value / 8 +
+  (dashRatio / 2) * tileHeight.value,
+  (1 - dashRatio) * tileHeight.value,
+  (dashRatio / 2) * tileHeight.value +
     /** diagonal stroke */
-    tileHypot.value / 8,
-  tileHypot.value / 4,
-  tileHypot.value / 4,
-  tileHypot.value / 4,
-  tileHypot.value / 8 +
+    (dashRatio / 2) * tileHypot.value,
+  (1 - dashRatio) * tileHypot.value,
+  (dashRatio / 2) * tileHypot.value +
     /** up stroke */
-    tileHeight.value / 8,
-  tileHeight.value / 4,
-  tileHeight.value / 4,
-  tileHeight.value / 4,
-  tileHeight.value / 8,
-];
+    (dashRatio / 2) * tileHeight.value,
+  (1 - dashRatio) * tileHeight.value,
+  (dashRatio / 2) * tileHeight.value,
+]);
+
+/** left tile face relative coords*/
+const leftFace = computed(() => [
+  [-tileWidth / 2, 0],
+  [-tileWidth / 2, tileHeight.value],
+  [0, tileHeight.value + tileHeight.value / 2],
+  [0, tileHeight.value / 2],
+]);
+
+/** right tile face relative coords */
+const rightFace = computed(() => [
+  [tileWidth / 2, 0],
+  [tileWidth / 2, tileHeight.value],
+  [0, tileHeight.value + tileHeight.value / 2],
+  [0, tileHeight.value / 2],
+]);
+
+/** top tile face relative coords */
+const topFace = computed(() => [
+  [-tileWidth / 2, 0],
+  [0, -tileHeight.value / 2],
+  [tileWidth / 2, 0],
+  [0, tileHeight.value / 2],
+]);
 
 /** draw isometric tile */
 const drawTile = (x: number, y: number, on: number) => {
   const _ctx = ctx.value;
   if (!_ctx) return;
-  _ctx.strokeStyle = stroke;
 
-  /** left face */
+  /** fade with on state */
+  if (fade) _ctx.globalAlpha = on;
+
+  /** if nothing to draw */
+  if (fade && !on) return;
+
+  /** draw left face */
   _ctx.beginPath();
-  _ctx.moveTo(x - tileWidth / 2, y);
-  _ctx.lineTo(x - tileWidth / 2, y + tileHeight.value);
-  _ctx.lineTo(x, y + tileHeight.value + tileHeight.value / 2);
-  _ctx.lineTo(x, y + tileHeight.value / 2);
+  leftFace.value.forEach(([dx, dy], index) =>
+    _ctx[index === 0 ? "moveTo" : "lineTo"](x + dx, y + dy),
+  );
   _ctx.fillStyle = fillLeft;
   _ctx.fill();
   _ctx.lineDashOffset = 0;
-  _ctx.setLineDash(sideStroke);
+  _ctx.setLineDash(sideStroke.value);
+  _ctx.strokeStyle = stroke;
   _ctx.stroke();
 
-  /** right face */
+  /** draw right face */
   _ctx.beginPath();
-  _ctx.moveTo(x + tileWidth / 2, y);
-  _ctx.lineTo(x + tileWidth / 2, y + tileHeight.value);
-  _ctx.lineTo(x, y + tileHeight.value + tileHeight.value / 2);
-  _ctx.lineTo(x, y + tileHeight.value / 2);
+  rightFace.value.forEach(([dx, dy], index) =>
+    _ctx[index === 0 ? "moveTo" : "lineTo"](x + dx, y + dy),
+  );
   _ctx.fillStyle = fillRight;
   _ctx.fill();
   _ctx.stroke();
 
-  /** top face */
+  /** draw top face */
   _ctx.beginPath();
-  _ctx.moveTo(x - tileWidth / 2, y);
-  _ctx.lineTo(x, y - tileHeight.value / 2);
-  _ctx.lineTo(x + tileWidth / 2, y);
-  _ctx.lineTo(x, y + tileHeight.value / 2);
+  topFace.value.forEach(([dx, dy], index) =>
+    _ctx[index === 0 ? "moveTo" : "lineTo"](x + dx, y + dy),
+  );
   _ctx.closePath();
   _ctx.fillStyle = `color-mix(in srgb, ${fillTop}, ${fillTopOn} ${on * 100}%)`;
   _ctx.fill();
-  _ctx.lineDashOffset = tileHypot.value / 8;
-  _ctx.setLineDash([tileHypot.value / 4]);
+  _ctx.lineDashOffset = (dashRatio / 2) * tileHypot.value;
+  _ctx.setLineDash(topStroke.value);
   _ctx.stroke();
 };
 
@@ -206,7 +245,7 @@ const getAll = () => tiles.value;
 const getOn = (tile: Tile) => tile.on;
 
 /** set tile "on" status */
-const setOn = (tile: Tile, value: number, delay = 0, duration = 0.25) =>
+const setOn = (tile: Tile, value: number, delay = 0, duration = 0.5) =>
   sleep(delay * 1000).then(() =>
     gsap.to(tile, { on: value ? 1 : 0, overwrite: true, duration }),
   );
