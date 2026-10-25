@@ -16,7 +16,7 @@ for (const [path, { default: _default }] of imageImports) {
 }
 
 const fileImports = toPairs(
-  import.meta.glob<{ default: string }>("./*.*", { eager: true }),
+  import.meta.glob<{ default: string }>(["./*.*", "!./*.png"], { eager: true }),
 );
 
 const files: Record<string, string> = {};
