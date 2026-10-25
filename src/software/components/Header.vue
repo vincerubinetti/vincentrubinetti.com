@@ -91,7 +91,7 @@ const filter = (tile: { col: number; row: number }) =>
       fill-top="oklch(48% 0.1 260)"
       fill-left="oklch(46% 0.1 260)"
       fill-right="oklch(44% 0.1 260)"
-      stroke="oklch(75% 0.1 260)"
+      stroke="oklch(75% 0.075 260)"
       :dash-ratio="1 / 3"
       :fade="true"
       class="absolute inset-0 -z-10 size-full bg-[radial-gradient(ellipse_50%_100%_at_bottom_center,oklch(40%_0.1_260),transparent)]"
