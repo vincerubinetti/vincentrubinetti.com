@@ -158,7 +158,7 @@ const cellAttrs = (col?: Cols[number], row?: Row) => {
                 ...cellStyle(header.column.columnDef.meta),
               }"
               v-bind="cellAttrs(header.column.columnDef.meta)"
-              class="button size-full gap-2 px-4 py-2 font-normal"
+              class="button size-full gap-2 px-4 py-2 font-normal whitespace-nowrap"
               @click="
                 (event: Event) =>
                   header.column.getToggleSortingHandler()?.(event)
