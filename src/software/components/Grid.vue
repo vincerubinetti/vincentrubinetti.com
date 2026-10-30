@@ -259,7 +259,7 @@ const onPointer = (first: boolean) => (event: PointerEvent) => {
   const x = event.offsetX - width.value / 2;
   const y = event.offsetY - height.value / 2;
   const { col, row } = cartToIso(x, y);
-  const center = getTile(col, row);
+  const center = fade ? getTile(col - 1, row + 1) : getTile(col, row);
   if (!center) return;
   if (first) on = 1 - getOn(center);
   setOn(center, on, 0, 0.05);
