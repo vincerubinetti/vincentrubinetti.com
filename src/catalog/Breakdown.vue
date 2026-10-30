@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import {
+  IconBrandGithub,
   IconBug,
   IconEye,
   IconGitBranch,
@@ -15,7 +16,7 @@ import totals from "./data/transform/totals.json";
 
 const tiles = [
   {
-    icon: IconStar,
+    icon: IconBrandGithub,
     title: formatValue(totals.repos),
     description: "Repos *",
   },

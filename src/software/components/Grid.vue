@@ -211,7 +211,7 @@ const render = useIntervalFn(() => {
     height.value,
   );
   for (const tile of tiles.value)
-    drawTile(tile.x, tile.y - tile.on * tileHeight.value, getOn(tile));
+    drawTile(tile.x, tile.y - getOn(tile) * tileHeight.value, getOn(tile));
 }, 20);
 
 /** pause when not visible */
@@ -262,7 +262,7 @@ const onPointer = (first: boolean) => (event: PointerEvent) => {
   const center = getTile(col, row);
   if (!center) return;
   if (first) on = 1 - getOn(center);
-  setOn(center, on, 0, 0.1);
+  setOn(center, on, 0, 0.05);
 };
 
 /** on unload */
