@@ -18,7 +18,8 @@ import profile from "@/images/vince.png?url&format=webp";
         personal, freelance, and professional sites and apps. I've taken complex
         projects from nascency to maturity &ndash; from research, to mockups, to
         implementation, to testing. My approach is holistic and obsessively
-        thorough, always chasing the most clean and robust product possible.
+        thorough, <b>carefully crafting</b> the most clean and robust product
+        possible.
       </p>
     </div>
   </section>
